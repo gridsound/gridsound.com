@@ -1,0 +1,22 @@
+body {
+	font-size: 14px;
+	font-family: "Montserrat", sans-serif;
+	color: var( --app-text );
+	background-color: var( --app-bg );
+}
+
+#auth,
+#main {
+	width: 100%;
+	height: 100%;
+	overflow-x: hidden;
+	box-sizing: border-box;
+	background-color: inherit;
+	transition: var( --auth-show-dur );
+	transition-property: visibility, opacity;
+}
+#auth.hidden,
+#main.hidden {
+	visibility: hidden;
+	opacity: 0;
+}

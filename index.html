@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8"/>
+	<meta name="viewport" content="width=device-width, user-scalable=no"/>
+	<title>GridSound</title>
+	<link rel="stylesheet" href="css/root.css"/>
+	<link rel="stylesheet" href="css/reset.css"/>
+	<link rel="stylesheet" href="css/body.css"/>
+	<link rel="stylesheet" href="css/auth.css"/>
+	<link rel="stylesheet" href="css/main.css"/>
+	<link rel="stylesheet" href="css/field.css"/>
+	<link rel="stylesheet" href="css/btn.css"/>
+	<link rel="stylesheet" href="css/rippleEffect.css"/>
+	<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Montserrat:600"/>
+	<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Oswald"/>
+</head>
+<body>
+
+<div id="auth" class="hidden">
+	<div id="authInnerWrap">
+		<div id="authTitle">GridSound</div>
+		<div id="authAreas">
+			<form class="auth-area" id="authSignup">
+				<div class="form-title">Create your personal account</div>
+				<label class="field">
+					<span class="field-label">Email</span>
+					<input class="field-input" id="authSignupEmail" type="email" name="email" required maxlength="128" placeholder="eg: janedoe@example.com"/>
+				</label>
+				<label class="field">
+					<span class="field-label">Username</span>
+					<input class="field-input" id="authSignupUsername" type="text" name="username" required minlength="4" maxlength="32" pattern="[a-zA-Z0-9_]*"/>
+				</label>
+				<label class="field">
+					<span class="field-label">Password</span>
+					<input class="field-input" id="authSignupPass" type="password" name="pass" required minlength="6"/>
+				</label>
+				<small id="authSignupError"></small>
+				<button id="authSignupBtn" type="submit" class="btn btn-submit"><span class="btn-text">Sign up</span></button>
+			</form>
+			<form class="auth-area" id="authLogin">
+				<div class="form-title">Sign in to GridSound</div>
+				<label class="field">
+					<span class="field-label">Email (or username)</span>
+					<input class="field-input" id="authLoginEmail" type="text" name="email" required/>
+				</label>
+				<label class="field">
+					<span class="field-label">Password</span>
+					<input class="field-input" id="authLoginPass" type="password" name="pass" required/>
+				</label>
+				<div id="authLoginForgot">
+					<a id="authLoginForgotBtn" href="">Forgot password&nbsp;?</a>
+				</div>
+				<small id="authLoginError"></small>
+				<button id="authLoginBtn" type="submit" class="btn btn-submit"><span class="btn-text">Log in</span></button>
+			</form>
+			<div class="auth-area" id="authUseapp">
+				<div class="form-title">
+					<span>Click here to launch the app</span><br/>
+					<small>(no account needed)</small>
+				</div>
+				<a id="authUseappBtn" href="https://gridsound.github.io/daw" class="btn btn-submit"><span class="btn-text">Open the DAW</span></a>
+			</div>
+		</div>
+	</div>
+</div>
+<div id="main" class="hidden">
+	<p>
+		Hi :) thanks for your interest in GridSound,
+		sorry the whole site is still in development...
+	</p>
+	<textarea id="mainData" readonly></textarea>
+	<button id="mainLogoutBtn" type="button" class="btn btn-submit"><span class="btn-text">Logout</span></button>
+</div>
+
+<script>function lg( a ) { return console.log.apply( console, arguments ), a; }</script>
+<script src="js/common/rippleEffect.js"></script>
+<script src="js/apiClient.js"></script>
+<script src="js/authPage.js"></script>
+<script src="js/mainPage.js"></script>
+<script src="js/run.js"></script>
+</body>
+</html>

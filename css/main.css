@@ -1,0 +1,11 @@
+#main {
+	padding: var( --main-padding );
+	color: #fff;
+}
+
+#mainData {
+	display: block;
+	width: 500px;
+	height: 140px;
+	margin-bottom: var( --main-padding );
+}
