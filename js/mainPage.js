@@ -3,6 +3,7 @@
 const mainPage = {
 	init() {
 		DOM.mainLogoutBtn.onclick = this._logoutBtnClick.bind( this );
+		DOM.mainResendEmailBtn.onclick = this._resendEmailBtnClick.bind( this );
 	},
 	show( b = true ) {
 		DOM.main.classList.toggle( "hidden", !b );
@@ -31,6 +32,11 @@ const mainPage = {
 		apiClient.logout().then( res => {
 			console.log( "logout", res );
 			authPage.show();
+		} );
+	},
+	_resendEmailBtnClick() {
+		apiClient.resendConfirmationEmail().then( res => {
+			console.log( "resendConfirmationEmail", res );
 		} );
 	},
 };

@@ -21,6 +21,16 @@ const apiClient = {
 		return this._fetch( "POST", "createUser", { username, email, pass } )
 			.then( this._loginThen.bind( this ) );
 	},
+	resendConfirmationEmail() {
+		const email = this.me.email;
+
+		lg(email)
+		return this._fetch( "POST", "resendConfirmationEmail", { email } )
+			.then( res => {
+				lg( res );
+				return res;
+			} );
+	},
 	logout() {
 		return this._fetch( "POST", "logout", { confirm: true } )
 			.then( res => {

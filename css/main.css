@@ -5,7 +5,7 @@
 
 #mainData {
 	display: block;
-	width: 500px;
+	width: 600px;
 	height: 140px;
 	margin-bottom: var( --main-padding );
 }
