@@ -21,6 +21,12 @@ const mainPage = {
 			} );
 	},
 	updateProfile( me ) {
+		DOM.userPageUserEmail.textContent = me.email;
+		DOM.userPageUserUsername.textContent = me.username;
+		DOM.userPageUserLastname.textContent = me.lastname;
+		DOM.userPageUserFirstname.textContent = me.firstname;
+		DOM.userPageUserAvatar.style.backgroundImage = `url("${ me.avatar }?s=120")`;
+
 		DOM.mainData.value = JSON.stringify( me, 4, " " );
 	},
 	updateCompositions( cmps ) {
