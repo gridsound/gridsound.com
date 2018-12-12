@@ -1,6 +1,6 @@
 #main {
-	max-width: var( --main-width );
 	margin: 0 auto;
+	max-width: var( --main-width );
 	padding: var( --main-padding );
 	color: #fff;
 	background-color: rgba( 0, 0, 0, .1 );

@@ -1,8 +1,9 @@
 :root {
 	--app-bg: #557;
-	--app-text: #333;
-	--auth-show-dur: .3s;
+
 	--auth-bg: #fff;
+	--auth-text: #333;
+	--auth-show-dur: .3s;
 	--auth-padding: 10px;
 	--auth-signup-bg: #ee5f5f;
 	--auth-signup-text: #fff;

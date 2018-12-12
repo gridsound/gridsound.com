@@ -2,6 +2,7 @@
 	position: absolute;
 	display: table;
 	z-index: 1;
+	color: var( --auth-text );
 	padding: 0 var( --auth-padding );
 	padding-bottom: calc( 2 * var( --auth-padding ) );
 }
