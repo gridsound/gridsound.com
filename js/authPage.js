@@ -22,6 +22,7 @@ const authPage = {
 		apiClient.isLogged().then( b => this.show( !b ) );
 	},
 	show( b = true ) {
+		document.documentElement.scrollTop = 0;
 		DOM.auth.classList.toggle( "hidden", !b );
 		mainPage.show( !b );
 	},
