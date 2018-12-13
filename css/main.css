@@ -2,8 +2,8 @@
 	margin: 0 auto;
 	max-width: var( --main-width );
 	padding: var( --main-padding );
+	padding-top: 0;
 	color: #fff;
-	background-color: rgba( 0, 0, 0, .1 );
 }
 
 #mainData {

@@ -10,4 +10,9 @@
 
 	--main-width: 640px;
 	--main-padding: 20px;
+
+	--head-height: 80px;
+	--head-radius: 6px;
+	--head-padding: 10px;
+	--head-bg: rgba( 0, 0, 0, .4 );
 }

@@ -1,3 +1,8 @@
+@font-face {
+	font-family: "FA";
+	src: url( "../../daw/assets/fa-solid-900.woff" );
+}
+
 html,
 body {
 	min-height: 100%;

@@ -1,0 +1,62 @@
+#head {
+	height: var( --head-height );
+	display: flex;
+	margin-bottom: 20px;
+	border-radius: 0 0 var( --head-radius ) var( --head-radius );
+	background-color: var( --head-bg );
+}
+
+/* .......................................................................... */
+#headIcon,
+#headLogout {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+#headIcon {
+	width: var( --head-height );
+}
+#headIcon::before {
+	content: "GS";
+	font-size: 40px;
+	font-family: "Oswald";
+	line-height: 1em;
+}
+
+/* .......................................................................... */
+#headUser {
+	display: flex;
+	align-items: center;
+	padding: 0 var( --head-padding );
+	font-size: 18px;
+	margin-left: auto;
+	background-color: dodgerblue;
+}
+#headAvatar {
+	width: 40px;
+	height: 40px;
+	margin: 0 var( --head-padding );
+	border-radius: 4px;
+	background-size: contain;
+	background-color: black;
+}
+#headUser::after {
+	content: "\f0d7";
+	font-family: "FA";
+}
+
+/* .......................................................................... */
+#headLogout {
+	padding: 0 var( --head-padding );
+	opacity: .5;
+	cursor: pointer;
+	transition: .2s opacity;
+}
+#headLogout:hover {
+	opacity: 1;
+}
+#headLogout::before {
+	content: "\f2f5";
+	font-size: 22px;
+	font-family: "FA";
+}

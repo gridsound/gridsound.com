@@ -2,7 +2,7 @@
 
 const mainPage = {
 	init() {
-		DOM.mainLogoutBtn.onclick = this._logoutBtnClick.bind( this );
+		DOM.headLogout.onclick = this._logoutBtnClick.bind( this );
 		DOM.mainResendEmailBtn.onclick = this._resendEmailBtnClick.bind( this );
 	},
 	show( b = true ) {
@@ -21,13 +21,18 @@ const mainPage = {
 			} );
 	},
 	updateProfile( me ) {
-		DOM.userPageUserEmail.textContent = me.email;
+		DOM.mainData.value = JSON.stringify( me, 4, " " ); // tmp
+
+		DOM.headUsername.textContent =
 		DOM.userPageUserUsername.textContent = me.username;
+		DOM.headAvatar.style.backgroundImage =
+		DOM.userPageUserAvatar.style.backgroundImage = me.avatar
+			? `url("${ me.avatar }?s=120")`
+			: "none";
+
+		DOM.userPageUserEmail.textContent = me.email;
 		DOM.userPageUserLastname.textContent = me.lastname;
 		DOM.userPageUserFirstname.textContent = me.firstname;
-		DOM.userPageUserAvatar.style.backgroundImage = `url("${ me.avatar }?s=120")`;
-
-		DOM.mainData.value = JSON.stringify( me, 4, " " );
 	},
 	updateCompositions( cmps ) {
 		console.log( "updateCompositions", cmps );

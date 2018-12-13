@@ -7,6 +7,7 @@
 	<link rel="stylesheet" href="css/root.css"/>
 	<link rel="stylesheet" href="css/reset.css"/>
 	<link rel="stylesheet" href="css/body.css"/>
+	<link rel="stylesheet" href="css/head.css"/>
 	<link rel="stylesheet" href="css/auth.css"/>
 	<link rel="stylesheet" href="css/main.css"/>
 	<link rel="stylesheet" href="css/userPage.css"/>
@@ -65,8 +66,15 @@
 		</div>
 	</div>
 </div>
+
 <div id="main" class="hidden">
 	<div id="head">
+		<div id="headIcon"></div>
+		<div id="headUser">
+			<div id="headUsername"></div>
+			<div id="headAvatar"></div>
+		</div>
+		<div id="headLogout" title="Quit / logout"></div>
 	</div>
 	<div id="pages">
 		<div id="userPage">
@@ -87,7 +95,6 @@
 		sorry the whole site is still in development...
 	</p>
 	<textarea id="mainData" readonly></textarea>
-	<button id="mainLogoutBtn" type="button" class="btn btn-submit"><span class="btn-text">Logout</span></button>
 	<button id="mainResendEmailBtn" type="button" class="btn btn-submit"><span class="btn-text">Send the confirmation email again</span></button>
 </div>
 
