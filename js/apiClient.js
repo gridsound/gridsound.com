@@ -10,35 +10,23 @@ const apiClient = {
 	},
 	isLogged() {
 		return this._fetch( "GET", "getMe" )
-			.then( this._loginThen.bind( this ) )
+			.then( res => this._assignMe( res ) )
 			.then( res => res.ok, () => false );
 	},
 	login( email, pass ) {
 		return this._fetch( "POST", "login", { email, pass } )
-			.then( this._loginThen.bind( this ) );
+			.then( res => this._assignMe( res ) );
 	},
 	signup( username, email, pass ) {
 		return this._fetch( "POST", "createUser", { username, email, pass } )
-			.then( this._loginThen.bind( this ) );
+			.then( res => this._assignMe( res ) );
 	},
 	resendConfirmationEmail() {
-		const email = this.me.email;
-
-		lg(email)
-		return this._fetch( "POST", "resendConfirmationEmail", { email } )
-			.then( res => {
-				lg( res );
-				return res;
-			} );
+		return this._fetch( "POST", "resendConfirmationEmail", { email: this.me.email } );
 	},
 	logout() {
 		return this._fetch( "POST", "logout", { confirm: true } )
-			.then( res => {
-				if ( res.ok ) {
-					Object.keys( this.me ).forEach( k => delete this.me[ k ] );
-				}
-				return res;
-			} );
+			.then( res => this._deleteMe( res ) );
 	},
 	getMyCompositions() {
 		return this._fetch( "GET", "getMyCompositions" );
@@ -48,6 +36,14 @@ const apiClient = {
 	},
 
 	// private:
+	_assignMe( res ) {
+		Object.assign( this.me, res.data );
+		return res;
+	},
+	_deleteMe( res ) {
+		Object.keys( this.me ).forEach( k => delete this.me[ k ] );
+		return res;
+	},
 	_fetch( method, url, body ) {
 		const obj = {
 			method,
@@ -58,11 +54,12 @@ const apiClient = {
 		if ( body ) {
 			obj.body = JSON.stringify( body );
 		}
-		return fetch( this.url + url, obj ).then( res => res.json() );
+		return fetch( this.url + url, obj )
+			.then( res => res.json() )
+			.then( res => this._fetchThen( res ) );
 	},
-	_loginThen( res ) {
+	_fetchThen( res ) {
 		if ( res.ok ) {
-			Object.assign( this.me, res.data );
 			return res;
 		} else {
 			const msg = this.errorCode[ res.msg ];
