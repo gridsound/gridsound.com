@@ -30,6 +30,7 @@ const mainPage = {
 			? `url("${ me.avatar }?s=120")`
 			: "none";
 
+		DOM.headUser.href = `#/${ me.username }`;
 		DOM.userPageUserEmail.textContent = me.email;
 		DOM.userPageUserLastname.textContent = me.lastname;
 		DOM.userPageUserFirstname.textContent = me.firstname;

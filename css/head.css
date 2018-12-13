@@ -29,20 +29,23 @@
 	align-items: center;
 	padding: 0 var( --head-padding );
 	font-size: 18px;
+	color: inherit;
 	margin-left: auto;
-	background-color: dodgerblue;
+	background-color: rgba( 51, 154, 240, .9 );
+	user-select: none;
+	transition: .2s background-color;
+}
+#headUser:hover {
+	text-decoration: none;
+	background-color: rgb( 51, 154, 240 );
 }
 #headAvatar {
 	width: 40px;
 	height: 40px;
-	margin: 0 var( --head-padding );
+	margin-left: var( --head-padding );
 	border-radius: 4px;
 	background-size: contain;
 	background-color: black;
-}
-#headUser::after {
-	content: "\f0d7";
-	font-family: "FA";
 }
 
 /* .......................................................................... */
