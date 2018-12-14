@@ -4,6 +4,7 @@ const mainPage = {
 	init() {
 		DOM.headLogout.onclick = this._logoutBtnClick.bind( this );
 		DOM.mainResendEmailBtn.onclick = this._resendEmailBtnClick.bind( this );
+		DOM.pages.append.apply( DOM.pages, document.querySelectorAll( ".page" ) );
 	},
 	show( b = true ) {
 		DOM.main.classList.toggle( "hidden", !b );
@@ -30,7 +31,7 @@ const mainPage = {
 			? `url("${ me.avatar }?s=120")`
 			: "none";
 
-		DOM.headUser.href = `#/${ me.username }`;
+		DOM.headUser.href = `#/u/${ me.username }`;
 		DOM.userPageUserEmail.textContent = me.email;
 		DOM.userPageUserLastname.textContent = me.lastname;
 		DOM.userPageUserFirstname.textContent = me.firstname;
@@ -43,6 +44,7 @@ const mainPage = {
 	_logoutBtnClick() {
 		apiClient.logout().then( res => {
 			console.log( "logout", res );
+			location.hash = "#/";
 			authPage.show();
 		} );
 	},

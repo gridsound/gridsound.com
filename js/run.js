@@ -14,6 +14,10 @@ mainPage.init();
 router.init();
 
 router.on( [], ( [ page ], [ pagePrev ] ) => {
-	lg( page, pagePrev );
+	if ( page !== pagePrev ) {
+		DOM.homePage.classList.toggle( "show", page === "" );
+		DOM.userPage.classList.toggle( "show", page === "u" );
+	}
 } );
+
 router.run();

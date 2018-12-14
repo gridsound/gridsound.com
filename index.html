@@ -7,9 +7,10 @@
 	<link rel="stylesheet" href="css/root.css"/>
 	<link rel="stylesheet" href="css/reset.css"/>
 	<link rel="stylesheet" href="css/body.css"/>
-	<link rel="stylesheet" href="css/head.css"/>
 	<link rel="stylesheet" href="css/auth.css"/>
+	<link rel="stylesheet" href="css/head.css"/>
 	<link rel="stylesheet" href="css/main.css"/>
+	<link rel="stylesheet" href="css/page.css"/>
 	<link rel="stylesheet" href="css/userPage.css"/>
 	<link rel="stylesheet" href="css/field.css"/>
 	<link rel="stylesheet" href="css/btn.css"/>
@@ -69,37 +70,38 @@
 
 <div id="main" class="hidden">
 	<div id="head">
-		<div id="headIcon"></div>
-		<a id="headUser" href="#/">
+		<a id="headIcon" href="#/"></a>
+		<a id="headUser">
 			<div id="headUsername"></div>
 			<div id="headAvatar"></div>
 		</a>
 		<div id="headLogout" title="Quit / logout"></div>
 	</div>
-
-	<p> <!-- TMP -->
+	<p><!-- TMP -->
 		Hi :) thanks for your interest in GridSound,
 		sorry the whole site is still in development...
 	</p>
+	<div id="pages"></div>
+</div>
 
-	<div id="pages">
-		<div id="userPage">
-			<div id="userPageUser">
-				<div id="userPageUserAvatar"></div>
-				<div id="userPageUserName">
-					<div id="userPageUserUsername"></div>
-					<div id="userPageUserFirstname"></div>
-					<div id="userPageUserLastname"></div>
-				</div>
-				<div id="userPageUserEmail"></div>
-			</div>
-			<br/>
-			<textarea id="mainData" readonly></textarea>
-			<br/>
-			<button id="mainResendEmailBtn" type="button" class="btn btn-submit"><span class="btn-text">Send the confirmation email again</span></button>
+<div class="page" id="homePage">
+	home
+</div>
+
+<div class="page" id="userPage">
+	<div id="userPageUser">
+		<div id="userPageUserAvatar"></div>
+		<div id="userPageUserName">
+			<div id="userPageUserUsername"></div>
+			<div id="userPageUserFirstname"></div>
+			<div id="userPageUserLastname"></div>
 		</div>
+		<div id="userPageUserEmail"></div>
 	</div>
-
+	<br/>
+	<textarea id="mainData" readonly></textarea>
+	<br/>
+	<button id="mainResendEmailBtn" type="button" class="btn btn-submit"><span class="btn-text">Send the confirmation email again</span></button>
 </div>
 
 <script>function lg( a ) { return console.log.apply( console, arguments ), a; }</script>
