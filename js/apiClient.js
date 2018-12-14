@@ -31,6 +31,10 @@ const apiClient = {
 	getMyCompositions() {
 		return this._fetch( "GET", "getMyCompositions" );
 	},
+	getUser( username ) {
+		return this._fetch( "GET", `getUser?username=${ username }` )
+			.then( res => res.data );
+	},
 	getUserCompositions( id ) {
 		return this._fetch( "GET", `getUserCompositions?id=${ id }` );
 	},
