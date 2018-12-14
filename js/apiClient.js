@@ -29,20 +29,15 @@ const apiClient = {
 		return this._fetch( "POST", "logout", { confirm: true } )
 			.then( res => this._deleteMe( res ) );
 	},
-	getMyCompositions() {
-		return this._fetch( "GET", "getMyCompositions" );
-	},
 	getUser( username ) {
 		return this._fetch( "GET", `getUser?username=${ username }` )
 			.then( res => res.data );
 	},
-	getUserCompositions( id ) {
-		return this._fetch( "GET", `getUserCompositions?id=${ id }` );
-	},
 
 	// private:
 	_assignMe( res ) {
-		Object.assign( this.user, res.data );
+		Object.assign( this.user, res.data.user );
+		Object.assign( this.compositions, res.data.compositions );
 		this.user.usernameLow = this.user.username.toLowerCase();
 		return res;
 	},
