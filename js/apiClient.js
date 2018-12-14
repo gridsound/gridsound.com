@@ -25,13 +25,17 @@ const apiClient = {
 	resendConfirmationEmail() {
 		return this._fetch( "POST", "resendConfirmationEmail", { email: this.user.email } );
 	},
-	logout() {
-		return this._fetch( "POST", "logout", { confirm: true } )
-			.then( res => this._deleteMe( res ) );
-	},
 	getUser( username ) {
 		return this._fetch( "GET", `getUser?username=${ username }` )
 			.then( res => res.data );
+	},
+	logout() {
+		return this._fetch( "POST", "logout", { confirm: true } )
+			.then( res => {
+				this._deleteMe( res );
+				setTimeout( () => location.href =
+					location.origin + location.pathname, 500 );
+			} );
 	},
 
 	// private:
