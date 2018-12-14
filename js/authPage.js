@@ -19,12 +19,15 @@ const authPage = {
 				DOM.authSignupEmail,
 				DOM.authSignupPass,
 			] );
-		apiClient.isLogged().then( b => this.show( !b ) );
+		return apiClient.isLogged().then( b => this.show( !b ) );
 	},
 	show( b = true ) {
 		document.documentElement.scrollTop = 0;
+		if ( !b ) {
+			mainPage.updateHead( apiClient.me );
+		}
 		DOM.auth.classList.toggle( "hidden", !b );
-		mainPage.show( !b );
+		DOM.main.classList.toggle( "hidden", b );
 	},
 
 	// private:

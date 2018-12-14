@@ -2,42 +2,42 @@
 
 const mainPage = {
 	init() {
+		const pages = document.querySelectorAll( ".page" ),
+			nameToObj = new Map( [
+				[ "", { obj: homePage || {}, elem: DOM.homePage } ],
+				[ "u", { obj: userPage, elem: DOM.userPage } ],
+			] );
+
 		DOM.headLogout.onclick = this._logoutBtnClick.bind( this );
-		DOM.mainResendEmailBtn.onclick = this._resendEmailBtnClick.bind( this );
-		DOM.pages.append.apply( DOM.pages, document.querySelectorAll( ".page" ) );
-	},
-	show( b = true ) {
-		DOM.main.classList.toggle( "hidden", !b );
-		this.updateProfile( b ? apiClient.me : {} );
-		if ( b ) {
-			this.getMyCompositions();
-		}
-	},
-	getMyCompositions() {
-		apiClient.getMyCompositions()
-			.then( res => {
-				if ( res.ok ) {
-					this.updateCompositions( res.data );
+		DOM.pages.append.apply( DOM.pages, pages );
+		router.on( [], ( [ path0 ], [ prevPath0 ] ) => {
+			if ( path0 !== prevPath0 ) {
+				const prev = nameToObj.get( prevPath0 ),
+					page = nameToObj.get( path0 );
+
+				if ( prev ) {
+					prev.elem.classList.remove( "show" );
+					if ( prev.obj.hide ) {
+						prev.obj.hide();
+					}
 				}
-			} );
+				if ( !page ) {
+					location.href = "#/";
+				} else {
+					page.elem.classList.add( "show" );
+					if ( page.obj.show ) {
+						page.obj.show();
+					}
+				}
+			}
+		} );
 	},
-	updateProfile( me ) {
-		DOM.mainData.value = JSON.stringify( me, 4, " " ); // tmp
-
-		DOM.headUsername.textContent =
-		DOM.userPageUserUsername.textContent = me.username;
-		DOM.headAvatar.style.backgroundImage =
-		DOM.userPageUserAvatar.style.backgroundImage = me.avatar
-			? `url("${ me.avatar }?s=120")`
+	updateHead( u ) {
+		DOM.headUser.href = `#/u/${ u.username }`;
+		DOM.headUsername.textContent = u.username;
+		DOM.headAvatar.style.backgroundImage = u.avatar
+			? `url("${ u.avatar }?s=120")`
 			: "none";
-
-		DOM.headUser.href = `#/u/${ me.username }`;
-		DOM.userPageUserEmail.textContent = me.email;
-		DOM.userPageUserLastname.textContent = me.lastname;
-		DOM.userPageUserFirstname.textContent = me.firstname;
-	},
-	updateCompositions( cmps ) {
-		console.log( "updateCompositions", cmps );
 	},
 
 	// private:
@@ -46,11 +46,6 @@ const mainPage = {
 			console.log( "logout", res );
 			location.hash = "#/";
 			authPage.show();
-		} );
-	},
-	_resendEmailBtnClick() {
-		apiClient.resendConfirmationEmail().then( res => {
-			console.log( "resendConfirmationEmail", res );
 		} );
 	},
 };

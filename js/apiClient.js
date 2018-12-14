@@ -38,6 +38,7 @@ const apiClient = {
 	// private:
 	_assignMe( res ) {
 		Object.assign( this.me, res.data );
+		this.me.usernameLow = this.me.username.toLowerCase();
 		return res;
 	},
 	_deleteMe( res ) {
