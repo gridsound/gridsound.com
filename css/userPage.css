@@ -16,32 +16,6 @@
 	color: #333;
 	background-color: #fff;
 }
-#userPageUserLoader {
-	top: 0;
-	left: 0;
-	right: 0;
-	bottom: 0;
-	display: flex;
-	position: absolute;
-	background: inherit;
-	align-items: center;
-	justify-content: center;
-	transition: .2s;
-	transition-property: opacity, visibility;
-	opacity: 0;
-	visibility: hidden;
-}
-#userPageUser.loading #userPageUserLoader {
-	opacity: 1;
-	visibility: visible;
-}
-#userPageUser.loading #userPageUserLoader::before {
-	content: "\f3f4";
-	display: inline-block;
-	font-size: 38px;
-	font-family: "FA";
-	animation: .7s linear infinite rotate360;
-}
 
 #userPageUserAvatar {
 	grid-area: avatar;

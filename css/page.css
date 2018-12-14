@@ -1,8 +1,0 @@
-.page {
-	transition: .2s;
-	transition-property: opacity, visibility;
-}
-.page:not( .show ) {
-	opacity: 0;
-	visibility: hidden;
-}

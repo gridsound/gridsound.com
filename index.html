@@ -10,7 +10,6 @@
 	<link rel="stylesheet" href="css/auth.css"/>
 	<link rel="stylesheet" href="css/head.css"/>
 	<link rel="stylesheet" href="css/main.css"/>
-	<link rel="stylesheet" href="css/page.css"/>
 	<link rel="stylesheet" href="css/userPage.css"/>
 	<link rel="stylesheet" href="css/field.css"/>
 	<link rel="stylesheet" href="css/btn.css"/>
@@ -20,7 +19,7 @@
 </head>
 <body>
 
-<div id="auth" class="hidden">
+<div id="auth">
 	<div id="authInnerWrap">
 		<div id="authTitle">GridSound</div>
 		<div id="authAreas">
@@ -68,7 +67,7 @@
 	</div>
 </div>
 
-<div id="main" class="hidden">
+<div id="main">
 	<div id="head">
 		<a id="headIcon" href="#/"></a>
 		<a id="headUser">
@@ -77,11 +76,13 @@
 		</a>
 		<div id="headLogout" title="Quit / logout"></div>
 	</div>
-	<p><!-- TMP -->
-		Hi :) thanks for your interest in GridSound,
-		sorry the whole site is still in development...
-	</p>
-	<div id="pages"></div>
+	<div id="pages">
+		<div id="loader"></div>
+		<div id="error">
+			<span id="errorLabel">error</span>
+			<span id="errorCode"></span>
+		</div>
+	</div>
 </div>
 
 <div class="page" id="homePage">
@@ -90,7 +91,6 @@
 
 <div class="page" id="userPage">
 	<div id="userPageUser">
-		<div id="userPageUserLoader"></div>
 		<div id="userPageUserAvatar"></div>
 		<div id="userPageUserName">
 			<div id="userPageUserUsername"></div>
@@ -109,6 +109,7 @@
 <script src="js/apiClient.js"></script>
 <script src="js/authLayer.js"></script>
 <script src="js/mainLayer.js"></script>
+<script src="js/errorPage.js"></script>
 <script src="js/userPage.js"></script>
 <script src="js/run.js"></script>
 </body>

@@ -11,6 +11,7 @@ const mainLayer = {
 		DOM.headLogout.onclick = this._logoutBtnClick.bind( this );
 		DOM.pages.append.apply( DOM.pages, pages );
 		router.on( [], ( [ path0 ], [ prevPath0 ] ) => {
+			errorPage.hide();
 			if ( path0 !== prevPath0 ) {
 				const prev = nameToObj.get( prevPath0 ),
 					page = nameToObj.get( path0 );
@@ -22,7 +23,7 @@ const mainLayer = {
 					}
 				}
 				if ( !page ) {
-					location.href = "#/";
+					errorPage.show( 404 );
 				} else {
 					page.elem.classList.add( "show" );
 					if ( page.obj.show ) {

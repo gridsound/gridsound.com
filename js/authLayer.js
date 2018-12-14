@@ -22,12 +22,18 @@ const authLayer = {
 		return apiClient.isLogged().then( b => this.show( !b ) );
 	},
 	show( b = true ) {
+		const dur = parseFloat( getComputedStyle( DOM.auth ).transitionDuration );
+
 		document.documentElement.scrollTop = 0;
 		if ( !b ) {
 			mainLayer.updateHead( apiClient.user );
 		}
-		DOM.auth.classList.toggle( "hidden", !b );
-		DOM.main.classList.toggle( "hidden", b );
+		DOM.auth.classList.toggle( "show", b );
+		DOM.main.classList.toggle( "show", !b );
+		setTimeout( () => {
+			DOM.auth.style.display = b ? "" : "none";
+			DOM.main.style.display = !b ? "" : "none";
+		}, dur * 1000 );
 	},
 
 	// private:

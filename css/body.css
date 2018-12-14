@@ -12,15 +12,13 @@ body {
 	min-height: 100%;
 	overflow-x: hidden;
 	box-sizing: border-box;
-	background-color: inherit;
-	transition:
-		visibility var( --auth-show-dur ),
-		opacity var( --auth-show-dur ),
-		top 0s var( --auth-show-dur );
-}
-#auth.hidden,
-#main.hidden {
 	visibility: hidden;
 	opacity: 0;
-	top: -100%;
+	transition: var( --auth-show-dur );
+	transition-property: visibility, opacity;
+}
+#auth.show,
+#main.show {
+	visibility: visible;
+	opacity: 1;
 }
