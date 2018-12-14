@@ -11,8 +11,6 @@ document.querySelectorAll( ".btn" ).forEach( btn => {
 router.init();
 apiClient.init();
 
-userPageUser.init();
-
 authLayer.init()
 	.then( () => {
 		mainLayer.init();

@@ -24,7 +24,7 @@ const authLayer = {
 	show( b = true ) {
 		document.documentElement.scrollTop = 0;
 		if ( !b ) {
-			mainLayer.updateHead( apiClient.me );
+			mainLayer.updateHead( apiClient.user );
 		}
 		DOM.auth.classList.toggle( "hidden", !b );
 		DOM.main.classList.toggle( "hidden", b );

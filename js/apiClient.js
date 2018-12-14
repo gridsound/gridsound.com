@@ -2,7 +2,8 @@
 
 const apiClient = {
 	url: "https://api.gridsound.com/",
-	me: {},
+	user: {},
+	compositions: [],
 	init() {
 		this.headers = Object.freeze( {
 			"Content-Type": "application/json; charset=utf-8",
@@ -22,7 +23,7 @@ const apiClient = {
 			.then( res => this._assignMe( res ) );
 	},
 	resendConfirmationEmail() {
-		return this._fetch( "POST", "resendConfirmationEmail", { email: this.me.email } );
+		return this._fetch( "POST", "resendConfirmationEmail", { email: this.user.email } );
 	},
 	logout() {
 		return this._fetch( "POST", "logout", { confirm: true } )
@@ -41,12 +42,12 @@ const apiClient = {
 
 	// private:
 	_assignMe( res ) {
-		Object.assign( this.me, res.data );
-		this.me.usernameLow = this.me.username.toLowerCase();
+		Object.assign( this.user, res.data );
+		this.user.usernameLow = this.user.username.toLowerCase();
 		return res;
 	},
 	_deleteMe( res ) {
-		Object.keys( this.me ).forEach( k => delete this.me[ k ] );
+		Object.keys( this.user ).forEach( k => delete this.user[ k ] );
 		return res;
 	},
 	_fetch( method, url, body ) {
