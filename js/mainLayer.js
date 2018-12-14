@@ -1,6 +1,6 @@
 "use strict";
 
-const mainPage = {
+const mainLayer = {
 	init() {
 		const pages = document.querySelectorAll( ".page" ),
 			nameToObj = new Map( [
@@ -45,7 +45,7 @@ const mainPage = {
 		apiClient.logout().then( res => {
 			console.log( "logout", res );
 			location.hash = "#/";
-			authPage.show();
+			authLayer.show();
 		} );
 	},
 };

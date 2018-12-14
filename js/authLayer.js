@@ -1,6 +1,6 @@
 "use strict";
 
-const authPage = {
+const authLayer = {
 	init() {
 		DOM.authLoginForgotBtn.onclick = () => {
 			alert( "Sorry, this feature is not done yet." );
@@ -24,7 +24,7 @@ const authPage = {
 	show( b = true ) {
 		document.documentElement.scrollTop = 0;
 		if ( !b ) {
-			mainPage.updateHead( apiClient.me );
+			mainLayer.updateHead( apiClient.me );
 		}
 		DOM.auth.classList.toggle( "hidden", !b );
 		DOM.main.classList.toggle( "hidden", b );

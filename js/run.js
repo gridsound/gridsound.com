@@ -10,9 +10,9 @@ document.querySelectorAll( ".btn" ).forEach( btn => {
 
 router.init();
 apiClient.init();
-authPage.init()
+authLayer.init()
 	.then( () => {
-		mainPage.init();
+		mainLayer.init();
 		userPage.init();
 		router.run();
 	} );
