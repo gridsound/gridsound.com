@@ -1,4 +1,5 @@
 :root {
+	--app-rad: 6px;
 	--app-bg: #557;
 
 	--auth-bg: #fff;
@@ -12,8 +13,6 @@
 	--main-padding: 20px;
 
 	--head-height: 80px;
-	--head-height: 80px;
-	--head-radius: 6px;
 	--head-padding: 10px;
 	--head-logout-hover-bg: #e94c4c;
 	--head-logout-hover-text: #fff;

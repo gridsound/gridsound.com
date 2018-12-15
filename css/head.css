@@ -3,7 +3,7 @@
 	display: flex;
 	overflow: hidden;
 	margin-bottom: 20px;
-	border-radius: 0 0 var( --head-radius ) var( --head-radius );
+	border-radius: 0 0 var( --app-rad ) var( --app-rad );
 	background-color: var( --head-bg );
 }
 
