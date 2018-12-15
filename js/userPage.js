@@ -33,8 +33,8 @@ const userPage = {
 		console.log( u );
 		if ( u.id === apiClient.user.id ) {
 			DOM.userPageUserEmailAddr.classList.toggle( "private", u.emailpublic !== u.email );
-			DOM.userPageUserEmail.classList.toggle( "toVerify", u.status === "EMAIL_TO_VERIFY" );
 		}
+		DOM.userPageUserEmail.classList.toggle( "toVerify", u.status === "EMAIL_TO_VERIFY" );
 		DOM.userPageUserEmailAddr.textContent = u.email;
 		DOM.userPageUserUsername.textContent = u.username;
 		DOM.userPageUserLastname.textContent = u.lastname;
