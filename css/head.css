@@ -1,18 +1,31 @@
 #head {
 	height: var( --head-height );
 	display: flex;
+	overflow: hidden;
 	margin-bottom: 20px;
 	border-radius: 0 0 var( --head-radius ) var( --head-radius );
 	background-color: var( --head-bg );
 }
 
 /* .......................................................................... */
-#headIcon,
-#headLogout {
+.headLink {
 	display: flex;
 	align-items: center;
 	justify-content: center;
+	transition: .2s;
+	transition-property: color, opacity, background-color;
 }
+.headLink:hover {
+	background-color: rgba( 255, 255, 255, .05 );
+}
+.headLink.selected {
+	background-color: rgba( 51, 154, 240, .9 );
+}
+.headLink.selected:hover {
+	background-color: rgb( 51, 154, 240 );
+}
+
+/* .......................................................................... */
 #headIcon {
 	width: var( --head-height );
 }
@@ -30,12 +43,7 @@
 	padding: 0 var( --head-padding );
 	font-size: 18px;
 	margin-left: auto;
-	background-color: rgba( 51, 154, 240, .9 );
 	user-select: none;
-	transition: .2s background-color;
-}
-#headUser:hover {
-	background-color: rgb( 51, 154, 240 );
 }
 #headAvatar {
 	width: 40px;
@@ -51,10 +59,12 @@
 	padding: 0 var( --head-padding );
 	opacity: .5;
 	cursor: pointer;
-	transition: .2s opacity;
+	color: var( --head-logout-text );
 }
 #headLogout:hover {
 	opacity: 1;
+	color: var( --head-logout-hover-text );
+	background-color: var( --head-logout-hover-bg );
 }
 #headLogout::before {
 	content: "\f2f5";

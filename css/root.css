@@ -12,7 +12,11 @@
 	--main-padding: 20px;
 
 	--head-height: 80px;
+	--head-height: 80px;
 	--head-radius: 6px;
 	--head-padding: 10px;
-	--head-bg: rgba( 0, 0, 0, .4 );
+	--head-logout-hover-bg: #e94c4c;
+	--head-logout-hover-text: #fff;
+	--head-logout-text: #000;
+	--head-bg: rgba( 0, 0, 0, .3 );
 }
