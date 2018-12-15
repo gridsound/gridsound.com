@@ -31,6 +31,9 @@ const userPage = {
 	// private:
 	_updateUser( u ) {
 		console.log( u );
+		if ( u.id === apiClient.user.id ) {
+			DOM.userPageUserEmail.classList.toggle( "private", u.emailpublic !== u.email );
+		}
 		DOM.userPageUserEmail.textContent = u.email;
 		DOM.userPageUserUsername.textContent = u.username;
 		DOM.userPageUserLastname.textContent = u.lastname;

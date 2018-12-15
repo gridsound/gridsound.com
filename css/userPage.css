@@ -52,6 +52,13 @@
 	align-self: flex-start;
 	line-height: 1.5em;
 }
+#userPageUserEmail:not(:empty)::before {
+	content: "\f0e0\A0";
+	font-family: "FA";
+}
+#userPageUserEmail.private::before {
+	content: "\f30d\A0";
+}
 
 @media ( max-width: 450px ) {
 	#userPageUser {
