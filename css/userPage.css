@@ -2,47 +2,74 @@
 }
 
 #userPageUser {
-	display: grid;
+	display: flex;
 	overflow: hidden;
 	position: relative;
-	align-items: flex-end;
-	grid-column-gap: 10px;
-	grid-template:
-		"avatar name" 60%
-		"avatar email"
-		/120px;
-	border-radius: 10px;
+	align-items: center;
+	border-radius: var( --app-rad );
 	font-size: 14px;
 	color: #333;
 	background-color: #fff;
 }
 
 #userPageUserAvatar {
-	grid-area: avatar;
 	width: 120px;
 	height: 120px;
-	padding: 10px;
-	box-sizing: border-box;
 	background-color: #fff;
 	background-size: cover;
+	background-position: center;
+}
+#userPageUserInfo {
+	display: flex;
+	overflow: hidden;
+	box-sizing: border-box;
+	flex-direction: column;
+	padding: 0 var( --userPageUser-padding );
+	max-width: 100%;
 }
 
 #userPageUserName {
-	grid-area: name;
 	display: flex;
 	align-items: baseline;
 	font-size: 1.5em;
 }
 #userPageUserUsername {
 	font-size: 2em;
-	margin-right: .3em;
 }
+#userPageUserEmail,
+#userPageUserLastname,
 #userPageUserFirstname {
-	margin-right: .3em;
+	text-overflow: ellipsis;
+	overflow: hidden;
+	white-space: nowrap;
 }
-#userPageUserLastname {
+#userPageUserLastname,
+#userPageUserFirstname {
+	margin-left: .4em;
 }
 #userPageUserEmail {
-	grid-area: email;
+	max-width: 100%;
 	align-self: flex-start;
+	line-height: 1.5em;
+}
+
+@media ( max-width: 450px ) {
+	#userPageUser {
+		flex-direction: column;
+		padding: calc( var( --userPageUser-padding ) / 1.5 );
+	}
+	#userPageUserAvatar {
+		border-radius: 4px;
+	}
+	#userPageUserInfo {
+		padding: 0;
+	}
+	#userPageUserName {
+		align-items: center;
+		flex-direction: column;
+	}
+	#userPageUserLastname,
+	#userPageUserFirstname {
+		margin-left: 0;
+	}
 }

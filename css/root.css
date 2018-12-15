@@ -18,4 +18,6 @@
 	--head-logout-hover-text: #fff;
 	--head-logout-text: #000;
 	--head-bg: rgba( 0, 0, 0, .3 );
+
+	--userPageUser-padding: 20px;
 }
