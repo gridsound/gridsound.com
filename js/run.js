@@ -19,5 +19,6 @@ apiClient.getMe()
 		main.loggedIn( res.user );
 	}, () => {} )
 	.finally( () => {
+		DOM.headAuth.classList.remove( "loading" );
 		router.run();
 	} );

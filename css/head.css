@@ -1,7 +1,6 @@
 #head {
 	height: var( --head-height );
 	display: flex;
-	overflow: hidden;
 	margin-bottom: var( --main-padding );
 	border-radius: 0 0 var( --app-rad ) var( --app-rad );
 	background-color: var( --head-bg );
@@ -29,6 +28,7 @@
 #headIcon {
 	width: var( --head-height );
 	margin-right: auto;
+	border-bottom-left-radius: inherit;
 }
 #headIcon::before {
 	content: "GS";
@@ -61,6 +61,7 @@
 #headAuth {
 	padding: 0 var( --head-padding );
 	cursor: pointer;
+	border-bottom-right-radius: inherit;
 }
 #headAuth:hover,
 #headAuth.selected {
@@ -73,4 +74,8 @@
 }
 .noauth #headAuth::before {
 	content: "\f090";
+}
+#headAuth.loading::before {
+	content: "\f3f4";
+	animation: .7s linear infinite rotate360;
 }

@@ -7,12 +7,12 @@ const main = {
 			[ "u",    { elem: DOM.userPage, headElem: DOM.headUser, obj: userPage } ],
 			[ "auth", { elem: DOM.authPage, headElem: DOM.headAuth, obj: authPage } ],
 		] );
-		DOM.headAuth.onclick = this._logoutBtnClick.bind( this );
+		DOM.headAuth.onclick = this._headAuthBtnClick.bind( this );
 		DOM.pages.append.apply( DOM.pages, document.querySelectorAll( ".page" ) );
 		router.on( [], ( a, b ) => this._routerFn( a[ 0 ], b[ 0 ] ) );
 	},
 	loggedIn( u ) {
-		DOM.headAuth.removeAttribute( "href" );
+		DOM.headAuth.href = "";
 		DOM.headUser.href = `#/u/${ u.username }`;
 		DOM.headUsername.textContent = u.username;
 		DOM.headAvatar.style.backgroundImage = u.avatar
@@ -46,11 +46,11 @@ const main = {
 			}
 		}
 	},
-	_logoutBtnClick() {
-		if ( !DOM.headAuth.href ) {
-			apiClient.logout().then( res => {
-				console.log( "logout", res );
-			} );
+	_headAuthBtnClick() {
+		if ( !DOM.headAuth.getAttribute( "href" ) ) {
+			DOM.headAuth.classList.add( "loading" );
+			apiClient.logout();
+			return false;
 		}
 	},
 };
