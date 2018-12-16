@@ -47,8 +47,10 @@ const main = {
 		}
 	},
 	_headAuthBtnClick() {
-		if ( !DOM.headAuth.getAttribute( "href" ) ) {
-			DOM.headAuth.classList.add( "loading" );
+		const btn = DOM.headAuth;
+
+		if ( !btn.getAttribute( "href" ) && !btn.classList.contains( "loading" ) ) {
+			btn.classList.add( "loading" );
 			apiClient.logout();
 			return false;
 		}

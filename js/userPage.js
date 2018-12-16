@@ -3,7 +3,7 @@
 const userPage = {
 	init() {
 		this._username = "";
-		DOM.mainResendEmailBtn.onclick = this._resendEmailBtnClick.bind( this );
+		DOM.userPageUserEmailNot.onclick = this._resendEmailBtnClick.bind( this );
 		router.on( [ "u" ], path => {
 			const username = path[ 1 ].toLowerCase();
 
@@ -47,8 +47,15 @@ const userPage = {
 		console.log( cmps );
 	},
 	_resendEmailBtnClick() {
-		apiClient.resendConfirmationEmail().then( res => {
-			console.log( "resendConfirmationEmail", res );
-		} );
+		const btn = DOM.userPageUserEmailNot,
+			done = btn.classList.contains( "loading" ) ||
+				btn.classList.contains( "sended" );
+
+		if ( !done ) {
+			btn.classList.add( "loading" );
+			apiClient.resendConfirmationEmail()
+				.finally( () => btn.classList.remove( "loading" ) )
+				.then( () => btn.classList.add( "sended" ) );
+		}
 	},
 };

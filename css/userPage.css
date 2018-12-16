@@ -36,9 +36,11 @@
 #userPageUserUsername {
 	font-size: 2em;
 }
-#userPageUserEmail,
+#userPageUserEmailAddr,
+#userPageUserEmailNot,
 #userPageUserLastname,
 #userPageUserFirstname {
+	max-width: 100%;
 	text-overflow: ellipsis;
 	overflow: hidden;
 	white-space: nowrap;
@@ -48,6 +50,8 @@
 	margin-left: .4em;
 }
 #userPageUserEmail {
+	display: flex;
+	flex-direction: column;
 	max-width: 100%;
 	align-self: flex-start;
 	line-height: 1.5em;
@@ -61,10 +65,20 @@
 }
 #userPageUserEmailNot {
 	color: #da6035;
+	cursor: pointer;
 	font-size: 12px;
 }
-#userPageUserEmail:not( .toVerify ) #userPageUserEmailNot {
+#userPageUserEmail:not( .toVerify ) #userPageUserEmailNot,
+#userPageUserEmailNot.sended span:first-child,
+#userPageUserEmailNot:not( .sended ) span:last-child {
 	display: none;
+}
+#userPageUserEmailNot.loading::before {
+	display: inline-block;
+	content: "\f3f4";
+	font-family: "FA";
+	margin-right: .5em;
+	animation: .7s linear infinite rotate360;
 }
 
 @media ( max-width: 450px ) {
@@ -78,7 +92,8 @@
 	#userPageUserInfo {
 		padding: 0;
 	}
-	#userPageUserName {
+	#userPageUserName,
+	#userPageUserEmail {
 		align-items: center;
 		flex-direction: column;
 	}
