@@ -2,22 +2,22 @@
 	--app-rad: 6px;
 	--app-bg: #557;
 
+	--main-width: 640px;
+	--main-padding: 20px;
+
+	--head-height: 80px;
+	--head-padding: 10px;
+	--head-logout-hover-bg: #ee5f5f;
+	--head-logout-hover-text: #fff;
+	--head-logout-text: #000;
+	--head-bg: rgba( 0, 0, 0, .3 );
+
 	--auth-bg: #fff;
 	--auth-text: #333;
 	--auth-show-dur: .3s;
 	--auth-padding: 10px;
 	--auth-signup-bg: #ee5f5f;
 	--auth-signup-text: #fff;
-
-	--main-width: 640px;
-	--main-padding: 20px;
-
-	--head-height: 80px;
-	--head-padding: 10px;
-	--head-logout-hover-bg: #e94c4c;
-	--head-logout-hover-text: #fff;
-	--head-logout-text: #000;
-	--head-bg: rgba( 0, 0, 0, .3 );
 
 	--userPageUser-padding: 20px;
 }

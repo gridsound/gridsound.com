@@ -10,10 +10,14 @@ document.querySelectorAll( ".btn" ).forEach( btn => {
 
 router.init();
 apiClient.init();
+main.init();
+authPage.init();
+userPage.init();
 
-authLayer.init()
-	.then( () => {
-		mainLayer.init();
-		userPage.init();
+apiClient.getMe()
+	.then( res => {
+		main.loggedIn( res.user );
+	}, () => {} )
+	.finally( () => {
 		router.run();
 	} );

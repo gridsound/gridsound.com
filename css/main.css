@@ -1,7 +1,9 @@
 #main {
+	box-sizing: border-box;
+	max-width: var( --main-width );
+	min-height: 100%;
 	margin: 0 auto;
 	padding: 0 var( --main-padding );
-	max-width: var( --main-width );
 	color: #fff;
 }
 

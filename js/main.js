@@ -1,21 +1,24 @@
 "use strict";
 
-const mainLayer = {
+const main = {
 	init() {
 		this._nameToObj = new Map( [
-			[ "",  { elem: DOM.homePage, headElem: DOM.headIcon, obj: homePage || {} } ],
-			[ "u", { elem: DOM.userPage, headElem: DOM.headUser, obj: userPage } ],
+			[ "",     { elem: DOM.homePage, headElem: DOM.headIcon, obj: homePage || {} } ],
+			[ "u",    { elem: DOM.userPage, headElem: DOM.headUser, obj: userPage } ],
+			[ "auth", { elem: DOM.authPage, headElem: DOM.headAuth, obj: authPage } ],
 		] );
-		DOM.headLogout.onclick = this._logoutBtnClick.bind( this );
+		DOM.headAuth.onclick = this._logoutBtnClick.bind( this );
 		DOM.pages.append.apply( DOM.pages, document.querySelectorAll( ".page" ) );
 		router.on( [], ( a, b ) => this._routerFn( a[ 0 ], b[ 0 ] ) );
 	},
-	updateHead( u ) {
+	loggedIn( u ) {
+		DOM.headAuth.removeAttribute( "href" );
 		DOM.headUser.href = `#/u/${ u.username }`;
 		DOM.headUsername.textContent = u.username;
 		DOM.headAvatar.style.backgroundImage = u.avatar
 			? `url("${ u.avatar }?s=120")`
 			: "none";
+		DOM.main.classList.remove( "noauth" );
 	},
 
 	// private:
@@ -44,10 +47,10 @@ const mainLayer = {
 		}
 	},
 	_logoutBtnClick() {
-		apiClient.logout().then( res => {
-			console.log( "logout", res );
-			location.hash = "#/";
-			authLayer.show();
-		} );
+		if ( !DOM.headAuth.href ) {
+			apiClient.logout().then( res => {
+				console.log( "logout", res );
+			} );
+		}
 	},
 };

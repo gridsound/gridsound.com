@@ -9,10 +9,9 @@ const apiClient = {
 			"Content-Type": "application/json; charset=utf-8",
 		} );
 	},
-	isLogged() {
+	getMe() {
 		return this._fetch( "GET", "getMe" )
-			.then( res => this._assignMe( res ) )
-			.then( res => res.ok, () => false );
+			.then( res => this._assignMe( res ) );
 	},
 	login( email, pass ) {
 		return this._fetch( "POST", "login", { email, pass } )
@@ -39,11 +38,11 @@ const apiClient = {
 	},
 
 	// private:
-	_assignMe( res ) {
-		Object.assign( this.user, res.data.user );
-		Object.assign( this.compositions, res.data.compositions );
+	_assignMe( { data } ) {
+		Object.assign( this.user, data.user );
+		Object.assign( this.compositions, data.compositions );
 		this.user.usernameLow = this.user.username.toLowerCase();
-		return res;
+		return data;
 	},
 	_deleteMe( res ) {
 		Object.keys( this.user ).forEach( k => delete this.user[ k ] );

@@ -2,7 +2,7 @@
 	height: var( --head-height );
 	display: flex;
 	overflow: hidden;
-	margin-bottom: 20px;
+	margin-bottom: var( --main-padding );
 	border-radius: 0 0 var( --app-rad ) var( --app-rad );
 	background-color: var( --head-bg );
 }
@@ -13,7 +13,7 @@
 	align-items: center;
 	justify-content: center;
 	transition: .2s;
-	transition-property: color, opacity, background-color;
+	transition-property: color, background-color;
 }
 .headLink:hover {
 	background-color: rgba( 255, 255, 255, .05 );
@@ -28,6 +28,7 @@
 /* .......................................................................... */
 #headIcon {
 	width: var( --head-height );
+	margin-right: auto;
 }
 #headIcon::before {
 	content: "GS";
@@ -42,8 +43,10 @@
 	align-items: center;
 	padding: 0 var( --head-padding );
 	font-size: 18px;
-	margin-left: auto;
 	user-select: none;
+}
+.noauth #headUser {
+	display: none;
 }
 #headAvatar {
 	width: 40px;
@@ -55,19 +58,19 @@
 }
 
 /* .......................................................................... */
-#headLogout {
+#headAuth {
 	padding: 0 var( --head-padding );
-	opacity: .5;
 	cursor: pointer;
-	color: var( --head-logout-text );
 }
-#headLogout:hover {
-	opacity: 1;
-	color: var( --head-logout-hover-text );
+#headAuth:hover,
+#headAuth.selected {
 	background-color: var( --head-logout-hover-bg );
 }
-#headLogout::before {
-	content: "\f2f5";
+#headAuth::before {
+	content: "\f08b";
 	font-size: 22px;
 	font-family: "FA";
+}
+.noauth #headAuth::before {
+	content: "\f090";
 }
