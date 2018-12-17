@@ -1,0 +1,7 @@
+#footer {
+	height: 20px;
+	display: flex;
+	margin-top: var( --main-padding );
+	border-radius: var( --app-rad ) var( --app-rad ) 0 0;
+	background-color: var( --head-bg );
+}
