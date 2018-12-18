@@ -5,25 +5,23 @@ const userPage = {
 		this._username = "";
 		DOM.userPageUserEmailNot.onclick = this._resendEmailBtnClick.bind( this );
 		router.on( [ "u" ], path => {
-			const username = path[ 1 ].toLowerCase();
+			const username = path[ 1 ].toLowerCase(),
+				itsMe = username === apiClient.user.usernameLow;
 
-			if ( username !== this._username ) {
-				const itsMe = username === apiClient.user.usernameLow,
-					prom = itsMe
-						? Promise.resolve( apiClient )
-						: apiClient.getUser( username );
-
+			if ( itsMe || username !== this._username ) {
 				DOM.loader.classList.add( "show" );
-				prom
-				.finally( () => DOM.loader.classList.remove( "show" ) )
-				.then( res => {
-					this._username = username;
-					this._updateUser( res.user );
-					this._updateComposition( res.compositions );
-				}, res => {
-					this._username = "";
-					errorPage.show( res.code );
-				} );
+				( itsMe
+				? Promise.resolve( apiClient )
+				: apiClient.getUser( username ) )
+					.finally( () => DOM.loader.classList.remove( "show" ) )
+					.then( res => {
+						this._username = username;
+						this._updateUser( res.user );
+						this._updateCompositions( res.compositions );
+					}, res => {
+						this._username = "";
+						errorPage.show( res.code );
+					} );
 			}
 		} );
 	},
@@ -43,7 +41,7 @@ const userPage = {
 			? `url("${ u.avatar }?s=120")`
 			: "none";
 	},
-	_updateComposition( cmps ) {
+	_updateCompositions( cmps ) {
 		console.log( cmps );
 	},
 	_resendEmailBtnClick() {
