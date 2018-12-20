@@ -3,6 +3,8 @@
 const userPage = {
 	init() {
 		this._username = "";
+		DOM.userPageCmp.remove();
+		DOM.userPageCmp.removeAttribute( "id" );
 		DOM.userPageUserEmailNot.onclick = this._resendEmailBtnClick.bind( this );
 		router.on( [ "u" ], path => {
 			const username = path[ 1 ].toLowerCase(),
@@ -15,6 +17,7 @@ const userPage = {
 				: apiClient.getUser( username ) )
 					.finally( () => DOM.loader.classList.remove( "show" ) )
 					.then( res => {
+						console.log( res.user, res.compositions );
 						this._username = username;
 						this._updateUser( res.user );
 						this._updateCompositions( res.compositions );
@@ -28,7 +31,6 @@ const userPage = {
 
 	// private:
 	_updateUser( u ) {
-		console.log( u );
 		if ( u.id === apiClient.user.id ) {
 			DOM.userPageUserEmailAddr.classList.toggle( "private", u.emailpublic !== u.email );
 		}
@@ -42,7 +44,29 @@ const userPage = {
 			: "none";
 	},
 	_updateCompositions( cmps ) {
-		console.log( cmps );
+		const elCmps = DOM.userPageCmps;
+
+		DOM.userPageNbCompositions.textContent = cmps.length;
+		while ( elCmps.lastChild ) {
+			elCmps.lastChild.remove();
+		}
+		elCmps.append.apply( elCmps, cmps.map( cmp => {
+			const el = DOM.userPageCmp.cloneNode( true );
+
+			return this._fillCmp( el, cmp );
+		} ) );
+	},
+	_fillCmp( el, obj ) {
+		const cmp = JSON.parse( obj.data ),
+			dur = cmp.duration * 60 / cmp.bpm,
+			durMin = Math.floor( dur / 60 ),
+			durSec = Math.round( dur % 60 ) + "";
+
+		el.querySelector( ".userPageCmpName" ).textContent = cmp.name;
+		el.querySelector( ".userPageCmpBPM" ).textContent = cmp.bpm;
+		el.querySelector( ".userPageCmpDur" ).textContent =
+			`${ durMin }:${ "00".substr( durSec.length ) + durSec }`;
+		return el;
 	},
 	_resendEmailBtnClick() {
 		const btn = DOM.userPageUserEmailNot,

@@ -81,6 +81,46 @@
 	animation: .7s linear infinite rotate360;
 }
 
+.userPageSectionTitle {
+	margin: var( --main-padding ) 0;
+	opacity: .4;
+}
+.userPageSectionTitleValue {
+	font-weight: bold;
+}
+.userPageSectionTitleLabel {
+	opacity: .7;
+}
+
+.userPageCmp {
+	padding: calc( var( --main-padding ) / 2 );
+	border-radius: var( --app-rad );
+	background-color: var( --userPageCmp-bg );
+}
+.userPageCmp + .userPageCmp {
+	margin-top: var( --main-padding );
+}
+.userPageCmpName {
+	font-size: 20px;
+}
+.userPageCmpInfos {
+	display: flex;
+	font-size: 14px;
+	opacity: .7;
+}
+.userPageCmpBPM {
+	margin-left: 1em;
+}
+.userPageCmpDur::before,
+.userPageCmpBPM::before {
+	font-family: "FA";
+	margin-right: .5em;
+	opacity: .5;
+}
+.userPageCmpDur::before { content: "\f2f2"; }
+.userPageCmpBPM::before { content: "\f3fd"; }
+/*.userPageCmpBPM::before { content: "\f709"; }*/
+
 @media ( max-width: 450px ) {
 	#userPageUser {
 		flex-direction: column;
