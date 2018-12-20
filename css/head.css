@@ -12,16 +12,17 @@
 	align-items: center;
 	justify-content: center;
 	transition: .2s;
-	transition-property: color, background-color;
+	transition-property: color, background-color, filter;
+	background-color: var( --bg, transparent );
 }
 .headLink:hover {
-	background-color: rgba( 255, 255, 255, .05 );
+	--bg: rgba( 255, 255, 255, .05 );
 }
 .headLink.selected {
-	background-color: rgba( 51, 154, 240, .9 );
+	--bg: var( --head-selected-bg );
 }
 .headLink.selected:hover {
-	background-color: rgb( 51, 154, 240 );
+	filter: brightness( 1.1 );
 }
 
 /* .......................................................................... */
