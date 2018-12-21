@@ -1,0 +1,3 @@
+[submodule "gs-api-client"]
+	path = gs-api-client
+	url = https://github.com/gridsound/gs-api-client

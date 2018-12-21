@@ -25,7 +25,7 @@ const authPage = {
 	_signSubmit( signAction, btn, error, inps ) {
 		btn.classList.add( "btn-loading" );
 		error.textContent = "";
-		apiClient[ signAction ].apply( apiClient, inps.map( inp => inp.value ) )
+		gsapiClient[ signAction ].apply( gsapiClient, inps.map( inp => inp.value ) )
 			.finally( () => btn.classList.remove( "btn-loading" ) )
 			.then( res => {
 				inps.forEach( inp => inp.value = "" );

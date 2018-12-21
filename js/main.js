@@ -51,7 +51,7 @@ const main = {
 
 		if ( !btn.getAttribute( "href" ) && !btn.classList.contains( "loading" ) ) {
 			btn.classList.add( "loading" );
-			apiClient.logout();
+			gsapiClient.logout();
 			return false;
 		}
 	},

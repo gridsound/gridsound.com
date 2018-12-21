@@ -9,12 +9,11 @@ document.querySelectorAll( ".btn" ).forEach( btn => {
 } );
 
 router.init();
-apiClient.init();
 main.init();
 authPage.init();
 userPage.init();
 
-apiClient.getMe()
+gsapiClient.getMe()
 	.then( res => {
 		main.loggedIn( res.user );
 	}, () => {} )

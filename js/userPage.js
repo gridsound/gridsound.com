@@ -8,13 +8,13 @@ const userPage = {
 		DOM.userPageUserEmailNot.onclick = this._resendEmailBtnClick.bind( this );
 		router.on( [ "u" ], path => {
 			const username = path[ 1 ].toLowerCase(),
-				itsMe = username === apiClient.user.usernameLow;
+				itsMe = username === gsapiClient.user.usernameLow;
 
 			if ( itsMe || username !== this._username ) {
 				DOM.loader.classList.add( "show" );
 				( itsMe
-				? Promise.resolve( apiClient )
-				: apiClient.getUser( username ) )
+				? Promise.resolve( gsapiClient )
+				: gsapiClient.getUser( username ) )
 					.finally( () => DOM.loader.classList.remove( "show" ) )
 					.then( res => {
 						console.log( res.user, res.compositions );
@@ -31,7 +31,7 @@ const userPage = {
 
 	// private:
 	_updateUser( u ) {
-		if ( u.id === apiClient.user.id ) {
+		if ( u.id === gsapiClient.user.id ) {
 			DOM.userPageUserEmailAddr.classList.toggle( "private", u.emailpublic !== u.email );
 		}
 		DOM.userPageUserEmail.classList.toggle( "toVerify", u.status === "EMAIL_TO_VERIFY" );
@@ -75,7 +75,7 @@ const userPage = {
 
 		if ( !done ) {
 			btn.classList.add( "loading" );
-			apiClient.resendConfirmationEmail()
+			gsapiClient.resendConfirmationEmail()
 				.finally( () => btn.classList.remove( "loading" ) )
 				.then( () => btn.classList.add( "sended" ) );
 		}
