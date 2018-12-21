@@ -21,5 +21,7 @@
 	--auth-signup-text: #fff;
 
 	--userPageUser-padding: 20px;
+
+	--userPageCmp-height: 64px;
 	--userPageCmp-bg: #339af0;
 }

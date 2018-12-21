@@ -93,12 +93,25 @@
 }
 
 .userPageCmp {
-	padding: calc( var( --main-padding ) / 2 );
+	display: flex;
+	height: var( --userPageCmp-height );
+	overflow: hidden;
 	border-radius: var( --app-rad );
 	background-color: var( --userPageCmp-bg );
 }
 .userPageCmp + .userPageCmp {
 	margin-top: var( --main-padding );
+}
+.userPageCmpPlay {
+	width: var( --userPageCmp-height );
+	background-color: rgba( 0, 0, 0, .1 );
+}
+.userPageCmpMiddle {
+	flex: 1;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	padding: calc( var( --main-padding ) / 2 );
 }
 .userPageCmpName {
 	font-size: 20px;
