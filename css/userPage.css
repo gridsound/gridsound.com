@@ -2,10 +2,15 @@
 }
 
 #userPageUser {
-	display: flex;
-	overflow: hidden;
+	display: grid;
+	grid-column-gap: var( --userPageUser-padding );
+	grid-template:
+		"avatar info" 1.2fr
+		"avatar email" 1fr
+		/ var( --userPageUser-height ) 1fr;
 	position: relative;
-	align-items: center;
+	height: var( --userPageUser-height );
+	padding-right: var( --userPageUser-padding );
 	border-radius: var( --app-rad );
 	font-size: 14px;
 	color: #333;
@@ -13,25 +18,18 @@
 }
 
 #userPageUserAvatar {
-	width: 120px;
-	height: 120px;
-	background-color: #fff;
+	grid-area: avatar;
+	background: #fff center;
 	background-size: cover;
-	background-position: center;
-}
-#userPageUserInfo {
-	display: flex;
-	overflow: hidden;
-	box-sizing: border-box;
-	flex-direction: column;
-	padding: 0 var( --userPageUser-padding );
-	max-width: 100%;
 }
 
-#userPageUserName {
+#userPageUserInfo {
+	grid-area: info;
 	display: flex;
+	align-self: flex-end;
 	align-items: baseline;
 	font-size: 1.5em;
+	min-width: 0;
 }
 #userPageUserUsername {
 	font-size: 2em;
@@ -50,11 +48,10 @@
 	margin-left: .4em;
 }
 #userPageUserEmail {
+	grid-area: email;
+	min-width: 0;
 	display: flex;
 	flex-direction: column;
-	max-width: 100%;
-	align-self: flex-start;
-	line-height: 1.5em;
 }
 #userPageUserEmailAddr:not(:empty)::before {
 	content: "\f0e0\A0";
@@ -136,22 +133,29 @@
 
 @media ( max-width: 450px ) {
 	#userPageUser {
-		flex-direction: column;
-		padding: calc( var( --userPageUser-padding ) / 1.5 );
+		height: auto;
+		padding: var( --userPageUser-padding );
+		grid-row-gap: var( --userPageUser-padding );
+		grid-template:
+			"avatar info" var( --userPageUser-height )
+			"email  email"
+			/ var( --userPageUser-height ) 1fr;
 	}
 	#userPageUserAvatar {
 		border-radius: 4px;
 	}
 	#userPageUserInfo {
-		padding: 0;
-	}
-	#userPageUserName,
-	#userPageUserEmail {
-		align-items: center;
 		flex-direction: column;
+		align-self: center;
 	}
 	#userPageUserLastname,
 	#userPageUserFirstname {
 		margin-left: 0;
+	}
+	#userPageUserUsername {
+		max-width: 100%;
+		text-overflow: ellipsis;
+		overflow: hidden;
+		white-space: nowrap;
 	}
 }

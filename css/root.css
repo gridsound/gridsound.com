@@ -20,7 +20,8 @@
 	--auth-signup-bg: #ee5f5f;
 	--auth-signup-text: #fff;
 
-	--userPageUser-padding: 20px;
+	--userPageUser-height: 120px;
+	--userPageUser-padding: 10px;
 
 	--userPageCmp-height: 64px;
 	--userPageCmp-bg: #339af0;
