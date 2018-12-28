@@ -30,7 +30,8 @@ const authPage = {
 			.then( res => {
 				inps.forEach( inp => inp.value = "" );
 				main.loggedIn( res.user );
-				location.hash = `#/u/${ res.user.username }`;
+				userPage.loggedIn();
+				location.hash = `#/u/${ res.user.usernameLow }`;
 			}, res => {
 				error.textContent = res.msg;
 			} );

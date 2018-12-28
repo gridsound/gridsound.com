@@ -1,6 +1,8 @@
 :root {
 	--app-rad: 6px;
 	--app-bg: #557;
+	--a-text-light: #9df;
+	--a-text-dark: #77c;
 
 	--main-width: 640px;
 	--main-padding: 20px;

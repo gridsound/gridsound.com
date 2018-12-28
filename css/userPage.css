@@ -3,24 +3,44 @@
 
 #userPageUser {
 	display: grid;
+	overflow: hidden;
 	grid-column-gap: var( --userPageUser-padding );
 	grid-template:
-		"avatar info" 1.2fr
-		"avatar email" 1fr
-		/ var( --userPageUser-height ) 1fr;
+		"avatar info  edit" 1.3fr
+		"avatar email edit" 1fr
+		/ var( --userPageUser-height ) 1fr 0;
 	position: relative;
 	height: var( --userPageUser-height );
-	padding-right: var( --userPageUser-padding );
 	border-radius: var( --app-rad );
 	font-size: 14px;
 	color: #333;
 	background-color: #fff;
 }
+#userPageUser.me {
+	grid-template-columns: var( --userPageUser-height ) 1fr 42px;
+}
 
 #userPageUserAvatar {
 	grid-area: avatar;
-	background: #fff center;
 	background-size: cover;
+	background-color: #fff;
+	background-position: center;
+}
+
+#userPageUserEdit {
+	grid-area: edit;
+	display: flex;
+	overflow: hidden;
+	align-items: center;
+	justify-content: center;
+	color: rgba( 0, 0, 0, .4 );
+	border: 0;
+	background-color: rgba( 0, 0, 0, .1 );
+}
+#userPageUserEdit::before {
+	content: "\f304";
+	font-size: 20px;
+	font-family: "FA";
 }
 
 #userPageUserInfo {
@@ -78,15 +98,29 @@
 	animation: .7s linear infinite rotate360;
 }
 
-.userPageSectionTitle {
-	margin: var( --main-padding ) 0;
-	opacity: .4;
+#userPageUserForm:not( .hidden ) {
+	max-height: 600px;
 }
-.userPageSectionTitleValue {
-	font-weight: bold;
+#userPageUserForm .userPageSectionBody {
+	display: grid;
+	grid-gap: 20px;
+	font-size: 12px;
+	padding: var( --main-padding );
+	border-radius: var( --app-rad );
+	background-color: rgba( 0, 0, 0, .12 );
 }
-.userPageSectionTitleLabel {
-	opacity: .7;
+#userPageUserForm .field-label {
+	opacity: .5;
+}
+#userPageGravatarLink::before {
+	content: "\f411";
+	font-family: "FAB";
+}
+#userPageUserFormBtns {
+	display: grid;
+	grid-gap: 20px;
+	grid-template-columns: auto auto;
+	justify-content: flex-end;
 }
 
 .userPageCmp {
@@ -138,8 +172,16 @@
 		grid-row-gap: var( --userPageUser-padding );
 		grid-template:
 			"avatar info" var( --userPageUser-height )
-			"email  email"
+			"email  email" 1fr
+			"edit   edit" 0
 			/ var( --userPageUser-height ) 1fr;
+	}
+	#userPageUser:not( .me ) {
+		padding-bottom: 0;
+	}
+	#userPageUser.me {
+		grid-template-columns: var( --userPageUser-height ) 1fr;
+		grid-template-rows: var( --userPageUser-height ) 1fr 1fr;
 	}
 	#userPageUserAvatar {
 		border-radius: 4px;

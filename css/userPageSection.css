@@ -1,0 +1,21 @@
+.userPageSection {
+	margin-top: var( --main-padding );
+	transition: .2s;
+	transition-property: margin-top, max-height, opacity;
+}
+.userPageSection.hidden {
+	opacity: 0;
+	max-height: 0;
+	margin-top: 0;
+	overflow: hidden;
+}
+.userPageSectionTitle {
+	margin-bottom: var( --main-padding );
+	opacity: .4;
+}
+.userPageSectionTitleValue {
+	font-weight: bold;
+}
+.userPageSectionTitleLabel {
+	opacity: .7;
+}

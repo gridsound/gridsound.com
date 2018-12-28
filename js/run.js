@@ -16,6 +16,7 @@ userPage.init();
 gsapiClient.getMe()
 	.then( res => {
 		main.loggedIn( res.user );
+		userPage.loggedIn();
 	}, () => {} )
 	.finally( () => {
 		DOM.headAuth.classList.remove( "loading" );

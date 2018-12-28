@@ -6,6 +6,9 @@
 	padding: var( --main-padding );
 	background-color: var( --auth-bg );
 }
+#authPage a {
+	color: var( --a-text-dark );
+}
 
 .authPageArea {
 	flex: 1;

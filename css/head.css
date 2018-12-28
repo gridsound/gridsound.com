@@ -45,6 +45,7 @@
 	padding: 0 var( --head-padding );
 	font-size: 18px;
 	user-select: none;
+	color: inherit;
 }
 .noauth #headUser {
 	display: none;

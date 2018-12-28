@@ -6,34 +6,64 @@ const userPage = {
 		DOM.userPageCmp.remove();
 		DOM.userPageCmp.removeAttribute( "id" );
 		DOM.userPageUserEmailNot.onclick = this._resendEmailBtnClick.bind( this );
-		router.on( [ "u" ], path => {
-			const username = path[ 1 ].toLowerCase(),
-				itsMe = username === gsapiClient.user.usernameLow;
+		router.on( [ "u" ], p => this.showUser( p[ 1 ] ) );
+	},
+	loggedIn() {
+		const name = gsapiClient.user.usernameLow;
 
-			if ( itsMe || username !== this._username ) {
-				DOM.loader.classList.add( "show" );
-				( itsMe
-				? Promise.resolve( gsapiClient )
-				: gsapiClient.getUser( username ) )
-					.finally( () => DOM.loader.classList.remove( "show" ) )
-					.then( res => {
-						console.log( res.user, res.compositions );
-						this._username = username;
-						this._updateUser( res.user );
-						this._updateCompositions( res.compositions );
-					}, res => {
-						this._username = "";
-						errorPage.show( res.code );
-					} );
-			}
+		document.querySelectorAll( "a[href*='<me>']" )
+			.forEach( a => {
+				a.setAttribute( "href",
+					a.getAttribute( "href" ).replace( "<me>", name ) );
+			} );
+		userPage.showUser( name, "-f" );
+		router.on( [ "u", name ], p => {
+			this.showUserForm( p[ 2 ] === "edit" );
 		} );
+	},
+	showUser( name, force ) {
+		const username = name.toLowerCase();
+
+		if ( username !== this._username || force === "-f" ) {
+			DOM.loader.classList.add( "show" );
+			( username === gsapiClient.user.usernameLow
+			? Promise.resolve( gsapiClient )
+			: gsapiClient.getUser( username ) )
+				.finally( () => DOM.loader.classList.remove( "show" ) )
+				.then( res => {
+					console.log( res.user, res.compositions );
+					this._username = username;
+					this._updateUser( res.user );
+					this._updateCompositions( res.compositions );
+				}, res => {
+					this._username = "";
+					errorPage.show( res.code );
+				} );
+		}
+	},
+	showUserForm( b ) {
+		DOM.userPageUserForm.classList.toggle( "hidden", !b );
+		if ( b ) {
+			const inps = Array.from( DOM.userPageUserForm );
+
+			inps[ 0 ].focus();
+			inps[ 3 ].checked = !!gsapiClient.user.emailpublic;
+			inps.forEach( inp => {
+				if ( inp.name ) {
+					inp.value = gsapiClient.user[ inp.name ];
+				}
+			} );
+		}
 	},
 
 	// private:
 	_updateUser( u ) {
-		if ( u.id === gsapiClient.user.id ) {
+		const itsMe = u.id === gsapiClient.user.id;
+
+		if ( itsMe ) {
 			DOM.userPageUserEmailAddr.classList.toggle( "private", u.emailpublic !== u.email );
 		}
+		DOM.userPageUser.classList.toggle( "me", itsMe );
 		DOM.userPageUserEmail.classList.toggle( "toVerify", u.status === "EMAIL_TO_VERIFY" );
 		DOM.userPageUserEmailAddr.textContent = u.email;
 		DOM.userPageUserUsername.textContent = u.username;

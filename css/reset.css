@@ -1,7 +1,5 @@
-@font-face {
-	font-family: "FA";
-	src: url( "../../daw/assets/fa-solid-900.woff" );
-}
+@font-face { font-family: "FA";  src: url( "../../daw/assets/fa-solid-900.woff" ); }
+@font-face { font-family: "FAB"; src: url( "../../daw/assets/fa-brands-400.woff" ); }
 
 html,
 body {
@@ -16,8 +14,11 @@ body {
 	background-color: var( --app-bg );
 }
 a {
-	color: inherit;
+	color: var( --a-text-light );
 	text-decoration: none;
+}
+a:empty {
+	color: inherit;
 }
 
 @keyframes rotate360 {
