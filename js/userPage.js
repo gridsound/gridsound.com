@@ -6,6 +6,7 @@ const userPage = {
 		DOM.userPageCmp.remove();
 		DOM.userPageCmp.removeAttribute( "id" );
 		DOM.userPageUserEmailNot.onclick = this._resendEmailBtnClick.bind( this );
+		DOM.userPageUserForm.onsubmit = this._userInfoSubmit.bind( this );
 		router.on( [ "u" ], p => this.showUser( p[ 1 ] ) );
 	},
 	loggedIn() {
@@ -109,5 +110,26 @@ const userPage = {
 				.finally( () => btn.classList.remove( "loading" ) )
 				.then( () => btn.classList.add( "sended" ) );
 		}
+	},
+	_userInfoSubmit() {
+		const inps = Array.from( DOM.userPageUserForm ),
+			obj = inps.reduce( ( obj, inp ) => {
+				if ( inp.name ) {
+					obj[ inp.name ] = inp.type !== "checkbox" ? inp.value : inp.checked;
+				}
+				return obj;
+			}, {} );
+
+		DOM.userPageUserFormError.textContent = "";
+		DOM.userPageUserFormSubmit.classList.add( "btn-loading" );
+		gsapiClient.updateMyInfo( obj )
+			.finally( () => DOM.userPageUserFormSubmit.classList.remove( "btn-loading" ) )
+			.then( res => {
+				this._updateUser( res.user );
+				location.href = DOM.headUser.href;
+			}, res => {
+				DOM.userPageUserFormError.textContent = res.msg;
+			} );
+		return false;
 	},
 };
