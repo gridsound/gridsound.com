@@ -6,6 +6,7 @@
 	--btn-outline: 2px solid;
 	--btn-outlineColor: rgba( 255, 255, 255, .2 );
 	--btn-text: #fff;
+	--btn-font: sans-serif;
 	--btn-colorA: hsl( 0, 0%, 61% );
 	--btn-colorB: hsl( 0, 0%, 42% );
 	--btn-submit-colorA: hsl( 210, 100%, 56% );
@@ -30,6 +31,7 @@
 	color: var( --btn-text );
 	font-size: 14px;
 	font-weight: bold;
+	font-family: var( --btn-font );
 	text-decoration: none;
 	background-color: var( --btn-colorA );
 	box-shadow: 0 var( --btn-borderBottomWidth ) 0 var( --btn-colorB );
