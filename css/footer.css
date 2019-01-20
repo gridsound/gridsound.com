@@ -1,7 +1,73 @@
 #footer {
-	height: 20px;
 	display: flex;
+	justify-content: center;
+	box-sizing: border-box;
 	margin-top: var( --main-padding );
-	border-radius: var( --app-rad ) var( --app-rad ) 0 0;
-	background-color: var( --head-bg );
+	padding: 16px 0;
+	font-size: 14px;
+	color: var( --color-dark );
+	border-top: 1px solid rgba( 0, 0, 0, .1 );
+	pointer-events: none;
+	transition: .5s box-shadow;
+}
+#footer:hover {
+	box-shadow: 0 -10px 30px -20px black;
+}
+#footerContent {
+	display: inline-grid;
+	grid-gap: 6px;
+}
+
+#footer a {
+	transition: .2s color;
+	pointer-events: auto;
+}
+#footer a:hover {
+	color: var( --color-light );
+}
+
+.footer-line {
+	display: flex;
+	align-items: center;
+}
+.footer-label {
+	margin-right: 6px;
+}
+
+#footerCopyright {
+	justify-content: center;
+	font-size: 12px;
+	opacity: .6;
+}
+#footerDAW::before {
+	content: "\f001";
+	margin-right: .4em;
+	font-family: "FA";
+}
+#footerDAW::after {
+	content: "DAW";
+	font-weight: bold;
+}
+
+#footerSocialsLink {
+	display: flex;
+}
+#footerSocialsLink a {
+	font-family: "FAB";
+}
+#footerSocialsLink a + a {
+	margin-left: .6em;
+}
+#footerGithub::before { content: "\f09b" }
+#footerCodepen::before { content: "\f1cb" }
+#footerDiscord::before { content: "\f392" }
+#footerTwitter::before { content: "\f099" }
+#footerYoutube::before { content: "\f167" }
+#footerFacebook::before { content: "\f09a" }
+
+@media ( max-width: 450px ) {
+	.footer-line {
+		flex-direction: column;
+		align-items: flex-start;
+	}
 }
