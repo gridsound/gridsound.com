@@ -29,7 +29,7 @@
 	padding: .3em .7em;
 	color: var( --btn-text );
 	font-size: 14px;
-	font-family: "Montserrat", sans-serif;
+	font-weight: bold;
 	text-decoration: none;
 	background-color: var( --btn-colorA );
 	box-shadow: 0 var( --btn-borderBottomWidth ) 0 var( --btn-colorB );

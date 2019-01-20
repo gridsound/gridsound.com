@@ -3,6 +3,9 @@
 	--app-bg: #557;
 	--a-text-light: #9df;
 	--a-text-dark: #77c;
+	--font-default: "Noto Sans", sans-serif;
+	--font-monospace: "Inconsolata", monospace;
+	--font-number: "Unica One", var( --font-monospace );
 
 	--main-width: 640px;
 	--main-padding: 20px;
