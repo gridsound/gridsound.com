@@ -2,14 +2,18 @@
 
 const main = {
 	init() {
-		this._nameToObj = new Map( [
-			[ "",     { elem: DOM.homePage, headElem: DOM.headIcon, obj: homePage || {} } ],
-			[ "u",    { elem: DOM.userPage, headElem: DOM.headUser, obj: userPage } ],
-			[ "auth", { elem: DOM.authPage, headElem: DOM.headAuth, obj: authPage } ],
-		] );
 		DOM.headAuth.onclick = this._headAuthBtnClick.bind( this );
 		DOM.pages.append.apply( DOM.pages, document.querySelectorAll( ".page" ) );
-		router.on( [], ( a, b ) => this._routerFn( a[ 0 ], b[ 0 ] ) );
+		window.onhashchange = () => this._hashChange();
+		this.pages = {
+			"": [ DOM.homePage, DOM.headIcon ],
+			"u": [ DOM.userPage, DOM.headUser, userPage ],
+			"auth": [ DOM.authPage, DOM.headAuth ],
+		};
+	},
+
+	run() {
+		this._hashChange();
 	},
 	loggedIn( u ) {
 		DOM.headAuth.href = "";
@@ -20,29 +24,53 @@ const main = {
 			: "none";
 		DOM.main.classList.remove( "noauth" );
 	},
+	error( code ) {
+		DOM.errorCode.textContent = code;
+		DOM.error.classList.add( "show" );
+		this._toggleClass( null, "headLinkBefore", "selected" );
+	},
 
-	// private:
-	_routerFn( path0, prevPath0 ) {
-		errorPage.hide();
-		if ( path0 !== prevPath0 ) {
-			const prev = this._nameToObj.get( prevPath0 ),
-				page = this._nameToObj.get( path0 );
+	_showPage( a, b ) {
+		const [ page, headLink, pageObj ] = this.pages[ a ];
 
-			if ( prev ) {
-				prev.elem.classList.remove( "show" );
-				prev.headElem.classList.remove( "selected" );
-				if ( prev.obj.hide ) {
-					prev.obj.hide();
+		DOM.error.classList.remove( "show" );
+		this._toggleClass( headLink, "headLinkBefore", "selected" );
+		this._toggleClass( page, "pageBefore", "show" );
+		if ( pageObj && pageObj.show ) {
+			pageObj.show( b );
+		}
+	},
+	_toggleClass( el, prevAttr, clazz ) {
+		const elPrev = this[ prevAttr ];
+
+		if ( el !== elPrev ) {
+			elPrev && elPrev.classList.remove( clazz );
+			el && el.classList.add( clazz );
+			this[ prevAttr ] = el || undefined;
+			return true;
+		}
+	},
+	_hashChange() {
+		const hash = location.hash;
+
+		if ( !hash ) {
+			location.hash = "#/";
+		} else if ( hash !== "#/" && hash.endsWith( "/" ) ) {
+			location.hash = hash.substr( 0, hash.length - 1 );
+		} else {
+			const arr = hash.split( "/" ),
+				len = arr.length,
+				[, h0, h1 ] = arr;
+
+			if (
+				( len < 3 && ( h0 === "" || h0 === "auth" ) ) ||
+				( len < 4 && ( h0 === "u" ) )
+			) {
+				if ( this._showPage( h0, h1 ) === false ) {
+					this.error( 404 );
 				}
-			}
-			if ( !page ) {
-				errorPage.show( 404 );
 			} else {
-				page.elem.classList.add( "show" );
-				page.headElem.classList.add( "selected" );
-				if ( page.obj.show ) {
-					page.obj.show();
-				}
+				this.error( 404 );
 			}
 		}
 	},

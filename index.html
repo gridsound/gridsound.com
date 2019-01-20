@@ -92,7 +92,7 @@
 				<span>email sended</span>
 			</a>
 		</div>
-		<a id="userPageUserEdit" href="#/u/<me>/edit"></a>
+		<button id="userPageUserEdit"></button>
 	</div>
 	<form id="userPageUserForm" class="userPageSection hidden">
 		<div class="userPageSectionTitle">
@@ -128,9 +128,9 @@
 			</label>
 			<div id="userPageUserFormError"></div>
 			<div id="userPageUserFormBtns">
-				<a href="#/u/<me>" class="btn">
+				<button id="userPageUserFormCancel" class="btn">
 					<span class="btn-text">cancel</span>
-				</a>
+				</button>
 				<button id="userPageUserFormSubmit" class="btn btn-submit" type="submit">
 					<span class="btn-text">save</span>
 				</button>
@@ -193,12 +193,10 @@
 </div>
 
 <script>function lg( a ) { return console.log.apply( console, arguments ), a; }</script>
-<script src="js/common/router.js"></script>
 <script src="js/common/rippleEffect.js"></script>
 <script src="gs-api-client/gsapiClient.js"></script>
 <script src="js/main.js"></script>
 <script src="js/authPage.js"></script>
-<script src="js/errorPage.js"></script>
 <script src="js/userPage.js"></script>
 <script src="js/run.js"></script>
 </body>

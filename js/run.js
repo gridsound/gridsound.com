@@ -8,7 +8,6 @@ document.querySelectorAll( ".btn" ).forEach( btn => {
 	rippleEffectInit( btn );
 } );
 
-router.init();
 main.init();
 authPage.init();
 userPage.init();
@@ -20,5 +19,5 @@ gsapiClient.getMe()
 	}, () => {} )
 	.finally( () => {
 		DOM.headAuth.classList.remove( "loading" );
-		router.run();
+		main.run();
 	} );

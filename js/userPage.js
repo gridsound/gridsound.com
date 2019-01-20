@@ -5,22 +5,17 @@ const userPage = {
 		this._username = "";
 		DOM.userPageCmp.remove();
 		DOM.userPageCmp.removeAttribute( "id" );
+		DOM.userPageUserEdit.onclick = this.toggleUserForm.bind( this );
+		DOM.userPageUserFormCancel.onclick = this.showUserForm.bind( this, false );
 		DOM.userPageUserEmailNot.onclick = this._resendEmailBtnClick.bind( this );
 		DOM.userPageUserForm.onsubmit = this._userInfoSubmit.bind( this );
-		router.on( [ "u" ], p => this.showUser( p[ 1 ] ) );
 	},
 	loggedIn() {
-		const name = gsapiClient.user.usernameLow;
-
-		document.querySelectorAll( "a[href*='<me>']" )
-			.forEach( a => {
-				a.setAttribute( "href",
-					a.getAttribute( "href" ).replace( "<me>", name ) );
-			} );
-		userPage.showUser( name, "-f" );
-		router.on( [ "u", name ], p => {
-			this.showUserForm( p[ 2 ] === "edit" );
-		} );
+		this.showUser( gsapiClient.user.usernameLow, "-f" );
+	},
+	show( username ) {
+		this.showUserForm( false );
+		this.showUser( username );
 	},
 	showUser( name, force ) {
 		const username = name.toLowerCase();
@@ -38,9 +33,13 @@ const userPage = {
 					this._updateCompositions( res.compositions );
 				}, res => {
 					this._username = "";
-					errorPage.show( res.code );
+					main.error( res.code );
 				} );
 		}
+	},
+	toggleUserForm() {
+		this.showUserForm(
+			DOM.userPageUserForm.classList.contains( "hidden" ) );
 	},
 	showUserForm( b ) {
 		DOM.userPageUserForm.classList.toggle( "hidden", !b );
