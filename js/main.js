@@ -8,7 +8,7 @@ const main = {
 		this.pages = {
 			"": [ DOM.homePage, DOM.headIcon ],
 			"u": [ DOM.userPage, DOM.headUser, userPage ],
-			"auth": [ DOM.authPage, DOM.headAuth ],
+			"auth": [ DOM.authPage, DOM.headAuth, authPage ],
 		};
 	},
 

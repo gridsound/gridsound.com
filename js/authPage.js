@@ -20,6 +20,11 @@ const authPage = {
 				DOM.authPageSignupPass,
 			] );
 	},
+	show() {
+		DOM.authPageSignupUsername.value =
+		DOM.authPageSignupEmail.value =
+		DOM.authPageSignupPass.value = "";
+	},
 
 	// private:
 	_signSubmit( signAction, btn, error, inps ) {
