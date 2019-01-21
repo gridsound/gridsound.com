@@ -21,9 +21,12 @@ const authPage = {
 			] );
 	},
 	show() {
-		DOM.authPageSignupUsername.value =
-		DOM.authPageSignupEmail.value =
-		DOM.authPageSignupPass.value = "";
+		setTimeout( () => {
+			DOM.authPageSignupUsername.value =
+			DOM.authPageSignupEmail.value =
+			DOM.authPageSignupPass.value = "";
+			DOM.authPageLoginEmail.focus();
+		}, 100 );
 	},
 
 	// private:
