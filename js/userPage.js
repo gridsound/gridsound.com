@@ -50,7 +50,7 @@ const userPage = {
 			inps[ 3 ].checked = !!gsapiClient.user.emailpublic;
 			inps.forEach( inp => {
 				if ( inp.name ) {
-					inp.value = gsapiClient.user[ inp.name ];
+					inp.value = gsapiClient.user[ inp.name ] || "";
 				}
 			} );
 		}
