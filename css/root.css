@@ -9,6 +9,7 @@
 	--font-monospace: "Inconsolata", monospace;
 	--font-number: "Unica One", var( --font-monospace );
 	--btn-font: var( --font-default );
+	--form-error-color: #ee5f5f;
 
 	--main-width: 640px;
 	--main-padding: 20px;

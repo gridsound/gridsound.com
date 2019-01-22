@@ -10,24 +10,6 @@
 	color: var( --a-text-dark );
 }
 
-.authPageArea {
-	flex: 1;
-	display: grid;
-	grid-gap: var( --auth-padding );
-	padding: var( --auth-padding );
-	border-radius: var( --app-rad );
-	align-content: flex-start;
-}
-#authPage .form-title {
-	text-align: center;
-}
-#authPage form .form-title {
-	margin-bottom: 1em;
-}
-.authPageArea .btn {
-	justify-self: center;
-}
-
 #authPageSignup {
 	grid-area: authPageSignup;
 	color: var( --auth-signup-text );
@@ -36,6 +18,7 @@
 #authPageSignup .field-input {
 	background-color: #fff;
 }
+
 #authPageLogin {
 	grid-area: authPageLogin;
 }
