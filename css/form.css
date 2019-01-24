@@ -7,12 +7,11 @@
 	flex: 1;
 	display: grid;
 	grid-gap: var( --auth-padding );
-	padding: var( --auth-padding );
 	border-radius: var( --app-rad );
 	align-content: flex-start;
 }
-.form .btn {
-	justify-self: center;
+.form:not( :only-child ) {
+	padding: var( --auth-padding );
 }
 
 /* ......................................................................... */
@@ -20,10 +19,19 @@
 	margin-bottom: 1em;
 	text-align: center;
 }
+.form-intro {
+	font-size: 12px;
+}
 .form-error {
 	color: var( --form-error-color );
 	font-size: 12px;
 	font-weight: bold;
+}
+.form-btns {
+	display: grid;
+	grid-gap: inherit;
+	justify-self: center;
+	grid-auto-flow: column;
 }
 
 /* ......................................................................... */

@@ -2,10 +2,6 @@
 
 const authPage = {
 	init() {
-		DOM.authPageLoginForgotBtn.onclick = () => {
-			alert( "Sorry, this feature is not done yet." );
-			return false;
-		};
 		DOM.authPageLogin.onsubmit = () => this._signSubmit( "login",
 			DOM.authPageLoginBtn,
 			DOM.authPageLoginError, [

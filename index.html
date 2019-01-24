@@ -15,7 +15,7 @@
 	<link rel="stylesheet" href="css/main.css"/>
 	<link rel="stylesheet" href="css/head.css"/>
 	<link rel="stylesheet" href="css/footer.css"/>
-	<link rel="stylesheet" href="css/authPage.css"/>
+	<link rel="stylesheet" href="css/authPages.css"/>
 	<link rel="stylesheet" href="css/userPageSection.css"/>
 	<link rel="stylesheet" href="css/userPage.css"/>
 </head>
@@ -172,7 +172,11 @@
 			<input class="field-input" id="authPageSignupPass" type="password" name="pass" required minlength="6"/>
 		</label>
 		<div class="form-error" id="authPageSignupError"></div>
-		<button id="authPageSignupBtn" type="submit" class="btn btn-submit"><span class="btn-text">Sign up</span></button>
+		<div class="form-btns">
+			<button id="authPageSignupBtn" type="submit" class="btn btn-submit">
+				<span class="btn-text">Sign up</span>
+			</button>
+		</div>
 	</form>
 	<form class="form" id="authPageLogin">
 		<div class="form-title">Log in to GridSound</div>
@@ -185,10 +189,65 @@
 			<input class="field-input" id="authPageLoginPass" type="password" name="pass" required/>
 		</label>
 		<div id="authPageLoginForgot">
-			<a id="authPageLoginForgotBtn" href="">Forgot password&nbsp;?</a>
+			<a href="#/forgotPassword">Forgot password&nbsp;?</a>
 		</div>
 		<div class="form-error" id="authPageLoginError"></div>
-		<button id="authPageLoginBtn" type="submit" class="btn btn-submit"><span class="btn-text">Log in</span></button>
+		<div class="form-btns">
+			<button id="authPageLoginBtn" type="submit" class="btn btn-submit">
+				<span class="btn-text">Log in</span>
+			</button>
+		</div>
+	</form>
+</div>
+
+<div class="page" id="forgotpassPage">
+	<form class="form" id="forgotpassForm">
+		<div class="form-title">Password forgotten</div>
+		<div class="form-intro">
+			<div>Enter your email address, you will receive a link to reset your password.</div>
+			<div>An email has been sent to your email address, click on the link
+				in it to continue your password reset. You can close this tab.</div>
+		</div>
+		<label class="field">
+			<span class="field-label">Email</span>
+			<input class="field-input" id="forgotpassFormEmail" type="email" name="email" required/>
+		</label>
+		<div class="form-error" id="forgotpassFormError"></div>
+		<div class="form-btns">
+			<a href="#/auth" class="btn">
+				<span class="btn-text">Back</span>
+			</a>
+			<button id="forgotpassFormSubmit" type="submit" class="btn btn-submit">
+				<span class="btn-text">Send email</span>
+			</button>
+		</div>
+	</form>
+</div>
+
+<div class="page" id="resetpassPage">
+	<form class="form" id="resetpassForm">
+		<div class="form-title">Reset password</div>
+		<div class="form-intro">
+			<div>Set a new password.</div>
+			<div>Your password has been changed successfully.</div>
+		</div>
+		<label class="field">
+			<span class="field-label">New password</span>
+			<input class="field-input" id="resetpassFormPass" type="password" name="pass" required/>
+		</label>
+		<label class="field">
+			<span class="field-label">New password (confirmation)</span>
+			<input class="field-input" id="resetpassFormPass2" type="password" name="pass2" required/>
+		</label>
+		<div class="form-error" id="resetpassFormError"></div>
+		<div class="form-btns">
+			<a href="#/auth" class="btn">
+				<span class="btn-text">Back to the login page</span>
+			</a>
+			<button id="resetpassFormSubmit" type="submit" class="btn btn-submit">
+				<span class="btn-text">Save</span>
+			</button>
+		</div>
 	</form>
 </div>
 
@@ -198,6 +257,8 @@
 <script src="js/main.js"></script>
 <script src="js/authPage.js"></script>
 <script src="js/userPage.js"></script>
+<script src="js/resetpassPage.js"></script>
+<script src="js/forgotpassPage.js"></script>
 <script src="js/run.js"></script>
 </body>
 </html>

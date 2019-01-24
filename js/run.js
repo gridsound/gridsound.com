@@ -11,6 +11,8 @@ document.querySelectorAll( ".btn" ).forEach( btn => {
 main.init();
 authPage.init();
 userPage.init();
+resetpassPage.init();
+forgotpassPage.init();
 
 gsapiClient.getMe()
 	.then( res => {
