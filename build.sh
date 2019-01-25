@@ -7,9 +7,7 @@ declare -a HEADER=(
 	'<title>GridSound</title>'
 	'<meta charset="UTF-8"/>'
 	'<meta name="viewport" content="width=device-width, user-scalable=no"/>'
-	'<meta name="description" content="The GridSoundcommunity"/>'
 	'<link rel="shortcut icon" href="../assets/favicon.png"/>'
-	'<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Montserrat:500,700|Oswald|Inconsolata|Unica+One">'
 )
 
 declare -a HEADEREND=(
@@ -18,13 +16,13 @@ declare -a HEADEREND=(
 )
 
 declare -a CSSfiles=(
+	"../assets/fonts/fonts.css"
+
 	"css/btn.css"
 	"css/form.css"
 	"css/rippleEffect.css"
-
 	"css/root.css"
 	"css/reset.css"
-
 	"css/main.css"
 	"css/head.css"
 	"css/footer.css"
