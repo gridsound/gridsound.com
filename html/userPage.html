@@ -1,0 +1,78 @@
+<div class="page" id="userPage">
+	<div id="userPageUser">
+		<div id="userPageUserAvatar"></div>
+		<div id="userPageUserInfo">
+			<div id="userPageUserUsername"></div>
+			<div id="userPageUserFirstname"></div>
+			<div id="userPageUserLastname"></div>
+		</div>
+		<div id="userPageUserEmail">
+			<span id="userPageUserEmailAddr"></span>
+			<a id="userPageUserEmailNot">
+				<span>resend the confirmation email</span>
+				<span>email sended</span>
+			</a>
+		</div>
+		<button id="userPageUserEdit"></button>
+	</div>
+	<form id="userPageUserForm" class="userPageSection hidden">
+		<div class="userPageSectionTitle">
+			<span class="userPageSectionTitleLabel">Profile edition</span>
+		</div>
+		<div class="userPageSectionBody">
+			<label class="field">
+				<span class="field-label">avatar</span>
+				<div>
+					GridSound accepts, for the moment, only
+					<a id="userPageGravatarLink" href="https://gravatar.com" target="_blank" rel="noopener">&nbsp;WordPress&nbsp;- Gravatar</a> as avatar.
+				</div>
+			</label>
+			<label class="field">
+				<span class="field-label">first name</span>
+				<input class="field-input" type="text" name="firstname" spellcheck="false"/>
+			</label>
+			<label class="field">
+				<span class="field-label">last name</span>
+				<input class="field-input" type="text" name="lastname" spellcheck="false"/>
+			</label>
+			<label class="field">
+				<span class="field-label">email</span>
+				<input class="field-input" type="email" name="email" spellcheck="false"/>
+				<span>if the email is changed, a confirmation email will be sent again</span>
+			</label>
+			<label class="field field-inline">
+				<span class="field-label">email public</span>
+				<div>
+					<input class="field-input" type="checkbox" name="emailpublic"/>
+					<span>if checked, your email will be public on your profile</span>
+				</div>
+			</label>
+			<div id="userPageUserFormError"></div>
+			<div id="userPageUserFormBtns">
+				<button id="userPageUserFormCancel" class="btn">
+					<span class="btn-text">cancel</span>
+				</button>
+				<button id="userPageUserFormSubmit" class="btn btn-submit" type="submit">
+					<span class="btn-text">save</span>
+				</button>
+			</div>
+		</div>
+	</form>
+	<div class="userPageSection">
+		<div class="userPageSectionTitle">
+			<span class="userPageSectionTitleValue" id="userPageNbCompositions"></span>
+			<span class="userPageSectionTitleLabel">composition/s</span>
+		</div>
+		<div id="userPageCmps" class="userPageSectionBody"></div>
+		<div id="userPageCmp" class="userPageCmp">
+			<div class="userPageCmpPlay"></div>
+			<div class="userPageCmpMiddle">
+				<div class="userPageCmpName"></div>
+				<div class="userPageCmpInfos">
+					<div class="userPageCmpDur"></div>
+					<div class="userPageCmpBPM"></div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

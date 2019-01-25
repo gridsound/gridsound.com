@@ -1,5 +1,5 @@
-@font-face { font-family: "FA";  src: url( "../../daw/assets/fa-solid-900.woff" ); }
-@font-face { font-family: "FAB"; src: url( "../../daw/assets/fa-brands-400.woff" ); }
+@font-face { font-family: "FA";  src: url( "../../assets/fa-solid-900.woff" ); }
+@font-face { font-family: "FAB"; src: url( "../../assets/fa-brands-400.woff" ); }
 
 html,
 body {

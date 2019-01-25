@@ -1,26 +1,25 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-	<meta charset="utf-8"/>
-	<meta name="viewport" content="width=device-width, user-scalable=no"/>
-	<title>GridSound</title>
-	<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Montserrat:500,700|Oswald|Inconsolata|Unica+One"/>
-	<link rel="stylesheet" href="css/btn.css"/>
-	<link rel="stylesheet" href="css/form.css"/>
-	<link rel="stylesheet" href="css/rippleEffect.css"/>
-
-	<link rel="stylesheet" href="css/root.css"/>
-	<link rel="stylesheet" href="css/reset.css"/>
-
-	<link rel="stylesheet" href="css/main.css"/>
-	<link rel="stylesheet" href="css/head.css"/>
-	<link rel="stylesheet" href="css/footer.css"/>
-	<link rel="stylesheet" href="css/authPages.css"/>
-	<link rel="stylesheet" href="css/userPageSection.css"/>
-	<link rel="stylesheet" href="css/userPage.css"/>
+<title>GridSound</title>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, user-scalable=no"/>
+<meta name="description" content="The GridSoundcommunity"/>
+<link rel="shortcut icon" href="../assets/favicon.png"/>
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Montserrat:500,700|Oswald|Inconsolata|Unica+One">
+<link rel="stylesheet" href="css/btn.css"/>
+<link rel="stylesheet" href="css/form.css"/>
+<link rel="stylesheet" href="css/rippleEffect.css"/>
+<link rel="stylesheet" href="css/root.css"/>
+<link rel="stylesheet" href="css/reset.css"/>
+<link rel="stylesheet" href="css/main.css"/>
+<link rel="stylesheet" href="css/head.css"/>
+<link rel="stylesheet" href="css/footer.css"/>
+<link rel="stylesheet" href="css/authPages.css"/>
+<link rel="stylesheet" href="css/userPageSection.css"/>
+<link rel="stylesheet" href="css/userPage.css"/>
 </head>
 <body>
-
 <div id="main" class="noauth">
 	<div id="head">
 		<a class="headLink" id="headIcon" href="#/"></a>
@@ -58,7 +57,49 @@
 		</div>
 	</div>
 </div>
-
+<div class="page" id="authPage">
+	<form class="form" id="authPageSignup">
+		<div class="form-title">Create a personal account</div>
+		<label class="field">
+			<span class="field-label">Email</span>
+			<input class="field-input" id="authPageSignupEmail" type="email" name="email" required maxlength="128" placeholder="eg: janedoe@example.com"/>
+		</label>
+		<label class="field">
+			<span class="field-label">Username</span>
+			<input class="field-input" id="authPageSignupUsername" type="text" name="username" required minlength="4" maxlength="32" pattern="[a-zA-Z0-9_]*"/>
+		</label>
+		<label class="field">
+			<span class="field-label">Password</span>
+			<input class="field-input" id="authPageSignupPass" type="password" name="pass" required minlength="6"/>
+		</label>
+		<div class="form-error" id="authPageSignupError"></div>
+		<div class="form-btns">
+			<button id="authPageSignupBtn" type="submit" class="btn btn-submit">
+				<span class="btn-text">Sign up</span>
+			</button>
+		</div>
+	</form>
+	<form class="form" id="authPageLogin">
+		<div class="form-title">Log in to GridSound</div>
+		<label class="field">
+			<span class="field-label">Email (or username)</span>
+			<input class="field-input" id="authPageLoginEmail" type="text" name="email" required/>
+		</label>
+		<label class="field">
+			<span class="field-label">Password</span>
+			<input class="field-input" id="authPageLoginPass" type="password" name="pass" required/>
+		</label>
+		<div id="authPageLoginForgot">
+			<a href="#/forgotPassword">Forgot password&nbsp;?</a>
+		</div>
+		<div class="form-error" id="authPageLoginError"></div>
+		<div class="form-btns">
+			<button id="authPageLoginBtn" type="submit" class="btn btn-submit">
+				<span class="btn-text">Log in</span>
+			</button>
+		</div>
+	</form>
+</div>
 <div class="page" id="homePage">
 	<div>
 		Hi! thanks for your interest in <b>GridSound</b> :)
@@ -76,7 +117,6 @@
 		</a>
 	</center>
 </div>
-
 <div class="page" id="userPage">
 	<div id="userPageUser">
 		<div id="userPageUserAvatar"></div>
@@ -155,75 +195,6 @@
 		</div>
 	</div>
 </div>
-
-<div class="page" id="authPage">
-	<form class="form" id="authPageSignup">
-		<div class="form-title">Create a personal account</div>
-		<label class="field">
-			<span class="field-label">Email</span>
-			<input class="field-input" id="authPageSignupEmail" type="email" name="email" required maxlength="128" placeholder="eg: janedoe@example.com"/>
-		</label>
-		<label class="field">
-			<span class="field-label">Username</span>
-			<input class="field-input" id="authPageSignupUsername" type="text" name="username" required minlength="4" maxlength="32" pattern="[a-zA-Z0-9_]*"/>
-		</label>
-		<label class="field">
-			<span class="field-label">Password</span>
-			<input class="field-input" id="authPageSignupPass" type="password" name="pass" required minlength="6"/>
-		</label>
-		<div class="form-error" id="authPageSignupError"></div>
-		<div class="form-btns">
-			<button id="authPageSignupBtn" type="submit" class="btn btn-submit">
-				<span class="btn-text">Sign up</span>
-			</button>
-		</div>
-	</form>
-	<form class="form" id="authPageLogin">
-		<div class="form-title">Log in to GridSound</div>
-		<label class="field">
-			<span class="field-label">Email (or username)</span>
-			<input class="field-input" id="authPageLoginEmail" type="text" name="email" required/>
-		</label>
-		<label class="field">
-			<span class="field-label">Password</span>
-			<input class="field-input" id="authPageLoginPass" type="password" name="pass" required/>
-		</label>
-		<div id="authPageLoginForgot">
-			<a href="#/forgotPassword">Forgot password&nbsp;?</a>
-		</div>
-		<div class="form-error" id="authPageLoginError"></div>
-		<div class="form-btns">
-			<button id="authPageLoginBtn" type="submit" class="btn btn-submit">
-				<span class="btn-text">Log in</span>
-			</button>
-		</div>
-	</form>
-</div>
-
-<div class="page" id="forgotpassPage">
-	<form class="form" id="forgotpassForm">
-		<div class="form-title">Password forgotten</div>
-		<div class="form-intro">
-			<div>Enter your email address, you will receive a link to reset your password.</div>
-			<div>An email has been sent to your email address, click on the link
-				in it to continue your password reset. You can close this tab.</div>
-		</div>
-		<label class="field">
-			<span class="field-label">Email</span>
-			<input class="field-input" id="forgotpassFormEmail" type="email" name="email" required/>
-		</label>
-		<div class="form-error" id="forgotpassFormError"></div>
-		<div class="form-btns">
-			<a href="#/auth" class="btn">
-				<span class="btn-text">Back</span>
-			</a>
-			<button id="forgotpassFormSubmit" type="submit" class="btn btn-submit">
-				<span class="btn-text">Send email</span>
-			</button>
-		</div>
-	</form>
-</div>
-
 <div class="page" id="resetpassPage">
 	<form class="form" id="resetpassForm">
 		<div class="form-title">Reset password</div>
@@ -250,10 +221,32 @@
 		</div>
 	</form>
 </div>
-
+<div class="page" id="forgotpassPage">
+	<form class="form" id="forgotpassForm">
+		<div class="form-title">Password forgotten</div>
+		<div class="form-intro">
+			<div>Enter your email address, you will receive a link to reset your password.</div>
+			<div>An email has been sent to your email address, click on the link
+				in it to continue your password reset. You can close this tab.</div>
+		</div>
+		<label class="field">
+			<span class="field-label">Email</span>
+			<input class="field-input" id="forgotpassFormEmail" type="email" name="email" required/>
+		</label>
+		<div class="form-error" id="forgotpassFormError"></div>
+		<div class="form-btns">
+			<a href="#/auth" class="btn">
+				<span class="btn-text">Back</span>
+			</a>
+			<button id="forgotpassFormSubmit" type="submit" class="btn btn-submit">
+				<span class="btn-text">Send email</span>
+			</button>
+		</div>
+	</form>
+</div>
 <script>function lg( a ) { return console.log.apply( console, arguments ), a; }</script>
-<script src="js/common/rippleEffect.js"></script>
 <script src="gs-api-client/gsapiClient.js"></script>
+<script src="js/common/rippleEffect.js"></script>
 <script src="js/main.js"></script>
 <script src="js/authPage.js"></script>
 <script src="js/userPage.js"></script>
