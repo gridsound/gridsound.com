@@ -1,2 +1,51 @@
 #homePage {
+	display: grid;
+	grid-gap: 10px;
+	grid-template:
+		"logo   intro" auto
+		"link   link"  1fr
+		/ 80px  1fr;
+}
+
+#homeLogo {
+	grid-area: logo;
+	width: 100%;
+}
+
+#homeIntro {
+	grid-area: intro;
+	display: flex;
+	align-items: center;
+	line-height: 1.8em;
+}
+
+#homeDAWLink {
+	grid-area: link;
+	position: relative;
+	overflow: hidden;
+	border-radius: var( --app-rad );
+}
+#homeDAWLinkImg {
+	width: 100%;
+}
+#homeDAWLinkText {
+	position: absolute;
+	display: flex;
+	align-items: center;
+	flex-direction: column;
+	justify-content: center;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	color: #fff;
+	background-image: radial-gradient( transparent, #151527 );
+	text-shadow: 0 0 24px #151527;
+}
+#homeDAWLinkTitle {
+	font-size: 52px;
+}
+#homeDAWLinkGS {
+	font-size: 1.15em;
+	font-family: "Oswald";
 }
