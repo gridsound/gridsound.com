@@ -1,17 +1,25 @@
 #footer {
 	display: flex;
+	position: relative;
 	justify-content: center;
 	box-sizing: border-box;
 	margin-top: var( --main-padding );
 	padding: 16px 0;
 	font-size: 14px;
 	color: var( --color-dark );
-	border-top: 1px solid rgba( 0, 0, 0, .1 );
 	pointer-events: none;
 	transition: .5s box-shadow;
 }
+#footer::before {
+	content: "";
+	position: absolute;
+	top: 0;
+	width: 100%;
+	border-top: 1px solid;
+	opacity: .2;
+}
 #footer:hover {
-	box-shadow: 0 -10px 30px -20px black;
+	box-shadow: 0 -10px 30px -22px rgba( 0, 0, 0, .7 );
 }
 #footerContent {
 	display: inline-grid;
