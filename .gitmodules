@@ -1,3 +1,6 @@
 [submodule "gs-api-client"]
 	path = gs-api-client
 	url = https://github.com/gridsound/gs-api-client
+[submodule "daw-core"]
+	path = daw-core
+	url = https://github.com/gridsound/daw-core
