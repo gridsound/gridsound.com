@@ -94,6 +94,11 @@ declare -a JSfiles=(
 	"daw-core/src/actions/nameSynth.js"
 	"daw-core/src/actions/newSynth.js"
 
+	"gs-webaudio-library/gswaEncodeWAV/gswaEncodeWAV.js"
+	"gs-webaudio-library/gswaScheduler/gswaScheduler.js"
+	"gs-webaudio-library/gswaSynth/gswaSynth.js"
+	"gs-webaudio-library/gswaPeriodicWaves/gswaPeriodicWaves.js"
+
 	"gs-api-client/gsapiClient.js"
 
 	"js/common/rippleEffect.js"

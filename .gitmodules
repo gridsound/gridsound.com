@@ -4,3 +4,6 @@
 [submodule "daw-core"]
 	path = daw-core
 	url = https://github.com/gridsound/daw-core
+[submodule "gs-webaudio-library"]
+	path = gs-webaudio-library
+	url = https://github.com/gridsound/gs-webaudio-library
