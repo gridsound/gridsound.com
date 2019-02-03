@@ -23,6 +23,7 @@ declare -a CSSfiles=(
 	"css/rippleEffect.css"
 	"css/root.css"
 	"css/reset.css"
+	"css/cmp.css"
 	"css/main.css"
 	"css/head.css"
 	"css/footer.css"
@@ -34,6 +35,7 @@ declare -a CSSfiles=(
 
 declare -a HTMLfiles=(
 	"html/_main.html"
+	"html/cmp.html"
 	"html/authPage.html"
 	"html/homePage.html"
 	"html/userPage.html"

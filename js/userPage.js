@@ -3,8 +3,8 @@
 const userPage = {
 	init() {
 		this._username = "";
-		DOM.userPageCmp.remove();
-		DOM.userPageCmp.removeAttribute( "id" );
+		DOM.cmp.remove();
+		DOM.cmp.removeAttribute( "id" );
 		DOM.userPageUserEdit.onclick = this.toggleUserForm.bind( this );
 		DOM.userPageUserFormCancel.onclick = this.showUserForm.bind( this, false );
 		DOM.userPageUserEmailNot.onclick = this._resendEmailBtnClick.bind( this );
@@ -81,7 +81,7 @@ const userPage = {
 			elCmps.lastChild.remove();
 		}
 		elCmps.append.apply( elCmps, cmps.map( cmp => {
-			const el = DOM.userPageCmp.cloneNode( true );
+			const el = DOM.cmp.cloneNode( true );
 
 			return this._fillCmp( el, cmp );
 		} ) );
@@ -92,9 +92,9 @@ const userPage = {
 			durMin = Math.floor( dur / 60 ),
 			durSec = Math.round( dur % 60 ) + "";
 
-		el.querySelector( ".userPageCmpName" ).textContent = cmp.name;
-		el.querySelector( ".userPageCmpBPM" ).textContent = cmp.bpm;
-		el.querySelector( ".userPageCmpDur" ).textContent =
+		el.querySelector( ".cmpName" ).textContent = cmp.name;
+		el.querySelector( ".cmpBPM" ).textContent = cmp.bpm;
+		el.querySelector( ".cmpDur" ).textContent =
 			`${ durMin }:${ "00".substr( durSec.length ) + durSec }`;
 		return el;
 	},

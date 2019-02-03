@@ -1,6 +1,3 @@
-#userPage {
-}
-
 #userPageUser {
 	display: grid;
 	overflow: hidden;
@@ -126,47 +123,9 @@
 	justify-content: flex-end;
 }
 
-.userPageCmp {
-	display: flex;
-	height: var( --userPageCmp-height );
-	overflow: hidden;
-	border-radius: var( --app-rad );
-	background-color: var( --userPageCmp-bg );
-}
-.userPageCmp + .userPageCmp {
+#userPage .cmp + .cmp {
 	margin-top: var( --main-padding );
 }
-.userPageCmpPlay {
-	width: var( --userPageCmp-height );
-	background-color: rgba( 0, 0, 0, .1 );
-}
-.userPageCmpMiddle {
-	flex: 1;
-	display: flex;
-	flex-direction: column;
-	justify-content: center;
-	padding: calc( var( --main-padding ) / 2 );
-}
-.userPageCmpName {
-	font-size: 20px;
-}
-.userPageCmpInfos {
-	display: flex;
-	font-size: 14px;
-	opacity: .7;
-}
-.userPageCmpBPM {
-	margin-left: 1em;
-}
-.userPageCmpDur::before,
-.userPageCmpBPM::before {
-	font-family: "FA";
-	margin-right: .5em;
-	opacity: .5;
-}
-.userPageCmpDur::before { content: "\f2f2"; }
-.userPageCmpBPM::before { content: "\f3fd"; }
-/*.userPageCmpBPM::before { content: "\f709"; }*/
 
 @media ( max-width: 450px ) {
 	#userPageUser {
