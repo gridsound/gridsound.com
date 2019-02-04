@@ -99,6 +99,7 @@ const main = {
 	_hashChange() {
 		const hash = location.hash;
 
+		this.stop();
 		if ( !hash ) {
 			location.hash = "#/";
 		} else if ( hash !== "#/" && hash.endsWith( "/" ) ) {
