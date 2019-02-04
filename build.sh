@@ -102,6 +102,7 @@ declare -a JSfiles=(
 	"gs-api-client/gsapiClient.js"
 
 	"js/common/rippleEffect.js"
+	"js/cmp.js"
 	"js/main.js"
 	"js/authPage.js"
 	"js/userPage.js"

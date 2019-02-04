@@ -3,6 +3,10 @@
 window.DOM = {};
 document.querySelectorAll( "[id]" ).forEach( el => {
 	DOM[ el.id ] = el;
+	if ( "toRemove" in el.dataset ) {
+		el.remove();
+		el.removeAttribute( "id" );
+	}
 } );
 document.querySelectorAll( ".btn" ).forEach( btn => {
 	rippleEffectInit( btn );

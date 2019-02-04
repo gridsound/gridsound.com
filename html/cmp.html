@@ -1,15 +1,19 @@
-<div id="cmp" class="cmp">
+<div id="cmp" class="cmp" data-to-remove>
 	<div class="cmpPlay"></div>
 	<div class="cmpBody">
 		<div class="cmpText">
 			<div class="cmpName"></div>
 			<div class="cmpInfo">
-				<div class="cmpDur"></div>
+				<div class="cmpTime">
+					<div class="cmpCurrentTime"></div>
+					<div class="cmpDur"></div>
+				</div>
 				<div class="cmpBPM"></div>
 			</div>
 		</div>
 		<div class="cmpSlider">
-			<input class="cmpSliderInput" type="range" min="0" max="1" step="0.001"/>
+			<div class="cmpSliderValue"></div>
+			<input class="cmpSliderInput" type="range" min="0" step="0.001" value="0"/>
 		</div>
 	</div>
 </div>

@@ -21,7 +21,7 @@
 	color: rgba( 255, 255, 255, .25 );
 }
 .cmpPlaying .cmpPlay::before {
-	content: "\f04c";
+	content: "\f04d";
 }
 
 .cmpBody {
@@ -38,7 +38,10 @@
 	padding: 0 10px;
 }
 .cmpSlider {
+	position: relative;
+	overflow: hidden;
 	height: 0;
+	cursor: pointer;
 	transition: .2s;
 	transition-property: height;
 	background-color: rgba( 0, 0, 0, .2 );
@@ -46,10 +49,20 @@
 .cmpPlaying .cmpSlider {
 	height: 10px;
 }
+.cmpSliderValue {
+	width: 0;
+	height: 100%;
+	pointer-events: none;
+	background-color: rgb( 103, 171, 227 );
+}
 .cmpSliderInput {
+	position: absolute;
+	cursor: inherit;
+	top: 0;
+	margin: 0;
+	opacity: 0;
 	width: 100%;
 	height: 100%;
-	opacity: .01;
 }
 
 .cmpName {
@@ -57,18 +70,28 @@
 }
 .cmpInfo {
 	display: flex;
-	font-size: 14px;
+	font-size: 16px;
+	font-family: var( --font-number );
 	opacity: .7;
+}
+.cmpTime {
+	display: flex;
+}
+.cmp:not( .cmpPlaying ) .cmpCurrentTime {
+	display: none;
+}
+.cmpCurrentTime::after {
+	content: "\A0-\A0";
 }
 .cmpBPM {
 	margin-left: 1em;
 }
-.cmpDur::before,
+.cmpTime::before,
 .cmpBPM::before {
 	font-family: "FA";
 	margin-right: .5em;
 	opacity: .5;
 }
-.cmpDur::before { content: "\f2f2"; }
+.cmpTime::before { content: "\f2f2"; }
 .cmpBPM::before { content: "\f3fd"; }
 /*.cmpBPM::before { content: "\f709"; }*/

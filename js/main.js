@@ -17,6 +17,50 @@ const main = {
 	run() {
 		this._hashChange();
 	},
+	getDAWCore() {
+		if ( !this.daw ) {
+			this.daw = new DAWCore();
+			this.daw.initPianoroll(); // this should be optionnal or by default
+			this.daw.destination.gain( .3 );
+			this.daw.cb.currentTime = t => {
+				if ( this._cmpPlaying ) {
+					this._cmpPlaying.currentTime( t );
+				}
+			};
+		}
+		return this.daw;
+	},
+	stop() {
+		if ( this._cmpPlaying ) {
+			this.daw.stop();
+			this._cmpPlaying.stop();
+			delete this._cmpPlaying;
+		}
+	},
+	play( cmp ) {
+		const daw = this.getDAWCore(),
+			currCmp = this._cmpPlaying;
+
+		this.stop();
+		if ( cmp !== currCmp ) {
+			daw.addComposition( cmp.data, { saveMode: "cloud" } )
+				.then( cmpData => daw.openComposition( "cloud", cmpData.id ) )
+				.then( () => {
+					daw.compositionFocus();
+					daw.play();
+					cmp.play();
+					this._cmpPlaying = cmp;
+				} );
+		}
+	},
+	currentTime( t ) {
+		const daw = this.getDAWCore(),
+			currCmp = this._cmpPlaying;
+
+		if ( currCmp ) {
+			daw.composition.setCurrentTime( t );
+		}
+	},
 	loggedIn( u ) {
 		DOM.headAuth.href = "";
 		DOM.headUser.href = `#/u/${ u.username }`;

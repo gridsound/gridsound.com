@@ -3,8 +3,6 @@
 const userPage = {
 	init() {
 		this._username = "";
-		DOM.cmp.remove();
-		DOM.cmp.removeAttribute( "id" );
 		DOM.userPageUserEdit.onclick = this.toggleUserForm.bind( this );
 		DOM.userPageUserFormCancel.onclick = this.showUserForm.bind( this, false );
 		DOM.userPageUserEmailNot.onclick = this._resendEmailBtnClick.bind( this );
@@ -27,7 +25,6 @@ const userPage = {
 			: gsapiClient.getUser( username ) )
 				.finally( () => DOM.loader.classList.remove( "show" ) )
 				.then( res => {
-					console.log( res.user, res.compositions );
 					this._username = username;
 					this._updateUser( res.user );
 					this._updateCompositions( res.compositions );
@@ -81,22 +78,11 @@ const userPage = {
 			elCmps.lastChild.remove();
 		}
 		elCmps.append.apply( elCmps, cmps.map( cmp => {
-			const el = DOM.cmp.cloneNode( true );
+			const elCmp = new Cmp();
 
-			return this._fillCmp( el, cmp );
+			elCmp.setData( cmp.data );
+			return elCmp.rootElement;
 		} ) );
-	},
-	_fillCmp( el, obj ) {
-		const cmp = JSON.parse( obj.data ),
-			dur = cmp.duration * 60 / cmp.bpm,
-			durMin = Math.floor( dur / 60 ),
-			durSec = Math.round( dur % 60 ) + "";
-
-		el.querySelector( ".cmpName" ).textContent = cmp.name;
-		el.querySelector( ".cmpBPM" ).textContent = cmp.bpm;
-		el.querySelector( ".cmpDur" ).textContent =
-			`${ durMin }:${ "00".substr( durSec.length ) + durSec }`;
-		return el;
 	},
 	_resendEmailBtnClick() {
 		const btn = DOM.userPageUserEmailNot,
