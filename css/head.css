@@ -44,8 +44,9 @@
 	align-items: center;
 	padding: 0 var( --head-padding );
 	font-size: 18px;
-	user-select: none;
 	color: inherit;
+	user-select: none;
+	-webkit-user-select: none;
 }
 .noauth #headUser {
 	display: none;
@@ -71,6 +72,7 @@
 }
 #headAuth::before {
 	content: "\f08b";
+	width: 1em;
 	font-size: 22px;
 	font-family: "FA";
 }

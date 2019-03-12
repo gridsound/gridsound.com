@@ -47,8 +47,9 @@
 }
 .btn-text {
 	position: relative;
-	user-select: none;
 	pointer-events: none;
+	user-select: none;
+	-webkit-user-select: none;
 }
 .btn.rippleEffect-active .rippleEffect-circle {
 	transition-duration: var( --btn-rippleDuration );
