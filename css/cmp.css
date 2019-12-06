@@ -11,17 +11,10 @@
 	align-items: center;
 	justify-content: center;
 	font-size: 28px;
-	font-family: "FA";
 	width: var( --cmp-height );
+	color: #fff4;
 	cursor: pointer;
-	background-color: rgba( 0, 0, 0, .1 );
-}
-.cmpPlay::before {
-	content: "\f04b";
-	color: rgba( 255, 255, 255, .25 );
-}
-.cmpPlaying .cmpPlay::before {
-	content: "\f04d";
+	background-color: #0001;
 }
 
 .cmpBody {
@@ -83,15 +76,11 @@
 .cmpCurrentTime::after {
 	content: "\A0-\A0";
 }
-.cmpBPM {
+.cmpBPMwrap {
 	margin-left: 1em;
 }
-.cmpTime::before,
-.cmpBPM::before {
-	font-family: "FA";
+.cmpTime .gsuiIcon,
+.cmpBPMwrap .gsuiIcon {
 	margin-right: .5em;
 	opacity: .5;
 }
-.cmpTime::before { content: "\f2f2"; }
-.cmpBPM::before { content: "\f3fd"; }
-/*.cmpBPM::before { content: "\f709"; }*/

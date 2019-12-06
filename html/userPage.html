@@ -7,13 +7,16 @@
 			<div id="userPageUserLastname"></div>
 		</div>
 		<div id="userPageUserEmail">
-			<span id="userPageUserEmailAddr"></span>
+			<span id="userPageUserEmailAddr">
+				<i id="userPageUserEmailAddrStatus" class="gsuiIcon"></i>
+				<span id="userPageUserEmailAddrText"></span>
+			</span>
 			<a id="userPageUserEmailNot">
 				<span>resend the confirmation email</span>
 				<span>email sended</span>
 			</a>
 		</div>
-		<button id="userPageUserEdit"></button>
+		<button id="userPageUserEdit" class="gsuiIcon" data-icon="pen"></button>
 	</div>
 	<form id="userPageUserForm" class="userPageSection hidden">
 		<div class="userPageSectionTitle">
@@ -24,7 +27,10 @@
 				<span class="field-label">avatar</span>
 				<div>
 					GridSound accepts, for the moment, only
-					<a id="userPageGravatarLink" href="https://gravatar.com" target="_blank" rel="noopener">&nbsp;WordPress&nbsp;- Gravatar</a> as avatar.
+					<a href="https://gravatar.com" class="highlight" target="_blank" rel="noopener">
+						<i class="gsuiIcon gsuiIconB" data-icon="wordpress"></i>
+						WordPress&nbsp;- Gravatar
+					</a> as avatar.
 				</div>
 			</label>
 			<label class="field">

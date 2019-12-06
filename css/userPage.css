@@ -30,14 +30,10 @@
 	overflow: hidden;
 	align-items: center;
 	justify-content: center;
-	color: rgba( 0, 0, 0, .4 );
 	border: 0;
-	background-color: rgba( 0, 0, 0, .1 );
-}
-#userPageUserEdit::before {
-	content: "\f304";
+	color: #0006;
 	font-size: 20px;
-	font-family: "FA";
+	background-color: #0001;
 }
 
 #userPageUserInfo {
@@ -70,13 +66,6 @@
 	display: flex;
 	align-items: flex-start;
 	flex-direction: column;
-}
-#userPageUserEmailAddr:not(:empty)::before {
-	content: "\f0e0\A0";
-	font-family: "FA";
-}
-#userPageUserEmailAddr.private::before {
-	content: "\f30d\A0";
 }
 #userPageUserEmailNot {
 	color: #da6035;
@@ -111,10 +100,6 @@
 }
 #userPageUserForm .field-label {
 	opacity: .5;
-}
-#userPageGravatarLink::before {
-	content: "\f411";
-	font-family: "FAB";
 }
 #userPageUserFormBtns {
 	display: grid;

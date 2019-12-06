@@ -18,6 +18,8 @@ declare -a HEADEREND=(
 declare -a CSSfiles=(
 	"../assets/fonts/fonts.css"
 
+	"gs-ui-components/gsuiIcon/gsuiIcon.css"
+
 	"css/btn.css"
 	"css/form.css"
 	"css/rippleEffect.css"

@@ -62,6 +62,8 @@ const main = {
 		}
 	},
 	loggedIn( u ) {
+		DOM.headAuth.dataset.spin = "";
+		DOM.headAuth.dataset.icon = "logout";
 		DOM.headAuth.href = "";
 		DOM.headUser.href = `#/u/${ u.username }`;
 		DOM.headUsername.textContent = u.username;
@@ -125,8 +127,8 @@ const main = {
 	_headAuthBtnClick() {
 		const btn = DOM.headAuth;
 
-		if ( !btn.getAttribute( "href" ) && !btn.classList.contains( "loading" ) ) {
-			btn.classList.add( "loading" );
+		if ( !btn.getAttribute( "href" ) && btn.dataset.spin !== "on" ) {
+			btn.dataset.spin = "on";
 			gsapiClient.logoutRefresh();
 			return false;
 		}

@@ -58,11 +58,11 @@ const userPage = {
 		const itsMe = u.id === gsapiClient.user.id;
 
 		if ( itsMe ) {
-			DOM.userPageUserEmailAddr.classList.toggle( "private", !u.emailpublic );
+			DOM.userPageUserEmailAddrStatus.dataset.icon = u.emailpublic ? "public" : "private";
 		}
 		DOM.userPageUser.classList.toggle( "me", itsMe );
 		DOM.userPageUserEmail.classList.toggle( "toVerify", !u.emailchecked );
-		DOM.userPageUserEmailAddr.textContent = u.email;
+		DOM.userPageUserEmailAddrText.textContent = u.email;
 		DOM.userPageUserUsername.textContent = u.username;
 		DOM.userPageUserLastname.textContent = u.lastname;
 		DOM.userPageUserFirstname.textContent = u.firstname;

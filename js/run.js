@@ -24,6 +24,6 @@ gsapiClient.getMe()
 		userPage.loggedIn();
 	}, () => {} )
 	.finally( () => {
-		DOM.headAuth.classList.remove( "loading" );
+		DOM.headAuth.dataset.spin = "";
 		main.run();
 	} );

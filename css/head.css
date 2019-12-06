@@ -64,22 +64,11 @@
 #headAuth {
 	padding: 0 var( --head-padding );
 	cursor: pointer;
+	width: 1em;
+	font-size: 22px;
 	border-bottom-right-radius: inherit;
 }
 #headAuth:hover,
 #headAuth.selected {
 	background-color: var( --head-logout-hover-bg );
-}
-#headAuth::before {
-	content: "\f08b";
-	width: 1em;
-	font-size: 22px;
-	font-family: "FA";
-}
-.noauth #headAuth::before {
-	content: "\f090";
-}
-#headAuth.loading::before {
-	content: "\f3f4";
-	animation: .7s linear infinite rotate360;
 }

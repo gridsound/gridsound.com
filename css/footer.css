@@ -19,7 +19,7 @@
 	opacity: .2;
 }
 #footer:hover {
-	box-shadow: 0 -10px 30px -22px rgba( 0, 0, 0, .7 );
+	box-shadow: 0 -10px 30px -30px rgba( 0, 0, 0, .7 );
 }
 #footerContent {
 	display: inline-grid;
@@ -45,33 +45,15 @@
 #footerCopyright {
 	justify-content: center;
 	font-size: 12px;
-	opacity: .6;
-}
-#footerDAW::before {
-	content: "\f001";
-	margin-right: .4em;
-	font-family: "FA";
-}
-#footerDAW::after {
-	content: "DAW";
-	font-weight: bold;
+	opacity: .8;
 }
 
 #footerSocialsLink {
 	display: flex;
 }
-#footerSocialsLink a {
-	font-family: "FAB";
-}
 #footerSocialsLink a + a {
 	margin-left: .6em;
 }
-#footerGithub::before { content: "\f09b" }
-#footerCodepen::before { content: "\f1cb" }
-#footerDiscord::before { content: "\f392" }
-#footerTwitter::before { content: "\f099" }
-#footerYoutube::before { content: "\f167" }
-#footerFacebook::before { content: "\f09a" }
 
 @media ( max-width: 450px ) {
 	.footer-line {

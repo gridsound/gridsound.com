@@ -22,9 +22,11 @@ class Cmp {
 	}
 	play() {
 		this.rootElement.classList.add( "cmpPlaying" );
+		this.rootElement.querySelector( ".cmpPlay" ).dataset.icon = "pause";
 	}
 	stop() {
 		this.rootElement.classList.remove( "cmpPlaying" );
+		this.rootElement.querySelector( ".cmpPlay" ).dataset.icon = "play";
 		this.currentTime( 0 );
 		delete this._focused;
 	}
