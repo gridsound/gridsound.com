@@ -86,14 +86,15 @@ const userPage = {
 	},
 	_resendEmailBtnClick() {
 		const btn = DOM.userPageUserEmailNot,
-			done = btn.classList.contains( "loading" ) ||
-				btn.classList.contains( "sended" );
+			load = DOM.userPageUserEmailSending,
+			done = load.dataset.spin === "on" ||
+				btn.classList.contains( "sent" );
 
 		if ( !done ) {
-			btn.classList.add( "loading" );
+			load.dataset.spin = "on";
 			gsapiClient.resendConfirmationEmail()
-				.finally( () => btn.classList.remove( "loading" ) )
-				.then( () => btn.classList.add( "sended" ) );
+				.then( () => btn.classList.add( "sent" ) )
+				.finally( () => load.dataset.spin = "" );
 		}
 	},
 	_userInfoSubmit() {

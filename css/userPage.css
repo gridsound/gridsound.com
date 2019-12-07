@@ -32,6 +32,7 @@
 	justify-content: center;
 	border: 0;
 	color: #0006;
+	cursor: pointer;
 	font-size: 20px;
 	background-color: #0001;
 }
@@ -75,16 +76,9 @@
 #userPageUser:not( .me ) #userPageUserEmailAddr.private,
 #userPageUser:not( .me ) #userPageUserEmailNot,
 #userPageUserEmail:not( .toVerify ) #userPageUserEmailNot,
-#userPageUserEmailNot.sended span:first-child,
-#userPageUserEmailNot:not( .sended ) span:last-child {
+#userPageUserEmailNot.sent #userPageUserEmailToSend,
+#userPageUserEmailNot:not( .sent ) #userPageUserEmailSent {
 	display: none;
-}
-#userPageUserEmailNot.loading::before {
-	display: inline-block;
-	content: "\f3f4";
-	font-family: "FA";
-	margin-right: .5em;
-	animation: .7s linear infinite rotate360;
 }
 
 #userPageUserForm:not( .hidden ) {
