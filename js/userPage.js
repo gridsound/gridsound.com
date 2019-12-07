@@ -108,13 +108,13 @@ const userPage = {
 		DOM.userPageUserFormError.textContent = "";
 		DOM.userPageUserFormSubmit.classList.add( "btn-loading" );
 		gsapiClient.updateMyInfo( obj )
-			.finally( () => DOM.userPageUserFormSubmit.classList.remove( "btn-loading" ) )
 			.then( res => {
 				this._updateUser( res.user );
-				location.href = DOM.headUser.href;
+				this.showUserForm( false );
 			}, res => {
 				DOM.userPageUserFormError.textContent = res.msg;
-			} );
+			} )
+			.finally( () => DOM.userPageUserFormSubmit.classList.remove( "btn-loading" ) );
 		return false;
 	},
 };
