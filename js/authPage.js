@@ -38,6 +38,7 @@ const authPage = {
 				userPage.loggedIn();
 				location.hash = `#/u/${ res.user.usernameLow }`;
 			}, res => {
+				DOM.headAuth.dataset.spin = "";
 				error.textContent = res.msg;
 			} );
 		return false;
