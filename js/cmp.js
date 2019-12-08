@@ -63,11 +63,13 @@ class Cmp {
 	// private:
 	_fillInfo( cmp ) {
 		const el = this.rootElement,
+			link = el.querySelector( ".cmpNameLink" ),
 			dur = cmp.duration * 60 / cmp.bpm,
 			durMin = Math.floor( dur / 60 ),
 			durSec = Math.round( dur % 60 ) + "";
 
-		el.querySelector( ".cmpName" ).textContent = cmp.name;
+		link.href = `#/cmp/${ cmp.id }`;
+		link.textContent = cmp.name;
 		el.querySelector( ".cmpBPM" ).textContent = cmp.bpm;
 		el.querySelector( ".cmpDur" ).textContent = `${ durMin }:${ durSec.padStart( 2, "0" ) }`;
 	}
