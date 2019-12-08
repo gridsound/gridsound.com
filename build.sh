@@ -29,9 +29,9 @@ declare -a CSSfiles=(
 	"css/main.css"
 	"css/head.css"
 	"css/footer.css"
+	"css/pageSection.css"
 	"css/homePage.css"
 	"css/authPages.css"
-	"css/userPageSection.css"
 	"css/userPage.css"
 )
 

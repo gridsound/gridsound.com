@@ -84,7 +84,7 @@
 #userPageUserForm:not( .hidden ) {
 	max-height: 600px;
 }
-#userPageUserForm .userPageSectionBody {
+#userPageUserForm .pageSectionBody {
 	display: grid;
 	grid-gap: 20px;
 	font-size: 12px;
