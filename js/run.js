@@ -15,6 +15,7 @@ document.querySelectorAll( ".btn" ).forEach( btn => {
 main.init();
 authPage.init();
 userPage.init();
+cmpPage.init();
 resetpassPage.init();
 forgotpassPage.init();
 

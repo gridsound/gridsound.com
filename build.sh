@@ -41,6 +41,7 @@ declare -a HTMLfiles=(
 	"html/authPage.html"
 	"html/homePage.html"
 	"html/userPage.html"
+	"html/cmpPage.html"
 	"html/resetpassPage.html"
 	"html/forgotpassPage.html"
 )
@@ -139,6 +140,7 @@ declare -a JSfiles=(
 	"js/main.js"
 	"js/authPage.js"
 	"js/userPage.js"
+	"js/cmpPage.js"
 	"js/resetpassPage.js"
 	"js/forgotpassPage.js"
 	"js/run.js"

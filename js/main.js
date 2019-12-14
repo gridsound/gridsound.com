@@ -8,6 +8,7 @@ const main = {
 		this.pages = {
 			"": [ DOM.homePage, DOM.headIcon ],
 			"u": [ DOM.userPage, DOM.headUser, userPage ],
+			"cmp": [ DOM.cmpPage, null, cmpPage ],
 			"auth": [ DOM.authPage, DOM.headAuth, authPage ],
 			"resetPassword": [ DOM.resetpassPage, DOM.headAuth, resetpassPage ],
 			"forgotPassword": [ DOM.forgotpassPage, DOM.headAuth, forgotpassPage ],
@@ -112,13 +113,11 @@ const main = {
 				[, pg, attrA, attrB ] = arr;
 
 			if (
-				( len <= 3 && ( pg === "u" ) ) ||
+				( len <= 3 && ( pg === "u" || pg === "cmp" ) ) ||
 				( len === 4 && ( pg === "resetPassword" ) ) ||
 				( len === 2 && ( pg === "" || pg === "auth" || pg === "forgotPassword" ) )
 			) {
-				if ( this._showPage( pg, attrA, attrB ) === false ) {
-					this.error( 404 );
-				}
+				this._showPage( pg, attrA, attrB );
 			} else {
 				this.error( 404 );
 			}

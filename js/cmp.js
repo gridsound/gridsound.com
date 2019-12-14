@@ -20,6 +20,19 @@ class Cmp {
 		this._slider.max = cmp.duration;
 		this._fillInfo( cmp );
 	}
+	setUserData( u ) {
+		const root = this.rootElement;
+
+		root.querySelector( ".cmpUser" ).href = `#/u/${ u.username }`;
+		root.querySelector( ".cmpUserAvatar" ).style.backgroundImage = `url(${ u.avatar })`;
+		root.querySelector( ".cmpUserUsername" ).textContent = u.username;
+		root.querySelector( ".cmpUserName" ).textContent = u.firstname || u.lastname
+			? `- ${u.firstname} ${u.lastname}`
+			: "";
+	}
+	showUser( b ) {
+		this.rootElement.classList.toggle( "cmpUserShown", b );
+	}
 	play() {
 		this.rootElement.classList.add( "cmpPlaying" );
 		this.rootElement.querySelector( ".cmpPlay" ).dataset.icon = "pause";
