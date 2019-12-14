@@ -16,9 +16,23 @@ class Cmp {
 	}
 
 	setData( cmp ) {
+		const el = this.rootElement,
+			dur = cmp.duration * 60 / cmp.bpm,
+			durMin = Math.floor( dur / 60 ),
+			durSec = Math.round( dur % 60 ) + "";
+
 		this.data = cmp;
 		this._slider.max = cmp.duration;
-		this._fillInfo( cmp );
+		el.querySelector( ".cmpNameLink" ).textContent = cmp.name;
+		el.querySelector( ".cmpBPM" ).textContent = cmp.bpm;
+		el.querySelector( ".cmpDur" ).textContent = `${ durMin }:${ durSec.padStart( 2, "0" ) }`;
+	}
+	setLink( id ) {
+		const ln = this.rootElement.querySelector( ".cmpNameLink" );
+
+		id
+			? ln.setAttribute( "href", `#/cmp/${ id }` )
+			: ln.removeAttribute( "href" );
 	}
 	setUserData( u ) {
 		const root = this.rootElement;
@@ -75,15 +89,6 @@ class Cmp {
 
 	// private:
 	_fillInfo( cmp ) {
-		const el = this.rootElement,
-			link = el.querySelector( ".cmpNameLink" ),
-			dur = cmp.duration * 60 / cmp.bpm,
-			durMin = Math.floor( dur / 60 ),
-			durSec = Math.round( dur % 60 ) + "";
 
-		link.href = `#/cmp/${ cmp.id }`;
-		link.textContent = cmp.name;
-		el.querySelector( ".cmpBPM" ).textContent = cmp.bpm;
-		el.querySelector( ".cmpDur" ).textContent = `${ durMin }:${ durSec.padStart( 2, "0" ) }`;
 	}
 }

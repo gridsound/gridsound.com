@@ -80,6 +80,7 @@ const userPage = {
 		elCmps.append.apply( elCmps, cmps.map( cmp => {
 			const elCmp = new Cmp();
 
+			elCmp.setLink( cmp.id );
 			elCmp.setData( cmp.data );
 			return elCmp.rootElement;
 		} ) );
