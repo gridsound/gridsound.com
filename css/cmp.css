@@ -64,9 +64,13 @@
 
 .cmpName {
 	position: relative;
-	height: 1em;
+	height: 1.25em;
 	font-size: 20px;
 	line-height: 1em;
+	transition: height .2s;
+}
+.cmpPlaying .cmpName {
+	height: 1em;
 }
 .cmpNameLink {
 	position: absolute;
