@@ -5,6 +5,7 @@ const main = {
 		DOM.headAuth.onclick = this._headAuthBtnClick.bind( this );
 		DOM.pages.append.apply( DOM.pages, document.querySelectorAll( ".page" ) );
 		window.onhashchange = () => this._hashChange();
+		this._timeoutIdPageChange = null;
 		this.pages = {
 			"": [ DOM.homePage, DOM.headIcon ],
 			"u": [ DOM.userPage, DOM.headUser, userPage ],
@@ -79,15 +80,18 @@ const main = {
 		this._toggleClass( null, "headLinkBefore", "selected" );
 	},
 
-	_showPage( pageName, a, b ) {
+	_showPage( pageName, args ) {
 		const [ page, headLink, pageObj ] = this.pages[ pageName ];
 
+		DOM.loader.classList.add( "show" );
 		DOM.error.classList.remove( "show" );
 		this._toggleClass( headLink, "headLinkBefore", "selected" );
 		this._toggleClass( page, "pageBefore", "show" );
-		if ( pageObj && pageObj.show ) {
-			pageObj.show( a, b );
-		}
+		clearTimeout( this._timeoutIdPageChange );
+		this._timeoutIdPageChange = setTimeout( () => {
+			Promise.resolve( pageObj && pageObj.show && pageObj.show( ...args ) )
+				.finally( () => DOM.loader.classList.remove( "show" ) );
+		}, 250 );
 	},
 	_toggleClass( el, prevAttr, clazz ) {
 		const elPrev = this[ prevAttr ];
@@ -110,14 +114,14 @@ const main = {
 		} else {
 			const arr = hash.split( "/" ),
 				len = arr.length,
-				[, pg, attrA, attrB ] = arr;
+				[, pg, ...args ] = arr;
 
 			if (
 				( len <= 3 && ( pg === "u" || pg === "cmp" ) ) ||
 				( len === 4 && ( pg === "resetPassword" ) ) ||
 				( len === 2 && ( pg === "" || pg === "auth" || pg === "forgotPassword" ) )
 			) {
-				this._showPage( pg, attrA, attrB );
+				this._showPage( pg, args );
 			} else {
 				this.error( 404 );
 			}

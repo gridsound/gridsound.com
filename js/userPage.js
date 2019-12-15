@@ -8,16 +8,12 @@ const userPage = {
 		DOM.userPageUserForm.onsubmit = this._userInfoSubmit.bind( this );
 	},
 	show( username ) {
-		this.showUserForm( false );
-		this.showUser( username );
-	},
-	showUser( name ) {
-		const username = name.toLowerCase();
+		const usernameLow = username.toLowerCase();
 
-		DOM.loader.classList.add( "show" );
-		( username === gsapiClient.user.usernameLow
+		this.showUserForm( false );
+		return ( usernameLow === gsapiClient.user.usernameLow
 			? Promise.resolve( gsapiClient.user )
-			: gsapiClient.getUser( username ) )
+			: gsapiClient.getUser( usernameLow ) )
 				.then( user => {
 					this._updateUser( user );
 					return gsapiClient.getUserCompositions( user.id );
@@ -25,8 +21,7 @@ const userPage = {
 				.then( cmps => {
 					this._updateCompositions( cmps );
 				} )
-				.catch( err => main.error( err.code ) )
-				.finally( () => DOM.loader.classList.remove( "show" ) );
+				.catch( err => main.error( err.code ) );
 	},
 	toggleUserForm() {
 		this.showUserForm(

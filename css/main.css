@@ -48,16 +48,10 @@
 	align-items: center;
 	justify-content: center;
 	z-index: 1;
+	font-size: 48px;
 	background-color: var( --app-bg );
 	transition: .2s;
 	transition-property: opacity, visibility;
-}
-#loader::before {
-	content: "\f3f4";
-	display: inline-block;
-	font-size: 38px;
-	font-family: "FA";
-	animation: .7s linear infinite rotate360;
 }
 
 /* .......................................................................... */

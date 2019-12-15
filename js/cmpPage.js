@@ -7,7 +7,7 @@ const cmpPage = {
 		Object.freeze( this );
 	},
 	show( cmpId ) {
-		gsapiClient.getComposition( cmpId )
+		return gsapiClient.getComposition( cmpId )
 			.then( data => {
 				this.cmp.setData( data.composition.data );
 				this.cmp.setUserData( data.user );
