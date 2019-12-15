@@ -10,10 +10,7 @@ const forgotpassPage = {
 	},
 	show() {
 		DOM.forgotpassPage.classList.remove( "sended" );
-		setTimeout( () => {
-			DOM.forgotpassFormEmail.value = "";
-			DOM.forgotpassFormEmail.focus();
-		}, 100 );
+		DOM.forgotpassFormEmail.value = "";
 	},
 
 	// private:

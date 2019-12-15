@@ -13,11 +13,8 @@ const resetpassPage = {
 		DOM.resetpassPage.classList.remove( "sended" );
 		this.email = email;
 		this.code = code;
-		setTimeout( () => {
-			DOM.resetpassFormPass2.value =
-			DOM.resetpassFormPass.value = "";
-			DOM.resetpassFormPass.focus();
-		}, 100 );
+		DOM.resetpassFormPass2.value =
+		DOM.resetpassFormPass.value = "";
 	},
 
 	// private:
@@ -29,8 +26,8 @@ const resetpassPage = {
 				.finally( () => btn.classList.remove( "btn-loading" ) )
 				.then( () => {
 					DOM.resetpassPage.classList.add( "sended" );
-				}, res => {
-					error.textContent = res.msg;
+				}, err => {
+					error.textContent = err.msg;
 				} );
 		}
 		return false;

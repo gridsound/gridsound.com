@@ -32,13 +32,12 @@ const userPage = {
 		if ( b ) {
 			const inps = Array.from( DOM.userPageUserForm );
 
-			inps[ 0 ].focus();
-			inps[ 3 ].checked = !!gsapiClient.user.emailpublic;
 			inps.forEach( inp => {
 				if ( inp.name ) {
 					inp.value = gsapiClient.user[ inp.name ] || "";
 				}
 			} );
+			inps[ 3 ].checked = !!gsapiClient.user.emailpublic;
 		}
 	},
 
