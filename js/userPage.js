@@ -2,37 +2,31 @@
 
 const userPage = {
 	init() {
-		this._username = "";
 		DOM.userPageUserEdit.onclick = this.toggleUserForm.bind( this );
 		DOM.userPageUserFormCancel.onclick = this.showUserForm.bind( this, false );
 		DOM.userPageUserEmailNot.onclick = this._resendEmailBtnClick.bind( this );
 		DOM.userPageUserForm.onsubmit = this._userInfoSubmit.bind( this );
 	},
-	loggedIn() {
-		this.showUser( gsapiClient.user.usernameLow, "-f" );
-	},
 	show( username ) {
 		this.showUserForm( false );
 		this.showUser( username );
 	},
-	showUser( name, force ) {
+	showUser( name ) {
 		const username = name.toLowerCase();
 
-		if ( username !== this._username || force === "-f" ) {
-			DOM.loader.classList.add( "show" );
-			( username === gsapiClient.user.usernameLow
-			? Promise.resolve( gsapiClient )
+		DOM.loader.classList.add( "show" );
+		( username === gsapiClient.user.usernameLow
+			? Promise.resolve( gsapiClient.user )
 			: gsapiClient.getUser( username ) )
-				.finally( () => DOM.loader.classList.remove( "show" ) )
-				.then( res => {
-					this._username = username;
-					this._updateUser( res.user );
-					this._updateCompositions( res.compositions );
-				}, res => {
-					this._username = "";
-					main.error( res.code );
-				} );
-		}
+				.then( user => {
+					this._updateUser( user );
+					return gsapiClient.getUserCompositions( user.id );
+				} )
+				.then( cmps => {
+					this._updateCompositions( cmps );
+				} )
+				.catch( err => main.error( err.code ) )
+				.finally( () => DOM.loader.classList.remove( "show" ) );
 	},
 	toggleUserForm() {
 		this.showUserForm(
@@ -110,8 +104,8 @@ const userPage = {
 		DOM.userPageUserFormError.textContent = "";
 		DOM.userPageUserFormSubmit.classList.add( "btn-loading" );
 		gsapiClient.updateMyInfo( obj )
-			.then( res => {
-				this._updateUser( res.user );
+			.then( me => {
+				this._updateUser( me );
 				this.showUserForm( false );
 			}, res => {
 				DOM.userPageUserFormError.textContent = res.msg;

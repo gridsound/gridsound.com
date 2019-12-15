@@ -32,11 +32,10 @@ const authPage = {
 		DOM.headAuth.dataset.spin = "on";
 		gsapiClient[ signAction ].apply( gsapiClient, inps.map( inp => inp.value ) )
 			.finally( () => btn.classList.remove( "btn-loading" ) )
-			.then( res => {
+			.then( me => {
 				inps.forEach( inp => inp.value = "" );
-				main.loggedIn( res.user );
-				userPage.loggedIn();
-				location.hash = `#/u/${ res.user.usernameLow }`;
+				main.loggedIn( me );
+				location.hash = `#/u/${ me.usernameLow }`;
 			}, res => {
 				DOM.headAuth.dataset.spin = "";
 				error.textContent = res.msg;

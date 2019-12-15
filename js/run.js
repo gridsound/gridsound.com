@@ -20,10 +20,9 @@ resetpassPage.init();
 forgotpassPage.init();
 
 gsapiClient.getMe()
-	.then( res => {
-		main.loggedIn( res.user );
-		userPage.loggedIn();
-	}, () => {} )
+	.then( me => {
+		main.loggedIn( me );
+	} )
 	.finally( () => {
 		DOM.headAuth.dataset.spin = "";
 		main.run();
