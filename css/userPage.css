@@ -122,7 +122,7 @@
 	}
 	#userPageUser.me {
 		grid-template-columns: var( --userPageUser-height ) 1fr;
-		grid-template-rows: var( --userPageUser-height ) 1fr 1fr;
+		grid-template-rows: var( --userPageUser-height ) 1fr 34px;
 	}
 	#userPageUserAvatar {
 		border-radius: 4px;

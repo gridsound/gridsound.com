@@ -46,15 +46,13 @@ const userPage = {
 	_updateUser( u ) {
 		const itsMe = u.id === gsapiClient.user.id;
 
-		if ( itsMe ) {
-			DOM.userPageUserEmailAddrStatus.dataset.icon = u.emailpublic ? "public" : "private";
-		}
 		DOM.userPageUser.classList.toggle( "me", itsMe );
-		DOM.userPageUserEmail.classList.toggle( "toVerify", !u.emailchecked );
-		DOM.userPageUserEmailAddrText.textContent = u.email;
 		DOM.userPageUserUsername.textContent = u.username;
 		DOM.userPageUserLastname.textContent = u.lastname;
 		DOM.userPageUserFirstname.textContent = u.firstname;
+		DOM.userPageUserEmail.classList.toggle( "toVerify", !u.emailchecked );
+		DOM.userPageUserEmailAddrText.textContent = u.email || "private email";
+		DOM.userPageUserEmailAddrStatus.dataset.icon = u.emailpublic ? "public" : "private";
 		DOM.userPageUserAvatar.style.backgroundImage = u.avatar
 			? `url("${ u.avatar }?s=120")`
 			: "none";
