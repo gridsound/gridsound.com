@@ -12,6 +12,6 @@ const cmpPage = {
 				this.cmp.setData( data.composition.data );
 				this.cmp.setUserData( data.user );
 				this.cmp.showUser( true );
-			} );
+			}, err => main.error( err.code ) );
 	},
 };
