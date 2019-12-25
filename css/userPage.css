@@ -19,9 +19,11 @@
 
 #userPageUserAvatar {
 	grid-area: avatar;
-	background-size: cover;
-	background-color: #fff;
-	background-position: center;
+	font-size: 72px;
+	color: var( --userPageUser-avatar-color );
+}
+#userPageUserAvatar {
+	border-radius: 0;
 }
 
 #userPageUserEdit {

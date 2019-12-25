@@ -69,10 +69,8 @@ const main = {
 		DOM.headAuth.href = "";
 		DOM.headUser.href = `#/u/${ u.username }`;
 		DOM.headUsername.textContent = u.username;
-		DOM.headAvatar.style.backgroundImage = u.avatar
-			? `url("${ u.avatar }?s=120")`
-			: "none";
 		DOM.main.classList.remove( "noauth" );
+		userAvatar.setAvatar( DOM.headAvatar, u.avatar );
 	},
 	error( code ) {
 		DOM.errorCode.textContent = code;

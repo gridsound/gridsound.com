@@ -33,6 +33,7 @@ declare -a CSSfiles=(
 	"css/homePage.css"
 	"css/authPages.css"
 	"css/userPage.css"
+	"css/userAvatar.css"
 )
 
 declare -a HTMLfiles=(
@@ -140,6 +141,7 @@ declare -a JSfiles=(
 	"js/main.js"
 	"js/authPage.js"
 	"js/userPage.js"
+	"js/userAvatar.js"
 	"js/cmpPage.js"
 	"js/resetpassPage.js"
 	"js/forgotpassPage.js"

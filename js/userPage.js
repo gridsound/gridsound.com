@@ -3,9 +3,9 @@
 const userPage = {
 	init() {
 		DOM.userPageUserEdit.onclick = this.toggleUserForm.bind( this );
-		DOM.userPageUserFormCancel.onclick = this.showUserForm.bind( this, false );
-		DOM.userPageUserEmailNot.onclick = this._resendEmailBtnClick.bind( this );
 		DOM.userPageUserForm.onsubmit = this._userInfoSubmit.bind( this );
+		DOM.userPageUserEmailNot.onclick = this._resendEmailBtnClick.bind( this );
+		DOM.userPageUserFormCancel.onclick = this.showUserForm.bind( this, false );
 	},
 	show( username ) {
 		const usernameLow = username.toLowerCase();
@@ -52,9 +52,7 @@ const userPage = {
 		DOM.userPageUserEmail.classList.toggle( "toVerify", !u.emailchecked );
 		DOM.userPageUserEmailAddrText.textContent = u.email || "private email";
 		DOM.userPageUserEmailAddrStatus.dataset.icon = u.emailpublic ? "public" : "private";
-		DOM.userPageUserAvatar.style.backgroundImage = u.avatar
-			? `url("${ u.avatar }?s=120")`
-			: "none";
+		userAvatar.setAvatar( DOM.userPageUserAvatar, u.avatar );
 	},
 	_updateCompositions( cmps ) {
 		const elCmps = DOM.userPageCmps;
