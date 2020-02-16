@@ -16,7 +16,7 @@ declare -a HEADEREND=(
 )
 
 declare -a CSSfiles=(
-	"assets/fonts/fonts.css"
+	"../assets/fonts/fonts.css"
 
 	"gs-ui-components/gsuiIcon/gsuiIcon.css"
 
@@ -153,21 +153,21 @@ declare -a JSfiles=(
 	"daw-core/src/actions/openPattern.js"
 	"daw-core/src/actions/openSynth.js"
 
-	"gs-webaudio-library/gswaLFO/gswaLFO.js"
-	"gs-webaudio-library/gswaMixer/gswaMixer.js"
-	"gs-webaudio-library/gswaSynth/gswaSynth.js"
-	"gs-webaudio-library/gswaSynth/gswaSynth.midiKeyToHz.js"
-	"gs-webaudio-library/gswaKeysScheduler/gswaKeysScheduler.js"
-	"gs-webaudio-library/gswaDrumsScheduler/gswaDrumsScheduler.js"
-	"gs-webaudio-library/gswaBPMTap/gswaBPMTap.js"
-	"gs-webaudio-library/gswaEffects/gswaEffects.js"
-	"gs-webaudio-library/gswaFxFilter/gswaFxFilter.js"
-	"gs-webaudio-library/gswaDrumrows/gswaDrumrows.js"
-	"gs-webaudio-library/gswaScheduler/gswaScheduler.js"
-	"gs-webaudio-library/gswaEncodeWAV/gswaEncodeWAV.js"
-	"gs-webaudio-library/gswaStereoPanner/gswaStereoPanner.js"
-	"gs-webaudio-library/gswaPeriodicWaves/gswaPeriodicWaves.js"
-	"gs-webaudio-library/gswaPeriodicWaves/gswaPeriodicWaves.list.js"
+	"gs-wa-components/gswaLFO/gswaLFO.js"
+	"gs-wa-components/gswaMixer/gswaMixer.js"
+	"gs-wa-components/gswaSynth/gswaSynth.js"
+	"gs-wa-components/gswaSynth/gswaSynth.midiKeyToHz.js"
+	"gs-wa-components/gswaKeysScheduler/gswaKeysScheduler.js"
+	"gs-wa-components/gswaDrumsScheduler/gswaDrumsScheduler.js"
+	"gs-wa-components/gswaBPMTap/gswaBPMTap.js"
+	"gs-wa-components/gswaEffects/gswaEffects.js"
+	"gs-wa-components/gswaFxFilter/gswaFxFilter.js"
+	"gs-wa-components/gswaDrumrows/gswaDrumrows.js"
+	"gs-wa-components/gswaScheduler/gswaScheduler.js"
+	"gs-wa-components/gswaEncodeWAV/gswaEncodeWAV.js"
+	"gs-wa-components/gswaStereoPanner/gswaStereoPanner.js"
+	"gs-wa-components/gswaPeriodicWaves/gswaPeriodicWaves.js"
+	"gs-wa-components/gswaPeriodicWaves/gswaPeriodicWaves.list.js"
 
 	"gs-api-client/gsapiClient.js"
 
