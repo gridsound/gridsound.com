@@ -22,7 +22,6 @@ const main = {
 	getDAWCore() {
 		if ( !this.daw ) {
 			this.daw = new DAWCore();
-			this.daw.initPianoroll(); // this should be optionnal or by default
 			this.daw.destination.setGain( .6 );
 			this.daw.cb.currentTime = t => {
 				if ( this._cmpPlaying ) {
