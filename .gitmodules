@@ -4,9 +4,6 @@
 [submodule "daw-core"]
 	path = daw-core
 	url = https://github.com/gridsound/daw-core
-[submodule "gs-data"]
-	path = gs-data
-	url = https://github.com/gridsound/gs-data
 [submodule "gs-ui-components"]
 	path = gs-ui-components
 	url = https://github.com/gridsound/gs-ui-components
