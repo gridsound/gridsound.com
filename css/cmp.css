@@ -82,7 +82,7 @@
 .cmpInfo {
 	display: flex;
 	font-size: 16px;
-	font-family: var( --font-number );
+	font-family: var( --gsui-font-number );
 	white-space: nowrap;
 	opacity: .7;
 }
@@ -113,7 +113,7 @@
 	content: "bpm";
 	margin-left: 4px;
 	font-size: 11px;
-	font-family: var( --font-default );
+	font-family: var( --gsui-font );
 }
 
 .cmpUser {

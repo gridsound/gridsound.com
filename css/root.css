@@ -5,10 +5,7 @@
 	--color-light: #fff;
 	--a-text-light: #9df;
 	--a-text-dark: #77c;
-	--font-default: "Montserrat", sans-serif;
-	--font-monospace: "Inconsolata", monospace;
-	--font-number: "Unica One", var( --font-monospace );
-	--btn-font: var( --font-default );
+	--btn-font: var( --gsui-font );
 	--form-error-color: #ee5f5f;
 
 	--main-width: 640px;
