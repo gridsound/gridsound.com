@@ -21,8 +21,10 @@ const main = {
 	},
 	getDAWCore() {
 		if ( !this.daw ) {
+			GSUI.$loadJSFile( "/assets/gswaPeriodicWavesList-v1.js" )
+				.then( () => gswaPeriodicWaves.$loadWaves( gswaPeriodicWavesList ) );
 			this.daw = new DAWCore();
-			this.daw.destination.setGain( .6 );
+			this.daw.$destinationSetGain( .6 );
 			this.daw.cb.currentTime = t => {
 				if ( this._cmpPlaying ) {
 					this._cmpPlaying.currentTime( t );
@@ -33,7 +35,7 @@ const main = {
 	},
 	stop() {
 		if ( this._cmpPlaying ) {
-			this.daw.stop();
+			this.daw.$stop();
 			this._cmpPlaying.stop();
 			delete this._cmpPlaying;
 		}
@@ -44,11 +46,11 @@ const main = {
 
 		this.stop();
 		if ( cmp !== currCmp ) {
-			daw.addComposition( cmp.data, { saveMode: "cloud" } )
-				.then( cmpData => daw.openComposition( "cloud", cmpData.id ) )
+			daw.$addCompositionByJSObject( cmp.data, { saveMode: "cloud" } )
+				.then( cmpData => daw.$openComposition( "cloud", cmpData.id ) )
 				.then( () => {
-					daw.compositionFocus();
-					daw.play();
+					daw.$focusOn( "composition" );
+					daw.$play();
 					cmp.play();
 					this._cmpPlaying = cmp;
 				} );
@@ -59,7 +61,7 @@ const main = {
 			currCmp = this._cmpPlaying;
 
 		if ( currCmp ) {
-			daw.composition.setCurrentTime( t );
+			daw.$compositionSetCurrentTime( t );
 		}
 	},
 	loggedIn( u ) {
