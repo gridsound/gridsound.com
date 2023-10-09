@@ -1,8 +1,6 @@
 :root {
 	--app-rad: 6px;
-	--app-bg: #557;
-	--color-dark: #1c1c30;
-	--color-light: #fff;
+	--app-bg: #1b1b31;
 	--a-text-light: #9df;
 	--a-text-dark: #77c;
 	--btn-font: var( --gsui-font );
@@ -16,8 +14,8 @@
 	--head-logout-hover-bg: #ee5f5f;
 	--head-logout-hover-text: #fff;
 	--head-logout-text: #000;
-	--head-selected-bg: #339af0;
-	--head-bg: rgba( 0, 0, 0, .3 );
+	--head-selected-bg: #2e355b;
+	--head-bg: #3b456e;
 
 	--auth-bg: #fff;
 	--auth-text: #333;
@@ -28,8 +26,9 @@
 
 	--userPageUser-height: 120px;
 	--userPageUser-padding: 10px;
-	--userPageUser-avatar-color: #339af0;
+	--userPageUser-avatar-color: #2e355b;
 
 	--cmp-height: 64px;
-	--cmp-bg: #339af0;
+	--cmp-bg: #2e355b;
+	--cmp-bgGrad: linear-gradient(45deg, #0003, transparent);
 }

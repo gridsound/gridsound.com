@@ -3,11 +3,10 @@
 	position: relative;
 	justify-content: center;
 	box-sizing: border-box;
-	margin-top: var( --main-padding );
+	margin-top: calc( var( --main-padding ) + 64px );
 	padding: 16px 0;
 	font-size: 14px;
-	color: var( --color-dark );
-	pointer-events: none;
+	box-shadow: 0px -20px 40px -42px #fff5;
 	transition: .5s box-shadow;
 }
 #footer::before {
@@ -16,10 +15,7 @@
 	top: 0;
 	width: 100%;
 	border-top: 1px solid;
-	opacity: .2;
-}
-#footer:hover {
-	box-shadow: 0 -10px 30px -30px rgba( 0, 0, 0, .7 );
+	opacity: .1;
 }
 #footerContent {
 	display: inline-grid;
@@ -28,10 +24,9 @@
 
 #footer a {
 	transition: .2s color;
-	pointer-events: auto;
 }
 #footer a:hover {
-	color: var( --color-light );
+	color: #ceb3e8;
 }
 
 .footer-line {

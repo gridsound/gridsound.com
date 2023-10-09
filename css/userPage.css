@@ -92,7 +92,7 @@
 	font-size: 12px;
 	padding: var( --main-padding );
 	border-radius: var( --app-rad );
-	background-color: rgba( 0, 0, 0, .12 );
+	background-color: #fff2;
 }
 #userPageUserForm .field-label {
 	opacity: .5;

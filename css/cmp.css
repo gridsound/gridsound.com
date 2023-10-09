@@ -4,6 +4,7 @@
 	height: var( --cmp-height );
 	border-radius: var( --app-rad );
 	background-color: var( --cmp-bg );
+	background-image: var( --cmp-bgGrad );
 }
 .cmpUserShown {
 	margin-bottom: 42px;
@@ -41,7 +42,7 @@
 	cursor: pointer;
 	transition: .2s;
 	transition-property: height;
-	background-color: rgba( 0, 0, 0, .2 );
+	background-color: #0003;
 }
 .cmpPlaying .cmpSlider {
 	height: 10px;
@@ -50,7 +51,7 @@
 	width: 0;
 	height: 100%;
 	pointer-events: none;
-	background-color: rgb( 103, 171, 227 );
+	background-color: #65b;
 }
 .cmpSliderInput {
 	position: absolute;
