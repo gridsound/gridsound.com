@@ -1,19 +1,55 @@
 #!/bin/bash
 
-declare -a HEADER=(
-	'<!DOCTYPE html>'
-	'<html lang="en">'
-	'<head>'
-	'<title>GridSound</title>'
-	'<meta charset="UTF-8"/>'
-	'<meta name="viewport" content="width=device-width, user-scalable=no"/>'
-	'<link rel="shortcut icon" href="../assets/favicon.png"/>'
-)
-
-declare -a HEADEREND=(
-	'</head>'
-	'<body>'
-)
+writeHeader() {
+	echo '<!DOCTYPE html>'
+	echo '<html lang="en">'
+	echo '<head>'
+	echo '<title>GridSound</title>'
+	echo '<meta charset="utf-8"/>'
+	echo '<meta name="viewport" content="width=device-width, user-scalable=no"/>'
+	echo '<meta name="description" content="A free and Open-Source DAW (digital audio workstation)"/>'
+	echo '<meta name="google" content="notranslate"/>'
+	echo '<meta name="theme-color" content="#1b1b31"/>'
+	echo '<meta property="og:type" content="website"/>'
+	echo '<meta property="og:title" content="GridSound"/>'
+	echo '<meta property="og:url" content="https://gridsound.com/"/>'
+	echo '<meta property="og:image" content="https://gridsound.com/assets/og-image.jpg"/>'
+	echo '<meta property="og:image:width" content="800"/>'
+	echo '<meta property="og:image:height" content="400"/>'
+	echo '<meta property="og:description" content="an online digital audio workstation"/>'
+	echo '<link rel="shortcut icon" href="/assets/favicon.png"/>'
+}
+writeBody() {
+	echo '</head>'
+	echo '<body>'
+	echo '<noscript>GridSound needs JavaScript to run</noscript>'
+}
+writeEnd() {
+	echo '</body>'
+	echo '</html>'
+}
+writeCSS() {
+	printf '<link rel="stylesheet" href="%s"/>\n' "${CSSfiles[@]}"
+}
+writeJS() {
+	printf '<script src="%s"></script>\n' "${JSfiles[@]}"
+}
+writeCSScompress() {
+	echo -n '' > allCSS.css
+	cat "${CSSfiles[@]}" >> allCSS.css
+	echo '<style>'
+	csso allCSS.css
+	echo '</style>'
+	rm allCSS.css
+}
+writeJScompress() {
+	echo '"use strict";' > allJS.js
+	cat "${JSfiles[@]}" >> allJS.js
+	echo '<script>'
+	terser allJS.js --compress --mangle --toplevel --mangle-props "regex='^[$]'"
+	echo '</script>'
+	rm allJS.js
+}
 
 declare -a CSSfiles=(
 	"../assets/fonts/fonts.css"
@@ -147,32 +183,25 @@ declare -a JSfiles=(
 buildDev() {
 	filename='index.html'
 	echo "Build $filename"
-	printf '%s\n' "${HEADER[@]}" > $filename;
-	printf '<link rel="stylesheet" href="%s"/>\n' "${CSSfiles[@]}" >> $filename;
-	printf '%s\n' "${HEADEREND[@]}" >> $filename;
+	writeHeader > $filename
+	writeCSS >> $filename
+	writeBody >> $filename
 	cat "${HTMLfiles[@]}" >> $filename
 	echo '<script>function lg( a ) { return console.log.apply( console, arguments ), a; }</script>' >> $filename
-	printf '<script src="%s"></script>\n' "${JSfiles[@]}" >> $filename;
-	echo '</body>' >> $filename
-	echo '</html>' >> $filename
+	writeJS >> $filename
+	writeEnd >> $filename
 }
 
 buildProd() {
 	filename='index-prod.html'
 	echo "Build $filename"
-	printf '%s\n' "${HEADER[@]}" > $filename;
-	echo '<style>' >> $filename
-	cat "${CSSfiles[@]}" >> $filename
-	echo '</style>' >> $filename
-	printf '%s\n' "${HEADEREND[@]}" >> $filename;
+	writeHeader > $filename
+	writeCSScompress >> $filename
+	writeBody >> $filename
 	cat "${HTMLfiles[@]}" >> $filename
-	echo '<script>' >> $filename
-	echo '"use strict";' >> $filename
-	echo 'function lg( a ) { return console.log.apply( console, arguments ), a; }' >> $filename
-	cat "${JSfiles[@]}" | grep -v '"use strict";' >> $filename
-	echo '</script>' >> $filename
-	echo '</body>' >> $filename
-	echo '</html>' >> $filename
+	echo '<script>function lg(a){return a}</script>' >> $filename
+	writeJScompress >> $filename
+	writeEnd >> $filename
 }
 
 updateDep() {
