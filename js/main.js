@@ -21,7 +21,7 @@ const main = {
 	},
 	getDAWCore() {
 		if ( !this.daw ) {
-			GSUI.$loadJSFile( "/assets/gswaPeriodicWavesList-v1.js" )
+			GSUloadJSFile( "/assets/gswaPeriodicWavesList-v1.js" )
 				.then( () => gswaPeriodicWaves.$loadWaves( gswaPeriodicWavesList ) );
 			this.daw = new DAWCore();
 			this.daw.$destinationSetGain( .6 );
