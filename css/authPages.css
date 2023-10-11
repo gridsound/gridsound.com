@@ -8,6 +8,10 @@
 	padding: var( --main-padding );
 	background-color: var( --auth-bg );
 }
+#authPage {
+	flex-direction: row;
+	gap: 0;
+}
 
 /* ......................................................................... */
 #forgotpassPage.sended #forgotpassFormSubmit,
@@ -38,9 +42,13 @@
 #authPageSignup .field-input {
 	background-color: #fff;
 }
+#authPageSignup .form-error {
+	color: #fff;
+}
 
 #authPageLogin {
 	grid-area: authPageLogin;
+	background-color: var( --auth-bg );
 }
 #authPageLoginForgot {
 	text-align: right;
@@ -48,12 +56,9 @@
 }
 @media ( max-width: 600px ) {
 	#authPage {
-		padding: 0;
 		flex-direction: column;
+		gap: var( --main-padding );
+		padding: 0;
 		background-color: transparent;
-	}
-	#authPageLogin {
-		margin-top: var( --main-padding );
-		background-color: var( --auth-bg );
 	}
 }

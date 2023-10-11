@@ -3,7 +3,6 @@
 const main = {
 	init() {
 		DOM.headAuth.onclick = this._headAuthBtnClick.bind( this );
-		DOM.pages.append.apply( DOM.pages, document.querySelectorAll( ".page" ) );
 		window.onhashchange = () => this._hashChange();
 		this._timeoutIdPageChange = null;
 		this.pages = {

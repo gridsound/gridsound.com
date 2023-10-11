@@ -42,6 +42,7 @@
 #userPageUserInfo {
 	grid-area: info;
 	display: flex;
+	gap: .5ch;
 	align-self: flex-end;
 	align-items: baseline;
 	font-size: 1.5em;
@@ -59,9 +60,10 @@
 	overflow: hidden;
 	white-space: nowrap;
 }
-#userPageUserLastname,
-#userPageUserFirstname {
-	margin-left: .4em;
+#userPageUserEmailAddr,
+#userPageUserEmailAddrText {
+	display: flex;
+	gap: .5ch;
 }
 #userPageUserEmail {
 	grid-area: email;
@@ -132,6 +134,7 @@
 	#userPageUserInfo {
 		flex-direction: column;
 		align-self: center;
+		gap: 0;
 	}
 	#userPageUserLastname,
 	#userPageUserFirstname {

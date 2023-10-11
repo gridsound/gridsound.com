@@ -72,17 +72,6 @@ declare -a CSSfiles=(
 	"css/userAvatar.css"
 )
 
-declare -a HTMLfiles=(
-	"html/_main.html"
-	"html/cmp.html"
-	"html/authPage.html"
-	"html/homePage.html"
-	"html/userPage.html"
-	"html/cmpPage.html"
-	"html/resetpassPage.html"
-	"html/forgotpassPage.html"
-)
-
 declare -a JSfiles=(
 	"gs-utils/gs-utils.js"
 	"gs-utils/gs-utils-dom.js"
@@ -168,6 +157,15 @@ declare -a JSfiles=(
 	"gs-wa-components/gswaMIDIControllersManager/gswaMIDIControllerInput.js"
 	"gs-wa-components/gswaMIDIControllersManager/gswaMIDIControllerOutput.js"
 
+	"html/main.html.js"
+	"html/cmp.html.js"
+	"html/cmpPage.html.js"
+	"html/homePage.html.js"
+	"html/userPage.html.js"
+	"html/authPage.html.js"
+	"html/forgotpassPage.html.js"
+	"html/resetpassPage.html.js"
+
 	"js/common/rippleEffect.js"
 	"js/cmp.js"
 	"js/main.js"
@@ -186,7 +184,6 @@ buildDev() {
 	writeHeader > $filename
 	writeCSS >> $filename
 	writeBody >> $filename
-	cat "${HTMLfiles[@]}" >> $filename
 	echo '<script>function lg( a ) { return console.log.apply( console, arguments ), a; }</script>' >> $filename
 	writeJS >> $filename
 	writeEnd >> $filename
@@ -198,7 +195,6 @@ buildProd() {
 	writeHeader > $filename
 	writeCSScompress >> $filename
 	writeBody >> $filename
-	cat "${HTMLfiles[@]}" >> $filename
 	echo '<script>function lg(a){return a}</script>' >> $filename
 	writeJScompress >> $filename
 	writeEnd >> $filename

@@ -1,16 +1,22 @@
+.page,
 .pageSection {
-	margin-top: var( --main-padding );
+	display: flex;
+	flex-direction: column;
+	gap: var( --main-padding );
+}
+.pageSection {
+	overflow: hidden;
 	transition: .2s;
 	transition-property: margin-top, max-height, opacity;
-	overflow: hidden;
 }
 .pageSection.hidden {
 	opacity: 0;
 	max-height: 0;
-	margin-top: 0;
+	margin-top: calc( -1 * var( --main-padding ) );
 }
 .pageSectionTitle {
-	margin-bottom: var( --main-padding );
+	display: flex;
+	gap: .5ch;
 	opacity: .4;
 }
 .pageSectionTitleValue {
@@ -18,6 +24,4 @@
 }
 .pageSectionTitleLabel {
 	opacity: .7;
-}
-.pageSectionBody {
 }

@@ -2,7 +2,7 @@
 
 class Cmp {
 	constructor() {
-		const el = DOM.cmp.cloneNode( true ),
+		const el = GSUgetTemplate( "gs-cmp" ),
 			elPlay = el.querySelector( ".cmpPlay" );
 
 		this.rootElement = el;

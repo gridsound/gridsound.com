@@ -1,16 +1,20 @@
 "use strict";
 
-window.DOM = {};
-document.querySelectorAll( "[id]" ).forEach( el => {
-	DOM[ el.id ] = el;
-	if ( "toRemove" in el.dataset ) {
-		el.remove();
-		el.removeAttribute( "id" );
-	}
-} );
-document.querySelectorAll( ".btn" ).forEach( btn => {
-	rippleEffectInit( btn );
-} );
+document.body.append( GSUgetTemplate( "gs-main" ) );
+
+document.querySelector( "#pages" ).append(
+	GSUgetTemplate( "gs-homePage" ),
+	GSUgetTemplate( "gs-userPage" ),
+	GSUgetTemplate( "gs-authPage" ),
+	GSUgetTemplate( "gs-cmpPage" ),
+	GSUgetTemplate( "gs-forgotpassPage" ),
+	GSUgetTemplate( "gs-resetpassPage" ),
+);
+
+const DOM = {};
+
+document.querySelectorAll( "[id]" ).forEach( el => DOM[ el.id ] = el );
+document.querySelectorAll( ".btn" ).forEach( btn => rippleEffectInit( btn ) );
 
 main.init();
 authPage.init();

@@ -6,7 +6,6 @@
 
 #homeIntro {
 	line-height: 2em;
-	margin-bottom: var( --main-padding );
 }
 #homeIntro a {
 	font-weight: bold;
