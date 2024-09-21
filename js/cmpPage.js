@@ -1,24 +1,25 @@
 "use strict";
 
-const cmpPage = {
-	_cmp: null,
+class cmpPage {
+	#cmp = null;
 
-	init() {
+	constructor() {
 		Object.seal( this );
 		GSUlistenEvents( DOM.cmpPage, {
 			gsuiCmpPlayer: {
-				play: ( d, t ) => { main.play( DOM.cmpPageCmp, this._cmp ); },
-				stop: ( d, t ) => { main.stop(); },
+				play: ( d, t ) => { PAGES.$main.play( DOM.cmpPageCmp, this.#cmp ); },
+				stop: ( d, t ) => { PAGES.$main.stop(); },
 			},
 		} );
-	},
+	}
+
 	show( cmpId ) {
 		return gsapiClient.$getComposition( cmpId )
 			.then( data => {
 				const u = data.user;
 				const cmp = data.composition.data;
 
-				this._cmp = cmp;
+				this.#cmp = cmp;
 				GSUsetAttribute( DOM.cmpPageCmp, {
 					"data-id": cmp.id,
 					name: cmp.name,
@@ -31,6 +32,6 @@ const cmpPage = {
 				DOM.cmpPageAuthorName.textContent = u.firstname || u.lastname
 					? `${ u.firstname } ${ u.lastname }`
 					: "";
-			}, err => main.error( err.code ) );
-	},
-};
+			}, err => PAGES.$main.error( err.code ) );
+	}
+}

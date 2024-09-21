@@ -1,20 +1,22 @@
 "use strict";
 
-const userPage = {
-	cmpsMap: new Map(),
+class userPage {
+	#cmpsMap = new Map();
 
-	init() {
+	constructor() {
+		Object.seal( this );
 		DOM.userPageUserEdit.onclick = this.toggleUserForm.bind( this );
-		DOM.userPageUserForm.onsubmit = this._userInfoSubmit.bind( this );
-		DOM.userPageUserEmailNot.onclick = this._resendEmailBtnClick.bind( this );
+		DOM.userPageUserForm.onsubmit = this.#userInfoSubmit.bind( this );
+		DOM.userPageUserEmailNot.onclick = this.#resendEmailBtnClick.bind( this );
 		DOM.userPageUserFormCancel.onclick = this.showUserForm.bind( this, false );
 		GSUlistenEvents( DOM.userPageCmps, {
 			gsuiCmpPlayer: {
-				play: ( d, t ) => { main.play( t, this.cmpsMap.get( t.dataset.id ) ); },
-				stop: ( d, t ) => { main.stop(); },
+				play: ( d, t ) => { PAGES.$main.play( t, this.#cmpsMap.get( t.dataset.id ) ); },
+				stop: ( d, t ) => { PAGES.$main.stop(); },
 			},
 		} );
-	},
+	}
+
 	show( username ) {
 		const usernameLow = username.toLowerCase();
 
@@ -23,17 +25,18 @@ const userPage = {
 			? Promise.resolve( gsapiClient.$user )
 			: gsapiClient.$getUser( usernameLow ) )
 				.then( user => {
-					this._updateUser( user );
+					this.#updateUser( user );
 					return gsapiClient.$getUserCompositions( user.id );
 				} )
 				.then( cmps => {
-					this._updateCompositions( cmps );
+					this.#updateCompositions( cmps );
 				} )
-				.catch( err => main.error( err.code ) );
-	},
+				.catch( err => PAGES.$main.error( err.code ) );
+	}
+
 	toggleUserForm() {
 		this.showUserForm( DOM.userPageUserForm.classList.contains( "hidden" ) );
-	},
+	}
 	showUserForm( b ) {
 		DOM.userPageUserForm.classList.toggle( "hidden", !b );
 		if ( b ) {
@@ -46,10 +49,10 @@ const userPage = {
 			} );
 			inps[ 3 ].checked = !!gsapiClient.$user.emailpublic;
 		}
-	},
+	}
 
 	// .........................................................................
-	_updateUser( u ) {
+	#updateUser( u ) {
 		const itsMe = u.id === gsapiClient.$user.id;
 
 		DOM.userPageUser.classList.toggle( "me", itsMe );
@@ -60,9 +63,9 @@ const userPage = {
 		DOM.userPageUserEmailAddrText.textContent = u.email || "private email";
 		DOM.userPageUserEmailAddrStatus.dataset.icon = u.emailpublic ? "public" : "private";
 		userAvatar.setAvatar( DOM.userPageUserAvatar, u.avatar );
-	},
-	_updateCompositions( cmps ) {
-		this.cmpsMap.clear();
+	}
+	#updateCompositions( cmps ) {
+		this.#cmpsMap.clear();
 		GSUemptyElement( DOM.userPageCmps );
 		DOM.userPageNbCompositions.textContent = cmps.length;
 		DOM.userPageCmps.append( ...cmps.map( cmp => {
@@ -74,11 +77,11 @@ const userPage = {
 				duration: cmp.data.duration * 60 / cmp.data.bpm,
 			} );
 
-			this.cmpsMap.set( cmp.id, cmp.data );
+			this.#cmpsMap.set( cmp.id, cmp.data );
 			return uiCmp;
 		} ) );
-	},
-	_resendEmailBtnClick() {
+	}
+	#resendEmailBtnClick() {
 		const btn = DOM.userPageUserEmailNot,
 			load = DOM.userPageUserEmailSending,
 			done = load.dataset.spin === "on" ||
@@ -90,8 +93,8 @@ const userPage = {
 				.then( () => btn.classList.add( "sent" ) )
 				.finally( () => load.dataset.spin = "" );
 		}
-	},
-	_userInfoSubmit() {
+	}
+	#userInfoSubmit() {
 		const inps = Array.from( DOM.userPageUserForm ),
 			obj = inps.reduce( ( obj, inp ) => {
 				if ( inp.name ) {
@@ -104,12 +107,12 @@ const userPage = {
 		DOM.userPageUserFormSubmit.classList.add( "btn-loading" );
 		gsapiClient.$updateMyInfo( obj )
 			.then( me => {
-				this._updateUser( me );
+				this.#updateUser( me );
 				this.showUserForm( false );
 			}, res => {
 				DOM.userPageUserFormError.textContent = res.msg;
 			} )
 			.finally( () => DOM.userPageUserFormSubmit.classList.remove( "btn-loading" ) );
 		return false;
-	},
-};
+	}
+}

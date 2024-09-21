@@ -1,25 +1,25 @@
 "use strict";
 
-const main = {
-	_cmpPlaying: null,
+class main {
+	#elCmpPlaying = null;
 
-	init() {
-		DOM.headAuth.onclick = this._headAuthBtnClick.bind( this );
-		window.onhashchange = () => this._hashChange();
+	constructor() {
+		DOM.headAuth.onclick = this.#headAuthBtnClick.bind( this );
+		window.onhashchange = () => this.#hashChange();
 		this._timeoutIdPageChange = null;
 		this.pages = {
-			"": [ DOM.homePage, DOM.headIcon ],
-			"u": [ DOM.userPage, DOM.headUser, userPage ],
-			"cmp": [ DOM.cmpPage, null, cmpPage ],
-			"auth": [ DOM.authPage, DOM.headAuth, authPage ],
-			"resetPassword": [ DOM.resetpassPage, DOM.headAuth, resetpassPage ],
-			"forgotPassword": [ DOM.forgotpassPage, DOM.headAuth, forgotpassPage ],
+			"":             [ DOM.homePage,       DOM.headIcon ],
+			u:              [ DOM.userPage,       DOM.headUser, PAGES.$user ],
+			cmp:            [ DOM.cmpPage,        null,         PAGES.$cmp ],
+			auth:           [ DOM.authPage,       DOM.headAuth, PAGES.$auth ],
+			resetPassword:  [ DOM.resetpassPage,  DOM.headAuth, PAGES.$resetpass ],
+			forgotPassword: [ DOM.forgotpassPage, DOM.headAuth, PAGES.$forgotpass ],
 		};
-	},
+	}
 
 	run() {
-		this._hashChange();
-	},
+		this.#hashChange();
+	}
 	getDAWCore() {
 		if ( !this.daw ) {
 			GSUloadJSFile( "assets/gswaPeriodicWavesList-v1.js" )
@@ -27,23 +27,23 @@ const main = {
 			this.daw = new DAWCore();
 			this.daw.$destinationSetGain( .6 );
 			this.daw.cb.currentTime = t => {
-				if ( this._cmpPlaying ) {
-					GSUsetAttribute( this._cmpPlaying, "currenttime", t * 60 / this.daw.$getBPM() );
+				if ( this.#elCmpPlaying ) {
+					GSUsetAttribute( this.#elCmpPlaying, "currenttime", t * 60 / this.daw.$getBPM() );
 				}
 			};
 		}
 		return this.daw;
-	},
+	}
 	stop() {
-		if ( this._cmpPlaying ) {
+		if ( this.#elCmpPlaying ) {
 			this.daw.$stop();
-			GSUsetAttribute( this._cmpPlaying, "playing", false );
-			this._cmpPlaying = null;
+			GSUsetAttribute( this.#elCmpPlaying, "playing", false );
+			this.#elCmpPlaying = null;
 		}
-	},
+	}
 	play( elCmp, cmp ) {
 		const daw = this.getDAWCore();
-		const currCmp = this._cmpPlaying;
+		const currCmp = this.#elCmpPlaying;
 
 		this.stop();
 		if ( elCmp !== currCmp ) {
@@ -53,17 +53,17 @@ const main = {
 					daw.$focusOn( "composition" );
 					daw.$play();
 					GSUsetAttribute( elCmp, "playing", true );
-					this._cmpPlaying = elCmp;
+					this.#elCmpPlaying = elCmp;
 				} );
 		}
-	},
+	}
 	currentTime( t ) {
 		const daw = this.getDAWCore();
 
-		if ( this._cmpPlaying ) {
+		if ( this.#elCmpPlaying ) {
 			daw.$compositionSetCurrentTime( t );
 		}
-	},
+	}
 	loggedIn( u ) {
 		DOM.headAuth.dataset.spin = "";
 		DOM.headAuth.dataset.icon = "logout";
@@ -72,28 +72,28 @@ const main = {
 		DOM.headUsername.textContent = u.username;
 		DOM.main.classList.remove( "noauth" );
 		userAvatar.setAvatar( DOM.headAvatar, u.avatar );
-	},
+	}
 	error( code ) {
 		DOM.errorCode.textContent = code;
 		DOM.error.classList.add( "show" );
-		this._toggleClass( null, "headLinkBefore", "selected" );
-	},
+		this.#toggleClass( null, "headLinkBefore", "selected" );
+	}
 
 	// .........................................................................
-	_showPage( pageName, args ) {
+	#showPage( pageName, args ) {
 		const [ page, headLink, pageObj ] = this.pages[ pageName ];
 
 		DOM.loader.classList.add( "show" );
 		DOM.error.classList.remove( "show" );
-		this._toggleClass( headLink, "headLinkBefore", "selected" );
-		this._toggleClass( page, "pageBefore", "show" );
+		this.#toggleClass( headLink, "headLinkBefore", "selected" );
+		this.#toggleClass( page, "pageBefore", "show" );
 		clearTimeout( this._timeoutIdPageChange );
 		this._timeoutIdPageChange = setTimeout( () => {
 			Promise.resolve( pageObj && pageObj.show && pageObj.show( ...args ) )
 				.finally( () => DOM.loader.classList.remove( "show" ) );
 		}, 250 );
-	},
-	_toggleClass( el, prevAttr, clazz ) {
+	}
+	#toggleClass( el, prevAttr, clazz ) {
 		const elPrev = this[ prevAttr ];
 
 		if ( el !== elPrev ) {
@@ -102,8 +102,8 @@ const main = {
 			this[ prevAttr ] = el || undefined;
 			return true;
 		}
-	},
-	_hashChange() {
+	}
+	#hashChange() {
 		const hash = location.hash;
 
 		this.stop();
@@ -121,13 +121,13 @@ const main = {
 				( len === 4 && ( pg === "resetPassword" ) ) ||
 				( len === 2 && ( pg === "" || pg === "auth" || pg === "forgotPassword" ) )
 			) {
-				this._showPage( pg, args );
+				this.#showPage( pg, args );
 			} else {
 				this.error( 404 );
 			}
 		}
-	},
-	_headAuthBtnClick() {
+	}
+	#headAuthBtnClick() {
 		const btn = DOM.headAuth;
 
 		if ( !btn.getAttribute( "href" ) && btn.dataset.spin !== "on" ) {
@@ -135,5 +135,5 @@ const main = {
 			gsapiClient.$logoutRefresh();
 			return false;
 		}
-	},
-};
+	}
+}

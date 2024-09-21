@@ -16,18 +16,20 @@ const DOM = {};
 document.querySelectorAll( "[id]" ).forEach( el => DOM[ el.id ] = el );
 document.querySelectorAll( ".btn" ).forEach( btn => rippleEffectInit( btn ) );
 
-main.init();
-authPage.init();
-userPage.init();
-cmpPage.init();
-resetpassPage.init();
-forgotpassPage.init();
+const PAGES = {
+	$cmp: new cmpPage(),
+	$auth: new authPage(),
+	$user: new userPage(),
+	$resetpass: new resetpassPage(),
+	$forgotpass: new forgotpassPage(),
+};
+PAGES.$main = new main();
 
 gsapiClient.$getMe()
 	.then( me => {
-		main.loggedIn( me );
+		PAGES.$main.loggedIn( me );
 	} )
 	.finally( () => {
 		DOM.headAuth.dataset.spin = "";
-		main.run();
+		PAGES.$main.run();
 	} );

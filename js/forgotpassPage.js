@@ -1,20 +1,22 @@
 "use strict";
 
-const forgotpassPage = {
-	init() {
+class forgotpassPage {
+	constructor() {
+		Object.seal( this );
 		DOM.forgotpassForm.onsubmit =
-			this._submit.bind( this,
+			this.#submit.bind( this,
 				DOM.forgotpassFormSubmit,
 				DOM.forgotpassFormError,
 				DOM.forgotpassFormEmail );
-	},
+	}
+
 	show() {
 		DOM.forgotpassPage.classList.remove( "sended" );
 		DOM.forgotpassFormEmail.value = "";
-	},
+	}
 
-	// private:
-	_submit( btn, error, email ) {
+	// .........................................................................
+	#submit( btn, error, email ) {
 		btn.classList.add( "btn-loading" );
 		error.textContent = "";
 		gsapiClient.$recoverPassword( email.value )
@@ -25,5 +27,5 @@ const forgotpassPage = {
 				error.textContent = res.msg;
 			} );
 		return false;
-	},
-};
+	}
+}
