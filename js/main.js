@@ -112,9 +112,9 @@ class main {
 		} else if ( hash !== "#/" && hash.endsWith( "/" ) ) {
 			location.hash = hash.substr( 0, hash.length - 1 );
 		} else {
-			const arr = hash.split( "/" ),
-				len = arr.length,
-				[, pg, ...args ] = arr;
+			const arr = hash.split( "/" );
+			const len = arr.length;
+			const [ , pg, ...args ] = arr;
 
 			if (
 				( len <= 3 && ( pg === "u" || pg === "cmp" ) ) ||

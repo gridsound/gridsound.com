@@ -82,10 +82,9 @@ class userPage {
 		} ) );
 	}
 	#resendEmailBtnClick() {
-		const btn = DOM.userPageUserEmailNot,
-			load = DOM.userPageUserEmailSending,
-			done = load.dataset.spin === "on" ||
-				btn.classList.contains( "sent" );
+		const btn = DOM.userPageUserEmailNot;
+		const load = DOM.userPageUserEmailSending;
+		const done = load.dataset.spin === "on" || btn.classList.contains( "sent" );
 
 		if ( !done ) {
 			load.dataset.spin = "on";
@@ -95,8 +94,8 @@ class userPage {
 		}
 	}
 	#userInfoSubmit() {
-		const inps = Array.from( DOM.userPageUserForm ),
-			obj = inps.reduce( ( obj, inp ) => {
+		const inps = Array.from( DOM.userPageUserForm );
+		const obj = inps.reduce( ( obj, inp ) => {
 				if ( inp.name ) {
 					obj[ inp.name ] = inp.type !== "checkbox" ? inp.value : inp.checked;
 				}

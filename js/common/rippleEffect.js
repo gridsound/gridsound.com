@@ -4,11 +4,11 @@ function rippleEffectInit( el ) {
 }
 
 function rippleEffectExec( e ) {
-	const el = e.currentTarget,
-		circ = document.createElement( "span" ),
-		bcr = el.getBoundingClientRect(),
-		x = e.pageX - bcr.left,
-		y = e.pageY - bcr.top;
+	const el = e.currentTarget;
+	const circ = document.createElement( "span" );
+	const bcr = el.getBoundingClientRect();
+	const x = e.pageX - bcr.left;
+	const y = e.pageY - bcr.top;
 
 	clearTimeout( el._rippleId );
 	if ( el._rippleCirc ) {
