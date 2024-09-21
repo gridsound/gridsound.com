@@ -1,6 +1,8 @@
 "use strict";
 
 const main = {
+	_cmpPlaying: null,
+
 	init() {
 		DOM.headAuth.onclick = this._headAuthBtnClick.bind( this );
 		window.onhashchange = () => this._hashChange();
@@ -20,13 +22,13 @@ const main = {
 	},
 	getDAWCore() {
 		if ( !this.daw ) {
-			GSUloadJSFile( "/assets/gswaPeriodicWavesList-v1.js" )
+			GSUloadJSFile( "assets/gswaPeriodicWavesList-v1.js" )
 				.then( () => gswaPeriodicWaves.$loadWaves( gswaPeriodicWavesList ) );
 			this.daw = new DAWCore();
 			this.daw.$destinationSetGain( .6 );
 			this.daw.cb.currentTime = t => {
 				if ( this._cmpPlaying ) {
-					this._cmpPlaying.currentTime( t );
+					GSUsetAttribute( this._cmpPlaying, "currenttime", t * 60 / this.daw.$getBPM() );
 				}
 			};
 		}
@@ -35,31 +37,30 @@ const main = {
 	stop() {
 		if ( this._cmpPlaying ) {
 			this.daw.$stop();
-			this._cmpPlaying.stop();
-			delete this._cmpPlaying;
+			GSUsetAttribute( this._cmpPlaying, "playing", false );
+			this._cmpPlaying = null;
 		}
 	},
-	play( cmp ) {
-		const daw = this.getDAWCore(),
-			currCmp = this._cmpPlaying;
+	play( elCmp, cmp ) {
+		const daw = this.getDAWCore();
+		const currCmp = this._cmpPlaying;
 
 		this.stop();
-		if ( cmp !== currCmp ) {
-			daw.$addCompositionByJSObject( cmp.data, { saveMode: "cloud" } )
+		if ( elCmp !== currCmp ) {
+			daw.$addCompositionByJSObject( cmp, { saveMode: "cloud" } )
 				.then( cmpData => daw.$openComposition( "cloud", cmpData.id ) )
 				.then( () => {
 					daw.$focusOn( "composition" );
 					daw.$play();
-					cmp.play();
-					this._cmpPlaying = cmp;
+					GSUsetAttribute( elCmp, "playing", true );
+					this._cmpPlaying = elCmp;
 				} );
 		}
 	},
 	currentTime( t ) {
-		const daw = this.getDAWCore(),
-			currCmp = this._cmpPlaying;
+		const daw = this.getDAWCore();
 
-		if ( currCmp ) {
+		if ( this._cmpPlaying ) {
 			daw.$compositionSetCurrentTime( t );
 		}
 	},
@@ -78,6 +79,7 @@ const main = {
 		this._toggleClass( null, "headLinkBefore", "selected" );
 	},
 
+	// .........................................................................
 	_showPage( pageName, args ) {
 		const [ page, headLink, pageObj ] = this.pages[ pageName ];
 

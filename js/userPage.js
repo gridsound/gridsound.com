@@ -1,11 +1,19 @@
 "use strict";
 
 const userPage = {
+	cmpsMap: new Map(),
+
 	init() {
 		DOM.userPageUserEdit.onclick = this.toggleUserForm.bind( this );
 		DOM.userPageUserForm.onsubmit = this._userInfoSubmit.bind( this );
 		DOM.userPageUserEmailNot.onclick = this._resendEmailBtnClick.bind( this );
 		DOM.userPageUserFormCancel.onclick = this.showUserForm.bind( this, false );
+		GSUlistenEvents( DOM.userPageCmps, {
+			gsuiCmpPlayer: {
+				play: ( d, t ) => { main.play( t, this.cmpsMap.get( t.dataset.id ) ); },
+				stop: ( d, t ) => { main.stop(); },
+			},
+		} );
 	},
 	show( username ) {
 		const usernameLow = username.toLowerCase();
@@ -24,8 +32,7 @@ const userPage = {
 				.catch( err => main.error( err.code ) );
 	},
 	toggleUserForm() {
-		this.showUserForm(
-			DOM.userPageUserForm.classList.contains( "hidden" ) );
+		this.showUserForm( DOM.userPageUserForm.classList.contains( "hidden" ) );
 	},
 	showUserForm( b ) {
 		DOM.userPageUserForm.classList.toggle( "hidden", !b );
@@ -41,7 +48,7 @@ const userPage = {
 		}
 	},
 
-	// private:
+	// .........................................................................
 	_updateUser( u ) {
 		const itsMe = u.id === gsapiClient.$user.id;
 
@@ -55,18 +62,20 @@ const userPage = {
 		userAvatar.setAvatar( DOM.userPageUserAvatar, u.avatar );
 	},
 	_updateCompositions( cmps ) {
-		const elCmps = DOM.userPageCmps;
-
+		this.cmpsMap.clear();
+		GSUemptyElement( DOM.userPageCmps );
 		DOM.userPageNbCompositions.textContent = cmps.length;
-		while ( elCmps.lastChild ) {
-			elCmps.lastChild.remove();
-		}
-		elCmps.append.apply( elCmps, cmps.map( cmp => {
-			const elCmp = new Cmp();
+		DOM.userPageCmps.append( ...cmps.map( cmp => {
+			const uiCmp = GSUcreateElement( "gsui-cmp-player", {
+				"data-id": cmp.id,
+				link: `#/cmp/${ cmp.id }`,
+				name: cmp.data.name,
+				bpm: cmp.data.bpm,
+				duration: cmp.data.duration * 60 / cmp.data.bpm,
+			} );
 
-			elCmp.setLink( cmp.id );
-			elCmp.setData( cmp.data );
-			return elCmp.rootElement;
+			this.cmpsMap.set( cmp.id, cmp.data );
+			return uiCmp;
 		} ) );
 	},
 	_resendEmailBtnClick() {
