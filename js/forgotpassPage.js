@@ -17,7 +17,7 @@ const forgotpassPage = {
 	_submit( btn, error, email ) {
 		btn.classList.add( "btn-loading" );
 		error.textContent = "";
-		gsapiClient.recoverPassword( email.value )
+		gsapiClient.$recoverPassword( email.value )
 			.finally( () => btn.classList.remove( "btn-loading" ) )
 			.then( () => {
 				DOM.forgotpassPage.classList.add( "sended" );

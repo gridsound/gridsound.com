@@ -2,13 +2,13 @@
 
 const authPage = {
 	init() {
-		DOM.authPageLogin.onsubmit = () => this._signSubmit( "login",
+		DOM.authPageLogin.onsubmit = () => this._signSubmit( gsapiClient.$login,
 			DOM.authPageLoginBtn,
 			DOM.authPageLoginError, [
 				DOM.authPageLoginEmail,
 				DOM.authPageLoginPass,
 			] );
-		DOM.authPageSignup.onsubmit = () => this._signSubmit( "signup",
+		DOM.authPageSignup.onsubmit = () => this._signSubmit( gsapiClient.$signup,
 			DOM.authPageSignupBtn,
 			DOM.authPageSignupError, [
 				DOM.authPageSignupUsername,
@@ -22,12 +22,12 @@ const authPage = {
 		DOM.authPageSignupPass.value = "";
 	},
 
-	// private:
-	_signSubmit( signAction, btn, error, inps ) {
+	// .........................................................................
+	_signSubmit( actFn, btn, error, inps ) {
 		btn.classList.add( "btn-loading" );
 		error.textContent = "";
 		DOM.headAuth.dataset.spin = "on";
-		gsapiClient[ signAction ].apply( gsapiClient, inps.map( inp => inp.value ) )
+		actFn( ...inps.map( inp => inp.value ) )
 			.finally( () => btn.classList.remove( "btn-loading" ) )
 			.then( me => {
 				inps.forEach( inp => inp.value = "" );

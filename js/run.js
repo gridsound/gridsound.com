@@ -23,7 +23,7 @@ cmpPage.init();
 resetpassPage.init();
 forgotpassPage.init();
 
-gsapiClient.getMe()
+gsapiClient.$getMe()
 	.then( me => {
 		main.loggedIn( me );
 	} )

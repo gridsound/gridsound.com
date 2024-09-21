@@ -22,7 +22,7 @@ const resetpassPage = {
 		if ( pass.value === pass2.value ) {
 			error.textContent = "";
 			btn.classList.add( "btn-loading" );
-			gsapiClient.resetPassword( this.email, this.code, pass.value )
+			gsapiClient.$resetPassword( this.email, this.code, pass.value )
 				.finally( () => btn.classList.remove( "btn-loading" ) )
 				.then( () => {
 					DOM.resetpassPage.classList.add( "sended" );

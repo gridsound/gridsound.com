@@ -130,7 +130,7 @@ const main = {
 
 		if ( !btn.getAttribute( "href" ) && btn.dataset.spin !== "on" ) {
 			btn.dataset.spin = "on";
-			gsapiClient.logoutRefresh();
+			gsapiClient.$logoutRefresh();
 			return false;
 		}
 	},

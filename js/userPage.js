@@ -11,12 +11,12 @@ const userPage = {
 		const usernameLow = username.toLowerCase();
 
 		this.showUserForm( false );
-		return ( usernameLow === gsapiClient.user.usernameLow
-			? Promise.resolve( gsapiClient.user )
-			: gsapiClient.getUser( usernameLow ) )
+		return ( usernameLow === gsapiClient.$user.usernameLow
+			? Promise.resolve( gsapiClient.$user )
+			: gsapiClient.$getUser( usernameLow ) )
 				.then( user => {
 					this._updateUser( user );
-					return gsapiClient.getUserCompositions( user.id );
+					return gsapiClient.$getUserCompositions( user.id );
 				} )
 				.then( cmps => {
 					this._updateCompositions( cmps );
@@ -34,16 +34,16 @@ const userPage = {
 
 			inps.forEach( inp => {
 				if ( inp.name ) {
-					inp.value = gsapiClient.user[ inp.name ] || "";
+					inp.value = gsapiClient.$user[ inp.name ] || "";
 				}
 			} );
-			inps[ 3 ].checked = !!gsapiClient.user.emailpublic;
+			inps[ 3 ].checked = !!gsapiClient.$user.emailpublic;
 		}
 	},
 
 	// private:
 	_updateUser( u ) {
-		const itsMe = u.id === gsapiClient.user.id;
+		const itsMe = u.id === gsapiClient.$user.id;
 
 		DOM.userPageUser.classList.toggle( "me", itsMe );
 		DOM.userPageUserUsername.textContent = u.username;
@@ -77,7 +77,7 @@ const userPage = {
 
 		if ( !done ) {
 			load.dataset.spin = "on";
-			gsapiClient.resendConfirmationEmail()
+			gsapiClient.$resendConfirmationEmail()
 				.then( () => btn.classList.add( "sent" ) )
 				.finally( () => load.dataset.spin = "" );
 		}
@@ -93,7 +93,7 @@ const userPage = {
 
 		DOM.userPageUserFormError.textContent = "";
 		DOM.userPageUserFormSubmit.classList.add( "btn-loading" );
-		gsapiClient.updateMyInfo( obj )
+		gsapiClient.$updateMyInfo( obj )
 			.then( me => {
 				this._updateUser( me );
 				this.showUserForm( false );
