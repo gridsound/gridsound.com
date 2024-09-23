@@ -67,6 +67,7 @@ class main {
 	loggedIn( u ) {
 		DOM.headAuth.dataset.spin = "";
 		DOM.headAuth.dataset.icon = "logout";
+		DOM.headAuth.title = "Logout";
 		DOM.headAuth.href = "";
 		DOM.headUser.href = `#/u/${ u.username }`;
 		DOM.headUsername.textContent = u.username;
