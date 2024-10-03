@@ -13,7 +13,7 @@
 	color: #333;
 	background-color: #fff;
 }
-#userPageUser.me {
+#userPage.me #userPageUser {
 	grid-template-columns: var( --userPageUser-height ) 1fr 42px;
 }
 
@@ -77,8 +77,8 @@
 	cursor: pointer;
 	font-size: 12px;
 }
-#userPageUser:not( .me ) #userPageUserEmailAddr.private,
-#userPageUser:not( .me ) #userPageUserEmailNot,
+#userPage:not( .me ) #userPageUserEmailAddr.private,
+#userPage:not( .me ) #userPageUserEmailNot,
 #userPageUserEmail:not( .toVerify ) #userPageUserEmailNot,
 #userPageUserEmailNot.sent #userPageUserEmailToSend,
 #userPageUserEmailNot:not( .sent ) #userPageUserEmailSent {
@@ -112,6 +112,25 @@
 	gap: var( --main-padding );
 }
 
+/* .......................................................................... */
+.userPageMenuLink {
+	display: flex;
+	align-items: center;
+	gap: inherit;
+}
+#userPageNbCompositionsDeleted {
+	margin-left: 20px;
+}
+#userPage[ data-page="bin" ] #userPageNbCompositions,
+#userPage:not( [ data-page="bin" ] ) #userPageNbCompositionsDeleted {
+	opacity: .5;
+}
+#main:not( .premium ) #userPageNbCompositionsDeleted,
+#userPage:not( .me ) #userPageNbCompositionsDeleted {
+	display: none;
+}
+
+/* .......................................................................... */
 @media ( max-width: 450px ) {
 	#userPageUser {
 		height: auto;
@@ -123,10 +142,10 @@
 			"edit   edit" 0
 			/ var( --userPageUser-height ) 1fr;
 	}
-	#userPageUser:not( .me ) {
+	#userPage:not( .me ) #userPageUser {
 		padding-bottom: 0;
 	}
-	#userPageUser.me {
+	#userPage.me #userPageUser {
 		grid-template-columns: var( --userPageUser-height ) 1fr;
 		grid-template-rows: var( --userPageUser-height ) 1fr 34px;
 	}

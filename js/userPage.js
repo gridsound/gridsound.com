@@ -1,14 +1,16 @@
 "use strict";
 
 class userPage {
+	#page = null;
+	#pageBin = null;
+	#itsMe = false;
+	#cmps = null;
 	#cmpsMap = new Map();
 
 	constructor() {
 		Object.seal( this );
-		DOM.userPageUserEdit.onclick = this.toggleUserForm.bind( this );
 		DOM.userPageUserForm.onsubmit = this.#userInfoSubmit.bind( this );
 		DOM.userPageUserEmailNot.onclick = this.#resendEmailBtnClick.bind( this );
-		DOM.userPageUserFormCancel.onclick = this.showUserForm.bind( this, false );
 		GSUlistenEvents( DOM.userPageCmps, {
 			gsuiCmpPlayer: {
 				play: ( d, t ) => { PAGES.$main.play( t, this.#cmpsMap.get( t.dataset.id ) ); },
@@ -17,27 +19,43 @@ class userPage {
 		} );
 	}
 
-	show( username ) {
+	show( username, page ) {
 		const usernameLow = username.toLowerCase();
 
-		this.showUserForm( false );
+		this.$update( username, page );
 		return ( usernameLow === gsapiClient.$user.usernameLow
 			? Promise.resolve( gsapiClient.$user )
-			: gsapiClient.$getUser( usernameLow ) )
-				.then( user => {
-					this.#updateUser( user );
-					return gsapiClient.$getUserCompositions( user.id );
-				} )
-				.then( cmps => {
-					this.#updateCompositions( cmps );
-				} )
-				.catch( err => PAGES.$main.error( err.code ) );
+			: gsapiClient.$getUser( usernameLow )
+		)
+			.then( user => {
+				this.#updateUser( user );
+				return gsapiClient.$getUserCompositions( user.id );
+			} )
+			.then( cmps => {
+				lg(cmps)
+				this.#cmps = cmps;
+				this.#cmpsMap.clear();
+				cmps.forEach( cmp => this.#cmpsMap.set( cmp.id, cmp.data ) );
+				cmps.deleted.forEach( cmp => this.#cmpsMap.set( cmp.id, cmp.data ) );
+				DOM.userPageNbCompositions.firstChild.textContent = cmps.length;
+				DOM.userPageNbCompositionsDeleted.firstChild.textContent = cmps.deleted.length;
+				this.#updateCompositions();
+			} )
+			.catch( err => PAGES.$main.error( err.code ) );
+	}
+	$update( username, page ) {
+		this.#page = page;
+		DOM.userPage.dataset.page = page || "";
+		this.#showUserForm( page === "edit" );
+		this.#updateCompositions();
+		GSUsetAttribute( DOM.userPageUserEdit, "href", `#/u/${ gsapiClient.$user.username }${ page === "edit" ? "" : "/edit" }` );
+	}
+	$quit() {
+		this.#showUserForm( false );
 	}
 
-	toggleUserForm() {
-		this.showUserForm( DOM.userPageUserForm.classList.contains( "hidden" ) );
-	}
-	showUserForm( b ) {
+	// .........................................................................
+	#showUserForm( b ) {
 		DOM.userPageUserForm.classList.toggle( "hidden", !b );
 		if ( b ) {
 			const inps = Array.from( DOM.userPageUserForm );
@@ -50,12 +68,10 @@ class userPage {
 			inps[ 3 ].checked = !!gsapiClient.$user.emailpublic;
 		}
 	}
-
-	// .........................................................................
 	#updateUser( u ) {
-		const itsMe = u.id === gsapiClient.$user.id;
-
-		DOM.userPageUser.classList.toggle( "me", itsMe );
+		this.#itsMe = u.id === gsapiClient.$user.id;
+		DOM.main.classList.toggle( "premium", gsapiClient.$user.premium );
+		DOM.userPage.classList.toggle( "me", this.#itsMe );
 		DOM.userPageUserUsername.textContent = u.username;
 		DOM.userPageUserLastname.textContent = u.lastname;
 		DOM.userPageUserFirstname.textContent = u.firstname;
@@ -63,23 +79,34 @@ class userPage {
 		DOM.userPageUserEmailAddrText.textContent = u.email || "private email";
 		DOM.userPageUserEmailAddrStatus.dataset.icon = u.emailpublic ? "public" : "private";
 		userAvatar.setAvatar( DOM.userPageUserAvatar, u.avatar );
+		GSUsetAttribute( DOM.userPageUserFormCancel, "href", `#/u/${ u.username }` );
+		GSUsetAttribute( DOM.userPageNbCompositions, "href", this.#itsMe ? `#/u/${ u.username }` : false );
+		GSUsetAttribute( DOM.userPageNbCompositionsDeleted, "href", this.#itsMe ? `#/u/${ u.username }/bin` : false );
 	}
-	#updateCompositions( cmps ) {
-		this.#cmpsMap.clear();
-		GSUemptyElement( DOM.userPageCmps );
-		DOM.userPageNbCompositions.textContent = cmps.length;
-		DOM.userPageCmps.append( ...cmps.map( cmp => {
-			const uiCmp = GSUcreateElement( "gsui-cmp-player", {
-				"data-id": cmp.id,
-				link: `#/cmp/${ cmp.id }`,
-				name: cmp.data.name,
-				bpm: cmp.data.bpm,
-				duration: cmp.data.duration * 60 / cmp.data.bpm,
-			} );
+	#updateCompositions() {
+		const bin = this.#page === "bin";
 
-			this.#cmpsMap.set( cmp.id, cmp.data );
-			return uiCmp;
-		} ) );
+		if ( this.#cmps && this.#pageBin !== bin ) {
+			const cmps = bin
+				? this.#cmps.deleted
+				: this.#cmps;
+
+			this.#pageBin = bin;
+			GSUemptyElement( DOM.userPageCmps );
+			DOM.userPageCmps.append( ...cmps.map( cmp => {
+				return GSUcreateElement( "gsui-cmp-player", {
+					"data-id": cmp.id,
+					link: bin ? false : `#/cmp/${ cmp.id }`,
+					edit: bin ? false : `//daw.gridsound.com/#${ cmp.id }`,
+					private: !cmp.public,
+					deletable: !bin && this.#itsMe,
+					restorable: bin && this.#itsMe,
+					name: cmp.data.name,
+					bpm: cmp.data.bpm,
+					duration: cmp.data.duration * 60 / cmp.data.bpm,
+				} );
+			} ) );
+		}
 	}
 	#resendEmailBtnClick() {
 		const btn = DOM.userPageUserEmailNot;
@@ -107,7 +134,7 @@ class userPage {
 		gsapiClient.$updateMyInfo( obj )
 			.then( me => {
 				this.#updateUser( me );
-				this.showUserForm( false );
+				location.hash = `/u/${ gsapiClient.$user.username }`;
 			}, res => {
 				DOM.userPageUserFormError.textContent = res.msg;
 			} )

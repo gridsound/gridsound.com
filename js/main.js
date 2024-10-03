@@ -1,20 +1,21 @@
 "use strict";
 
 class main {
+	#pageName = null;
 	#elCmpPlaying = null;
+	#timeoutIdPageChange = null;
+	$pages = {
+		"":             [ DOM.homePage,       DOM.headIcon ],
+		u:              [ DOM.userPage,       DOM.headUser, PAGES.$user ],
+		cmp:            [ DOM.cmpPage,        null,         PAGES.$cmp ],
+		auth:           [ DOM.authPage,       DOM.headAuth, PAGES.$auth ],
+		resetPassword:  [ DOM.resetpassPage,  DOM.headAuth, PAGES.$resetpass ],
+		forgotPassword: [ DOM.forgotpassPage, DOM.headAuth, PAGES.$forgotpass ],
+	};
 
 	constructor() {
 		DOM.headAuth.onclick = this.#headAuthBtnClick.bind( this );
 		window.onhashchange = () => this.#hashChange();
-		this._timeoutIdPageChange = null;
-		this.pages = {
-			"":             [ DOM.homePage,       DOM.headIcon ],
-			u:              [ DOM.userPage,       DOM.headUser, PAGES.$user ],
-			cmp:            [ DOM.cmpPage,        null,         PAGES.$cmp ],
-			auth:           [ DOM.authPage,       DOM.headAuth, PAGES.$auth ],
-			resetPassword:  [ DOM.resetpassPage,  DOM.headAuth, PAGES.$resetpass ],
-			forgotPassword: [ DOM.forgotpassPage, DOM.headAuth, PAGES.$forgotpass ],
-		};
 	}
 
 	run() {
@@ -65,6 +66,7 @@ class main {
 		}
 	}
 	loggedIn( u ) {
+		gsapiClient.$setIntervalPing();
 		DOM.headAuth.dataset.spin = "";
 		DOM.headAuth.dataset.icon = "logout";
 		DOM.headAuth.title = "Logout";
@@ -82,17 +84,23 @@ class main {
 
 	// .........................................................................
 	#showPage( pageName, args ) {
-		const [ page, headLink, pageObj ] = this.pages[ pageName ];
+		const [ page, headLink, pageObj ] = this.$pages[ pageName ];
 
-		DOM.loader.classList.add( "show" );
-		DOM.error.classList.remove( "show" );
-		this.#toggleClass( headLink, "headLinkBefore", "selected" );
-		this.#toggleClass( page, "pageBefore", "show" );
-		clearTimeout( this._timeoutIdPageChange );
-		this._timeoutIdPageChange = setTimeout( () => {
-			Promise.resolve( pageObj && pageObj.show && pageObj.show( ...args ) )
-				.finally( () => DOM.loader.classList.remove( "show" ) );
-		}, 250 );
+		if ( pageName === this.#pageName ) {
+			pageObj?.$update?.( ...args );
+		} else {
+			this.$pages[ this.#pageName ]?.[ 2 ]?.$quit?.();
+			this.#pageName = pageName;
+			DOM.loader.classList.add( "show" );
+			DOM.error.classList.remove( "show" );
+			this.#toggleClass( headLink, "headLinkBefore", "selected" );
+			this.#toggleClass( page, "pageBefore", "show" );
+			clearTimeout( this.#timeoutIdPageChange );
+			this.#timeoutIdPageChange = setTimeout( () => {
+				Promise.resolve( pageObj?.show?.( ...args ) )
+					.finally( () => DOM.loader.classList.remove( "show" ) );
+			}, 250 );
+		}
 	}
 	#toggleClass( el, prevAttr, clazz ) {
 		const elPrev = this[ prevAttr ];
@@ -111,16 +119,27 @@ class main {
 		if ( !hash ) {
 			location.hash = "#/";
 		} else if ( hash !== "#/" && hash.endsWith( "/" ) ) {
-			location.hash = hash.substr( 0, hash.length - 1 );
+			location.hash = hash.substring( 0, hash.length - 1 );
 		} else {
 			const arr = hash.split( "/" );
-			const len = arr.length;
+			const len = arr.length - 1;
 			const [ , pg, ...args ] = arr;
 
 			if (
-				( len <= 3 && ( pg === "u" || pg === "cmp" ) ) ||
-				( len === 4 && ( pg === "resetPassword" ) ) ||
-				( len === 2 && ( pg === "" || pg === "auth" || pg === "forgotPassword" ) )
+				(
+					( len === 2 && pg === "u" ) ||
+					( len === 3 && pg === "u" && (
+						args[ 1 ] === "edit" ||
+						args[ 1 ] === "bin"
+					) )
+				) ||
+				( len === 2 && pg === "cmp" ) ||
+				( len === 3 && pg === "resetPassword" ) ||
+				( len === 1 && (
+					pg === "" ||
+					pg === "auth" ||
+					pg === "forgotPassword"
+				) )
 			) {
 				this.#showPage( pg, args );
 			} else {

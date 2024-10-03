@@ -17,7 +17,6 @@
 .pageSectionTitle {
 	display: flex;
 	gap: .5ch;
-	opacity: .4;
 }
 .pageSectionTitleValue {
 	font-weight: bold;

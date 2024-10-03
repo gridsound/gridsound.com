@@ -48,6 +48,7 @@
 	width: 100%;
 	box-sizing: border-box;
 	padding: .8em;
+	outline: 0;
 	border: 0;
 	border-radius: 2px;
 	background-color: #eee;
