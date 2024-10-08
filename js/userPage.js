@@ -5,6 +5,7 @@ class userPage {
 	#pageBin = null;
 	#itsMe = false;
 	#cmps = null;
+	#cmpsDel = null;
 	#cmpsMap = new Map();
 
 	constructor() {
@@ -13,12 +14,15 @@ class userPage {
 		DOM.userPageUserEmailNot.onclick = this.#resendEmailBtnClick.bind( this );
 		GSUlistenEvents( DOM.userPageCmps, {
 			gsuiCmpPlayer: {
-				play: ( d, t ) => { PAGES.$main.play( t, this.#cmpsMap.get( t.dataset.id ) ); },
+				play: ( d, t ) => { PAGES.$main.play( t, this.#cmpsMap.get( t.dataset.id ).data ); },
 				stop: ( d, t ) => { PAGES.$main.stop(); },
+				delete: ( d, t ) => this.#deleteRestoreComposition( t, "delete" ),
+				restore: ( d, t ) => this.#deleteRestoreComposition( t, "restore" ),
 			},
 		} );
 	}
 
+	// .........................................................................
 	show( username, page ) {
 		const usernameLow = username.toLowerCase();
 
@@ -33,13 +37,13 @@ class userPage {
 			} )
 			.then( cmps => {
 				lg(cmps)
-				this.#cmps = cmps;
+				this.#cmps = [ ...cmps ];
+				this.#cmpsDel = [ ...cmps.deleted ];
 				this.#cmpsMap.clear();
-				cmps.forEach( cmp => this.#cmpsMap.set( cmp.id, cmp.data ) );
-				cmps.deleted.forEach( cmp => this.#cmpsMap.set( cmp.id, cmp.data ) );
-				DOM.userPageNbCompositions.firstChild.textContent = cmps.length;
-				DOM.userPageNbCompositionsDeleted.firstChild.textContent = cmps.deleted.length;
-				this.#updateCompositions();
+				this.#cmps.forEach( cmp => this.#cmpsMap.set( cmp.id, cmp ) );
+				this.#cmpsDel.forEach( cmp => this.#cmpsMap.set( cmp.id, cmp ) );
+				this.#updateNbCompositions();
+				this.#createCompositions();
 			} )
 			.catch( err => PAGES.$main.error( err.code ) );
 	}
@@ -47,7 +51,7 @@ class userPage {
 		this.#page = page;
 		DOM.userPage.dataset.page = page || "";
 		this.#showUserForm( page === "edit" );
-		this.#updateCompositions();
+		this.#createCompositions();
 		GSUsetAttribute( DOM.userPageUserEdit, "href", `#/u/${ gsapiClient.$user.username }${ page === "edit" ? "" : "/edit" }` );
 	}
 	$quit() {
@@ -83,12 +87,16 @@ class userPage {
 		GSUsetAttribute( DOM.userPageNbCompositions, "href", this.#itsMe ? `#/u/${ u.username }` : false );
 		GSUsetAttribute( DOM.userPageNbCompositionsDeleted, "href", this.#itsMe ? `#/u/${ u.username }/bin` : false );
 	}
-	#updateCompositions() {
+	#updateNbCompositions() {
+		DOM.userPageNbCompositions.firstChild.textContent = this.#cmps.length;
+		DOM.userPageNbCompositionsDeleted.firstChild.textContent = this.#cmpsDel.length;
+	}
+	#createCompositions() {
 		const bin = this.#page === "bin";
 
 		if ( this.#cmps && this.#pageBin !== bin ) {
 			const cmps = bin
-				? this.#cmps.deleted
+				? this.#cmpsDel
 				: this.#cmps;
 
 			this.#pageBin = bin;
@@ -97,13 +105,12 @@ class userPage {
 				return GSUcreateElement( "gsui-cmp-player", {
 					"data-id": cmp.id,
 					link: bin ? false : `#/cmp/${ cmp.id }`,
-					edit: bin ? false : `//daw.gridsound.com/#${ cmp.id }`,
+					edit: bin ? false : `//localhost/gridsound/daw/#${ cmp.id }`,
 					private: !cmp.public,
-					deletable: !bin && this.#itsMe,
-					restorable: bin && this.#itsMe,
 					name: cmp.data.name,
 					bpm: cmp.data.bpm,
 					duration: cmp.data.duration * 60 / cmp.data.bpm,
+					actions: !this.#itsMe ? false : bin ? "restore" : "delete",
 				} );
 			} ) );
 		}
@@ -140,5 +147,26 @@ class userPage {
 			} )
 			.finally( () => DOM.userPageUserFormSubmit.classList.remove( "btn-loading" ) );
 		return false;
+	}
+	#deleteRestoreComposition( elCmp, act ) {
+		const id = elCmp.dataset.id;
+
+		( act === "delete"
+			? gsapiClient.$deleteComposition( id )
+			: gsapiClient.$restoreComposition( id )
+		).then( () => {
+			if ( act === "delete" ) {
+				this.#cmpsDel.unshift( this.#cmpsMap.get( id ) );
+				this.#cmps = this.#cmps.filter( cmp => cmp.id !== id );
+			} else {
+				this.#cmps.unshift( this.#cmpsMap.get( id ) );
+				this.#cmpsDel = this.#cmpsDel.filter( cmp => cmp.id !== id );
+			}
+			GSUsetAttribute( elCmp, act === "delete" ? "deleting" : "restoring", true );
+			setTimeout( () => {
+				elCmp.remove();
+				this.#updateNbCompositions();
+			}, 350 );
+		} );
 	}
 }

@@ -17,7 +17,7 @@ writeHeader() {
 	echo '<meta property="og:image:width" content="800"/>'
 	echo '<meta property="og:image:height" content="400"/>'
 	echo '<meta property="og:description" content="an online digital audio workstation"/>'
-	echo '<link rel="shortcut icon" href="/assets/favicon.png"/>'
+	echo '<link rel="shortcut icon" href="assets/favicon.png"/>'
 }
 writeBody() {
 	echo '</head>'
@@ -52,9 +52,10 @@ writeJScompress() {
 }
 
 declare -a CSSfiles=(
-	"../assets/fonts/fonts.css"
+	"assets/fonts/fonts.css"
 
 	"gs-ui-components/gsuiIcon/gsuiIcon.css"
+	"gs-ui-components/gsuiActionMenu/gsuiActionMenu.css"
 	"gs-ui-components/gsuiCmpPlayer/gsuiCmpPlayer.css"
 
 	"css/btn.css"
@@ -160,7 +161,6 @@ declare -a JSfiles=(
 	"gs-wa-components/gswaMIDIDevices/gswaMIDIInput.js"
 	"gs-wa-components/gswaMIDIDevices/gswaMIDIOutput.js"
 
-	"gs-ui-components/gsuiCmpPlayer/gsuiCmpPlayer.html.js"
 	"html/main.html.js"
 	"html/cmpPage.html.js"
 	"html/homePage.html.js"
@@ -168,8 +168,11 @@ declare -a JSfiles=(
 	"html/authPage.html.js"
 	"html/forgotpassPage.html.js"
 	"html/resetpassPage.html.js"
+	"gs-ui-components/gsuiCmpPlayer/gsuiCmpPlayer.html.js"
 
 	"gs-ui-components/gsui0ne/gsui0ne.js"
+	"gs-ui-components/gsuiActionMenu/gsuiActionMenu.js"
+	"gs-ui-components/gsuiActionMenu/getAbsPos.js"
 	"gs-ui-components/gsuiCmpPlayer/gsuiCmpPlayer.js"
 
 	"js/common/rippleEffect.js"
