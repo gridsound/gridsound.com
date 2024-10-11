@@ -4,6 +4,8 @@
 	flex-direction: column;
 	gap: var( --main-padding );
 }
+
+/* .......................................................................... */
 .pageSection {
 	overflow: hidden;
 	transition: .2s;
@@ -14,13 +16,55 @@
 	max-height: 0;
 	margin-top: calc( -1 * var( --main-padding ) );
 }
+
+/* .......................................................................... */
 .pageSectionTitle {
 	display: flex;
-	gap: .5ch;
+	flex-wrap: wrap;
+	column-gap: 20px;
+	row-gap: 6px;
 }
 .pageSectionTitleValue {
 	font-weight: bold;
 }
 .pageSectionTitleLabel {
 	opacity: .7;
+}
+
+/* .......................................................................... */
+.pageSectionBody {
+	display: flex;
+}
+.pageSectionBody:empty {
+	display: none;
+}
+
+/* .......................................................................... */
+.pageSectionPlaceHolder {
+	display: none;
+	align-items: center;
+	flex-direction: column;
+	margin-top: 40px;
+	gap: 20px;
+}
+.pageSectionPlaceHolder-text {
+	max-width: 360px;
+	font-size: 16px;
+	font-weight: bold;
+	font-style: italic;
+	text-align: center;
+	line-height: 1.6em;
+	opacity: .7;
+}
+.pageSectionPlaceHolder-draw {
+	position: relative;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 100px;
+	height: 100px;
+	opacity: .5;
+}
+.pageSectionPlaceHolder-draw .gsuiIcon {
+	font-size: 60px;
 }
