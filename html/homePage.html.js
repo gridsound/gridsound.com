@@ -28,7 +28,7 @@ GSUsetTemplate( "gs-homePage", () =>
 				GSUcreateAExt( { href: "//soundbox.gridsound.com" }, "SoundBox" ),
 				GSUcreateElement( "br", null ),
 				GSUcreateSpan( null,
-					"A simple page to check quickly an entire audio sample library in few clicks. " +
+					"A simple page to quickly check an entire audio sample library in few clicks. " +
 					"Just drop your files and you can check their waveforms and play them as you want, " +
 					"easier than VLC or anything for this specific purpose."
 				),
@@ -45,14 +45,15 @@ GSUsetTemplate( "gs-homePage", () =>
 				GSUcreateAExt( { href: "//gammes.gridsound.com" }, "Gammes" ),
 				GSUcreateElement( "br", null ),
 				GSUcreateSpan( null,
-					"Gammes is an educative page to learn the musical scales."
+					"Gammes is an educative page to learn and listen the musical scales with different notations."
 				),
 			),
 		),
 		GSUcreateSpan( null,
 			"In the footer you have access to all the GridSound links on different social networks. " +
 			"You can come to the Discord and join the chat to ask for help on how to use the DAW " +
-			"or you can follow us on Twitter or Facebook to read our latest news."
+			"or you can follow us on Twitter or Facebook to read our latest news. " +
+			"The GitHub link allows you to open an issue if you see a bug."
 		),
 	),
 );
