@@ -1,6 +1,6 @@
 function rippleEffectInit( el ) {
 	el.classList.add( "rippleEffect" );
-	el.addEventListener( "click", rippleEffectExec, false );
+	el.addEventListener( "pointerdown", rippleEffectExec, false );
 }
 
 function rippleEffectExec( e ) {
