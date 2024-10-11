@@ -1,8 +1,10 @@
 #footer {
-	display: flex;
 	position: relative;
-	justify-content: center;
 	box-sizing: border-box;
+	display: flex;
+	align-items: center;
+	flex-direction: column;
+	gap: 10px;
 	margin-top: calc( var( --main-padding ) + 64px );
 	padding: 16px 0;
 	font-size: 14px;
@@ -13,28 +15,25 @@
 	position: absolute;
 	top: 0;
 	width: 100%;
-	border-top: 1px solid;
+	border-bottom: 1px solid;
 	opacity: .1;
 }
 
-#footerContent {
-	overflow: hidden;
-	display: flex;
-	flex-direction: column;
-	gap: 10px;
-}
 #footerSocialsLink {
 	display: flex;
-	justify-content: center;
-	gap: 1em;
+	justify-content: space-between;
+	width: 300px;
+	max-width: 100%;
 }
 #footerSocialsLink a:hover {
 	color: #ceb3e8;
 }
+
 #footerCopyright {
 	font-size: 12px;
 	text-align: center;
 	overflow: hidden;
+	width: 100%;
 	white-space: nowrap;
 	text-overflow: ellipsis;
 	opacity: .8;
