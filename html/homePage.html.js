@@ -12,7 +12,7 @@ GSUsetTemplate( "gs-homePage", () =>
 		),
 		GSUcreateElement( "ul", null,
 			GSUcreateElement( "li", null,
-				GSUcreateAExt( { href: "//gridsound.com/daw" }, "DAW (Digital Audio Workstation)" ),
+				GSUcreateAExt( { href: DAWURL }, "DAW (Digital Audio Workstation)" ),
 				GSUcreateElement( "br", null ),
 				GSUcreateSpan( null,
 					"This is the main app to create a full digital music, " +

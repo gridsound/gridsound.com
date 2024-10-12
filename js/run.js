@@ -1,5 +1,7 @@
 "use strict";
 
+const DAWURL = "//localhost/gridsound/daw/";
+
 document.body.append( GSUgetTemplate( "gs-main" ) );
 
 document.querySelector( "#pages" ).append(

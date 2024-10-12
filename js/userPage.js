@@ -105,7 +105,7 @@ class userPage {
 				return GSUcreateElement( "gsui-cmp-player", {
 					"data-id": cmp.id,
 					link: bin ? false : `#/cmp/${ cmp.id }`,
-					dawlink: bin ? false : `//localhost/gridsound/daw/#${ cmp.id }`,
+					dawlink: bin ? false : `${ DAWURL }#${ cmp.id }`,
 					private: !cmp.public,
 					name: cmp.data.name,
 					bpm: cmp.data.bpm,
