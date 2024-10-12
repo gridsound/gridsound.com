@@ -39,6 +39,28 @@
 }
 
 /* .......................................................................... */
+#headNewCmp {
+	position: relative;
+	width: 68px;
+	padding-right: 8px;
+	font-size: 28px;
+}
+#headNewCmp .gsuiIcon + .gsuiIcon {
+	position: absolute;
+	font-size: 20px;
+	top: 42px;
+	left: 42px;
+}
+#headNewCmp .gsuiIcon:nth-child( 2 ) {
+	margin-left: -3px;
+	margin-top: -3px;
+	color: var( --head-bg );
+}
+#headNewCmp .gsuiIcon:nth-child( 2 ):after {
+	opacity: 1;
+}
+
+/* .......................................................................... */
 #headUser {
 	display: flex;
 	align-items: center;

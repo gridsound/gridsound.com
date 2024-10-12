@@ -72,7 +72,6 @@ GSUsetTemplate( "gs-userPage", () =>
 				),
 			),
 		),
-		GSUcreateAExt( { id: "userPageNewCmp", href: DAWURL, class: "btn btn-submit" }, "Create a new composition" ),
 		GSUcreateDiv( { class: "pageSection" },
 			GSUcreateDiv( { class: "pageSectionTitle" },
 				GSUcreateA( { class: "userPageMenuLink", href: false, id: "userPageNbCompositions" },
