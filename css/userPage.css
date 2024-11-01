@@ -128,7 +128,7 @@
 }
 
 /* .......................................................................... */
-#userPage[ data-page="bin" ] gsui-cmp-player {
+#userPage[ data-page="bin" ] gsui-com-player {
 	opacity: .6;
 	--gsui-bg: #fff4;
 }

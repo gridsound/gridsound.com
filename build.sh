@@ -56,7 +56,7 @@ declare -a CSSfiles=(
 
 	"gs-ui-components/gsuiIcon/gsuiIcon.css"
 	"gs-ui-components/gsuiActionMenu/gsuiActionMenu.css"
-	"gs-ui-components/gsuiCmpPlayer/gsuiCmpPlayer.css"
+	"gs-ui-components/gsuiComPlayer/gsuiComPlayer.css"
 
 	"css/btn.css"
 	"css/form.css"
@@ -165,12 +165,12 @@ declare -a JSfiles=(
 	"html/authPage.html.js"
 	"html/forgotpassPage.html.js"
 	"html/resetpassPage.html.js"
-	"gs-ui-components/gsuiCmpPlayer/gsuiCmpPlayer.html.js"
+	"gs-ui-components/gsuiComPlayer/gsuiComPlayer.html.js"
 
 	"gs-ui-components/gsui0ne/gsui0ne.js"
 	"gs-ui-components/gsuiActionMenu/gsuiActionMenu.js"
 	"gs-ui-components/gsuiActionMenu/getAbsPos.js"
-	"gs-ui-components/gsuiCmpPlayer/gsuiCmpPlayer.js"
+	"gs-ui-components/gsuiComPlayer/gsuiComPlayer.js"
 
 	"js/common/rippleEffect.js"
 	"js/main.js"

@@ -6,7 +6,7 @@ class cmpPage {
 	constructor() {
 		Object.seal( this );
 		GSUlistenEvents( DOM.cmpPage, {
-			gsuiCmpPlayer: {
+			gsuiComPlayer: {
 				play: ( d, t ) => { PAGES.$main.play( DOM.cmpPageCmp, this.#cmp ); },
 				stop: ( d, t ) => { PAGES.$main.stop(); },
 			},

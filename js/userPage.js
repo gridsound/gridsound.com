@@ -14,7 +14,7 @@ class userPage {
 		DOM.userPageUserForm.onsubmit = this.#userInfoSubmit.bind( this );
 		DOM.userPageUserEmailNot.onclick = this.#resendEmailBtnClick.bind( this );
 		GSUlistenEvents( DOM.userPageCmps, {
-			gsuiCmpPlayer: {
+			gsuiComPlayer: {
 				play: ( d, t ) => { PAGES.$main.play( t, this.#cmpsMap.get( t.dataset.id ).data ); },
 				stop: ( d, t ) => { PAGES.$main.stop(); },
 				fork: ( d, t ) => this.#forkComposition( t ),
@@ -107,7 +107,7 @@ class userPage {
 
 			GSUemptyElement( DOM.userPageCmps );
 			DOM.userPageCmps.append( ...cmps.map( cmp => {
-				return GSUcreateElement( "gsui-cmp-player", {
+				return GSUcreateElement( "gsui-com-player", {
 					"data-id": cmp.id,
 					link: this.#pageBin ? false : `#/cmp/${ cmp.id }`,
 					dawlink: this.#pageBin ? false : `${ DAWURL }#${ cmp.id }`,
