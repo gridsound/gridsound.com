@@ -1,6 +1,7 @@
 "use strict";
 
 class userPage {
+	#usernameLow = null;
 	#page = null;
 	#pageBin = null;
 	#itsMe = false;
@@ -16,6 +17,7 @@ class userPage {
 			gsuiCmpPlayer: {
 				play: ( d, t ) => { PAGES.$main.play( t, this.#cmpsMap.get( t.dataset.id ).data ); },
 				stop: ( d, t ) => { PAGES.$main.stop(); },
+				fork: ( d, t ) => this.#forkComposition( t ),
 				delete: ( d, t ) => this.#deleteRestoreComposition( t, "delete" ),
 				restore: ( d, t ) => this.#deleteRestoreComposition( t, "restore" ),
 			},
@@ -24,41 +26,48 @@ class userPage {
 
 	// .........................................................................
 	show( username, page ) {
+		this.$update( username, page );
+	}
+	$update( username, page ) {
+		const usernameLow = username.toLowerCase();
+		const changeCmpsSubPage = this.#pageBin !== ( page === "bin" );
+
+		this.#page = page;
+		this.#pageBin = page === "bin";
+		DOM.userPage.dataset.page = page || "";
+		if ( usernameLow !== this.#usernameLow ) {
+			this.#downloadData( username );
+		} else if ( changeCmpsSubPage ) {
+			this.#updateCompositions();
+		}
+		this.#showUserForm( page === "edit" && usernameLow === gsapiClient.$user.usernameLow );
+		GSUsetAttribute( DOM.userPageUserEdit, "href", `#/u/${ gsapiClient.$user.username }${ page === "edit" ? "" : "/edit" }` );
+	}
+	$quit() {
+		this.#usernameLow = null;
+		this.#showUserForm( false );
+	}
+
+	// .........................................................................
+	#downloadData( username ) {
 		const usernameLow = username.toLowerCase();
 
-		this.$update( username, page );
-		return ( usernameLow === gsapiClient.$user.usernameLow
-			? Promise.resolve( gsapiClient.$user )
-			: gsapiClient.$getUser( usernameLow )
-		)
+		return gsapiClient.$getUser( usernameLow )
 			.then( user => {
 				this.#updateUser( user );
 				return gsapiClient.$getUserCompositions( user.id );
 			} )
 			.then( cmps => {
-				lg(cmps)
 				this.#cmps = [ ...cmps ];
 				this.#cmpsDel = [ ...cmps.deleted ];
 				this.#cmpsMap.clear();
 				this.#cmps.forEach( cmp => this.#cmpsMap.set( cmp.id, cmp ) );
 				this.#cmpsDel.forEach( cmp => this.#cmpsMap.set( cmp.id, cmp ) );
 				this.#updateNbCompositions();
-				this.#createCompositions();
+				this.#updateCompositions();
 			} )
 			.catch( err => PAGES.$main.error( err.code ) );
 	}
-	$update( username, page ) {
-		this.#page = page;
-		DOM.userPage.dataset.page = page || "";
-		this.#showUserForm( page === "edit" );
-		this.#createCompositions();
-		GSUsetAttribute( DOM.userPageUserEdit, "href", `#/u/${ gsapiClient.$user.username }${ page === "edit" ? "" : "/edit" }` );
-	}
-	$quit() {
-		this.#showUserForm( false );
-	}
-
-	// .........................................................................
 	#showUserForm( b ) {
 		DOM.userPageUserForm.classList.toggle( "hidden", !b );
 		if ( b ) {
@@ -73,6 +82,7 @@ class userPage {
 		}
 	}
 	#updateUser( u ) {
+		this.#usernameLow = u.usernameLow;
 		this.#itsMe = u.id === gsapiClient.$user.id;
 		DOM.main.classList.toggle( "premium", gsapiClient.$user.premium );
 		DOM.userPage.classList.toggle( "me", this.#itsMe );
@@ -91,26 +101,23 @@ class userPage {
 		DOM.userPageNbCompositions.firstChild.textContent = this.#cmps.length;
 		DOM.userPageNbCompositionsDeleted.firstChild.textContent = this.#cmpsDel.length;
 	}
-	#createCompositions() {
-		const bin = this.#page === "bin";
+	#updateCompositions() {
+		if ( this.#cmps ) {
+			const cmps = this.#pageBin ? this.#cmpsDel : this.#cmps;
 
-		if ( this.#cmps && this.#pageBin !== bin ) {
-			const cmps = bin
-				? this.#cmpsDel
-				: this.#cmps;
-
-			this.#pageBin = bin;
 			GSUemptyElement( DOM.userPageCmps );
 			DOM.userPageCmps.append( ...cmps.map( cmp => {
 				return GSUcreateElement( "gsui-cmp-player", {
 					"data-id": cmp.id,
-					link: bin ? false : `#/cmp/${ cmp.id }`,
-					dawlink: bin ? false : `${ DAWURL }#${ cmp.id }`,
+					link: this.#pageBin ? false : `#/cmp/${ cmp.id }`,
+					dawlink: this.#pageBin ? false : `${ DAWURL }#${ cmp.id }`,
+					itsmine: this.#itsMe,
 					private: !cmp.public,
+					opensource: cmp.opensource,
 					name: cmp.data.name,
 					bpm: cmp.data.bpm,
 					duration: cmp.data.duration * 60 / cmp.data.bpm,
-					actions: !this.#itsMe ? false : bin ? "restore" : "delete",
+					actions: !this.#itsMe ? false : this.#pageBin ? "restore" : "fork delete",
 				} );
 			} ) );
 		}
@@ -147,6 +154,9 @@ class userPage {
 			} )
 			.finally( () => DOM.userPageUserFormSubmit.classList.remove( "btn-loading" ) );
 		return false;
+	}
+	#forkComposition( elCmp ) {
+		gsapiClient.$forkComposition( elCmp.dataset.id );
 	}
 	#deleteRestoreComposition( elCmp, act ) {
 		const id = elCmp.dataset.id;

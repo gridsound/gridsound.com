@@ -48,8 +48,7 @@ class main {
 
 		this.stop();
 		if ( elCmp !== currCmp ) {
-			daw.$addCompositionByJSObject( cmp, { saveMode: "cloud" } )
-				.then( cmpData => daw.$openComposition( "cloud", cmpData.id ) )
+			daw.$openComposition( cmp )
 				.then( () => {
 					daw.$focusOn( "composition" );
 					daw.$play();

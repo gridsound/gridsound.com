@@ -103,9 +103,6 @@ declare -a JSfiles=(
 
 	"daw-core/src/DAWCore.js"
 	"daw-core/src/DAWCoreBuffers.js"
-	"daw-core/src/DAWCoreLocalStorage.js"
-	"daw-core/src/DAWCoreAddComposition.js"
-	"daw-core/src/DAWCoreCompositionExportJSON.js"
 	"daw-core/src/DAWCoreCompositionExportWAV.js"
 	"daw-core/src/DAWCoreCompositionFormat.js"
 	"daw-core/src/DAWCoreDestination.js"
