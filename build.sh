@@ -58,6 +58,7 @@ declare -a CSSfiles=(
 	"gs-ui-components/gsuiIcon/gsuiIcon.css"
 	"gs-ui-components/gsuiRipple/gsuiRipple.css"
 	"gs-ui-components/gsuiActionMenu/gsuiActionMenu.css"
+	"gs-ui-components/gsuiComAvatar/gsuiComAvatar.css"
 	"gs-ui-components/gsuiComButton/gsuiComButton.css"
 	"gs-ui-components/gsuiComProfile/gsuiComProfile.css"
 	"gs-ui-components/gsuiComPlayer/gsuiComPlayer.css"
@@ -73,7 +74,6 @@ declare -a CSSfiles=(
 	"css/authPages.css"
 	"css/userPage.css"
 	"css/cmpPage.css"
-	"css/userAvatar.css"
 )
 
 declare -a JSfiles=(
@@ -174,6 +174,7 @@ declare -a JSfiles=(
 	"gs-ui-components/gsuiRipple/gsuiRipple.js"
 	"gs-ui-components/gsuiActionMenu/gsuiActionMenu.js"
 	"gs-ui-components/gsuiActionMenu/getAbsPos.js"
+	"gs-ui-components/gsuiComAvatar/gsuiComAvatar.js"
 	"gs-ui-components/gsuiComButton/gsuiComButton.js"
 	"gs-ui-components/gsuiComProfile/gsuiComProfile.js"
 	"gs-ui-components/gsuiComPlayer/gsuiComPlayer.js"
@@ -181,7 +182,6 @@ declare -a JSfiles=(
 	"js/main.js"
 	"js/authPage.js"
 	"js/userPage.js"
-	"js/userAvatar.js"
 	"js/cmpPage.js"
 	"js/resetpassPage.js"
 	"js/forgotpassPage.js"

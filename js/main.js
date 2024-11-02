@@ -73,7 +73,7 @@ class main {
 		DOM.headUser.href = `#/u/${ u.username }`;
 		DOM.headUsername.textContent = u.username;
 		DOM.main.classList.remove( "noauth" );
-		userAvatar.setAvatar( DOM.headAvatar, u.avatar );
+		GSUsetAttribute( DOM.headAvatar, "src", u.avatar );
 	}
 	error( code ) {
 		DOM.errorCode.textContent = code;
