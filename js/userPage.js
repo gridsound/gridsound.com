@@ -11,8 +11,8 @@ class userPage {
 
 	constructor() {
 		Object.seal( this );
-		DOM.userPageUserForm.onsubmit = this.#userInfoSubmit.bind( this );
-		DOM.userPageUserEmailNot.onclick = this.#resendEmailBtnClick.bind( this );
+		DOM.gsuiComProfile.$setSavingCallbackPromise( this.#userInfoSubmit.bind( this ) );
+		DOM.gsuiComProfile.$setVerifyEmailCallbackPromise( this.#resendEmailBtnClick.bind( this ) );
 		GSUlistenEvents( DOM.userPageCmps, {
 			gsuiComPlayer: {
 				play: ( d, t ) => { PAGES.$main.play( t, this.#cmpsMap.get( t.dataset.id ).data ); },
@@ -40,12 +40,9 @@ class userPage {
 		} else if ( changeCmpsSubPage ) {
 			this.#updateCompositions();
 		}
-		this.#showUserForm( page === "edit" && usernameLow === gsapiClient.$user.usernameLow );
-		GSUsetAttribute( DOM.userPageUserEdit, "href", `#/u/${ gsapiClient.$user.username }${ page === "edit" ? "" : "/edit" }` );
 	}
 	$quit() {
 		this.#usernameLow = null;
-		this.#showUserForm( false );
 	}
 
 	// .........................................................................
@@ -68,32 +65,21 @@ class userPage {
 			} )
 			.catch( err => PAGES.$main.error( err.code ) );
 	}
-	#showUserForm( b ) {
-		DOM.userPageUserForm.classList.toggle( "hidden", !b );
-		if ( b ) {
-			const inps = Array.from( DOM.userPageUserForm );
-
-			inps.forEach( inp => {
-				if ( inp.name ) {
-					inp.value = gsapiClient.$user[ inp.name ] || "";
-				}
-			} );
-			inps[ 3 ].checked = !!gsapiClient.$user.emailpublic;
-		}
-	}
 	#updateUser( u ) {
 		this.#usernameLow = u.usernameLow;
 		this.#itsMe = u.id === gsapiClient.$user.id;
 		DOM.main.classList.toggle( "premium", gsapiClient.$user.premium );
 		DOM.userPage.classList.toggle( "me", this.#itsMe );
-		DOM.userPageUserUsername.textContent = u.username;
-		DOM.userPageUserLastname.textContent = u.lastname;
-		DOM.userPageUserFirstname.textContent = u.firstname;
-		DOM.userPageUserEmail.classList.toggle( "toVerify", !u.emailchecked );
-		DOM.userPageUserEmailAddrText.textContent = u.email || "private email";
-		DOM.userPageUserEmailAddrStatus.dataset.icon = u.emailpublic ? "public" : "private";
-		userAvatar.setAvatar( DOM.userPageUserAvatar, u.avatar );
-		GSUsetAttribute( DOM.userPageUserFormCancel, "href", `#/u/${ u.username }` );
+		GSUsetAttribute( DOM.gsuiComProfile, {
+			itsme: this.#itsMe,
+			username: u.username,
+			lastname: u.lastname,
+			firstname: u.firstname,
+			avatar: u.avatar,
+			email: u.email,
+			emailpublic: u.emailpublic,
+			emailtoverify: !u.emailchecked,
+		} );
 		GSUsetAttribute( DOM.userPageNbCompositions, "href", this.#itsMe ? `#/u/${ u.username }` : false );
 		GSUsetAttribute( DOM.userPageNbCompositionsDeleted, "href", this.#itsMe ? `#/u/${ u.username }/bin` : false );
 	}
@@ -105,6 +91,7 @@ class userPage {
 		if ( this.#cmps ) {
 			const cmps = this.#pageBin ? this.#cmpsDel : this.#cmps;
 
+			lg(cmps)
 			GSUemptyElement( DOM.userPageCmps );
 			DOM.userPageCmps.append( ...cmps.map( cmp => {
 				return GSUcreateElement( "gsui-com-player", {
@@ -123,40 +110,20 @@ class userPage {
 		}
 	}
 	#resendEmailBtnClick() {
-		const btn = DOM.userPageUserEmailNot;
-		const load = DOM.userPageUserEmailSending;
-		const done = load.dataset.spin === "on" || btn.classList.contains( "sent" );
-
-		if ( !done ) {
-			load.dataset.spin = "on";
-			gsapiClient.$resendConfirmationEmail()
-				.then( () => btn.classList.add( "sent" ) )
-				.finally( () => load.dataset.spin = "" );
-		}
+		return gsapiClient.$resendConfirmationEmail();
 	}
-	#userInfoSubmit() {
-		const inps = Array.from( DOM.userPageUserForm );
-		const obj = inps.reduce( ( obj, inp ) => {
-				if ( inp.name ) {
-					obj[ inp.name ] = inp.type !== "checkbox" ? inp.value : inp.checked;
-				}
-				return obj;
-			}, {} );
-
-		DOM.userPageUserFormError.textContent = "";
-		DOM.userPageUserFormSubmit.classList.add( "btn-loading" );
-		gsapiClient.$updateMyInfo( obj )
-			.then( me => {
-				this.#updateUser( me );
-				location.hash = `/u/${ gsapiClient.$user.username }`;
-			}, res => {
-				DOM.userPageUserFormError.textContent = res.msg;
-			} )
-			.finally( () => DOM.userPageUserFormSubmit.classList.remove( "btn-loading" ) );
-		return false;
+	#userInfoSubmit( obj ) {
+		return gsapiClient.$updateMyInfo( obj ).catch( err => { throw err.msg; } );
 	}
 	#forkComposition( elCmp ) {
-		gsapiClient.$forkComposition( elCmp.dataset.id );
+		gsapiClient.$forkComposition( elCmp.dataset.id )
+			.then( res => {
+				lg( "forked with success", elCmp.dataset.id, res );
+				return gsapiClient.$getComposition( res.msg );
+			} )
+			.then( obj => {
+				lg(obj.composition.data)
+			} )
 	}
 	#deleteRestoreComposition( elCmp, act ) {
 		const id = elCmp.dataset.id;

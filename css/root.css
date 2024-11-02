@@ -24,10 +24,6 @@
 	--auth-signup-bg: #607d8b;
 	--auth-signup-text: #fff;
 
-	--userPageUser-height: 120px;
-	--userPageUser-padding: 10px;
-	--userPageUser-avatar-color: #2e355b;
-
 	--cmp-height: 64px;
 	--cmp-bg: #2e355b;
 	--cmp-bgGrad: linear-gradient(45deg, #0003, transparent);

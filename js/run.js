@@ -16,7 +16,6 @@ document.querySelector( "#pages" ).append(
 const DOM = {};
 
 document.querySelectorAll( "[id]" ).forEach( el => DOM[ el.id ] = el );
-document.querySelectorAll( ".btn" ).forEach( btn => rippleEffectInit( btn ) );
 
 const PAGES = {
 	$cmp: new cmpPage(),

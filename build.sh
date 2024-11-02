@@ -54,13 +54,15 @@ writeJScompress() {
 declare -a CSSfiles=(
 	"assets/fonts/fonts.css"
 
+	"gs-ui-components/gsui.css"
 	"gs-ui-components/gsuiIcon/gsuiIcon.css"
+	"gs-ui-components/gsuiRipple/gsuiRipple.css"
 	"gs-ui-components/gsuiActionMenu/gsuiActionMenu.css"
+	"gs-ui-components/gsuiComButton/gsuiComButton.css"
+	"gs-ui-components/gsuiComProfile/gsuiComProfile.css"
 	"gs-ui-components/gsuiComPlayer/gsuiComPlayer.css"
 
-	"css/btn.css"
 	"css/form.css"
-	"css/rippleEffect.css"
 	"css/root.css"
 	"css/reset.css"
 	"css/main.css"
@@ -165,14 +167,17 @@ declare -a JSfiles=(
 	"html/authPage.html.js"
 	"html/forgotpassPage.html.js"
 	"html/resetpassPage.html.js"
+	"gs-ui-components/gsuiComProfile/gsuiComProfile.html.js"
 	"gs-ui-components/gsuiComPlayer/gsuiComPlayer.html.js"
 
 	"gs-ui-components/gsui0ne/gsui0ne.js"
+	"gs-ui-components/gsuiRipple/gsuiRipple.js"
 	"gs-ui-components/gsuiActionMenu/gsuiActionMenu.js"
 	"gs-ui-components/gsuiActionMenu/getAbsPos.js"
+	"gs-ui-components/gsuiComButton/gsuiComButton.js"
+	"gs-ui-components/gsuiComProfile/gsuiComProfile.js"
 	"gs-ui-components/gsuiComPlayer/gsuiComPlayer.js"
 
-	"js/common/rippleEffect.js"
 	"js/main.js"
 	"js/authPage.js"
 	"js/userPage.js"
