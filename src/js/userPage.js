@@ -110,7 +110,7 @@ class userPage {
 		}
 	}
 	#resendEmailBtnClick() {
-		return gsapiClient.$resendConfirmationEmail();
+		return gsapiClient.$resendConfirmationEmail().catch( err => { throw err.msg; } );
 	}
 	#userInfoSubmit( obj ) {
 		return gsapiClient.$updateMyInfo( obj ).catch( err => { throw err.msg; } );
