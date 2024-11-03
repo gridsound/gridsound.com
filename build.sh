@@ -62,6 +62,9 @@ declare -a CSSfiles=(
 	"gs-ui-components/gsuiComButton/gsuiComButton.css"
 	"gs-ui-components/gsuiComProfile/gsuiComProfile.css"
 	"gs-ui-components/gsuiComPlayer/gsuiComPlayer.css"
+	"gs-ui-components/gsuiComPlaylist/gsuiComPlaylist.css"
+	"gs-ui-components/gsuiPopup/gsuiPopup.css"
+	"gs-ui-components/gsuiPopup/gsuiPopup.colors.default.css"
 
 	"src/css/form.css"
 	"src/css/root.css"
@@ -69,10 +72,8 @@ declare -a CSSfiles=(
 	"src/css/main.css"
 	"src/css/head.css"
 	"src/css/footer.css"
-	"src/css/pageSection.css"
 	"src/css/homePage.css"
 	"src/css/authPages.css"
-	"src/css/userPage.css"
 	"src/css/cmpPage.css"
 )
 
@@ -169,6 +170,8 @@ declare -a JSfiles=(
 	"src/html/resetpassPage.html.js"
 	"gs-ui-components/gsuiComProfile/gsuiComProfile.html.js"
 	"gs-ui-components/gsuiComPlayer/gsuiComPlayer.html.js"
+	"gs-ui-components/gsuiComPlaylist/gsuiComPlaylist.html.js"
+	"gs-ui-components/gsuiPopup/gsuiPopup.html.js"
 
 	"gs-ui-components/gsui0ne/gsui0ne.js"
 	"gs-ui-components/gsuiRipple/gsuiRipple.js"
@@ -178,6 +181,8 @@ declare -a JSfiles=(
 	"gs-ui-components/gsuiComButton/gsuiComButton.js"
 	"gs-ui-components/gsuiComProfile/gsuiComProfile.js"
 	"gs-ui-components/gsuiComPlayer/gsuiComPlayer.js"
+	"gs-ui-components/gsuiComPlaylist/gsuiComPlaylist.js"
+	"gs-ui-components/gsuiPopup/gsuiPopup.js"
 
 	"src/js/main.js"
 	"src/js/authPage.js"

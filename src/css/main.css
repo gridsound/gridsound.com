@@ -16,6 +16,11 @@
 	min-height: 260px;
 	margin-bottom: auto;
 }
+.page {
+	display: flex;
+	flex-direction: column;
+	gap: var( --main-padding );
+}
 
 /* .......................................................................... */
 .page,
