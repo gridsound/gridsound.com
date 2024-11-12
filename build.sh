@@ -57,6 +57,7 @@ declare -a CSSfiles=(
 	"gs-ui-components/gsui.css"
 	"gs-ui-components/gsuiIcon/gsuiIcon.css"
 	"gs-ui-components/gsuiRipple/gsuiRipple.css"
+	"gs-ui-components/gsuiDropdown/gsuiDropdown.css"
 	"gs-ui-components/gsuiActionMenu/gsuiActionMenu.css"
 	"gs-ui-components/gsuiComAvatar/gsuiComAvatar.css"
 	"gs-ui-components/gsuiComButton/gsuiComButton.css"
@@ -64,7 +65,6 @@ declare -a CSSfiles=(
 	"gs-ui-components/gsuiComPlayer/gsuiComPlayer.css"
 	"gs-ui-components/gsuiComPlaylist/gsuiComPlaylist.css"
 	"gs-ui-components/gsuiPopup/gsuiPopup.css"
-	"gs-ui-components/gsuiPopup/gsuiPopup.colors.default.css"
 
 	"src/css/form.css"
 	"src/css/root.css"
@@ -175,8 +175,9 @@ declare -a JSfiles=(
 
 	"gs-ui-components/gsui0ne/gsui0ne.js"
 	"gs-ui-components/gsuiRipple/gsuiRipple.js"
+	"gs-ui-components/gsuiDropdown/getAbsPos.js"
+	"gs-ui-components/gsuiDropdown/gsuiDropdown.js"
 	"gs-ui-components/gsuiActionMenu/gsuiActionMenu.js"
-	"gs-ui-components/gsuiActionMenu/getAbsPos.js"
 	"gs-ui-components/gsuiComAvatar/gsuiComAvatar.js"
 	"gs-ui-components/gsuiComButton/gsuiComButton.js"
 	"gs-ui-components/gsuiComProfile/gsuiComProfile.js"
