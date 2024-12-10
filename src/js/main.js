@@ -125,13 +125,7 @@ class main {
 			const [ , pg, ...args ] = arr;
 
 			if (
-				(
-					( len === 2 && pg === "u" ) ||
-					( len === 3 && pg === "u" && (
-						args[ 1 ] === "edit" ||
-						args[ 1 ] === "bin"
-					) )
-				) ||
+				( len === 2 && pg === "u" ) ||
 				( len === 2 && pg === "cmp" ) ||
 				( len === 3 && pg === "resetPassword" ) ||
 				( len === 1 && (
