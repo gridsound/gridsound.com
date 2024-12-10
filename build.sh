@@ -96,6 +96,7 @@ declare -a JSfiles=(
 	"daw-core/src/json/drumrow.js"
 	"daw-core/src/json/effects.delay.js"
 	"daw-core/src/json/effects.filter.js"
+	"daw-core/src/json/effects.reverb.js"
 	"daw-core/src/json/effects.waveshaper.js"
 	"daw-core/src/json/env.js"
 	"daw-core/src/json/key.js"
@@ -139,6 +140,7 @@ declare -a JSfiles=(
 	"daw-core/src/actions/common/updatePatternDuration.js"
 
 	"gs-wa-components/gswaNoise/gswaNoise.js"
+	"gs-wa-components/gswaReverbIR/gswaReverbIR.js"
 	"gs-wa-components/gswaLFO/gswaLFO.js"
 	"gs-wa-components/gswaEnvelope/gswaEnvelope.js"
 	"gs-wa-components/gswaMixer/gswaMixer.js"
@@ -150,6 +152,8 @@ declare -a JSfiles=(
 	"gs-wa-components/gswaEffects/gswaEffects.js"
 	"gs-wa-components/gswaFxDelay/gswaFxDelay.js"
 	"gs-wa-components/gswaFxFilter/gswaFxFilter.js"
+	"gs-wa-components/gswaFxReverb/gswaFxReverb.js"
+	"gs-wa-components/gswaFxWaveShaper/gswaFxWaveShaper.js"
 	"gs-wa-components/gswaDrumrows/gswaDrumrows.js"
 	"gs-wa-components/gswaScheduler/gswaScheduler.js"
 	"gs-wa-components/gswaEncodeWAV/gswaEncodeWAV.js"
@@ -171,6 +175,7 @@ declare -a JSfiles=(
 	"gs-ui-components/gsuiComProfile/gsuiComProfile.html.js"
 	"gs-ui-components/gsuiComPlayer/gsuiComPlayer.html.js"
 	"gs-ui-components/gsuiComPlaylist/gsuiComPlaylist.html.js"
+	"gs-ui-components/gsuiDotlineSVG/gsuiDotlineSVG.html.js"
 	"gs-ui-components/gsuiPopup/gsuiPopup.html.js"
 
 	"gs-ui-components/gsui0ne/gsui0ne.js"
@@ -183,6 +188,7 @@ declare -a JSfiles=(
 	"gs-ui-components/gsuiComProfile/gsuiComProfile.js"
 	"gs-ui-components/gsuiComPlayer/gsuiComPlayer.js"
 	"gs-ui-components/gsuiComPlaylist/gsuiComPlaylist.js"
+	"gs-ui-components/gsuiDotlineSVG/gsuiDotlineSVG.js"
 	"gs-ui-components/gsuiPopup/gsuiPopup.js"
 
 	"src/js/main.js"
