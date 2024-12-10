@@ -5,7 +5,7 @@ class main {
 	#elCmpPlaying = null;
 	#timeoutIdPageChange = null;
 	$pages = {
-		"":             [ DOM.homePage,       DOM.headIcon ],
+		"":             [ DOM.homePage,       DOM.headIcon, PAGES.$home ],
 		u:              [ DOM.userPage,       DOM.headUser, PAGES.$user ],
 		cmp:            [ DOM.cmpPage,        null,         PAGES.$cmp ],
 		auth:           [ DOM.authPage,       DOM.headAuth, PAGES.$auth ],

@@ -1,21 +1,233 @@
 #homePage {
-	gap: 40px;
-	line-height: 2em;
+	gap: 0;
 }
 
-#homePage img {
-	float: left;
-	width: 76px;
-	margin-right: var( --main-padding );
-}
-
-#homePage ul {
-	margin: 0;
-	padding: 0 0 0 16px;
-}
-#homePage li a:first-child {
+/* .......................................................................... */
+#homePage-title {
+	margin-top: 30px;
+	margin-bottom: 40px;
+	text-align: center;
+	font-size: 46px;
 	font-weight: bold;
 }
-#homePage li span {
-	opacity: .7;
+
+/* .......................................................................... */
+#homePage-anim {
+	position: relative;
+	height: 300px;
+	margin-bottom: -100px;
+	margin-bottom: -50px;
 }
+#homePage-anim-white-spot {
+	--sz: 200px;
+	position: absolute;
+	bottom: -90px;
+	left: 50%;
+	width: var( --sz );
+	height: var( --sz );
+	margin-left: calc( var( --sz ) / -2 );
+	border-radius: 50%;
+	background-color: #fff;
+	filter: blur( 20px );
+	opacity: 0;
+	transition: opacity 1s;
+}
+.homePage-anim-light {
+	position: absolute;
+	bottom: 0;
+	left: 50%;
+	margin-left: -150px;
+	width: 300px;
+	height: 400px;
+	transform-origin: bottom;
+	filter: blur( 10px );
+	opacity: 0;
+	transition:
+		transform 1.5s,
+		opacity 1.5s;
+}
+.homePage-anim-light::before {
+	content: "";
+	position: absolute;
+	inset: 0;
+	background-image: linear-gradient( 0deg, #5300e9 20%, #4f47ff22 50%, transparent );
+	clip-path: polygon( 0 0, 100% 0, 50% 100% );
+}
+
+/* .......................................................................... */
+#homePage-anim-stars {
+	position: absolute;
+	inset: 0;
+	opacity: 0;
+	transform: scale( .95 );
+	transform-origin: bottom;
+	transition:
+		transform 1s,
+		opacity 2s;
+}
+.homePage-anim-star {
+	--sz: 4px;
+	position: absolute;
+	width: var( --sz );
+	height: var( --sz );
+	margin: calc( var( --sz ) / -2 ) 0 0 calc( var( --sz ) / -2 );
+	border-radius: 50%;
+	background-color: currentColor;
+}
+.homePage-anim-star:nth-child(  1 ) { left: 20%; top: 57%; opacity: .3 }
+.homePage-anim-star:nth-child(  2 ) { left: 35%; top: 50%; opacity: .6 }
+.homePage-anim-star:nth-child(  3 ) { left: 55%; top: 65%; }
+.homePage-anim-star:nth-child(  4 ) { left: 80%; top: 20%; }
+.homePage-anim-star:nth-child(  5 ) { left: 90%; top: 40%; opacity: .4 }
+.homePage-anim-star:nth-child(  6 ) { left: 60%; top: 46%; opacity: .5 }
+.homePage-anim-star:nth-child(  7 ) { left: 10%; top: 15%; opacity: .4 }
+.homePage-anim-star:nth-child(  8 ) { left: 30%; top: 25%; }
+.homePage-anim-star:nth-child(  9 ) { left: 70%; top: 55%; }
+.homePage-anim-star:nth-child( 10 ) { left: 45%; top: 35%; }
+.homePage-anim-star:nth-child( 11 ) { left: 40%; top: 60%; }
+.homePage-anim-star:nth-child( 12 ) { left: 66%; top: 26%; opacity: .7 }
+.homePage-anim-star:nth-child( 13 ) { left: 50%; top: 10%; opacity: .4 }
+.homePage-anim-star:nth-child( 14 ) { left: 52%; top: 12%; opacity: .6 }
+.homePage-anim-star:nth-child( 15 ) { left: 33%; top: 62%; opacity: .8 }
+.homePage-anim-star:nth-child( 16 ) { left: 30%; top: 64%; opacity: .8 }
+.homePage-anim-star:nth-child( 17 ) { left: 85%; top: 60%; opacity: .4 }
+
+/* .......................................................................... */
+#homePage-anim-icons {
+	position: absolute;
+	inset: 0;
+}
+.homePage-anim-icon {
+	position: absolute;
+	top: 100%;
+	left: 50%;
+	margin-top: 0;
+	margin-left: -.5em;
+	font-size: min( 64px, 10vw );
+	opacity: 0;
+	transition: 1.2s;
+	transition-property: transform, opacity, left, top;
+}
+
+/* .......................................................................... */
+#homePage-screen {
+	position: relative;
+	display: flex;
+	align-items: center;
+	margin: auto;
+}
+#homePage-screen:has( a:active ) {
+	transform: translateY( 10px );
+}
+#homePage-screen-blur {
+	position: absolute;
+	inset: -20px;
+	border-radius: 50px;
+	filter: blur( 80px );
+	background-image: linear-gradient( 45deg, #9100ff, #ff007a )
+}
+#homePage-screen-brd {
+	position: absolute;
+	inset: -10px;
+	padding: 10px;
+	border-radius: 10px;
+	background-color: #fff2;
+	background-repeat: no-repeat;
+	background-position-y: 200px;
+	background-image: linear-gradient( 0deg, #fff8, transparent 90% );
+	opacity: 0;
+	transform: translateY( 20px );
+	transition:
+		background-position .2s,
+		transform .25s,
+		opacity .25s;
+}
+a:hover ~ #homePage-screen-brd {
+	animation: homePage-screen-brd-anim .5s infinite alternate;
+}
+@keyframes homePage-screen-brd-anim {
+	  0% { background-position-y: 200px; }
+	100% { background-position-y:   0px; }
+}
+#homePage-screen a {
+	font-size: 0;
+}
+#homePage-screen img {
+	position: relative;
+	z-index: 1;
+	box-sizing: border-box;
+	max-width: 520px;
+	width: 100%;
+	margin: auto;
+	border: 2px solid #0005;
+	border-radius: 10px;
+	opacity: 0;
+	transform: translateY( -20px );
+	transition:
+		transform .25s,
+		opacity .25s;
+}
+
+/* .......................................................................... */
+.startAnim #homePage-screen-brd,
+.startAnim #homePage-screen img {
+	opacity: 1;
+	transform: translateY( 0 );
+}
+.startAnim .homePage-anim-light {
+	opacity: 1;
+}
+.startAnim .homePage-anim-light:nth-child( 1 ) { transform: rotate( -30deg ) }
+.startAnim .homePage-anim-light:nth-child( 2 ) { transform: rotate( -15deg ) }
+.startAnim .homePage-anim-light:nth-child( 4 ) { transform: rotate(  15deg ) }
+.startAnim .homePage-anim-light:nth-child( 5 ) { transform: rotate(  30deg ) }
+.startAnim #homePage-anim-white-spot {
+	opacity: 1;
+}
+.startAnim #homePage-anim-stars {
+	opacity: 1;
+	transform: scale( 1 );
+}
+.startAnim .homePage-anim-icon {
+	opacity: 1;
+}
+.startAnim .homePage-anim-icon[ data-icon="waveform" ]   { left: 10%; top: 30%; transform: rotate(  23deg ); }
+.startAnim .homePage-anim-icon[ data-icon="piano" ]      { left: 67%; top:  5%; transform: rotate(  -8deg ); transition-delay: .05s }
+.startAnim .homePage-anim-icon[ data-icon="drum" ]       { left: 34%; top:  2%; transform: rotate( -30deg ); transition-delay: .15s }
+.startAnim .homePage-anim-icon[ data-icon="amp-guitar" ] { left: 89%; top: 26%; transform: rotate(  20deg ); transition-delay: .18s }
+.startAnim .homePage-anim-icon[ data-icon="mixer" ]      { left: 31%; top: 36%; transform: rotate( -35deg ); transition-delay: .22s }
+.startAnim .homePage-anim-icon[ data-icon="music" ]      { left: 49%; top: 26%; transform: rotate(  12deg ); transition-delay: .35s }
+.startAnim .homePage-anim-icon[ data-icon="sax-hot" ]    { left: 68%; top: 39%; transform: rotate(  12deg ); transition-delay: .35s }
+
+/* .......................................................................... */
+.loopAnim .homePage-anim-light {
+	animation: homePage-anim-light-anim 2s infinite linear alternate;
+}
+@keyframes homePage-anim-light-anim {
+	  0% { transform: rotate( -30deg ); }
+	100% { transform: rotate(  30deg ); }
+}
+.loopAnim .homePage-anim-light:nth-child( 2 ) { animation-delay: -.5s }
+.loopAnim .homePage-anim-light:nth-child( 3 ) { animation-delay: -1s }
+.loopAnim .homePage-anim-light:nth-child( 4 ) { animation-delay: -2.5s }
+.loopAnim .homePage-anim-light:nth-child( 5 ) { animation-delay: -2s }
+.loopAnim #homePage-anim-white-spot {
+	animation: homePage-anim-white-spot-anim 1.3s infinite linear alternate;
+}
+@keyframes homePage-anim-white-spot-anim {
+	  0% { filter: blur( 20px ); }
+	100% { filter: blur( 40px ); }
+}
+.loopAnim .homePage-anim-icon {
+	animation: homePage-anim-icon-anim 3s infinite alternate;
+}
+@keyframes homePage-anim-icon-anim {
+	  0% { margin-top: 0; }
+	100% { margin-top: -20px; }
+}
+.loopAnim .homePage-anim-icon:nth-child( 2 ) { animation-delay: .25s }
+.loopAnim .homePage-anim-icon:nth-child( 3 ) { animation-delay: .50s }
+.loopAnim .homePage-anim-icon:nth-child( 4 ) { animation-delay: .75s }
+.loopAnim .homePage-anim-icon:nth-child( 5 ) { animation-delay: 1s }
+.loopAnim .homePage-anim-icon:nth-child( 6 ) { animation-delay: 1.25s }
+.loopAnim .homePage-anim-icon:nth-child( 7 ) { animation-delay: 1.50s }

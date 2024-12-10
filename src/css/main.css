@@ -16,6 +16,9 @@
 	min-height: 260px;
 	margin-bottom: auto;
 }
+#pages:has( #homePage.show ) {
+	overflow: visible;
+}
 .page {
 	display: flex;
 	flex-direction: column;

@@ -19,6 +19,7 @@ document.querySelectorAll( "[id]" ).forEach( el => DOM[ el.id ] = el );
 
 const PAGES = {
 	$cmp: new cmpPage(),
+	$home: new homePage(),
 	$auth: new authPage(),
 	$user: new userPage(),
 	$resetpass: new resetpassPage(),

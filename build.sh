@@ -193,6 +193,7 @@ declare -a JSfiles=(
 
 	"src/js/main.js"
 	"src/js/authPage.js"
+	"src/js/homePage.js"
 	"src/js/userPage.js"
 	"src/js/cmpPage.js"
 	"src/js/resetpassPage.js"
