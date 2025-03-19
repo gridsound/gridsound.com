@@ -84,3 +84,24 @@
 #errorCode {
 	font-size: 3em;
 }
+
+/* .......................................................................... */
+#main-bg {
+	position: fixed;
+	top: 0;
+	width: calc( 600px + 620px );
+	height: 100%;
+	margin-left: calc( 620px / -2 );
+	opacity: .3;
+}
+.main-bg-island {
+	position: absolute;
+	background: center no-repeat;
+	background-size: contain;
+	filter: sepia( 100% ) hue-rotate( 220deg ) brightness( .6 );
+}
+.main-bg-island[ data-name="piano" ] { width: 200px; height: 300px; left:    50px; bottom: 180px; background-image: url( "../../assets/art/gs-piano-island.svg" );               }
+.main-bg-island[ data-name="ipod"  ] { width: 150px; height: 300px; left:   -90px; bottom: 370px; background-image: url( "../../assets/art/gs-ipod-island.svg" );  opacity: .75; }
+.main-bg-island[ data-name="ampli" ] { width: 200px; height: 300px; right:   50px; bottom: 120px; background-image: url( "../../assets/art/gs-ampli-island.svg" );               }
+.main-bg-island[ data-name="tape"  ] { width: 180px; height: 300px; right: -100px; bottom: 260px; background-image: url( "../../assets/art/gs-tape-island.svg" );  opacity: .75; }
+.main-bg-island[ data-name="drums" ] { width: 160px; height: 300px; right:   30px; bottom: 420px; background-image: url( "../../assets/art/gs-drums-island.svg" ); opacity: .60; }

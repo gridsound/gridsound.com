@@ -2,6 +2,13 @@
 
 GSUsetTemplate( "gs-main", () =>
 	GSUcreateDiv( { id: "main", class: "noauth" },
+		GSUcreateDiv( { id: "main-bg", inert: true },
+			GSUcreateDiv( { class: "main-bg-island", "data-name": "ipod" } ),
+			GSUcreateDiv( { class: "main-bg-island", "data-name": "piano" } ),
+			GSUcreateDiv( { class: "main-bg-island", "data-name": "drums" } ),
+			GSUcreateDiv( { class: "main-bg-island", "data-name": "tape" } ),
+			GSUcreateDiv( { class: "main-bg-island", "data-name": "ampli" } ),
+		),
 		GSUcreateDiv( { id: "head" },
 			GSUcreateA( { id: "headIcon", class: "headLink", href: "#/" } ),
 			GSUcreateAExt( { id: "headNewCmp", class: "headLink", href: DAWURL, title: "Create a new composition" },
