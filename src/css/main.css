@@ -1,9 +1,11 @@
 #main {
+	--page-trans-dur: .3s;
+	position: relative;
 	display: flex;
 	flex-direction: column;
 	box-sizing: border-box;
 	max-width: var( --main-width );
-	min-height: 100%;
+	min-height: 100vh;
 	margin: 0 auto;
 	padding: 0 var( --main-padding );
 	color: #fff;
@@ -12,12 +14,8 @@
 /* .......................................................................... */
 #pages {
 	position: relative;
-	overflow: hidden;
-	min-height: 260px;
+	flex: 1;
 	margin-bottom: auto;
-}
-#pages:has( #homePage.show ) {
-	overflow: visible;
 }
 .page {
 	display: flex;
@@ -29,8 +27,10 @@
 .page,
 #error,
 #loader {
-	transition: .2s;
-	transition-property: opacity, visibility;
+	transition:
+		var( --page-trans-dur ) opacity,
+		var( --page-trans-dur ) visibility,
+		0s transform;
 }
 .page:not( .show ),
 #error:not( .show ),
@@ -43,34 +43,35 @@
 	visibility: hidden;
 	opacity: 0;
 }
+.page:not( .show ) {
+	transform: translateY( -1000% );
+	transition:
+		var( --page-trans-dur ) opacity,
+		var( --page-trans-dur ) visibility,
+		0s transform var( --page-trans-dur );
+}
 
 /* .......................................................................... */
 #loader {
-	top: 0;
-	left: 0;
-	right: 0;
-	bottom: 0;
-	display: flex;
 	position: absolute;
+	z-index: 1;
+	inset: 0 0 auto 0;
+	height: 400px;
+	display: flex;
 	background: inherit;
 	align-items: center;
 	justify-content: center;
-	z-index: 1;
 	font-size: 48px;
-	background-color: var( --app-bg );
 	transition: .2s;
 	transition-property: opacity, visibility;
 }
 
 /* .......................................................................... */
 #error {
-	top: 0;
-	left: 0;
-	right: 0;
-	bottom: 0;
-	z-index: 1;
-	display: flex;
 	position: absolute;
+	z-index: 1;
+	inset: 0;
+	display: flex;
 	flex-direction: column;
 	align-items: center;
 	justify-content: center;
