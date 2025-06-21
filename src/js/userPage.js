@@ -77,8 +77,8 @@ class userPage {
 		this.#itsMe = u.id === gsapiClient.$user.id;
 		DOM.main.classList.toggle( "premium", gsapiClient.$user.premium );
 		DOM.userPage.classList.toggle( "me", this.#itsMe );
-		GSUsetAttribute( DOM.userPagePlaylist, "whoami", this.#itsMe ? u.premium ? "itsme+" : "itsme" : "" );
-		GSUsetAttribute( DOM.userPageProfile, {
+		GSUdomSetAttr( DOM.userPagePlaylist, "whoami", this.#itsMe ? u.premium ? "itsme+" : "itsme" : "" );
+		GSUdomSetAttr( DOM.userPageProfile, {
 			itsme: this.#itsMe,
 			username: u.username,
 			lastname: u.lastname,

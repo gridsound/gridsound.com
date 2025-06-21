@@ -44,7 +44,7 @@ writeCSScompress() {
 }
 writeJScompress() {
 	echo '"use strict";' > allJS.js
-	cat "${JSfiles[@]}" >> allJS.js
+	cat `echo "${JSfiles[@]}" | sed 's/.dev.js/.prod.js/g'` >> allJS.js
 	echo '<script>'
 	terser allJS.js --compress --mangle --toplevel --mangle-props "regex='^[$]'"
 	echo '</script>'
@@ -80,11 +80,15 @@ declare -a CSSfiles=(
 declare -a JSfiles=(
 	"gs-utils/gs-utils.js"
 	"gs-utils/gs-utils-dom.js"
-	"gs-utils/gs-utils-fft.js"
+	"gs-utils/gs-utils-func.js"
+	"gs-utils/gs-utils-math.js"
+	"gs-utils/gs-utils-math-fft.js"
 	"gs-utils/gs-utils-json.js"
 	"gs-utils/gs-utils-audio.js"
+	"gs-utils/gs-utils-audio-nodes.dev.js"
 	"gs-utils/gs-utils-files.js"
 	"gs-utils/gs-utils-models.js"
+	"gs-utils/gs-utils-checkType.dev.js"
 
 	"gs-api-client/gsapiClient.js"
 
@@ -116,14 +120,13 @@ declare -a JSfiles=(
 	"daw-core/src/actions/common/calcNewKeysDuration.js"
 	"daw-core/src/actions/common/createUniqueName.js"
 	"daw-core/src/actions/common/getDrumrowName.js"
-	"daw-core/src/actions/common/getNextIdOf.js"
-	"daw-core/src/actions/common/getNextOrderOf.js"
 	"daw-core/src/actions/common/patternOpenedByType.js"
 	"daw-core/src/actions/common/toggleSolo.js"
 	"daw-core/src/actions/common/updatePatternDuration.js"
 
 	"gs-wa-components/gswaNoise/gswaNoise.js"
 	"gs-wa-components/gswaReverbIR/gswaReverbIR.js"
+	"gs-wa-components/gswaCrossfade/gswaCrossfade.js"
 	"gs-wa-components/gswaOscillator/gswaOscillator.js"
 	"gs-wa-components/gswaLFO/gswaLFO.js"
 	"gs-wa-components/gswaEnvelope/gswaEnvelope.js"
@@ -208,6 +211,7 @@ buildProd() {
 updateDep() {
 	git submodule init
 	git submodule update --remote
+	cp gs-wa-components/gswaCrossfade/gswaCrossfadeProc.js .
 }
 
 if [ $# = 0 ]; then

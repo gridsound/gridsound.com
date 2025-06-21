@@ -4,7 +4,7 @@ const DAWURL = "//localhost/gridsound/daw/";
 
 document.body.append( GSUgetTemplate( "gs-main" ) );
 
-document.querySelector( "#pages" ).append(
+GSUdomQS( "#pages" ).append(
 	GSUgetTemplate( "gs-homePage" ),
 	GSUgetTemplate( "gs-userPage" ),
 	GSUgetTemplate( "gs-authPage" ),
@@ -15,7 +15,7 @@ document.querySelector( "#pages" ).append(
 
 const DOM = {};
 
-document.querySelectorAll( "[id]" ).forEach( el => DOM[ el.id ] = el );
+GSUforEach( GSUdomQSA( "[id]" ), el => DOM[ el.id ] = el );
 
 const PAGES = {
 	$cmp: new cmpPage(),

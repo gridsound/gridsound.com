@@ -1,6 +1,7 @@
 "use strict";
 
 class main {
+	#daw = null;
 	#pageName = null;
 	#elCmpPlaying = null;
 	#timeoutIdPageChange = null;
@@ -21,49 +22,53 @@ class main {
 	run() {
 		this.#hashChange();
 	}
-	getDAWCore() {
-		if ( !this.daw ) {
-			GSUloadJSFile( "assets/gswaPeriodicWavesList-v1.js" )
-				.then( () => gswaPeriodicWaves.$loadWaves( gswaPeriodicWavesList ) );
-			this.daw = new DAWCore();
-			this.daw.$destinationSetGain( .6 );
-			this.daw.cb.currentTime = t => {
-				if ( this.#elCmpPlaying ) {
-					GSUsetAttribute( this.#elCmpPlaying, "currenttime", t * 60 / this.daw.$getBPM() );
-				}
-			};
+	#getDAWCore() {
+		if ( !this.#daw ) {
+			this.#daw = new DAWCore();
+			return this.#daw.$init()
+				.then( () => GSUloadJSFile( "assets/gswaPeriodicWavesList-v1.js" ) )
+				.then( () => {
+					gswaPeriodicWaves.$loadWaves( gswaPeriodicWavesList );
+					this.#daw.$destinationSetGain( .6 );
+					this.#daw.cb.currentTime = t => {
+						if ( this.#elCmpPlaying ) {
+							GSUdomSetAttr( this.#elCmpPlaying, "currenttime", t * 60 / this.#daw.$getBPM() );
+						}
+					};
+					return this.#daw;
+				} );
 		}
-		return this.daw;
+		return Promise.resolve( this.#daw );
 	}
 	stop() {
 		if ( this.#elCmpPlaying ) {
-			this.daw.$stop();
-			GSUsetAttribute( this.#elCmpPlaying, "playing", false );
+			this.#daw.$stop();
+			GSUdomRmAttr( this.#elCmpPlaying, "playing" );
 			this.#elCmpPlaying = null;
 		}
 	}
 	play( elCmp, cmp ) {
-		const daw = this.getDAWCore();
-		const currCmp = this.#elCmpPlaying;
+		this.#getDAWCore().then( daw => {
+			const currCmp = this.#elCmpPlaying;
 
-		this.stop();
-		if ( elCmp !== currCmp ) {
-			daw.$openComposition( cmp )
-				.then( () => {
+			this.stop();
+			if ( elCmp !== currCmp ) {
+				daw.$openComposition( cmp ).then( () => {
 					daw.$focusOn( "composition" );
 					daw.$play();
-					GSUsetAttribute( elCmp, "playing", true );
+					GSUdomSetAttr( elCmp, "playing" );
 					this.#elCmpPlaying = elCmp;
 				} );
-		}
+			}
+		} )
 	}
-	currentTime( t ) {
-		const daw = this.getDAWCore();
-
-		if ( this.#elCmpPlaying ) {
-			daw.$compositionSetCurrentTime( t );
-		}
-	}
+	// currentTime( t ) {
+	// 	this.#getDAWCore().then( daw => {
+	// 		if ( this.#elCmpPlaying ) {
+	// 			daw.$compositionSetCurrentTime( t );
+	// 		}
+	// 	} );
+	// }
 	loggedIn( u ) {
 		gsapiClient.$setIntervalPing();
 		DOM.headAuth.dataset.spin = "";
@@ -73,7 +78,7 @@ class main {
 		DOM.headUser.href = `#/u/${ u.username }`;
 		DOM.headUsername.textContent = u.username;
 		DOM.main.classList.remove( "noauth" );
-		GSUsetAttribute( DOM.headAvatar, "src", u.avatar );
+		GSUdomSetAttr( DOM.headAvatar, "src", u.avatar );
 	}
 	error( code ) {
 		DOM.errorCode.textContent = code;
@@ -94,11 +99,11 @@ class main {
 			DOM.error.classList.remove( "show" );
 			this.#toggleClass( headLink, "headLinkBefore", "selected" );
 			this.#toggleClass( page, "pageBefore", "show" );
-			clearTimeout( this.#timeoutIdPageChange );
-			this.#timeoutIdPageChange = setTimeout( () => {
+			GSUclearTimeout( this.#timeoutIdPageChange );
+			this.#timeoutIdPageChange = GSUsetTimeout( () => {
 				Promise.resolve( pageObj?.show?.( ...args ) )
 					.finally( () => DOM.loader.classList.remove( "show" ) );
-			}, 250 );
+			}, .25 );
 		}
 	}
 	#toggleClass( el, prevAttr, clazz ) {

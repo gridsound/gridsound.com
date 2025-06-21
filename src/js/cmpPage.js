@@ -20,7 +20,7 @@ class cmpPage {
 				const cmp = data.composition.data;
 
 				this.#cmp = cmp;
-				GSUsetAttribute( DOM.cmpPageCmp, {
+				GSUdomSetAttr( DOM.cmpPageCmp, {
 					"data-id": cmp.id,
 					name: cmp.name,
 					bpm: cmp.bpm,

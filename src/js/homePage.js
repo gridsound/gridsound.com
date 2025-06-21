@@ -8,10 +8,10 @@ class homePage {
 	}
 
 	show() {
-		setTimeout( () => {
+		GSUsetTimeout( () => {
 			DOM.homePage.classList.add( "startAnim" );
-			setTimeout( () => DOM.homePage.classList.add( "loopAnim" ), 1000 );
-		}, 50 );
+			GSUsetTimeout( () => DOM.homePage.classList.add( "loopAnim" ), 1 );
+		}, .05 );
 	}
 	$quit() {
 		DOM.homePage.classList.remove( "startAnim", "loopAnim" );
