@@ -92,6 +92,7 @@ declare -a JSfiles=(
 
 	"gs-api-client/gsapiClient.js"
 
+	"daw-core/src/GScomposition.js"
 	"daw-core/src/DAWCore.js"
 	"daw-core/src/DAWCoreBuffers.js"
 	"daw-core/src/DAWCoreCompositionExportWAV.js"
@@ -120,7 +121,6 @@ declare -a JSfiles=(
 	"daw-core/src/actions/common/calcNewKeysDuration.js"
 	"daw-core/src/actions/common/createUniqueName.js"
 	"daw-core/src/actions/common/getDrumrowName.js"
-	"daw-core/src/actions/common/patternOpenedByType.js"
 	"daw-core/src/actions/common/toggleSolo.js"
 	"daw-core/src/actions/common/updatePatternDuration.js"
 

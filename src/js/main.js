@@ -32,7 +32,7 @@ class main {
 					this.#daw.$destinationSetGain( .6 );
 					this.#daw.cb.currentTime = t => {
 						if ( this.#elCmpPlaying ) {
-							GSUdomSetAttr( this.#elCmpPlaying, "currenttime", t * 60 / this.#daw.$getBPM() );
+							GSUdomSetAttr( this.#elCmpPlaying, "currenttime", t * 60 / this.#daw.$cmp.$getBPM() );
 						}
 					};
 					return this.#daw;
