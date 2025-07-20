@@ -26,11 +26,11 @@ class authPage {
 
 	// .........................................................................
 	#signSubmit( actFn, btn, error, inps ) {
-		btn.classList.add( "btn-loading" );
+		GSUdomAddClass( btn, "btn-loading" );
 		error.textContent = "";
 		DOM.headAuth.dataset.spin = "on";
 		actFn( ...inps.map( inp => inp.value ) )
-			.finally( () => btn.classList.remove( "btn-loading" ) )
+			.finally( () => GSUdomRmClass( btn, "btn-loading" ) )
 			.then( me => {
 				inps.forEach( inp => inp.value = "" );
 				PAGES.$main.loggedIn( me );

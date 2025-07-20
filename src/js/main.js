@@ -30,11 +30,7 @@ class main {
 				.then( () => {
 					gswaPeriodicWaves.$loadWaves( gswaPeriodicWavesList );
 					this.#daw.$destinationSetGain( .6 );
-					this.#daw.cb.currentTime = t => {
-						if ( this.#elCmpPlaying ) {
-							GSUdomSetAttr( this.#elCmpPlaying, "currenttime", t * 60 / this.#daw.$cmp.$getBPM() );
-						}
-					};
+					this.#daw.cb.currentTime = t => GSUdomSetAttr( this.#elCmpPlaying, "currenttime", t * 60 / this.#daw.$cmp.$getBPM() );
 					return this.#daw;
 				} );
 		}
@@ -77,12 +73,12 @@ class main {
 		DOM.headAuth.href = "";
 		DOM.headUser.href = `#/u/${ u.username }`;
 		DOM.headUsername.textContent = u.username;
-		DOM.main.classList.remove( "noauth" );
+		GSUdomRmClass( DOM.main, "noauth" );
 		GSUdomSetAttr( DOM.headAvatar, "src", u.avatar );
 	}
 	error( code ) {
 		DOM.errorCode.textContent = code;
-		DOM.error.classList.add( "show" );
+		GSUdomAddClass( DOM.error, "show" );
 		this.#toggleClass( null, "headLinkBefore", "selected" );
 	}
 
@@ -95,14 +91,14 @@ class main {
 		} else {
 			this.$pages[ this.#pageName ]?.[ 2 ]?.$quit?.();
 			this.#pageName = pageName;
-			DOM.loader.classList.add( "show" );
-			DOM.error.classList.remove( "show" );
+			GSUdomAddClass( DOM.loader, "show" );
+			GSUdomRmClass( DOM.error, "show" );
 			this.#toggleClass( headLink, "headLinkBefore", "selected" );
 			this.#toggleClass( page, "pageBefore", "show" );
 			GSUclearTimeout( this.#timeoutIdPageChange );
 			this.#timeoutIdPageChange = GSUsetTimeout( () => {
 				Promise.resolve( pageObj?.show?.( ...args ) )
-					.finally( () => DOM.loader.classList.remove( "show" ) );
+					.finally( () => GSUdomRmClass( DOM.loader, "show" ) );
 			}, .25 );
 		}
 	}
@@ -110,8 +106,8 @@ class main {
 		const elPrev = this[ prevAttr ];
 
 		if ( el !== elPrev ) {
-			elPrev && elPrev.classList.remove( clazz );
-			el && el.classList.add( clazz );
+			GSUdomRmClass( elPrev, clazz );
+			GSUdomAddClass( el, clazz );
 			this[ prevAttr ] = el || undefined;
 			return true;
 		}

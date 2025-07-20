@@ -11,18 +11,18 @@ class forgotpassPage {
 	}
 
 	show() {
-		DOM.forgotpassPage.classList.remove( "sended" );
+		GSUdomRmClass( DOM.forgotpassPage, "sended" );
 		DOM.forgotpassFormEmail.value = "";
 	}
 
 	// .........................................................................
 	#submit( btn, error, email ) {
-		btn.classList.add( "btn-loading" );
+		GSUdomAddClass( btn, "btn-loading" );
 		error.textContent = "";
 		gsapiClient.$recoverPassword( email.value )
-			.finally( () => btn.classList.remove( "btn-loading" ) )
+			.finally( () => GSUdomRmClass( btn, "btn-loading" ) )
 			.then( () => {
-				DOM.forgotpassPage.classList.add( "sended" );
+				GSUdomAddClass( DOM.forgotpassPage, "sended" );
 			}, res => {
 				error.textContent = res.msg;
 			} );

@@ -9,11 +9,11 @@ class homePage {
 
 	show() {
 		GSUsetTimeout( () => {
-			DOM.homePage.classList.add( "startAnim" );
-			GSUsetTimeout( () => DOM.homePage.classList.add( "loopAnim" ), 1 );
+			GSUdomAddClass( DOM.homePage, "startAnim" );
+			GSUsetTimeout( () => GSUdomAddClass( DOM.homePage, "loopAnim" ), 1 );
 		}, .05 );
 	}
 	$quit() {
-		DOM.homePage.classList.remove( "startAnim", "loopAnim" );
+		GSUdomRmClass( DOM.homePage, "startAnim", "loopAnim" );
 	}
 }
