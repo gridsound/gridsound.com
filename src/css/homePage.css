@@ -59,10 +59,10 @@
 	position: absolute;
 	inset: 0;
 	opacity: 0;
-	transform: scale( .95 );
+	scale: .95;
 	transform-origin: bottom;
 	transition:
-		transform 1s,
+		scale 1s,
 		opacity 2s;
 }
 .homePage-anim-star {
@@ -186,18 +186,18 @@ a:hover ~ #homePage-screen-brd {
 }
 .startAnim #homePage-anim-stars {
 	opacity: 1;
-	transform: scale( 1 );
+	scale: 1;
 }
 .startAnim .homePage-anim-icon {
 	opacity: 1;
 }
-.startAnim .homePage-anim-icon[ data-icon="waveform" ]   { left: 10%; top: 30%; transform: rotate(  23deg ); }
-.startAnim .homePage-anim-icon[ data-icon="piano" ]      { left: 67%; top:  5%; transform: rotate(  -8deg ); transition-delay: .05s }
-.startAnim .homePage-anim-icon[ data-icon="drum" ]       { left: 34%; top:  2%; transform: rotate( -30deg ); transition-delay: .15s }
-.startAnim .homePage-anim-icon[ data-icon="amp-guitar" ] { left: 89%; top: 26%; transform: rotate(  20deg ); transition-delay: .18s }
-.startAnim .homePage-anim-icon[ data-icon="mixer" ]      { left: 31%; top: 36%; transform: rotate( -35deg ); transition-delay: .22s }
-.startAnim .homePage-anim-icon[ data-icon="music" ]      { left: 49%; top: 26%; transform: rotate(  12deg ); transition-delay: .35s }
-.startAnim .homePage-anim-icon[ data-icon="sax-hot" ]    { left: 68%; top: 39%; transform: rotate(  12deg ); transition-delay: .35s }
+.startAnim .homePage-anim-icon[ data-icon="waveform" ]   { left: 10%; top: 30%; rotate:  23deg; }
+.startAnim .homePage-anim-icon[ data-icon="piano" ]      { left: 67%; top:  5%; rotate:  -8deg; transition-delay: .05s }
+.startAnim .homePage-anim-icon[ data-icon="drum" ]       { left: 34%; top:  2%; rotate: -30deg; transition-delay: .15s }
+.startAnim .homePage-anim-icon[ data-icon="amp-guitar" ] { left: 89%; top: 26%; rotate:  20deg; transition-delay: .18s }
+.startAnim .homePage-anim-icon[ data-icon="mixer" ]      { left: 31%; top: 36%; rotate: -35deg; transition-delay: .22s }
+.startAnim .homePage-anim-icon[ data-icon="music" ]      { left: 49%; top: 26%; rotate:  12deg; transition-delay: .35s }
+.startAnim .homePage-anim-icon[ data-icon="sax-hot" ]    { left: 68%; top: 39%; rotate:  12deg; transition-delay: .35s }
 
 /* .......................................................................... */
 .loopAnim .homePage-anim-light {
