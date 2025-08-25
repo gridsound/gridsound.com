@@ -45,6 +45,7 @@ export default {
 	// .........................................................................
 	cssDep: [
 		"gs-ui-components/gsui.css",
+		"gs-ui-components/gsui-flex.css",
 		"gs-ui-components/gsuiIcon/gsuiIcon.css",
 		"gs-ui-components/gsuiRipple/gsuiRipple.css",
 		"gs-ui-components/gsuiDropdown/gsuiDropdown.css",
@@ -54,6 +55,7 @@ export default {
 		"gs-ui-components/gsuiComProfile/gsuiComProfile.css",
 		"gs-ui-components/gsuiComPlayer/gsuiComPlayer.css",
 		"gs-ui-components/gsuiComPlaylist/gsuiComPlaylist.css",
+		"gs-ui-components/gsuiJoystick/gsuiJoystick.css",
 		"gs-ui-components/gsuiPopup/gsuiPopup.css",
 	],
 	// .........................................................................
@@ -152,6 +154,7 @@ export default {
 		"gs-ui-components/gsuiComProfile/gsuiComProfile.js",
 		"gs-ui-components/gsuiComPlayer/gsuiComPlayer.js",
 		"gs-ui-components/gsuiComPlaylist/gsuiComPlaylist.js",
+		"gs-ui-components/gsuiJoystick/gsuiJoystick.js",
 		"gs-ui-components/gsuiPopup/gsuiPopup.js",
 	],
 };

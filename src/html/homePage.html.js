@@ -21,5 +21,9 @@ GSUsetTemplate( "gs-homePage", () =>
 			GSUcreateDiv( { id: "homePage-screen-blur" } ),
 			GSUcreateDiv( { id: "homePage-screen-brd" } ),
 		),
+		GSUcreateFlex( { id: "homePage-trySynth", x: true, xcenter: true, ycenter: true, g16: true },
+			GSUcreateDiv( { id: "homePage-trySynth-tryme" } ),
+			GSUcreateElement( "gsui-joystick", { id: "homePage-trySynth-joystick" } ),
+		),
 	),
 );
