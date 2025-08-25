@@ -129,15 +129,12 @@
 	--b: -100px;
 	position: absolute;
 	right: 0;
-	bottom: calc( var( --b ) * ( 1 - .25 * var( --gscom-scroll ) ) );
+	bottom: calc( var( --b ) * ( .5 - 1.5 * var( --gscom-scroll ) ) );
 	max-width: 100%;
 	width: 340px;
-	height: 100%;
-}
-#bg-volcan img {
-	position: absolute;
-	top: -50px;
-	width: auto;
-	height: 100%;
-	object-fit: contain;
+	height: 300px;
+	background-size: cover;
+	background-image: url( "../../assets/art/gs-volcano-island.svg" );
+	background-position: left bottom;
+	background-repeat: no-repeat;
 }
