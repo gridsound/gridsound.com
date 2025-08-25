@@ -38,7 +38,7 @@ GSUsetTemplate( "gs-main", () =>
 				),
 			),
 			GSUcreateDiv( { id: "footer" },
-				GSUcreateDiv( { id: "footerSocialsLink" },
+				GSUcreateDiv( { id: "footerSocialLinks" },
 					GSUcreateAExt( { class: "gsuiIcon", "data-icon": "br-github", href: "//github.com/gridsound" } ),
 					GSUcreateAExt( { class: "gsuiIcon", "data-icon": "br-codepen", href: "//codepen.io/gridsound" } ),
 					GSUcreateAExt( { class: "gsuiIcon", "data-icon": "br-discord", href: "//discord.gg/NUYxHAg" } ),

@@ -9,24 +9,32 @@
 	padding: 16px 0;
 	font-size: 14px;
 	box-shadow: 0 -42px 60px -32px #fff5;
-}
-#footer::before {
-	content: "";
-	position: absolute;
-	top: 0;
-	width: 100%;
-	border-bottom: 1px solid;
-	opacity: .1;
+
+	&::before {
+		content: "";
+		position: absolute;
+		top: 0;
+		width: 100%;
+		border-bottom: 1px solid;
+		opacity: .1;
+	}
 }
 
-#footerSocialsLink {
+#footerSocialLinks {
 	display: flex;
 	justify-content: space-between;
 	width: 300px;
 	max-width: 100%;
-}
-#footerSocialsLink a:hover {
-	color: #ceb3e8;
+
+	a {
+		transition: scale .1s;
+	}
+	a:hover {
+		z-index: 1;
+		scale: 4;
+		padding: 0;
+		filter: drop-shadow( 0 0 4px #227 );
+	}
 }
 
 #footerCopyright {
