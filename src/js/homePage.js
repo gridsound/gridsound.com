@@ -71,13 +71,21 @@ class homePage {
 			oscillators: {
 				0: {
 					pan: ( x * 2 - 1 ) * .5,
-					unisondetune: y / 6,
-					unisonblend: x,
+					unisondetune: y * .5,
+					unisonblend: .5 - x * .5,
+					gain: .9,
+				},
+				1: {
+					pan: ( x * 2 - 1 ) * -.5,
+					unisondetune: ( 1 - y * .2 ),
+					unisonblend: 1 - x * .9,
+					gain: .5,
 				},
 			},
 		} );
 		this.#waReverb.$change( {
-			wet: .5 + y * 3.5,
+			// wet: .5 + ( 1 - y ) * 3.5,
+			wet: 4,
 		} );
 	}
 
@@ -97,6 +105,25 @@ class homePage {
 			this.#waSynth.$setBPM( 60 );
 			this.#waSynth.$output.connect( this.#waReverb.$getInput() );
 			this.#waSynth.$change( {
+				envs: {
+					gain: {
+						toggle: true,
+						attack: .01,
+						hold: 0,
+						decay: .1,
+						sustain: .6,
+						release: .5,
+					},
+					lowpass: {
+						toggle: true,
+						attack: 0,
+						hold: 1,
+						decay: 1,
+						sustain: 1,
+						release: .25,
+						q: 5,
+					},
+				},
 				lfos: {
 					gain: {
 						toggle: true,
@@ -108,9 +135,11 @@ class homePage {
 						wave: "custom.s0.o0",
 						unisonvoices: 5,
 						wavetable: wt,
+						gain: .9,
 					} ),
 					1: GSUgetModel( "oscillator", {
-						wave: "sine",
+						wave: "sawtooth",
+						unisonvoices: 3,
 						detune: -12,
 						gain: .6,
 					} ),
@@ -121,7 +150,7 @@ class homePage {
 				wet: 2,
 				delay: 0,
 				fadein: 0,
-				decay: 1,
+				decay: .5,
 			} );
 			this.#waReverb.$toggle( true );
 		} );
