@@ -35,3 +35,11 @@ gsapiClient.$getMe()
 		DOM.headAuth.dataset.spin = "";
 		PAGES.$main.run();
 	} );
+
+document.addEventListener( "scroll", e => {
+	const elHTML = document.documentElement;
+	const scrollSize = Math.max( 1000, elHTML.scrollHeight - elHTML.offsetHeight );
+	const p = GSUmathFix( elHTML.scrollTop / scrollSize, 3 );
+
+	GSUsetStyle( DOM.root, "--gscom-scroll", p );
+} );
