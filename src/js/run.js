@@ -38,7 +38,7 @@ gsapiClient.$getMe()
 
 document.addEventListener( "scroll", e => {
 	const elHTML = document.documentElement;
-	const scrollSize = Math.max( 1000, elHTML.scrollHeight - elHTML.offsetHeight );
+	const scrollSize = Math.max( 2000, elHTML.scrollHeight - elHTML.offsetHeight );
 	const p = GSUmathFix( elHTML.scrollTop / scrollSize, 3 );
 
 	GSUsetStyle( DOM.root, "--gscom-scroll", p );

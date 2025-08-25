@@ -122,14 +122,14 @@
 .bg-island[ data-name="drums" ] { --w: 160px; --b: 420px; right: 150px; background-image: url( "../../assets/art/gs-drums-island.svg" ); opacity: .60; }
 .bg-island[ data-name="piano" ] { --w: 200px; --b: 100px; right:  60px; background-image: url( "../../assets/art/gs-piano-island.svg" );               }
 .bg-island[ data-name="ipod"  ] { --w: 150px; --b: 300px; right: 380px; background-image: url( "../../assets/art/gs-ipod-island.svg" );  opacity: .75; }
-.bg-island[ data-name="ampli" ] { --w: 200px; --b: 130px; left:  150px; background-image: url( "../../assets/art/gs-ampli-island.svg" );               }
-.bg-island[ data-name="tape"  ] { --w: 180px; --b: 280px; left:  400px; background-image: url( "../../assets/art/gs-tape-island.svg" );  opacity: .75; }
+.bg-island[ data-name="ampli" ] { --w: 200px; --b: 250px; left:  150px; background-image: url( "../../assets/art/gs-ampli-island.svg" );               }
+.bg-island[ data-name="tape"  ] { --w: 180px; --b: 350px; left:  400px; background-image: url( "../../assets/art/gs-tape-island.svg" );  opacity: .75; }
 
 #bg-volcan {
-	--b: -100px;
+	--b: -50px;
 	position: absolute;
 	right: 0;
-	bottom: calc( var( --b ) * ( .5 - 1.5 * var( --gscom-scroll ) ) );
+	bottom: calc( var( --b ) * ( 1 - var( --gscom-scroll ) ) );
 	max-width: 100%;
 	width: 340px;
 	height: 300px;
