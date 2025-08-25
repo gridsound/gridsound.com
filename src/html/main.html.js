@@ -42,7 +42,7 @@ GSUsetTemplate( "gs-main", () =>
 					GSUcreateAExt( { class: "gsuiIcon", "data-icon": "br-github", href: "//github.com/gridsound" } ),
 					GSUcreateAExt( { class: "gsuiIcon", "data-icon": "br-codepen", href: "//codepen.io/gridsound" } ),
 					GSUcreateAExt( { class: "gsuiIcon", "data-icon": "br-discord", href: "//discord.gg/NUYxHAg" } ),
-					GSUcreateAExt( { class: "gsuiIcon", "data-icon": "br-twitter", href: "//twitter.com/gridsound" } ),
+					GSUcreateAExt( { class: "gsuiIcon", "data-icon": "br-bluesky", href: "//bsky.app/profile/gridsound.com" } ),
 					GSUcreateAExt( { class: "gsuiIcon", "data-icon": "br-youtube", href: "//youtube.com/@gridsound" } ),
 					GSUcreateAExt( { class: "gsuiIcon", "data-icon": "br-facebook", href: "//facebook.com/gridsound" } ),
 				),
