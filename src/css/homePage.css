@@ -5,10 +5,17 @@
 /* .......................................................................... */
 #homePage-title {
 	margin-top: 30px;
-	margin-bottom: 40px;
 	text-align: center;
 	font-size: 46px;
 	font-weight: 500;
+}
+#homePage-logo {
+	width: 100%;
+	height: 82px;
+	margin-bottom: 40px;
+	background: center no-repeat url( "../../assets/logo/gs-gridsound-logo.svg" );
+	background-size: contain;
+	filter: invert( 1 );
 }
 
 /* .......................................................................... */

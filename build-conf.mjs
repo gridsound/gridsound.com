@@ -1,7 +1,7 @@
 export default {
 	title:         "GridSound",
 	desc:          "The platform to compose your own music",
-	favicon:       "assets/favicon.png",
+	favicon:       "assets/favicon2.svg",
 	url:           "https://gridsound.com/",
 	ogImage:       "https://gridsound.com/assets/og-image.jpg",
 	ogImageW:      800,

@@ -27,15 +27,18 @@
 
 /* .......................................................................... */
 #headIcon {
+	position: relative;
 	width: var( --head-height );
 	margin-right: auto;
 	border-bottom-left-radius: inherit;
 }
 #headIcon::before {
-	content: "GS";
-	font-size: 40px;
-	font-family: "Oswald";
-	line-height: 1em;
+	content: "";
+	position: absolute;
+	inset: 0;
+	background: center no-repeat url( "../../assets/logo/gs-gs-logo.svg" );
+	background-size: 60%;
+	filter: invert( 1 );
 }
 
 /* .......................................................................... */
