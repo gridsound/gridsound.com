@@ -24,11 +24,9 @@ class userPage {
 		DOM.userPagePlaylist.$setRestoreCallbackPromise( id => gsapiClient.$restoreComposition( id ).catch( err => { throw err.msg; } ) );
 		DOM.userPageProfile.$setSavingCallbackPromise( obj => gsapiClient.$updateMyInfo( obj ).catch( err => { throw err.msg; } ) );
 		DOM.userPageProfile.$setVerifyEmailCallbackPromise( () => gsapiClient.$resendConfirmationEmail().catch( err => { throw err.msg; } ) );
-		GSUlistenEvents( DOM.userPagePlaylist, {
-			gsuiComPlayer: {
-				play: ( d, t ) => { PAGES.$main.play( t, this.#cmpsMap.get( t.dataset.id ).data ); },
-				stop: ( d, t ) => { PAGES.$main.stop(); },
-			},
+		GSUdomListen( DOM.userPagePlaylist, {
+			[ GSEV_COMPLAYER_PLAY ]: d => PAGES.$main.play( d.$target, this.#cmpsMap.get( d.$targetId ).data ),
+			[ GSEV_COMPLAYER_STOP ]: () => PAGES.$main.stop(),
 		} );
 	}
 

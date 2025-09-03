@@ -14,20 +14,16 @@ class homePage {
 
 	constructor() {
 		Object.seal( this );
-		GSUlistenEvents( DOM[ "homePage-trySynth-joystick" ], {
-			gsuiJoystick: {
-				end: d => this.#onendJoystick(),
-				move: d => this.#onmoveJoystick( ...d.args ),
-				start: d => {
-					const [ x, y ] = d.args;
-
-					if ( this.#ctx ) {
-						this.#onstartJoystick( x, y );
-					} else {
-						this.#audioInit().then( () => this.#onstartJoystick( x, y ) );
-					}
-				},
-			}
+		GSUdomListen( DOM[ "homePage-trySynth-joystick" ], {
+			[ GSEV_JOYSTICK_END ]: () => this.#onendJoystick(),
+			[ GSEV_JOYSTICK_MOVE ]: ( _, x, y ) => this.#onmoveJoystick( x, y ),
+			[ GSEV_JOYSTICK_START ]: ( _, x, y ) => {
+				if ( this.#ctx ) {
+					this.#onstartJoystick( x, y );
+				} else {
+					this.#audioInit().then( () => this.#onstartJoystick( x, y ) );
+				}
+			},
 		} );
 	}
 

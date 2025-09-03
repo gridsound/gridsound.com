@@ -60,6 +60,9 @@ export default {
 	],
 	// .........................................................................
 	jsDep: [
+		"gs-ui-components/gsui-constantes.js",
+
+		// .....................................................................
 		"gs-utils/gs-utils.js",
 		"gs-utils/gs-utils-dom.js",
 		"gs-utils/gs-utils-func.js",
