@@ -2,8 +2,8 @@
 
 GSUsetTemplate( "gs-homePage", () =>
 	GSUcreateDiv( { class: "page", id: "homePage" },
-		GSUcreateElement( "h1", { id: "homePage-title" }, "Start creating your own music online with:" ),
-		GSUcreateDiv( { id: "homePage-logo" } ),
+		GSUcreateElement( "h1", { id: "homePage-title" }, "Start creating your own music online" ),
+		GSUcreateDiv( { id: "homePage-logo", inert: true } ),
 		GSUcreateDiv( { id: "homePage-anim", inert: true },
 			GSUnewArray( 5, () => GSUcreateDiv( { class: "homePage-anim-light" } ) ),
 			GSUcreateDiv( { id: "homePage-anim-white-spot" } ),
