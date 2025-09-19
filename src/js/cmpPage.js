@@ -1,28 +1,25 @@
 "use strict";
 
 class cmpPage {
-	#cmp = null;
-
 	constructor() {
 		Object.seal( this );
-		GSUdomListen( DOM.cmpPage, {
-			[ GSEV_COMPLAYER_PLAY ]: () => PAGES.$main.play( DOM.cmpPageCmp, this.#cmp ),
-			[ GSEV_COMPLAYER_STOP ]: () => PAGES.$main.stop(),
-		} );
 	}
 
+	$quit() {
+		GSUdomSetAttr( DOM.cmpPageCmp, "playing", false );
+	}
 	show( cmpId ) {
 		return gsapiClient.$getComposition( cmpId )
 			.then( data => {
 				const u = data.user;
-				const cmp = data.composition.data;
+				const cmp = data.composition;
 
-				this.#cmp = cmp;
 				GSUdomSetAttr( DOM.cmpPageCmp, {
 					"data-id": cmp.id,
 					name: cmp.name,
 					bpm: cmp.bpm,
-					duration: cmp.duration * 60 / cmp.bpm,
+					duration: cmp.durationSec,
+					url: `https://compositions.gridsound.com/${ cmp.id }.opus`,
 				} );
 				DOM.cmpPageAuthor.href = `#/u/${ u.username }`;
 				DOM.cmpPageAuthorAvatar.style.backgroundImage = `url(${ u.avatar })`;

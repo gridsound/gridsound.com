@@ -24,10 +24,6 @@ class userPage {
 		DOM.userPagePlaylist.$setRestoreCallbackPromise( id => gsapiClient.$restoreComposition( id ).catch( err => { throw err.msg; } ) );
 		DOM.userPageProfile.$setSavingCallbackPromise( obj => gsapiClient.$updateMyInfo( obj ).catch( err => { throw err.msg; } ) );
 		DOM.userPageProfile.$setVerifyEmailCallbackPromise( () => gsapiClient.$resendConfirmationEmail().catch( err => { throw err.msg; } ) );
-		GSUdomListen( DOM.userPagePlaylist, {
-			[ GSEV_COMPLAYER_PLAY ]: d => PAGES.$main.play( d.$target, this.#cmpsMap.get( d.$targetId ).data ),
-			[ GSEV_COMPLAYER_STOP ]: () => PAGES.$main.stop(),
-		} );
 	}
 
 	// .........................................................................
@@ -49,7 +45,10 @@ class userPage {
 		}
 	}
 	$quit() {
+		const elCmp = GSUdomQS( DOM.userPagePlaylist, "gsui-com-player[playing]" );
+
 		this.#usernameLow = null;
+		GSUdomSetAttr( elCmp, "playing", false );
 	}
 
 	// .........................................................................

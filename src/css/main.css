@@ -87,7 +87,6 @@
 	align-items: center;
 	justify-content: center;
 	font-size: 36px;
-	background-color: var( --app-bg );
 }
 #errorLabel {
 	opacity: .6;

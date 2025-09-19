@@ -1,7 +1,7 @@
 export default {
 	title:         "GridSound",
 	desc:          "The platform to compose your own music",
-	favicon:       "assets/favicon2.svg",
+	favicon:       "assets/ico.svg",
 	url:           "https://gridsound.com/",
 	ogImage:       "https://gridsound.com/assets/og-image.jpg",
 	ogImageW:      800,
@@ -45,6 +45,7 @@ export default {
 	// .........................................................................
 	cssDep: [
 		"gs-ui-components/gsui.css",
+		"gs-ui-components/gsui-gray.css",
 		"gs-ui-components/gsui-flex.css",
 		"gs-ui-components/gsuiIcon/gsuiIcon.css",
 		"gs-ui-components/gsuiRipple/gsuiRipple.css",
@@ -77,39 +78,6 @@ export default {
 
 		// .....................................................................
 		"gs-api-client/gsapiClient.js",
-
-		// .....................................................................
-		"daw-core/src/GScomposition.js",
-		"daw-core/src/DAWCore.js",
-		"daw-core/src/DAWCoreBuffers.js",
-		"daw-core/src/DAWCoreCompositionExportWAV.js",
-		"daw-core/src/DAWCoreCompositionFormat.js",
-		"daw-core/src/DAWCoreDestination.js",
-		"daw-core/src/DAWCoreHistory.js",
-		"daw-core/src/DAWCoreHistoryTexts.js",
-		"daw-core/src/DAWCoreSlicesBuffers.js",
-		"daw-core/src/DAWCoreComposition.js",
-		"daw-core/src/DAWCoreSlices.js",
-		"daw-core/src/DAWCoreDrums.js",
-		"daw-core/src/DAWCoreKeys.js",
-
-		"daw-core/src/controllers/blocks.js",
-		"daw-core/src/controllers/drumrows.js",
-		"daw-core/src/controllers/drums.js",
-		"daw-core/src/controllers/effects.js",
-		"daw-core/src/controllers/keys.js",
-		"daw-core/src/controllers/mixer.js",
-		"daw-core/src/controllers/synth.js",
-		"daw-core/src/controllers/tracks.js",
-		"daw-core/src/controllers/slicer.js",
-
-		"daw-core/src/actions/common/addPatternBuffer.js",
-		"daw-core/src/actions/common/calcNewDuration.js",
-		"daw-core/src/actions/common/calcNewKeysDuration.js",
-		"daw-core/src/actions/common/createUniqueName.js",
-		"daw-core/src/actions/common/getDrumrowName.js",
-		"daw-core/src/actions/common/toggleSolo.js",
-		"daw-core/src/actions/common/updatePatternDuration.js",
 
 		// .....................................................................
 		"gs-wa-components/gswaNoise/gswaNoise.js",

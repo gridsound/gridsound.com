@@ -6,7 +6,7 @@ class homePage {
 	#waReverb = null;
 	#startedKey = null;
 	#setAnimSpeedThr = GSUthrottle( ( speed, amp ) => {
-		GSUsetStyle( DOM[ "homePage-trySynth-joystick" ], {
+		GSUdomStyle( DOM[ "homePage-trySynth-joystick" ], {
 			'--gsuiJoystick-anim-speed': speed,
 			'--gsuiJoystick-anim-opacity': amp / 1,
 		} );

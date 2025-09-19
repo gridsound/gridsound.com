@@ -2,6 +2,7 @@
 
 const DAWURL = "//localhost/gridsound/daw/";
 
+document.body.dataset.skin = "gray";
 document.body.append( GSUgetTemplate( "gs-main" ) );
 
 GSUdomQS( "#pages" ).append(
@@ -41,5 +42,5 @@ document.addEventListener( "scroll", e => {
 	const scrollSize = Math.max( 2000, elHTML.scrollHeight - elHTML.offsetHeight );
 	const p = GSUmathFix( elHTML.scrollTop / scrollSize, 3 );
 
-	GSUsetStyle( DOM.root, "--gscom-scroll", p );
+	GSUdomStyle( DOM.root, "--gscom-scroll", p );
 } );

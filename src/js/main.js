@@ -1,9 +1,7 @@
 "use strict";
 
 class main {
-	#daw = null;
 	#pageName = null;
-	#elCmpPlaying = null;
 	#timeoutIdPageChange = null;
 	$pages = {
 		"":             [ DOM.homePage,       DOM.headIcon, PAGES.$home ],
@@ -22,49 +20,6 @@ class main {
 	run() {
 		this.#hashChange();
 	}
-	#getDAWCore() {
-		if ( !this.#daw ) {
-			this.#daw = new DAWCore();
-			return this.#daw.$init()
-				.then( () => GSUloadJSFile( "assets/gswaPeriodicWavesList-v1.js" ) )
-				.then( () => {
-					gswaPeriodicWaves.$loadWaves( gswaPeriodicWavesList );
-					this.#daw.$destinationSetGain( .6 );
-					this.#daw.cb.currentTime = t => GSUdomSetAttr( this.#elCmpPlaying, "currenttime", t * 60 / this.#daw.$cmp.$getBPM() );
-					return this.#daw;
-				} );
-		}
-		return Promise.resolve( this.#daw );
-	}
-	stop() {
-		if ( this.#elCmpPlaying ) {
-			this.#daw.$stop();
-			GSUdomRmAttr( this.#elCmpPlaying, "playing" );
-			this.#elCmpPlaying = null;
-		}
-	}
-	play( elCmp, cmp ) {
-		this.#getDAWCore().then( daw => {
-			const currCmp = this.#elCmpPlaying;
-
-			this.stop();
-			if ( elCmp !== currCmp ) {
-				daw.$openComposition( cmp ).then( () => {
-					daw.$focusOn( "composition" );
-					daw.$play();
-					GSUdomSetAttr( elCmp, "playing" );
-					this.#elCmpPlaying = elCmp;
-				} );
-			}
-		} )
-	}
-	// currentTime( t ) {
-	// 	this.#getDAWCore().then( daw => {
-	// 		if ( this.#elCmpPlaying ) {
-	// 			daw.$compositionSetCurrentTime( t );
-	// 		}
-	// 	} );
-	// }
 	loggedIn( u ) {
 		gsapiClient.$setIntervalPing();
 		DOM.headAuth.dataset.spin = "";
@@ -115,7 +70,6 @@ class main {
 	#hashChange() {
 		const hash = location.hash;
 
-		this.stop();
 		if ( !hash ) {
 			location.hash = "#/";
 		} else if ( hash !== "#/" && hash.endsWith( "/" ) ) {
