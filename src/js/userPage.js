@@ -83,7 +83,7 @@ class userPage {
 			avatar: u.avatar,
 			email: u.email,
 			emailpublic: u.emailpublic,
-			emailtoverify: !u.emailchecked,
+			emailtoverify: this.#itsMe && !u.emailchecked,
 		} );
 	}
 }
