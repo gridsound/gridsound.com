@@ -1,6 +1,9 @@
 "use strict";
 
 class resetpassPage {
+	#email = null;
+	#code = null;
+
 	constructor() {
 		Object.seal( this );
 		DOM.resetpassForm.onsubmit =
@@ -13,8 +16,8 @@ class resetpassPage {
 
 	show( email, code ) {
 		DOM.resetpassPage.classList.remove( "sended" );
-		this.email = email;
-		this.code = code;
+		this.#email = email;
+		this.#code = code;
 		DOM.resetpassFormPass2.value =
 		DOM.resetpassFormPass.value = "";
 	}
@@ -24,7 +27,7 @@ class resetpassPage {
 		if ( pass.value === pass2.value ) {
 			error.textContent = "";
 			btn.classList.add( "btn-loading" );
-			gsapiClient.$resetPassword( this.email, this.code, pass.value )
+			gsapiClient.$resetPassword( this.#email, this.#code, pass.value )
 				.finally( () => btn.classList.remove( "btn-loading" ) )
 				.then( () => {
 					DOM.resetpassPage.classList.add( "sended" );
