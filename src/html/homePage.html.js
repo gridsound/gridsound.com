@@ -11,7 +11,7 @@ GSUsetTemplate( "gs-homePage", () =>
 				GSUnewArray( 17, () => GSUcreateDiv( { class: "homePage-anim-star" } ) ),
 			),
 			GSUcreateDiv( { id: "homePage-anim-icons" },
-				[ "waveform", "piano", "drum", "amp-guitar", "mixer", "music", "sax-hot" ].map( i =>
+				[ "cu-waveform", "piano", "drum", "amp-guitar", "mixer", "music", "sax-hot" ].map( i =>
 					GSUcreateIcon( { class: "homePage-anim-icon", icon: i } ) )
 			),
 		),

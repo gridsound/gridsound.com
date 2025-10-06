@@ -215,7 +215,7 @@ a:hover ~ #homePage-screen-brd {
 .startAnim .homePage-anim-icon {
 	opacity: 1;
 }
-.startAnim .homePage-anim-icon[ data-icon="waveform" ]   { left: 10%; top: 30%; rotate:  23deg; }
+.startAnim .homePage-anim-icon[ data-icon="cu-waveform" ]   { left: 10%; top: 30%; rotate:  23deg; }
 .startAnim .homePage-anim-icon[ data-icon="piano" ]      { left: 67%; top:  5%; rotate:  -8deg; transition-delay: .05s }
 .startAnim .homePage-anim-icon[ data-icon="drum" ]       { left: 34%; top:  2%; rotate: -30deg; transition-delay: .15s }
 .startAnim .homePage-anim-icon[ data-icon="amp-guitar" ] { left: 89%; top: 26%; rotate:  20deg; transition-delay: .18s }
