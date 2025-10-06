@@ -13,13 +13,19 @@ class cmpPage {
 			.then( data => {
 				const u = data.user;
 				const cmp = data.composition;
+				const itsmine = gsapiClient.$user.id === cmp.iduser;
+				const del = !!cmp.deleted;
 
 				GSUdomSetAttr( DOM.cmpPageCmp, {
+					itsmine,
 					"data-id": cmp.id,
 					name: cmp.name,
 					bpm: cmp.bpm,
+					private: !cmp.public,
+					opensource: cmp.opensource,
 					duration: cmp.durationSec,
 					url: `https://compositions.gridsound.com/${ cmp.id }.opus`,
+					dawlink: del || !( itsmine || cmp.opensource ) ? false : `${ DAWURL }#${ cmp.id }`,
 				} );
 				DOM.cmpPageAuthor.href = `#/u/${ u.username }`;
 				DOM.cmpPageAuthorAvatar.style.backgroundImage = `url(${ u.avatar })`;
