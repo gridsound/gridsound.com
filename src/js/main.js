@@ -100,7 +100,7 @@ class main {
 
 		if ( !btn.getAttribute( "href" ) && btn.dataset.spin !== "on" ) {
 			btn.dataset.spin = "on";
-			gsapiClient.$logoutRefresh();
+			gsapiClient.$logoutRefresh().catch( () => GSUdomRmAttr( btn, "data-spin" ) );
 			return false;
 		}
 	}
