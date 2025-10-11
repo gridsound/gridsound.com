@@ -30,7 +30,7 @@
 	content: "";
 	position: absolute;
 	inset: 0;
-	background: center no-repeat url( "../../assets/logo/gs-gridsound-logo.svg" );
+	background: center no-repeat url( "../../../assets/logo/gs-gridsound-logo.svg" );
 	background-size: contain;
 	filter: invert( 1 );
 }

@@ -13,34 +13,40 @@ export default {
 		"assets/fonts/fonts.css",
 	],
 	cssSrcB: [
-		"src/css/form.css",
-		"src/css/root.css",
-		"src/css/reset.css",
-		"src/css/main.css",
-		"src/css/head.css",
-		"src/css/footer.css",
-		"src/css/homePage.css",
-		"src/css/authPages.css",
-		"src/css/cmpPage.css",
-	],
-	jsSrcB: [
-		"src/html/main.html.js",
-		"src/html/cmpPage.html.js",
-		"src/html/homePage.html.js",
-		"src/html/userPage.html.js",
-		"src/html/authPage.html.js",
-		"src/html/forgotpassPage.html.js",
-		"src/html/resetpassPage.html.js",
+		"src/main/form.css",
+		"src/main/root.css",
+		"src/main/reset.css",
+		"src/main/main.css",
+		"src/main/head.css",
+		"src/main/footer.css",
 
 		// .....................................................................
-		"src/js/main.js",
-		"src/js/authPage.js",
-		"src/js/homePage.js",
-		"src/js/userPage.js",
-		"src/js/cmpPage.js",
-		"src/js/resetpassPage.js",
-		"src/js/forgotpassPage.js",
-		"src/js/run.js",
+		"src/pages/home/home.css",
+		"src/pages/auth/auth.css",
+		"src/pages/cmp/cmp.css",
+	],
+	jsSrcB: [
+		"src/main/main.html.js",
+		"src/pages/cmp/cmp.html.js",
+		"src/pages/home/home.html.js",
+		"src/pages/user/user.html.js",
+		"src/pages/auth/auth.html.js",
+		"src/pages/forgotpass/forgotpass.html.js",
+		"src/pages/resetpass/resetpass.html.js",
+
+		// .....................................................................
+		"src/main/main.js",
+
+		// .....................................................................
+		"src/pages/auth/auth.js",
+		"src/pages/home/home.js",
+		"src/pages/user/user.js",
+		"src/pages/cmp/cmp.js",
+		"src/pages/resetpass/resetpass.js",
+		"src/pages/forgotpass/forgotpass.js",
+
+		// .....................................................................
+		"src/run.js",
 	],
 	// .........................................................................
 	cssDep: [
