@@ -1,0 +1,25 @@
+gscom-userlink {
+	display: inline-flex;
+}
+
+.gscomUserLink-a {
+	display: inline-flex;
+	align-items: center;
+	gap: 10px;
+	font-size: 16px;
+}
+
+.gscomUserLink-avatar {
+	width: 22px;
+	height: 22px;
+	border-radius: 2px;
+	background: #fff6 no-repeat center;
+	background-size: cover;
+}
+.gscomUserLink-username {
+	font-weight: bold;
+}
+.gscomUserLink-name:not( :empty )::before {
+	content: "-";
+	margin-right: 10px;
+}

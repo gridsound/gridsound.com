@@ -13,6 +13,9 @@ export default {
 		"assets/fonts/fonts.css",
 	],
 	cssSrcB: [
+		"src/components/gscomUserLink.css",
+
+		// .....................................................................
 		"src/main/form.css",
 		"src/main/root.css",
 		"src/main/reset.css",
@@ -26,6 +29,9 @@ export default {
 		"src/pages/cmp/cmp.css",
 	],
 	jsSrcB: [
+		"src/components/gscomUserLink.js",
+
+		// .....................................................................
 		"src/main/main.html.js",
 		"src/pages/cmp/cmp.html.js",
 		"src/pages/home/home.html.js",
