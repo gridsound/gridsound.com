@@ -18,6 +18,7 @@ GSUsetTemplate( "gs-main", () =>
 			GSUcreateDiv( { id: "head" },
 				GSUcreateA( { id: "headIcon", class: "headLink", href: "#/" } ),
 				GSUcreateDiv( { id: "headSep" } ),
+				GSUcreateA( { id: "headSearch", class: "headLink gsuiIcon", href: "#/q", "data-icon": "search", title: "Search for users or compositions" } ),
 				GSUcreateAExt( { id: "headNewCmp", class: "headLink", href: DAWURL, title: "Create a new composition" },
 					GSUcreateIcon( { icon: "music", inert: true } ),
 					GSUcreateIcon( { icon: "plus", inert: true } ),

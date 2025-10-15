@@ -1,0 +1,55 @@
+#searchPage-form {
+	display: flex;
+	flex-direction: column;
+	gap: inherit;
+}
+
+#searchPage-form-filter {
+	display: flex;
+	gap: 36px;
+}
+#searchPage-form-filter label {
+	display: flex;
+	gap: 8px;
+	cursor: pointer;
+}
+#searchPage-form-filter input {
+	margin: 0;
+}
+
+#searchPage-form-body {
+	display: flex;
+	height: 48px;
+}
+#searchPage-form-q {
+	flex: 1;
+	border: 0;
+	outline: 0;
+	min-width: 0;
+	border-radius: 8px 0 0 8px;
+	padding: 12px;
+	font-size: 20px;
+	background-color: #fff1;
+}
+#searchPage-form-q::placeholder {
+	font-style: italic;
+}
+#searchPage-form-submit {
+	width: 42px;
+	padding: 0;
+	border: 0;
+	border-radius: 0 8px 8px 0;
+	font-size: 22px;
+	cursor: pointer;
+	background-color: #fff3;
+}
+
+/* .......................................................................... */
+#searchPageResultIntro b {
+	font-style: italic;
+}
+#searchPageResult {
+	display: flex;
+	flex-direction: column;
+	gap: 16px;
+}

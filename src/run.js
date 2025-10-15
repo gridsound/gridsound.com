@@ -7,6 +7,7 @@ document.body.append( GSUgetTemplate( "gs-main" ) );
 
 GSUdomQS( "#pages" ).append(
 	GSUgetTemplate( "gs-homePage" ),
+	GSUgetTemplate( "gs-searchPage" ),
 	GSUgetTemplate( "gs-userPage" ),
 	GSUgetTemplate( "gs-authPage" ),
 	GSUgetTemplate( "gs-cmpPage" ),
@@ -23,6 +24,7 @@ const PAGES = {
 	$home: new homePage(),
 	$auth: new authPage(),
 	$user: new userPage(),
+	$search: new searchPage(),
 	$resetpass: new resetpassPage(),
 	$forgotpass: new forgotpassPage(),
 };

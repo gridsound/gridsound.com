@@ -1,0 +1,28 @@
+"use strict";
+
+GSUsetTemplate( "gs-searchPage", () =>
+	GSUcreateDiv( { class: "page", id: "searchPage" },
+		GSUcreateDiv( { id: "searchPage-intro" }, "Search a user or a composition on GridSound" ),
+		GSUcreateElement( "form", { id: "searchPage-form" },
+			GSUcreateDiv( { id: "searchPage-form-filter" },
+				GSUcreateLabel( null,
+					GSUcreateInput( { name: "search-filter", type: "radio", value: "u" } ),
+					GSUcreateSpan( null, "user" ),
+				),
+				GSUcreateLabel( null,
+					GSUcreateInput( { name: "search-filter", type: "radio", value: "cmp" } ),
+					GSUcreateSpan( null, "composition" ),
+				),
+			),
+			GSUcreateDiv( { id: "searchPage-form-body" },
+				GSUcreateInput( { id: "searchPage-form-q", type: "text", placeholder: "search...", autocomplete: "off" } ),
+				GSUcreateButton( { id: "searchPage-form-submit", type: "submit", class: "gsuiIcon", icon: "search" } ),
+			),
+		),
+		GSUcreateDiv( { id: "searchPageResultIntro" },
+			GSUcreateSpan(),
+			GSUcreateElement( "b" ),
+		),
+		GSUcreateDiv( { id: "searchPageResult" } ),
+	),
+);
