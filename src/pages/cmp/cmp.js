@@ -27,12 +27,12 @@ class cmpPage {
 					url: `https://compositions.gridsound.com/${ cmp.id }.opus`,
 					dawlink: del || !( itsmine || cmp.opensource ) ? false : `${ DAWURL }#${ cmp.id }`,
 				} );
-				DOM.cmpPageAuthor.href = `#/u/${ u.username }`;
-				DOM.cmpPageAuthorAvatar.style.backgroundImage = `url(${ u.avatar })`;
-				DOM.cmpPageAuthorUsername.textContent = u.username;
-				DOM.cmpPageAuthorName.textContent = u.firstname || u.lastname
-					? `${ u.firstname } ${ u.lastname }`
-					: "";
+				GSUdomSetAttr( DOM.cmpPageUserLink, {
+					avatar: u.avatar,
+					username: u.username,
+					firstname: u.firstname,
+					lastname: u.lastname,
+				} );
 			}, err => PAGES.$main.error( err.code ) );
 	}
 }

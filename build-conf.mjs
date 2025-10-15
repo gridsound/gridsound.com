@@ -26,7 +26,6 @@ export default {
 		// .....................................................................
 		"src/pages/home/home.css",
 		"src/pages/auth/auth.css",
-		"src/pages/cmp/cmp.css",
 	],
 	jsSrcB: [
 		"src/components/gscomUserLink.js",
