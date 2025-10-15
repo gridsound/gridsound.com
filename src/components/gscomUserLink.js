@@ -41,9 +41,9 @@ class gscomUserLink extends gsui0ne {
 		const a = GSUdomGetAttr( this, "firstname" );
 		const b = GSUdomGetAttr( this, "lastname" );
 
-		this.$elements.$name.textContent = a || b
+		this.$elements.$name.textContent = a && b
 			? `${ a } ${ b }`
-			: "";
+			: a || b || "";
 	}
 }
 
