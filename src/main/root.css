@@ -13,8 +13,9 @@
 	--head-logout-hover-bg: #ee5f5f;
 	--head-logout-hover-text: #fff;
 	--head-logout-text: #000;
-	--head-selected-bg: #2e355b;
+	--head-selected-bg: #3a4983;
 	--head-bg: #3b456e;
+	--head-brd: 1px solid #2e3653;
 
 	--auth-bg: #fff;
 	--auth-text: #333;
