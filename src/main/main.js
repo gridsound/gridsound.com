@@ -59,6 +59,11 @@ class main {
 					.finally( () => GSUdomRmClass( DOM.loader, "show" ) );
 			}, .25 );
 		}
+		if ( pageName === "u" ) {
+			const itsme = args[ 0 ].toLowerCase() === gsapiClient.$user.usernameLow;
+
+			this.#toggleClass( itsme ? headLink : null, "headLinkBefore", "selected" );
+		}
 	}
 	#toggleClass( el, prevAttr, clazz ) {
 		const elPrev = this[ prevAttr ];
