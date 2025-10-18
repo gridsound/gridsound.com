@@ -23,10 +23,12 @@ class main {
 	}
 	loggedIn( u ) {
 		gsapiClient.$setIntervalPing();
-		DOM.headAuth.dataset.spin = "";
-		DOM.headAuth.dataset.icon = "logout";
-		DOM.headAuth.title = "Logout";
-		DOM.headAuth.href = "";
+		GSUdomSetAttr( DOM.headAuth, {
+			"data-spin": "",
+			"data-icon": "logout",
+			title: "Logout",
+			href: "",
+		} );
 		DOM.headUser.href = `#/u/${ u.username }`;
 		DOM.headUsername.textContent = u.username;
 		GSUdomRmClass( DOM.root, "noauth" );
