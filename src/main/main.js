@@ -67,7 +67,6 @@ class main {
 			GSUdomRmClass( elPrev, clazz );
 			GSUdomAddClass( el, clazz );
 			this[ prevAttr ] = el || undefined;
-			return true;
 		}
 	}
 	#hashChange() {
