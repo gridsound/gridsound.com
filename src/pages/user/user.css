@@ -1,0 +1,30 @@
+#userPageProfileMenu {
+	display: flex;
+	gap: 20px;
+}
+.userPageProfileMenu-btn {
+	display: flex;
+	gap: 6px;
+	border: 0;
+	padding: 0;
+	color: inherit;
+	font: inherit;
+	font-size: 14px;
+	text-decoration: none;
+	opacity: .3;
+	cursor: pointer;
+	background: none;
+}
+#userPage:has( gsui-com-playlist:not( [ bin ] ) ) .userPageProfileMenu-btn:first-child,
+#userPage:has( gsui-com-playlist[ bin ] ) .userPageProfileMenu-btn:last-child {
+	opacity: 1;
+}
+.userPageProfileMenu-btn span:first-child {
+	font-weight: bold;
+}
+.userPageProfileMenu-btn span:last-child {
+	opacity: .7;
+}
+#userPage:has( gsui-com-playlist:not( [ whoami="itsme+" ] ) ) .userPageProfileMenu-btn:last-child {
+	display: none;
+}

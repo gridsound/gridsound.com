@@ -10,6 +10,9 @@ class userPage {
 
 	constructor() {
 		Object.seal( this );
+		GSUdomListen( DOM.userPagePlaylist, {
+			[ GSEV_COMPLAYLIST_UPDATE_NB ]: ( _, a, b ) => this.#updateNbCmps( a, b ),
+		} );
 		DOM.userPagePlaylist.$setForkCallbackPromise( id => 
 			gsapiClient.$forkComposition( id )
 				.then( res => gsapiClient.$getComposition( res.msg ) )
@@ -25,6 +28,7 @@ class userPage {
 		DOM.userPagePlaylist.$setVisibilityCallbackPromise( ( id, vis ) => gsapiClient.$changeCompositionVisibility( id, vis ).catch( err => { throw err.msg; } ) );
 		DOM.userPageProfile.$setSavingCallbackPromise( obj => gsapiClient.$updateMyInfo( obj ).catch( err => { throw err.msg; } ) );
 		DOM.userPageProfile.$setVerifyEmailCallbackPromise( () => gsapiClient.$resendConfirmationEmail().catch( err => { throw err.msg; } ) );
+		DOM.userPageProfileMenu.onclick = this.#onclickMenu.bind( this );
 	}
 
 	// .........................................................................
@@ -53,6 +57,21 @@ class userPage {
 	}
 
 	// .........................................................................
+	#onclickMenu( e ) {
+		const act = e.target.dataset.action;
+
+		switch ( act ) {
+			case "compositions":
+			case "compositions-bin":
+				this.#pageBin = act === "compositions-bin";
+				GSUdomSetAttr( DOM.userPagePlaylist, "bin", this.#pageBin );
+				break;
+		}
+	}
+	#updateNbCmps( a, b ) {
+		DOM.userPageProfileNbCmps.textContent = a;
+		DOM.userPageProfileNbCmpsDeleted.textContent = b;
+	}
 	#downloadData( username ) {
 		const usernameLow = username.toLowerCase();
 
