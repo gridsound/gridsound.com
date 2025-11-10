@@ -9,7 +9,8 @@ class searchPage {
 	}
 
 	$quit() {
-		//
+		GSUdomQSA( DOM.searchPageResult, "gsui-com-player" )
+			.forEach( el => GSUdomSetAttr( el, "playing", false ) );
 	}
 	show( filter, q ) {
 		this.#query( filter, q );
@@ -75,17 +76,22 @@ class searchPage {
 				lastname: u.lastname,
 			} ) ) );
 		} else {
-			DOM.searchPageResult.append( ...arr.map( cmp => GSUcreateElement( "gsui-com-player", {
-				"data-id": cmp.id,
-				name: cmp.name,
-				bpm: cmp.bpm,
-				private: !cmp.public,
-				opensource: cmp.opensource,
-				duration: cmp.durationSec,
-				url: `https://compositions.gridsound.com/${ cmp.id }.opus`,
-				link: `#/cmp/${ cmp.id }`,
-				dawlink: gsapiClient.$user.id === cmp.iduser || cmp.opensource ? `${ DAWURL }#${ cmp.id }` : false,
-			} ) ) );
+			DOM.searchPageResult.append( ...arr.map( cmp => {
+				const elCmp = GSUcreateElement( "gsui-com-player", {
+					"data-id": cmp.id,
+					name: cmp.name,
+					bpm: cmp.bpm,
+					private: !cmp.public,
+					opensource: cmp.opensource,
+					duration: cmp.durationSec,
+					rendered: !!cmp.rendered,
+					link: `#/cmp/${ cmp.id }`,
+					dawlink: gsapiClient.$user.id === cmp.iduser || cmp.opensource ? `${ DAWURL }#${ cmp.id }` : false,
+				} );
+
+				elCmp.$setRendersCallbackPromise( elCmp => gsapiClient.$getCompositionRenders( elCmp.dataset.id ).then( arr => arr[ 0 ]?.url ) );
+				return elCmp;
+			} ) );
 		}
 	}
 }

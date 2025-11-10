@@ -16,6 +16,7 @@ class cmpPage {
 				const itsmine = gsapiClient.$user.id === cmp.iduser;
 				const del = !!cmp.deleted;
 
+				DOM.cmpPageCmp.$setRendersCallbackPromise( elCmp => gsapiClient.$getCompositionRenders( elCmp.dataset.id ).then( arr => arr[ 0 ]?.url ) );
 				GSUdomSetAttr( DOM.cmpPageCmp, {
 					itsmine,
 					"data-id": cmp.id,
@@ -24,7 +25,7 @@ class cmpPage {
 					private: !cmp.public,
 					opensource: cmp.opensource,
 					duration: cmp.durationSec,
-					url: `https://compositions.gridsound.com/${ cmp.id }.opus`,
+					rendered: !!cmp.rendered,
 					dawlink: del || !( itsmine || cmp.opensource ) ? false : `${ DAWURL }#${ cmp.id }`,
 				} );
 				GSUdomSetAttr( DOM.cmpPageUserLink, {

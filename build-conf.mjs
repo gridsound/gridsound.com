@@ -27,6 +27,7 @@ export default {
 		"src/pages/home/home.css",
 		"src/pages/search/search.css",
 		"src/pages/auth/auth.css",
+		"src/pages/user/user.css",
 	],
 	jsSrcB: [
 		"src/components/gscomUserLink.js",
