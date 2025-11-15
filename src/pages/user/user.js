@@ -1,6 +1,7 @@
 "use strict";
 
 class userPage {
+	#id = null;
 	#usernameLow = null;
 	#page = null;
 	#pageBin = null;
@@ -27,6 +28,9 @@ class userPage {
 		DOM.userPagePlaylist.$setRendersCallbackPromise( id => gsapiClient.$getCompositionRenders( id ).catch( err => { throw err.msg; } ) );
 		DOM.userPagePlaylist.$setRestoreCallbackPromise( id => gsapiClient.$restoreComposition( id ).catch( err => { throw err.msg; } ) );
 		DOM.userPagePlaylist.$setVisibilityCallbackPromise( ( id, vis ) => gsapiClient.$changeCompositionVisibility( id, vis ).catch( err => { throw err.msg; } ) );
+		DOM.userPageProfile.$setFollowersCallbackPromise( () => gsapiClient.$getUserFollowers( this.#id ).catch( err => { throw err.msg; } ) );
+		DOM.userPageProfile.$setFollowingCallbackPromise( () => gsapiClient.$getUserFollowing( this.#id ).catch( err => { throw err.msg; } ) );
+		DOM.userPageProfile.$setFollowCallbackPromise( b => ( b ? gsapiClient.$followUser : gsapiClient.$unfollowUser )( this.#id ).catch( err => { throw err.msg; } ) );
 		DOM.userPageProfile.$setSavingCallbackPromise( obj => gsapiClient.$updateMyInfo( obj ).catch( err => { throw err.msg; } ) );
 		DOM.userPageProfile.$setVerifyEmailCallbackPromise( () => gsapiClient.$resendConfirmationEmail().catch( err => { throw err.msg; } ) );
 		DOM.userPageProfileMenu.onclick = this.#onclickMenu.bind( this );
@@ -93,6 +97,7 @@ class userPage {
 			} );
 	}
 	#updateUser( u ) {
+		this.#id = u.id;
 		this.#usernameLow = u.usernameLow;
 		this.#itsMe = u.id === gsapiClient.$user.id;
 		DOM.main.classList.toggle( "premium", gsapiClient.$user.premium );
@@ -103,6 +108,9 @@ class userPage {
 			username: u.username,
 			lastname: u.lastname,
 			firstname: u.firstname,
+			followers: u.followers,
+			following: u.following,
+			followed: u.followed,
 			avatar: u.avatar,
 			email: u.email,
 			emailpublic: u.emailpublic,
