@@ -44,13 +44,13 @@ class main {
 	#showPage( pageName, args ) {
 		const [ page, headLink, pageObj ] = this.$pages[ pageName ];
 
+		GSUdomRmClass( DOM.error, "show" );
 		if ( pageName === this.#pageName ) {
 			pageObj?.$update?.( ...args );
 		} else {
 			this.$pages[ this.#pageName ]?.[ 2 ]?.$quit?.();
 			this.#pageName = pageName;
 			GSUdomAddClass( DOM.loader, "show" );
-			GSUdomRmClass( DOM.error, "show" );
 			this.#toggleClass( headLink, "headLinkBefore", "selected" );
 			this.#toggleClass( page, "pageBefore", "show" );
 			GSUclearTimeout( this.#timeoutIdPageChange );

@@ -80,6 +80,8 @@ class userPage {
 			.then( user => {
 				this.#updateUser( user );
 				return gsapiClient.$getUserCompositions( user.id );
+			}, e => {
+				PAGES.$main.error( e.code );
 			} )
 			.then( cmps => {
 				lg(cmps)
