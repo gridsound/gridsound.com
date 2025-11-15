@@ -69,7 +69,7 @@ class searchPage {
 		DOM.searchPageResultIntro.firstChild.textContent = `There ${ there } ${ what } matching `;
 		DOM.searchPageResultIntro.lastChild.textContent = `"${ q }"`;
 		if ( filter === "u" ) {
-			DOM.searchPageResult.append( ...arr.map( u => GSUcreateElement( "gscom-userlink", {
+			DOM.searchPageResult.append( ...arr.map( u => GSUcreateElement( "gsui-com-userlink", {
 				avatar: u.avatar,
 				username: u.username,
 				firstname: u.firstname,

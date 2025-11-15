@@ -13,9 +13,6 @@ export default {
 		"assets/fonts/fonts.css",
 	],
 	cssSrcB: [
-		"src/components/gscomUserLink.css",
-
-		// .....................................................................
 		"src/main/form.css",
 		"src/main/root.css",
 		"src/main/reset.css",
@@ -30,9 +27,6 @@ export default {
 		"src/pages/user/user.css",
 	],
 	jsSrcB: [
-		"src/components/gscomUserLink.js",
-
-		// .....................................................................
 		"src/main/main.html.js",
 		"src/pages/cmp/cmp.html.js",
 		"src/pages/home/home.html.js",
@@ -69,6 +63,7 @@ export default {
 		"gs-ui-components/gsuiComAvatar/gsuiComAvatar.css",
 		"gs-ui-components/gsuiComButton/gsuiComButton.css",
 		"gs-ui-components/gsuiComProfile/gsuiComProfile.css",
+		"gs-ui-components/gsuiComUserLink/gsuiComUserLink.css",
 		"gs-ui-components/gsuiComPlayer/gsuiComPlayer.css",
 		"gs-ui-components/gsuiComPlaylist/gsuiComPlaylist.css",
 		"gs-ui-components/gsuiJoystick/gsuiJoystick.css",
@@ -138,6 +133,7 @@ export default {
 		"gs-ui-components/gsuiComAvatar/gsuiComAvatar.js",
 		"gs-ui-components/gsuiComButton/gsuiComButton.js",
 		"gs-ui-components/gsuiComProfile/gsuiComProfile.js",
+		"gs-ui-components/gsuiComUserLink/gsuiComUserLink.js",
 		"gs-ui-components/gsuiComPlayer/gsuiComPlayer.js",
 		"gs-ui-components/gsuiComPlaylist/gsuiComPlaylist.js",
 		"gs-ui-components/gsuiJoystick/gsuiJoystick.js",
