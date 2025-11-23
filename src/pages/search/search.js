@@ -77,7 +77,9 @@ class searchPage {
 			} ) ) );
 		} else {
 			DOM.searchPageResult.append( ...arr.map( cmp => {
+				const itsmine = gsapiClient.$user.id === cmp.iduser;
 				const elCmp = GSUcreateElement( "gsui-com-player", {
+					itsmine,
 					"data-id": cmp.id,
 					name: cmp.name,
 					bpm: cmp.bpm,
@@ -86,7 +88,7 @@ class searchPage {
 					duration: cmp.durationSec,
 					rendered: !!cmp.rendered,
 					link: `#/cmp/${ cmp.id }`,
-					dawlink: gsapiClient.$user.id === cmp.iduser || cmp.opensource ? `${ DAWURL }#${ cmp.id }` : false,
+					dawlink: itsmine || cmp.opensource ? `${ DAWURL }#${ cmp.id }` : false,
 				} );
 
 				elCmp.$setRendersCallbackPromise( elCmp => gsapiClient.$getCompositionRenders( elCmp.dataset.id ).then( arr => arr[ 0 ]?.url ) );
