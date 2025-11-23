@@ -24,14 +24,14 @@ class userPage {
 				} )
 		);
 		DOM.userPagePlaylist.$setDAWURL( DAWURL );
-		DOM.userPagePlaylist.$setLikeCallbackPromise( ( id, act ) => gsapiClient.$likeComposition( id, act ).catch( err => { throw err.msg; } ) );
+		DOM.userPagePlaylist.$setLikeCallbackPromise( ( id, act ) => gsapiClient.$likeComposition( id, act ) );
 		DOM.userPagePlaylist.$setDeleteCallbackPromise( id => gsapiClient.$deleteComposition( id ).catch( err => { throw err.msg; } ) );
 		DOM.userPagePlaylist.$setRendersCallbackPromise( id => gsapiClient.$getCompositionRenders( id ).catch( err => { throw err.msg; } ) );
 		DOM.userPagePlaylist.$setRestoreCallbackPromise( id => gsapiClient.$restoreComposition( id ).catch( err => { throw err.msg; } ) );
 		DOM.userPagePlaylist.$setVisibilityCallbackPromise( ( id, vis ) => gsapiClient.$changeCompositionVisibility( id, vis ).catch( err => { throw err.msg; } ) );
 		DOM.userPageProfile.$setFollowersCallbackPromise( () => gsapiClient.$getUserFollowers( this.#id ).catch( err => { throw err.msg; } ) );
 		DOM.userPageProfile.$setFollowingCallbackPromise( () => gsapiClient.$getUserFollowing( this.#id ).catch( err => { throw err.msg; } ) );
-		DOM.userPageProfile.$setFollowCallbackPromise( b => ( b ? gsapiClient.$followUser : gsapiClient.$unfollowUser )( this.#id ).catch( err => { throw err.msg; } ) );
+		DOM.userPageProfile.$setFollowCallbackPromise( b => ( b ? gsapiClient.$followUser : gsapiClient.$unfollowUser )( this.#id ) );
 		DOM.userPageProfile.$setSavingCallbackPromise( obj => gsapiClient.$updateMyInfo( obj ).catch( err => { throw err.msg; } ) );
 		DOM.userPageProfile.$setVerifyEmailCallbackPromise( () => gsapiClient.$resendConfirmationEmail().catch( err => { throw err.msg; } ) );
 		DOM.userPageProfileMenu.onclick = this.#onclickMenu.bind( this );
