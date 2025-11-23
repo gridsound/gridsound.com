@@ -24,6 +24,7 @@ class userPage {
 				} )
 		);
 		DOM.userPagePlaylist.$setDAWURL( DAWURL );
+		DOM.userPagePlaylist.$setLikeCallbackPromise( ( id, act ) => gsapiClient.$likeComposition( id, act ).catch( err => { throw err.msg; } ) );
 		DOM.userPagePlaylist.$setDeleteCallbackPromise( id => gsapiClient.$deleteComposition( id ).catch( err => { throw err.msg; } ) );
 		DOM.userPagePlaylist.$setRendersCallbackPromise( id => gsapiClient.$getCompositionRenders( id ).catch( err => { throw err.msg; } ) );
 		DOM.userPagePlaylist.$setRestoreCallbackPromise( id => gsapiClient.$restoreComposition( id ).catch( err => { throw err.msg; } ) );

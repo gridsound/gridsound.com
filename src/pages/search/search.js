@@ -89,9 +89,21 @@ class searchPage {
 					rendered: !!cmp.rendered,
 					link: `#/cmp/${ cmp.id }`,
 					dawlink: itsmine || cmp.opensource ? `${ DAWURL }#${ cmp.id }` : false,
+					likes: cmp.likes,
+					liked: cmp.liked,
 				} );
 
-				elCmp.$setRendersCallbackPromise( elCmp => gsapiClient.$getCompositionRenders( elCmp.dataset.id ).then( arr => arr[ 0 ]?.url ) );
+				elCmp.$setRendersCallbackPromise( el =>
+					gsapiClient.$getCompositionRenders( el.dataset.id )
+						.then( arr => arr[ 0 ]?.url )
+				);
+				elCmp.$setLikeCallbackPromise( ( el, act ) =>
+					gsapiClient.$likeComposition( el.dataset.id, act )
+						.catch( err => {
+							GSUpopup.$alert( err.code, err.msg );
+							throw err.msg;
+						} )
+				);
 				return elCmp;
 			} ) );
 		}
