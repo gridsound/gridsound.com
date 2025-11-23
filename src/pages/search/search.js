@@ -93,17 +93,8 @@ class searchPage {
 					liked: cmp.liked,
 				} );
 
-				elCmp.$setRendersCallbackPromise( el =>
-					gsapiClient.$getCompositionRenders( el.dataset.id )
-						.then( arr => arr[ 0 ]?.url )
-				);
-				elCmp.$setLikeCallbackPromise( ( el, act ) =>
-					gsapiClient.$likeComposition( el.dataset.id, act )
-						.catch( err => {
-							GSUpopup.$alert( err.code, err.msg );
-							throw err.msg;
-						} )
-				);
+				elCmp.$setLikeCallbackPromise( ( el, act ) => gsapiClient.$likeComposition( el.dataset.id, act ) );
+				elCmp.$setRendersCallbackPromise( el => gsapiClient.$getCompositionRenders( el.dataset.id ).then( arr => arr[ 0 ]?.url ) );
 				return elCmp;
 			} ) );
 		}
