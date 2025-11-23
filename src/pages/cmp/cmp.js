@@ -16,17 +16,8 @@ class cmpPage {
 				const itsmine = gsapiClient.$user.id === cmp.iduser;
 				const del = !!cmp.deleted;
 
-				DOM.cmpPageCmp.$setLikeCallbackPromise( ( el, act ) =>
-					gsapiClient.$likeComposition( el.dataset.id, act )
-						.catch( err => {
-							GSUpopup.$alert( err.code, err.msg );
-							throw err.msg;
-						} )
-				);
-				DOM.cmpPageCmp.$setRendersCallbackPromise( el =>
-					gsapiClient.$getCompositionRenders( el.dataset.id )
-						.then( arr => arr[ 0 ]?.url )
-				);
+				DOM.cmpPageCmp.$setLikeCallbackPromise( ( el, act ) => gsapiClient.$likeComposition( el.dataset.id, act ) );
+				DOM.cmpPageCmp.$setRendersCallbackPromise( el => gsapiClient.$getCompositionRenders( el.dataset.id ).then( arr => arr[ 0 ]?.url ) );
 				GSUdomSetAttr( DOM.cmpPageCmp, {
 					itsmine,
 					"data-id": cmp.id,
