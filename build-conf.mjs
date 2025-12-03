@@ -21,10 +21,12 @@ export default {
 		"src/main/footer.css",
 
 		// .....................................................................
+		"src/pages/cmp/cmp.css",
 		"src/pages/home/home.css",
 		"src/pages/search/search.css",
 		"src/pages/auth/auth.css",
 		"src/pages/user/user.css",
+		"src/pages/logs/logs.css",
 	],
 	jsSrcB: [
 		"src/main/main.html.js",
@@ -32,6 +34,7 @@ export default {
 		"src/pages/home/home.html.js",
 		"src/pages/user/user.html.js",
 		"src/pages/auth/auth.html.js",
+		"src/pages/logs/logs.html.js",
 		"src/pages/search/search.html.js",
 		"src/pages/forgotpass/forgotpass.html.js",
 		"src/pages/resetpass/resetpass.html.js",
@@ -43,6 +46,7 @@ export default {
 		"src/pages/auth/auth.js",
 		"src/pages/home/home.js",
 		"src/pages/user/user.js",
+		"src/pages/logs/logs.js",
 		"src/pages/cmp/cmp.js",
 		"src/pages/search/search.js",
 		"src/pages/resetpass/resetpass.js",
