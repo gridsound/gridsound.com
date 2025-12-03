@@ -6,6 +6,7 @@ class cmpPage {
 	}
 
 	$quit() {
+		GSUdomEmpty( DOM.cmpPageLikes );
 		GSUdomSetAttr( DOM.cmpPageCmp, "playing", false );
 	}
 	show( cmpId ) {
@@ -16,6 +17,12 @@ class cmpPage {
 				const itsmine = gsapiClient.$user.id === cmp.iduser;
 				const del = !!cmp.deleted;
 
+				DOM.cmpPageLikes.append(
+					...cmp.likedby.flatMap( ( u, i ) => [
+						i ? GSUcreateSpan( null, ", " ) : '',
+						GSUcreateA( { href: `#/u/${ u }` }, u ),
+					] )
+				);
 				DOM.cmpPageCmp.$setLikeCallbackPromise( ( el, act ) => gsapiClient.$likeComposition( el.dataset.id, act ) );
 				DOM.cmpPageCmp.$setRendersCallbackPromise( el => gsapiClient.$getCompositionRenders( el.dataset.id ).then( arr => arr[ 0 ]?.url ) );
 				GSUdomSetAttr( DOM.cmpPageCmp, {
