@@ -1,0 +1,96 @@
+#logsPage_title {
+	font-size: 20px;
+	font-weight: bold;
+}
+
+#logsPage_logs {
+	display: table;
+	border-collapse: collapse;
+}
+
+#logsPage_users5min,
+#logsPage_users24h {
+	display: flex;
+	flex-wrap: wrap;
+	gap: .5ch;
+
+	a {
+		font-weight: bold;
+	}
+	a:hover {
+		text-decoration: underline;
+	}
+	a:not( :last-child )::after {
+		font-weight: normal;
+		content: ",";
+	}
+}
+
+/* .......................................................................... */
+.logsPage-date {
+	display: table-row;
+	position: relative;
+	height: 32px;
+	line-height: 32px;
+	opacity: .5;
+
+	&:not( :first-child ) {
+		height: 48px;
+		line-height: 60px;
+	}
+	span {
+		position: absolute;
+		inset: 0;
+		font-size: 18px;
+		font-weight: bold;
+	}
+}
+
+/* .......................................................................... */
+.logsPage-log {
+	display: table-row;
+	font-size: 12px;
+	white-space: nowrap;
+
+	> * {
+		display: table-cell;
+		padding: 4px 10px 6px 10px;
+	}
+	&:hover {
+		background-color: #fff1;
+	}
+}
+
+.logsPage-log-action {
+	&[ data-action^='UN' ],
+	&[ data-action$='FAIL' ],
+	&[ data-action='DELETE' ] { --bg: #a33 }
+	&[ data-action='PING' ] { --bg: #c39 }
+	span {
+		height: 16px;
+		padding: 2px 8px;
+		border-radius: 99px;
+		font-size: 10px;
+		font-weight: bold;
+		background-color: var( --bg, #795 );
+	}
+	.gsuiIcon {
+		margin-right: 1ch;
+	}
+}
+
+.logsPage-log-target {
+	white-space: break-spaces;
+
+	.gsuiIcon {
+		margin-right: .5ch;
+	}
+}
+
+.logsPage-log-when {
+	width: 0;
+	margin-left: auto;
+	text-align: end;
+	font-family: monospace;
+	opacity: .5;
+}

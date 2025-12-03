@@ -9,6 +9,7 @@ class main {
 		u:              [ DOM.userPage,       DOM.headUser,   PAGES.$user ],
 		cmp:            [ DOM.cmpPage,        null,           PAGES.$cmp ],
 		auth:           [ DOM.authPage,       DOM.headAuth,   PAGES.$auth ],
+		logs:           [ DOM.logsPage,       null,           PAGES.$logs ],
 		resetPassword:  [ DOM.resetpassPage,  DOM.headAuth,   PAGES.$resetpass ],
 		forgotPassword: [ DOM.forgotpassPage, DOM.headAuth,   PAGES.$forgotpass ],
 	};
@@ -89,6 +90,7 @@ class main {
 			if (
 				( len === 2 && pg === "u" ) ||
 				( pg === "q" ) ||
+				( pg === "logs" ) ||
 				( len === 2 && pg === "cmp" ) ||
 				( len === 3 && pg === "resetPassword" ) ||
 				( len === 1 && (

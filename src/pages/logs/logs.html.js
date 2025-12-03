@@ -1,0 +1,42 @@
+"use strict";
+
+GSUsetTemplate( "gs-logsPage", () =>
+	GSUcreateDiv( { id: "logsPage", class: "page" },
+		GSUcreateDiv( { id: "logsPage_title" }, "Logs 🤫" ),
+		GSUcreateDiv( { id: "logsPage_users5min" },
+			GSUcreateSpan( null, "users ping (5min): " ),
+		),
+		GSUcreateDiv( { id: "logsPage_users24h" },
+			GSUcreateSpan( null, "users ping (24h): " ),
+		),
+		GSUcreateDiv( { id: "logsPage_logs" } ),
+	),
+);
+
+GSUsetTemplate( "gs-logsPage-log", p =>
+	GSUcreateDiv( { class: "logsPage-log" },
+		GSUcreateDiv( { class: "logsPage-log-body" },
+			GSUcreateA( { href: `#/u/${ p.username }` },
+				GSUcreateElement( "b", null, p.username ),
+				// GSUcreateSpan( null, ` (${ p.firstname },${ p.lastname })` ),
+			),
+		),
+		GSUcreateDiv( { class: "logsPage-log-action", "data-action": p.action },
+			GSUcreateIcon( { icon: p.icon } ),
+			GSUcreateSpan( null, p.action ),
+		),
+		GSUcreateDiv( { class: "logsPage-log-target" },
+			p.cmpid && GSUcreateA( { href: `#/cmp/${ p.cmpid }` },
+				GSUcreateIcon( { icon: "music" } ),
+				GSUcreateElement( "b", null, p.cmpname ),
+			),
+			p.utarget_id && GSUcreateA( { href: `#/u/${ p.utarget_username }` },
+				GSUcreateIcon( { icon: "musician" } ),
+				GSUcreateElement( "b", null, p.utarget_username ),
+			),
+			p.action.startsWith( "SEARCH-" ) && GSUcreateElement( "i", null, `"${ p.idtarget }"` ),
+			p.action === "RESEND-EMAIL" && GSUcreateSpan( null, p.idtarget ),
+		),
+		GSUcreateSpan( { class: "logsPage-log-when" }, p.time ),
+	),
+);
