@@ -79,23 +79,15 @@ class userPage {
 		DOM.userPageProfileNbCmpsDeleted.textContent = b;
 	}
 	#downloadData( username ) {
-		const usernameLow = username.toLowerCase();
-
-		return gsapiClient.$getUser( usernameLow )
-			.then( user => {
-				this.#updateUser( user );
-				return gsapiClient.$getUserCompositions( user.id );
-			}, e => {
-				PAGES.$main.error( e.code );
-			} )
-			.then( cmps => {
-				lg(cmps)
-				this.#cmps = [ ...cmps ];
+		return gsapiClient.$getUserCompositions( username )
+			.then( data => {
+				this.#updateUser( data.$user );
+				this.#cmps = [ ...data.$compositions, ...data.$compositionsDeleted ];
 				this.#cmpsMap.clear();
-				cmps.forEach( cmp => this.#cmpsMap.set( cmp.id, cmp ) );
+				this.#cmps.forEach( cmp => this.#cmpsMap.set( cmp.id, cmp ) );
 				DOM.userPagePlaylist.$clearCompositions();
-				DOM.userPagePlaylist.$addCompositions( cmps );
-			} );
+				DOM.userPagePlaylist.$addCompositions( this.#cmps );
+			}, e => PAGES.$main.error( e.code ) );
 	}
 	#updateUser( u ) {
 		this.#id = u.id;
