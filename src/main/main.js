@@ -4,14 +4,15 @@ class main {
 	#pageName = null;
 	#timeoutIdPageChange = null;
 	$pages = {
-		"":             [ DOM.homePage,       DOM.headIcon,   PAGES.$home ],
-		q:              [ DOM.searchPage,     DOM.headSearch, PAGES.$search ],
-		u:              [ DOM.userPage,       DOM.headUser,   PAGES.$user ],
-		cmp:            [ DOM.cmpPage,        null,           PAGES.$cmp ],
-		auth:           [ DOM.authPage,       DOM.headAuth,   PAGES.$auth ],
-		logs:           [ DOM.logsPage,       null,           PAGES.$logs ],
-		resetPassword:  [ DOM.resetpassPage,  DOM.headAuth,   PAGES.$resetpass ],
-		forgotPassword: [ DOM.forgotpassPage, DOM.headAuth,   PAGES.$forgotpass ],
+		"":             [ DOM.homePage,       DOM.headIcon,    PAGES.$home ],
+		q:              [ DOM.searchPage,     DOM.headSearch,  PAGES.$search ],
+		u:              [ DOM.userPage,       DOM.headUser,    PAGES.$user ],
+		cmp:            [ DOM.cmpPage,        null,            PAGES.$cmp ],
+		auth:           [ DOM.authPage,       DOM.headAuth,    PAGES.$auth ],
+		logs:           [ DOM.logsPage,       null,            PAGES.$logs ],
+		explore:        [ DOM.explorePage,    DOM.headExplore, PAGES.$explore ],
+		resetPassword:  [ DOM.resetpassPage,  DOM.headAuth,    PAGES.$resetpass ],
+		forgotPassword: [ DOM.forgotpassPage, DOM.headAuth,    PAGES.$forgotpass ],
 	};
 
 	constructor() {
@@ -91,6 +92,7 @@ class main {
 				( len === 2 && pg === "u" ) ||
 				( pg === "q" ) ||
 				( pg === "logs" ) ||
+				( pg === "explore" ) ||
 				( len === 2 && pg === "cmp" ) ||
 				( len === 3 && pg === "resetPassword" ) ||
 				( len === 1 && (

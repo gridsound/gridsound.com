@@ -27,6 +27,7 @@ export default {
 		"src/pages/auth/auth.css",
 		"src/pages/user/user.css",
 		"src/pages/logs/logs.css",
+		"src/pages/explore/explore.css",
 	],
 	jsSrcB: [
 		"src/main/main.html.js",
@@ -36,6 +37,7 @@ export default {
 		"src/pages/auth/auth.html.js",
 		"src/pages/logs/logs.html.js",
 		"src/pages/search/search.html.js",
+		"src/pages/explore/explore.html.js",
 		"src/pages/forgotpass/forgotpass.html.js",
 		"src/pages/resetpass/resetpass.html.js",
 
@@ -50,6 +52,7 @@ export default {
 		"src/pages/cmp/cmp.js",
 		"src/pages/search/search.js",
 		"src/pages/resetpass/resetpass.js",
+		"src/pages/explore/explore.js",
 		"src/pages/forgotpass/forgotpass.js",
 
 		// .....................................................................

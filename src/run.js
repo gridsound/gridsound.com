@@ -12,8 +12,9 @@ GSUdomQS( "#pages" ).append(
 	GSUgetTemplate( "gs-authPage" ),
 	GSUgetTemplate( "gs-logsPage" ),
 	GSUgetTemplate( "gs-cmpPage" ),
-	GSUgetTemplate( "gs-forgotpassPage" ),
+	GSUgetTemplate( "gs-explorePage" ),
 	GSUgetTemplate( "gs-resetpassPage" ),
+	GSUgetTemplate( "gs-forgotpassPage" ),
 );
 
 const DOM = {};
@@ -27,6 +28,7 @@ const PAGES = {
 	$user: new userPage(),
 	$logs: new logsPage(),
 	$search: new searchPage(),
+	$explore: new explorePage(),
 	$resetpass: new resetpassPage(),
 	$forgotpass: new forgotpassPage(),
 };
