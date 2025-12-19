@@ -2,6 +2,8 @@
 	display: flex;
 	gap: 20px;
 }
+
+/* .......................................................................... */
 .userPageProfileMenu-btn {
 	display: flex;
 	gap: 4px;
@@ -14,17 +16,18 @@
 	opacity: .3;
 	cursor: pointer;
 	background: none;
-}
-#userPage:has( gsui-com-playlist:not( [ bin ] ) ) .userPageProfileMenu-btn:first-child,
-#userPage:has( gsui-com-playlist[ bin ] ) .userPageProfileMenu-btn:last-child {
-	opacity: 1;
-}
-.userPageProfileMenu-btn span:first-child {
-	font-weight: bold;
-}
-.userPageProfileMenu-btn span:last-child {
-	opacity: .7;
-}
-#userPage:has( gsui-com-playlist:not( [ whoami="itsme+" ] ) ) .userPageProfileMenu-btn:last-child {
-	display: none;
+
+	span:first-child {
+		font-weight: bold;
+	}
+	span:last-child {
+		opacity: .7;
+	}
+	#userPage:has( gsui-com-playlist:not( [ whoami="itsme+" ] ) ) &[ data-action="compositions-bin" ] {
+		display: none;
+	}
+	#userPage:has( gsui-com-playlist:not( [ bin ] ) ) &[ data-action="compositions" ],
+	#userPage:has( gsui-com-playlist[ bin ] ) &[ data-action="compositions-bin" ] {
+		opacity: 1;
+	}
 }
