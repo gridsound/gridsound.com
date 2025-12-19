@@ -5,6 +5,10 @@ class explorePage {
 		Object.seal( this );
 	}
 
-	show() {
+	show( all ) {
+		this.$update( all );
+	}
+	$update( all ) {
+		GSUdomSetAttr( DOM.exploreSwitch, "data-all", all === "all" );
 	}
 }

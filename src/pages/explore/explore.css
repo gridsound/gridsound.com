@@ -1,3 +1,22 @@
-#explorePage {
+#exploreSwitch {
+	overflow: hidden;
+	display: flex;
+	align-self: center;
+	height: 32px;
+	line-height: 32px;
+	border-radius: 8px;
+	background-color: #fff1;
+
+	a {
+		padding: 0 32px;
+	}
+	&[ data-all ] a[ href$="all" ],
+	&:not( [ data-all ] ) a:not( [ href$="all" ] ) {
+		background-color: #fff2;
+	}
+}
+
+/* .......................................................................... */
+#exploreBody {
 	background-color: dodgerblue;
 }

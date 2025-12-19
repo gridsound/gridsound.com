@@ -2,6 +2,12 @@
 
 GSUsetTemplate( "gs-explorePage", () =>
 	GSUcreateDiv( { class: "page", id: "explorePage" },
-		"exploring..."
+		GSUcreateDiv( { id: "exploreSwitch" },
+			GSUcreateA( { href: "#/explore/all" }, "All" ),
+			GSUcreateA( { href: "#/explore" }, "You" ),
+		),
+		GSUcreateDiv( { id: "exploreBody" },
+			"plop"
+		),
 	),
 );

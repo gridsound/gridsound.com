@@ -87,12 +87,13 @@ class main {
 			const arr = hash.split( "/" );
 			const len = arr.length - 1;
 			const [ , pg, ...args ] = arr;
+			const [ a0 ] = args;
 
 			if (
 				( len === 2 && pg === "u" ) ||
 				( pg === "q" ) ||
 				( pg === "logs" ) ||
-				( pg === "explore" ) ||
+				( len <= 2  && pg === "explore" && ( !a0 || a0 === "all" ) ) ||
 				( len === 2 && pg === "cmp" ) ||
 				( len === 3 && pg === "resetPassword" ) ||
 				( len === 1 && (
