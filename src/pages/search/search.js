@@ -9,8 +9,7 @@ class searchPage {
 	}
 
 	$quit() {
-		GSUdomQSA( DOM.searchPageResult, "gsui-com-player" )
-			.forEach( el => GSUdomSetAttr( el, "playing", false ) );
+		GSUdomEmpty( DOM.searchPageResult );
 	}
 	show( filter, q ) {
 		this.#query( filter, q );
@@ -76,27 +75,7 @@ class searchPage {
 				lastname: u.lastname,
 			} ) ) );
 		} else {
-			DOM.searchPageResult.append( ...arr.map( cmp => {
-				const itsmine = gsapiClient.$user.id === cmp.iduser;
-				const elCmp = GSUcreateElement( "gsui-com-player", {
-					itsmine,
-					"data-id": cmp.id,
-					name: cmp.name,
-					bpm: cmp.bpm,
-					private: !cmp.public,
-					opensource: cmp.opensource,
-					duration: cmp.durationSec,
-					rendered: !!cmp.rendered,
-					link: `#/cmp/${ cmp.id }`,
-					dawlink: itsmine || cmp.opensource ? `${ DAWURL }#${ cmp.id }` : false,
-					likes: cmp.likes,
-					liked: cmp.liked,
-				} );
-
-				elCmp.$setLikeCallbackPromise( ( el, act ) => gsapiClient.$likeComposition( el.dataset.id, act ) );
-				elCmp.$setRendersCallbackPromise( el => gsapiClient.$getCompositionRenders( el.dataset.id ).then( arr => arr[ 0 ]?.url ) );
-				return elCmp;
-			} ) );
+			DOM.searchPageResult.append( ...arr.map( cmp => PartialCmp.$domCmp( cmp ) ) );
 		}
 	}
 }
