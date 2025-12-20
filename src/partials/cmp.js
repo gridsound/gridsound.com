@@ -18,30 +18,55 @@ class PartialCmp {
 		return GSUcreateDiv( { class: "cmp-likes" }, ...elems );
 	}
 	static $domCmp( cmp ) {
-		const del = !!cmp.deleted;
 		const itsmine = gsapiClient.$user.id === cmp.iduser;
 		const elCmp = GSUcreateElement( "gsui-com-player", {
-			itsmine,
 			"data-id": cmp.id,
-			name: cmp.name,
+			itsmine,
 			bpm: cmp.bpm,
-			private: !cmp.public,
-			opensource: cmp.opensource,
-			duration: cmp.durationSec,
-			rendered: !!cmp.rendered,
-			dawlink: del || !( itsmine || cmp.opensource ) ? false : `${ DAWURL }#${ cmp.id }`,
+			name: cmp.name,
+			link: `#/cmp/${ cmp.id }`,
 			likes: cmp.likes,
 			liked: cmp.liked,
+			private: !cmp.public,
+			deleted: !!cmp.deleted,
+			rendered: !!cmp.rendered,
+			duration: cmp.durationSec,
+			opensource: cmp.opensource,
+			actions: PartialCmp.#cmpActions( cmp, itsmine ),
+			dawlink: !cmp.deleted && ( itsmine || cmp.opensource ) ? `${ DAWURL }#${ cmp.id }` : false,
 		} );
 
 		elCmp.$setLikeCallbackPromise( PartialCmp.#cbLike );
 		elCmp.$setRendersCallbackPromise( PartialCmp.#cbGetRender );
+		if ( itsmine ) {
+			elCmp.$setDeleteCallbackPromise( PartialCmp.#cbDelete );
+			elCmp.$setRestoreCallbackPromise( PartialCmp.#cbRestore );
+			elCmp.$setVisibilityCallbackPromise( PartialCmp.#cbPublic );
+		}
 		return elCmp;
 	}
-	static #cbLike( el, act ) {
-		return gsapiClient.$likeComposition( el.dataset.id, act );
+	static #cmpActions( cmp, itsmine ) {
+		let actions;
+
+		if ( itsmine ) {
+			if ( !!cmp.deleted ) {
+				actions = "restore";
+			} else {
+				actions = "fork delete";
+				if ( gsapiClient.$user.premium ) {
+					if ( !cmp.opensource ) { actions += " open"; }
+					if ( cmp.opensource || !cmp.public ) { actions += " visible"; }
+					if ( cmp.public ) { actions += " private"; }
+				}
+			}
+		} else if ( cmp.opensource ) {
+			actions = "fork";
+		}
+		return actions;
 	}
-	static #cbGetRender( el ) {
-		return gsapiClient.$getCompositionRenders( el.dataset.id ).then( arr => arr[ 0 ]?.url );
-	}
+	static #cbLike( el, act ) { return gsapiClient.$likeComposition( el.dataset.id, act ); }
+	static #cbGetRender( el ) { return gsapiClient.$getCompositionRenders( el.dataset.id ).then( arr => arr[ 0 ]?.url ); }
+	static #cbDelete( el ) { return gsapiClient.$deleteComposition( el.dataset.id ).catch( err => { throw err.msg; } ); }
+	static #cbRestore( el ) { return gsapiClient.$restoreComposition( el.dataset.id ).catch( err => { throw err.msg; } ); }
+	static #cbPublic( el, vis ) { return gsapiClient.$changeCompositionVisibility( el.dataset.id, vis ).catch( err => { throw err.msg; } ); }
 }
