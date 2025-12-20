@@ -40,6 +40,8 @@
 /* .......................................................................... */
 #headIcon {
 	position: relative;
+	width: 64px;
+	padding: 0;
 	border-bottom-left-radius: inherit;
 }
 #headIcon::before {
