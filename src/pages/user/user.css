@@ -14,7 +14,6 @@
 	font-size: 14px;
 	text-decoration: none;
 	opacity: .3;
-	cursor: pointer;
 	background: none;
 
 	span:first-child {
@@ -23,11 +22,22 @@
 	span:last-child {
 		opacity: .7;
 	}
-	#userPage:has( gsui-com-playlist:not( [ whoami="itsme+" ] ) ) &[ data-action="compositions-bin" ] {
+	&[ data-action="cmpsLiked" ] {
+		margin-left: auto;
+	}
+	#userPage:not( [ data-itsme ][ data-premium ] ) &[ data-action="cmpsDeleted" ] {
 		display: none;
 	}
-	#userPage:has( gsui-com-playlist:not( [ bin ] ) ) &[ data-action="compositions" ],
-	#userPage:has( gsui-com-playlist[ bin ] ) &[ data-action="compositions-bin" ] {
+	body:not( [ data-hash$="/bin" ] ):not( [ data-hash$="/likes" ] ) &[ data-action="cmps" ],
+	[ data-hash$="/bin" ] &[ data-action="cmpsDeleted" ],
+	[ data-hash$="/likes" ] &[ data-action="cmpsLiked" ] {
 		opacity: 1;
 	}
+}
+
+/* .......................................................................... */
+#userPagePlaylist {
+	display: flex;
+	flex-direction: column;
+	gap: inherit;
 }
