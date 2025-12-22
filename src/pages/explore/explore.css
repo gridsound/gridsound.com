@@ -12,6 +12,7 @@
 	}
 	&[ data-all ] a[ href$="all" ],
 	&:not( [ data-all ] ) a:not( [ href$="all" ] ) {
+		text-shadow: 0 0 8px #fff;
 		background-color: #fff2;
 	}
 }
