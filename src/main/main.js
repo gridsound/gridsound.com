@@ -14,6 +14,18 @@ class main {
 		resetPassword:  [ DOM.resetpassPage,  DOM.headAuth,    PAGES.$resetpass ],
 		forgotPassword: [ DOM.forgotpassPage, DOM.headAuth,    PAGES.$forgotpass ],
 	};
+	static $routes = Object.freeze( [
+		/^#\/$/,
+		/^#\/u\/.+(\/bin|\/likes)?$/,
+		/^#\/explore(\/all)?$/,
+		/^#\/q(\/u|\/cmp)?$/,
+		/^#\/q(\/u|\/cmp)(\/.+)?$/,
+		/^#\/cmp\/.+$/,
+		/^#\/auth$/,
+		/^#\/logs$/,
+		/^#\/resetPassword\/.+\/.+$/,
+		/^#\/forgotPassword$/,
+	] );
 
 	constructor() {
 		DOM.headAuth.onclick = this.#headAuthBtnClick.bind( this );
@@ -77,35 +89,20 @@ class main {
 		}
 	}
 	#hashChange() {
-		const hash = location.hash;
+		const h = location.hash;
 
-		if ( !hash ) {
+		GSUdomSetAttr( document.body, "data-hash", h );
+		if ( !h ) {
 			location.hash = "#/";
-		} else if ( hash !== "#/" && hash.endsWith( "/" ) ) {
-			location.hash = hash.substring( 0, hash.length - 1 );
+		} else if ( h !== "#/" && h.endsWith( "/" ) ) {
+			location.hash = h.substring( 0, h.length - 1 );
+		} else if ( !main.$routes.some( r => r.test( h ) ) ) {
+			this.error( 404 );
 		} else {
-			const arr = hash.split( "/" );
-			const len = arr.length - 1;
+			const arr = h.split( "/" );
 			const [ , pg, ...args ] = arr;
-			const [ a0 ] = args;
 
-			if (
-				( len === 2 && pg === "u" ) ||
-				( pg === "q" ) ||
-				( pg === "logs" ) ||
-				( len <= 2  && pg === "explore" && ( !a0 || a0 === "all" ) ) ||
-				( len === 2 && pg === "cmp" ) ||
-				( len === 3 && pg === "resetPassword" ) ||
-				( len === 1 && (
-					pg === "" ||
-					pg === "auth" ||
-					pg === "forgotPassword"
-				) )
-			) {
-				this.#showPage( pg, args );
-			} else {
-				this.error( 404 );
-			}
+			this.#showPage( pg, args );
 		}
 	}
 	#headAuthBtnClick() {
