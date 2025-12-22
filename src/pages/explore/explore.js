@@ -5,7 +5,8 @@ class explorePage {
 		Object.seal( this );
 	}
 
-	show( all ) {
+	// .........................................................................
+	$show( all ) {
 		this.$update( all );
 	}
 	$update( all ) {

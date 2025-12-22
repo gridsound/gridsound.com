@@ -18,7 +18,7 @@ class userPage {
 	}
 
 	// .........................................................................
-	show( username, page ) {
+	$show( username, page ) {
 		const links = DOM.userPageProfileMenu.childNodes;
 
 		this.#username = username;
@@ -40,7 +40,7 @@ class userPage {
 	$update( username, page ) {
 		if ( username !== this.#username ) {
 			this.$quit();
-			this.show( username, page );
+			this.$show( username, page );
 			return;
 		}
 		GSUdomEmpty( DOM.userPagePlaylist );

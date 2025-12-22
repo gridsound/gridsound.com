@@ -27,7 +27,8 @@ class homePage {
 		} );
 	}
 
-	show() {
+	// .........................................................................
+	$show() {
 		GSUsetTimeout( () => {
 			GSUdomAddClass( DOM.homePage, "startAnim" );
 			GSUsetTimeout( () => GSUdomAddClass( DOM.homePage, "loopAnim" ), 1 );

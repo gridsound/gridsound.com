@@ -14,7 +14,8 @@ class resetpassPage {
 				DOM.resetpassFormPass2 );
 	}
 
-	show( email, code ) {
+	// .........................................................................
+	$show( email, code ) {
 		DOM.resetpassPage.classList.remove( "sended" );
 		this.#email = email;
 		this.#code = code;

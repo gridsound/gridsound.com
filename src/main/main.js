@@ -69,7 +69,7 @@ class main {
 			this.#toggleClass( page, "pageBefore", "show" );
 			GSUclearTimeout( this.#timeoutIdPageChange );
 			this.#timeoutIdPageChange = GSUsetTimeout( () => {
-				Promise.resolve( pageObj?.show?.( ...args ) )
+				Promise.resolve( pageObj?.$show?.( ...args ) )
 					.finally( () => GSUdomRmClass( DOM.loader, "show" ) );
 			}, .25 );
 		}

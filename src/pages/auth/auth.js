@@ -18,7 +18,8 @@ class authPage {
 			] );
 	}
 
-	show() {
+	// .........................................................................
+	$show() {
 		DOM.authPageSignupUsername.value =
 		DOM.authPageSignupEmail.value =
 		DOM.authPageSignupPass.value = "";

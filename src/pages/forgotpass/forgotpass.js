@@ -10,7 +10,8 @@ class forgotpassPage {
 				DOM.forgotpassFormEmail );
 	}
 
-	show() {
+	// .........................................................................
+	$show() {
 		GSUdomRmClass( DOM.forgotpassPage, "sended" );
 		DOM.forgotpassFormEmail.value = "";
 	}

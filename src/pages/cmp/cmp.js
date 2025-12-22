@@ -5,10 +5,8 @@ class cmpPage {
 		Object.seal( this );
 	}
 
-	$quit() {
-		GSUdomEmpty( DOM.cmpPage );
-	}
-	show( cmpId ) {
+	// .........................................................................
+	$show( cmpId ) {
 		return gsapiClient.$getComposition( cmpId )
 			.then( data => {
 				DOM.cmpPage.append(
@@ -17,5 +15,8 @@ class cmpPage {
 					PartialCmp.$domLikes( data.composition ),
 				);
 			}, err => PAGES.$main.error( err.code ) );
+	}
+	$quit() {
+		GSUdomEmpty( DOM.cmpPage );
 	}
 }

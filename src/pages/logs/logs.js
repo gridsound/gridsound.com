@@ -5,7 +5,8 @@ class logsPage {
 		Object.seal( this );
 	}
 
-	show() {
+	// .........................................................................
+	$show() {
 		gsapiClient.$getLogs().then( obj => {
 			this.#displayLogs( obj.logs );
 			this.#displayConnectedUsers( DOM.logsPage_users5min, obj.users5min );

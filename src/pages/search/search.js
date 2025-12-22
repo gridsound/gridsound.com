@@ -8,10 +8,8 @@ class searchPage {
 		this.#updateFilter( "u" );
 	}
 
-	$quit() {
-		GSUdomEmpty( DOM.searchPageResult );
-	}
-	show( filter, q ) {
+	// .........................................................................
+	$show( filter, q ) {
 		this.#query( filter, q );
 		GSUsetTimeout( () => {
 			DOM[ "searchPage-form-q" ].focus();
@@ -19,6 +17,9 @@ class searchPage {
 	}
 	$update( filter, q ) {
 		this.#query( filter, q );
+	}
+	$quit() {
+		GSUdomEmpty( DOM.searchPageResult );
 	}
 
 	// .........................................................................
