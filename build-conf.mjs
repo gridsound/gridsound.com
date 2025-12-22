@@ -77,7 +77,6 @@ export default {
 		"gs-ui-components/gsuiComProfile/gsuiComProfile.css",
 		"gs-ui-components/gsuiComUserLink/gsuiComUserLink.css",
 		"gs-ui-components/gsuiComPlayer/gsuiComPlayer.css",
-		"gs-ui-components/gsuiComPlaylist/gsuiComPlaylist.css",
 		"gs-ui-components/gsuiJoystick/gsuiJoystick.css",
 		"gs-ui-components/gsuiPopup/gsuiPopup.css",
 	],
@@ -133,7 +132,6 @@ export default {
 		// .....................................................................
 		"gs-ui-components/gsuiComProfile/gsuiComProfile.html.js",
 		"gs-ui-components/gsuiComPlayer/gsuiComPlayer.html.js",
-		"gs-ui-components/gsuiComPlaylist/gsuiComPlaylist.html.js",
 		"gs-ui-components/gsuiPopup/gsuiPopup.html.js",
 
 		// .....................................................................
@@ -147,7 +145,6 @@ export default {
 		"gs-ui-components/gsuiComProfile/gsuiComProfile.js",
 		"gs-ui-components/gsuiComUserLink/gsuiComUserLink.js",
 		"gs-ui-components/gsuiComPlayer/gsuiComPlayer.js",
-		"gs-ui-components/gsuiComPlaylist/gsuiComPlaylist.js",
 		"gs-ui-components/gsuiJoystick/gsuiJoystick.js",
 		"gs-ui-components/gsuiPopup/gsuiPopup.js",
 	],
