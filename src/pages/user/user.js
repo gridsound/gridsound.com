@@ -10,6 +10,9 @@ class userPage {
 
 	constructor() {
 		Object.seal( this );
+		GSUdomListen( DOM.userPagePlaylist, {
+			[ GSEV_COMPLAYER_ACTION ]: this.#onAction.bind( this ),
+		} );
 		DOM.userPageProfile.$setFollowersCallbackPromise( () => gsapiClient.$getUserFollowers( this.#id ).catch( err => { throw err.msg; } ) );
 		DOM.userPageProfile.$setFollowingCallbackPromise( () => gsapiClient.$getUserFollowing( this.#id ).catch( err => { throw err.msg; } ) );
 		DOM.userPageProfile.$setFollowCallbackPromise( b => ( b ? gsapiClient.$followUser : gsapiClient.$unfollowUser )( this.#id ) );
@@ -74,6 +77,25 @@ class userPage {
 	}
 
 	// .........................................................................
+	#onAction( e, act ) {
+		if ( act === "delete" || act === "restore" ) {
+			const a = DOM.userPageProfileNbCmps;
+			const b = DOM.userPageProfileNbCmpsDeleted;
+
+			if ( act === "restore" ) {
+				this.#cmps?.unshift( e.$target );
+				GSUarrayRemove( this.#cmpsDeleted, e.$target );
+				a.textContent = +a.textContent + 1;
+				b.textContent = b.textContent - 1;
+			} else {
+				this.#cmpsDeleted?.unshift( e.$target );
+				GSUarrayRemove( this.#cmps, e.$target );
+				a.textContent = a.textContent - 1;
+				b.textContent = +b.textContent + 1;
+			}
+			GSUsetTimeout( () => e.$target.remove(), .35 );
+		}
+	}
 	#appendCmps( pg ) {
 		const cmps =
 			!pg ? this.#cmps :
