@@ -35,7 +35,7 @@ class userPage {
 				GSUdomSetAttr( DOM.userPage, "data-itsme", u.id === gsapiClient.$user.id );
 				GSUdomSetAttr( DOM.userPage, "data-premium", u.premium );
 				this.$update( username, page );
-			}, e => PAGES.$main.error( e.code ) );
+			}, e => PAGES.$main.$error( e.code ) );
 	}
 	$update( username, page ) {
 		if ( username !== this.#username ) {

@@ -36,11 +36,11 @@ PAGES.$main = new main();
 
 gsapiClient.$getMe()
 	.then( me => {
-		PAGES.$main.loggedIn( me );
+		PAGES.$main.$loggedIn( me );
 	} )
 	.finally( () => {
 		DOM.headAuth.dataset.spin = "";
-		PAGES.$main.run();
+		PAGES.$main.$run();
 	} );
 
 document.addEventListener( "scroll", e => {

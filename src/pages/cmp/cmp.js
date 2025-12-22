@@ -14,7 +14,7 @@ class cmpPage {
 					PartialCmp.$domAuthor( data.user ),
 					PartialCmp.$domLikes( data.composition ),
 				);
-			}, err => PAGES.$main.error( err.code ) );
+			}, err => PAGES.$main.$error( err.code ) );
 	}
 	$quit() {
 		GSUdomEmpty( DOM.cmpPage );

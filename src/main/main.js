@@ -32,10 +32,11 @@ class main {
 		window.onhashchange = () => this.#hashChange();
 	}
 
-	run() {
+	// .........................................................................
+	$run() {
 		this.#hashChange();
 	}
-	loggedIn( u ) {
+	$loggedIn( u ) {
 		gsapiClient.$setIntervalPing();
 		GSUdomSetAttr( DOM.headAuth, {
 			"data-spin": "",
@@ -48,7 +49,7 @@ class main {
 		GSUdomRmClass( DOM.root, "noauth" );
 		GSUdomSetAttr( DOM.headAvatar, "src", u.avatar );
 	}
-	error( code ) {
+	$error( code ) {
 		DOM.errorCode.textContent = code;
 		GSUdomAddClass( DOM.error, "show" );
 		this.#toggleClass( null, "headLinkBefore", "selected" );
@@ -97,7 +98,7 @@ class main {
 		} else if ( h !== "#/" && h.endsWith( "/" ) ) {
 			location.hash = h.substring( 0, h.length - 1 );
 		} else if ( !main.$routes.some( r => r.test( h ) ) ) {
-			this.error( 404 );
+			this.$error( 404 );
 		} else {
 			const arr = h.split( "/" );
 			const [ , pg, ...args ] = arr;

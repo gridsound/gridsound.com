@@ -34,7 +34,7 @@ class authPage {
 			.finally( () => GSUdomRmClass( btn, "btn-loading" ) )
 			.then( me => {
 				inps.forEach( inp => inp.value = "" );
-				PAGES.$main.loggedIn( me );
+				PAGES.$main.$loggedIn( me );
 				location.hash = `#/u/${ me.usernameLow }`;
 			}, res => {
 				DOM.headAuth.dataset.spin = "";
