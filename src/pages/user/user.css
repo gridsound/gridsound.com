@@ -40,4 +40,10 @@
 	display: flex;
 	flex-direction: column;
 	gap: inherit;
+
+	body[ data-hash$="/likes" ] & gsui-com-userlink {
+		margin-top: -8px;
+		margin-top: 0;
+		margin-bottom: 16px;
+	}
 }

@@ -58,7 +58,11 @@ class userPage {
 		if ( page === "likes" && !this.#cmpsLiked ) {
 			gsapiClient.$getUserCompositionsLiked( username )
 				.then( cmps => {
-					this.#cmpsLiked = cmps.map( cmp => PartialCmp.$domCmp( cmp ) );
+					this.#cmpsLiked = cmps.flatMap( ( cmp, i ) => [
+						PartialCmp.$domCmp( cmp ),
+						cmps[ i + 1 ]?.$user.username === cmp.$user.username
+							? '' : PartialCmp.$domAuthor( cmp.$user ),
+					] );
 					this.#appendCmps( page );
 				} );
 			return;
