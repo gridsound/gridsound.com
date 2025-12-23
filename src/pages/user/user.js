@@ -82,22 +82,26 @@ class userPage {
 
 	// .........................................................................
 	#onAction( e, act ) {
-		if ( act === "delete" || act === "restore" ) {
+		const restoring = act === "restore";
+
+		if ( act === "delete" || restoring ) {
 			const a = DOM.userPageProfileNbCmps;
 			const b = DOM.userPageProfileNbCmpsDeleted;
+			const elCmp = e.$target;
 
-			if ( act === "restore" ) {
-				this.#cmps?.unshift( e.$target );
-				GSUarrayRemove( this.#cmpsDeleted, e.$target );
+			if ( restoring ) {
+				this.#cmps?.unshift( elCmp );
+				GSUarrayRemove( this.#cmpsDeleted, elCmp );
 				a.textContent = +a.textContent + 1;
 				b.textContent = b.textContent - 1;
 			} else {
-				this.#cmpsDeleted?.unshift( e.$target );
-				GSUarrayRemove( this.#cmps, e.$target );
+				this.#cmpsDeleted?.unshift( elCmp );
+				GSUarrayRemove( this.#cmps, elCmp );
 				a.textContent = a.textContent - 1;
 				b.textContent = +b.textContent + 1;
 			}
-			GSUsetTimeout( () => e.$target.remove(), .35 );
+			PartialCmp.$updateCmpActions( elCmp );
+			GSUsetTimeout( () => elCmp.remove(), .35 );
 		}
 	}
 	#appendCmps( pg ) {
