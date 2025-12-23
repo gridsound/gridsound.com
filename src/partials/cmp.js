@@ -32,10 +32,10 @@ class PartialCmp {
 			rendered: !!cmp.rendered,
 			duration: cmp.durationSec,
 			opensource: cmp.opensource,
-			actions: PartialCmp.#cmpActions( cmp, itsmine ),
 			dawlink: !cmp.deleted && ( itsmine || cmp.opensource ) ? `${ DAWURL }#${ cmp.id }` : false,
 		} );
 
+		PartialCmp.$updateCmpActions( elCmp );
 		elCmp.$setLikeCallbackPromise( PartialCmp.#cbLike );
 		elCmp.$setRendersCallbackPromise( PartialCmp.#cbGetRender );
 		if ( itsmine ) {
@@ -45,24 +45,26 @@ class PartialCmp {
 		}
 		return elCmp;
 	}
-	static #cmpActions( cmp, itsmine ) {
+	static $updateCmpActions( elCmp ) {
+		const open = GSUdomHasAttr( elCmp, "opensource" );
+		const priv4te = GSUdomHasAttr( elCmp, "private" );
 		let actions;
 
-		if ( itsmine ) {
-			if ( !!cmp.deleted ) {
+		if ( GSUdomHasAttr( elCmp, "itsmine" ) ) {
+			if ( GSUdomHasAttr( elCmp, "deleted" ) ) {
 				actions = "restore";
 			} else {
 				actions = "fork delete";
 				if ( gsapiClient.$user.premium ) {
-					if ( !cmp.opensource ) { actions += " open"; }
-					if ( cmp.opensource || !cmp.public ) { actions += " visible"; }
-					if ( cmp.public ) { actions += " private"; }
+					if ( !open ) { actions += " open"; }
+					if ( open || priv4te ) { actions += " visible"; }
+					if ( !priv4te ) { actions += " private"; }
 				}
 			}
-		} else if ( cmp.opensource ) {
+		} else if ( open ) {
 			actions = "fork";
 		}
-		return actions;
+		GSUdomSetAttr( elCmp, "actions", actions );
 	}
 	static #cbLike( el, act ) { return gsapiClient.$likeComposition( el.dataset.id, act ); }
 	static #cbGetRender( el ) { return gsapiClient.$getCompositionRenders( el.dataset.id ).then( arr => arr[ 0 ]?.url ); }
