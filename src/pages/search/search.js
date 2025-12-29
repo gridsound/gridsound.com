@@ -3,8 +3,8 @@
 class searchPage {
 	constructor() {
 		Object.seal( this );
-		DOM[ "searchPage-form" ].onchange = this.#onchangeForm.bind( this );
-		DOM[ "searchPage-form" ].onsubmit = this.#onsubmitForm.bind( this );
+		DOM.searchPageForm.onchange = this.#onchangeForm.bind( this );
+		DOM.searchPageForm.onsubmit = this.#onsubmitForm.bind( this );
 		this.#updateFilter( "u" );
 	}
 
@@ -12,7 +12,7 @@ class searchPage {
 	$show( filter, q ) {
 		this.#query( filter, q );
 		GSUsetTimeout( () => {
-			DOM[ "searchPage-form-q" ].focus();
+			DOM.searchPageFormQ.focus();
 		}, .2 );
 	}
 	$update( filter, q ) {
@@ -24,14 +24,14 @@ class searchPage {
 
 	// .........................................................................
 	#getFilter() {
-		return GSUdomQS( DOM[ "searchPage-form" ], "input[name='search-filter']:checked" ).value;
+		return GSUdomQS( DOM.searchPageForm, "input[name='search-filter']:checked" ).value;
 	}
 	#updateFilter( f ) {
-		GSUdomQS( DOM[ "searchPage-form" ], `input[value="${ f }"]` ).checked = true;
-		GSUdomSetAttr( DOM[ "searchPage-form-submit" ], "data-icon", f === "u" ? "cu-search-user" : "cu-search-music" );
+		GSUdomQS( DOM.searchPageForm, `input[value="${ f }"]` ).checked = true;
+		GSUdomSetAttr( DOM.searchPageFormSubmit, "data-icon", f === "u" ? "cu-search-user" : "cu-search-music" );
 	}
 	#updateQInput( q ) {
-		DOM[ "searchPage-form-q" ].value = decodeURI( q );
+		DOM.searchPageFormQ.value = decodeURI( q );
 	}
 	#query( filter = "u", q = "" ) {
 		const q2 = decodeURI( q );
@@ -51,7 +51,7 @@ class searchPage {
 		}
 	}
 	#onsubmitForm() {
-		const q = GSUtrim2( DOM[ "searchPage-form-q" ].value );
+		const q = GSUtrim2( DOM.searchPageFormQ.value );
 
 		location.hash = `#/q/${ this.#getFilter() }/${ q }`;
 		return false;

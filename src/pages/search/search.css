@@ -1,27 +1,28 @@
-#searchPage-form {
+#searchPageForm {
 	display: flex;
 	flex-direction: column;
 	gap: inherit;
 }
 
-#searchPage-form-filter {
+#searchPageFormFilter {
 	display: flex;
 	gap: 36px;
-}
-#searchPage-form-filter label {
-	display: flex;
-	gap: 8px;
-	cursor: pointer;
-}
-#searchPage-form-filter input {
-	margin: 0;
+
+	label {
+		display: flex;
+		gap: 8px;
+		cursor: pointer;
+	}
+	input {
+		margin: 0;
+	}
 }
 
-#searchPage-form-body {
+#searchPageFormBody {
 	display: flex;
 	height: 48px;
 }
-#searchPage-form-q {
+#searchPageFormQ {
 	flex: 1;
 	border: 0;
 	outline: 0;
@@ -30,11 +31,12 @@
 	padding: 12px;
 	font-size: 20px;
 	background-color: #fff1;
+
+	&::placeholder {
+		font-style: italic;
+	}
 }
-#searchPage-form-q::placeholder {
-	font-style: italic;
-}
-#searchPage-form-submit {
+#searchPageFormSubmit {
 	width: 42px;
 	padding: 0;
 	border: 0;
