@@ -1,10 +1,40 @@
-#head {
+#headWrap {
+	position: sticky;
+	top: 0;
+	z-index: 1;
 	height: var( --head-height );
-	display: flex;
 	margin-bottom: var( --main-padding );
+	pointer-events: none;
+	transition: background-color .4s;
+
+	body:not( [ data-hash="#/" ] ) & {
+		background-color: var( --app-bg );
+	}
+}
+#head {
+	position: absolute;
+	inset: 0;
+	display: flex;
+	height: calc( var( --head-height ) - 32px * var( --y128 ) );
 	border-radius: 0 0 var( --app-rad ) var( --app-rad );
 	font-size: 22px;
 	background-color: var( --head-bg );
+	pointer-events: auto;
+
+	body[ data-hash="#/" ] & {
+		box-shadow: 0 10px 20px #0005;
+	}
+}
+
+/* .......................................................................... */
+[ data-head-sticky-shadow ] {
+	transition: box-shadow .5s;
+}
+[ data-head-sticky-shadow="on" ] {
+	box-shadow:
+		0 calc( 4px +  0px ) 0 var( --app-bg ),
+		0 calc( 4px +  2px ) 0 var( --head-bg ),
+		0 calc( 4px + 16px ) 0 #0003;
 }
 
 /* .......................................................................... */

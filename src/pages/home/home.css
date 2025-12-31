@@ -136,6 +136,7 @@
 /* .......................................................................... */
 #homePage-screen {
 	position: relative;
+	z-index: 0;
 	display: flex;
 	align-items: center;
 	margin: auto;

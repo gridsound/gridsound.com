@@ -2,6 +2,7 @@
 
 class main {
 	#pageName = null;
+	#scrollSave = 0;
 	#timeoutIdPageChange = null;
 	$pages = {
 		"":             [ DOM.homePage,       DOM.headIcon,    PAGES.$home ],
@@ -34,6 +35,7 @@ class main {
 
 	// .........................................................................
 	$run() {
+		GSUdomBody.onscroll = this.#onscroll.bind( this );
 		this.#hashChange();
 	}
 	$loggedIn( u ) {
@@ -56,6 +58,31 @@ class main {
 	}
 
 	// .........................................................................
+	#onscroll() {
+		const y = GSUdomHtml.scrollTop | 0;
+
+		if ( y !== this.#scrollSave ) {
+			const y128 = Math.min( y, 118 ) / 118;
+			const st = {
+				"--y32": Math.min( y, 32 ) / 32,
+				"--y128": y128,
+			};
+
+			this.#scrollSave = y;
+			GSUdomStyle( DOM.head, st );
+			GSUdomStyle( DOM.userPageTop, st );
+			GSUdomStyle( DOM.searchPageForm, st );
+			GSUdomSetAttr( DOM.userPageProfileMenu, "data-head-sticky-shadow", y128 >= 1 ? "on" : "" );
+			GSUdomSetAttr( DOM.searchPageForm, "data-head-sticky-shadow", y128 >= 1 ? "on" : "" );
+		}
+		main.#onscrollBg();
+	}
+	static #onscrollBg() {
+		const scrollSize = Math.max( 2000, GSUdomHtml.scrollHeight - GSUdomHtml.offsetHeight );
+		const p = GSUmathFix( GSUdomHtml.scrollTop / scrollSize, 3 );
+
+		GSUdomStyle( DOM.root, "--gscom-scroll", p );
+	}
 	#showPage( pageName, args ) {
 		const [ page, headLink, pageObj ] = this.$pages[ pageName ];
 
@@ -92,7 +119,7 @@ class main {
 	#hashChange() {
 		const h = location.hash;
 
-		GSUdomSetAttr( document.body, "data-hash", h );
+		GSUdomSetAttr( GSUdomBody, "data-hash", h );
 		if ( !h ) {
 			location.hash = "#/";
 		} else if ( h !== "#/" && h.endsWith( "/" ) ) {

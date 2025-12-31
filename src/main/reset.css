@@ -5,12 +5,12 @@ html {
 }
 html,
 body {
-	overflow-x: hidden;
+	/*overflow-x: hidden; check on safari */
 	min-height: 100%;
 	scroll-behavior: smooth;
 }
 body {
-	overflow: hidden;
+	/*overflow: hidden; check on safari */
 	margin: 0;
 	font-size: 14px;
 	font-family: var( --gsui-font );

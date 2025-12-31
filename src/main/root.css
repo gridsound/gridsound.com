@@ -1,4 +1,7 @@
 :root {
+	--y32: 0;
+	--y128: 0;
+
 	--app-rad: 6px;
 	--app-bg: #1b1b31;
 	--a-text-light: #9df;

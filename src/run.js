@@ -2,8 +2,8 @@
 
 const DAWURL = "//localhost/gridsound/daw/";
 
-document.body.dataset.skin = "gray";
-document.body.append( GSUgetTemplate( "gs-main" ) );
+GSUdomBody.dataset.skin = "gray";
+GSUdomBody.append( GSUgetTemplate( "gs-main" ) );
 
 GSUdomQS( "#pages" ).append(
 	GSUgetTemplate( "gs-homePage" ),
@@ -42,11 +42,3 @@ gsapiClient.$getMe()
 		DOM.headAuth.dataset.spin = "";
 		PAGES.$main.$run();
 	} );
-
-document.addEventListener( "scroll", e => {
-	const elHTML = document.documentElement;
-	const scrollSize = Math.max( 2000, elHTML.scrollHeight - elHTML.offsetHeight );
-	const p = GSUmathFix( elHTML.scrollTop / scrollSize, 3 );
-
-	GSUdomStyle( DOM.root, "--gscom-scroll", p );
-} );

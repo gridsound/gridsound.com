@@ -1,10 +1,41 @@
+#userPageTop {
+	position: sticky;
+	z-index: 1;
+	top: calc( var( --head-height ) + var( --main-padding ) - ( 10px + 32px ) * var( --y128 ) );
+	height: calc( 142px + 20px + 18px );
+	display: flex;
+	flex-direction: column;
+	gap: calc( var( --main-padding ) * ( 1 - var( --y32 ) ) );
+}
+
+/* .......................................................................... */
+#userPageProfile {
+	--rad: calc( var( --app-rad ) * ( 1 - var( --y32 ) ) );
+	--gsuiComProfile-radius: var( --app-rad ) var( --app-rad ) var( --rad ) var( --rad );
+	--gsuiComProfile-height-mul: calc( 1 - var( --y128 ) );
+}
+
+/* .......................................................................... */
 #userPageProfileMenu {
+	--rad: calc( var( --app-rad ) * var( --y32 ) );
+	position: relative;
+	overflow: hidden;
 	display: flex;
 	gap: 20px;
+	min-height: 18px;
+	padding: calc( 8px * var( --y32 ) ) calc( 10px * var( --y32 ) );
+	border-radius: 0 0 var( --rad ) var( --rad );
+}
+#userPageProfileMenuBg {
+	position: absolute;
+	inset: 0;
+	background-color: #32374c;
+	opacity: var( --y32 );
 }
 
 /* .......................................................................... */
 .userPageProfileMenu-btn {
+	z-index: 1;
 	display: flex;
 	gap: 4px;
 	border: 0;
@@ -45,5 +76,28 @@
 		margin-top: -8px;
 		margin-top: 0;
 		margin-bottom: 16px;
+	}
+}
+
+/* .......................................................................... */
+#userPageEditForm {
+	font-size: 12px;
+
+	label {
+		display: flex;
+		flex-direction: column;
+		gap: 6px;
+
+		> span:first-child {
+			font-weight: bold;
+		}
+	}
+	input:not( [ type="checkbox" ] ) {
+		border: 0;
+		border-radius: 6px;
+		height: 32px;
+		padding: 0 8px;
+		font: inherit;
+		background-color: #0005;
 	}
 }

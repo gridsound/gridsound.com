@@ -10,19 +10,19 @@ class userPage {
 
 	constructor() {
 		Object.seal( this );
-		GSUdomListen( DOM.userPagePlaylist, {
+		GSUdomListen( DOM.userPage, {
 			[ GSEV_COMPLAYER_ACTION ]: this.#onAction.bind( this ),
+			[ GSEV_COMPROFILE_EDIT ]: this.#showEditForm.bind( this ),
+			[ GSEV_COMPROFILE_FOLLOWERS ]: this.#showFollowList.bind( this, "followers" ),
+			[ GSEV_COMPROFILE_FOLLOWING ]: this.#showFollowList.bind( this, "following" ),
 		} );
-		DOM.userPageProfile.$setFollowersCallbackPromise( () => gsapiClient.$getUserFollowers( this.#id ).catch( err => { throw err.msg; } ) );
-		DOM.userPageProfile.$setFollowingCallbackPromise( () => gsapiClient.$getUserFollowing( this.#id ).catch( err => { throw err.msg; } ) );
 		DOM.userPageProfile.$setFollowCallbackPromise( b => ( b ? gsapiClient.$followUser : gsapiClient.$unfollowUser )( this.#id ) );
-		DOM.userPageProfile.$setSavingCallbackPromise( obj => gsapiClient.$updateMyInfo( obj ).catch( err => { throw err.msg; } ) );
 		DOM.userPageProfile.$setVerifyEmailCallbackPromise( () => gsapiClient.$resendConfirmationEmail().catch( err => { throw err.msg; } ) );
 	}
 
 	// .........................................................................
 	$show( username, page ) {
-		const links = DOM.userPageProfileMenu.childNodes;
+		const links = GSUdomQSA( DOM.userPageProfileMenu, "a" );
 
 		this.#username = username;
 		GSUdomSetAttr( links[ 0 ], "href", `#/u/${ username }` );
@@ -78,6 +78,43 @@ class userPage {
 		this.#username =
 		this.#cmpsLiked =
 		this.#cmpsDeleted = null;
+	}
+
+	// .........................................................................
+	#showFollowList( list ) {
+		GSUpopup.$custom( {
+			title: `${ this.#username }'s ${ list }`,
+			element: GSUcreateFlex( { id: "userPageFollowList", y: true, g4: true },
+				GSUcreateIcon( { spin: "on", style: { fontSize: "36px" } } ),
+			),
+		} );
+		( list === "followers"
+			? gsapiClient.$getUserFollowers
+			: gsapiClient.$getUserFollowing
+		)( this.#id )
+			.then( arr => {
+				const list = GSUdomQS( "#userPageFollowList" );
+
+				GSUdomEmpty( list );
+				list.append( ...arr.map( u => GSUcreateElement( "gsui-com-userlink", u ) ) );
+			} )
+			.catch( err => { throw err.msg; } );
+	}
+	#showEditForm() {
+		GSUpopup.$custom( {
+			title: "Profile edition",
+			cancel: "Cancel",
+			element: GSUgetTemplate( "gs-userPage-edit-form", gsapiClient.$user ),
+			submit: obj => {
+				return gsapiClient.$updateMyInfo( obj )
+					.then( () => {
+						obj.emailpublic = !!obj.emailpublic;
+						GSUdomSetAttr( DOM.userPageProfile, obj );
+						return true;
+					} )
+					.catch( err => GSUdomQS( "#userPageEditFormError" ).textContent = err.msg );
+			},
+		} )
 	}
 
 	// .........................................................................
