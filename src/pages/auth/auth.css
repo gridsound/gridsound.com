@@ -38,12 +38,13 @@
 	grid-area: authPageSignup;
 	color: var( --auth-signup-text );
 	background-color: var( --auth-signup-bg );
-}
-#authPageSignup .field-input {
-	background-color: #fff;
-}
-#authPageSignup .form-error {
-	color: #fff;
+
+	.field-input {
+		background-color: #fff;
+	}
+	.form-error {
+		color: #fff;
+	}
 }
 
 #authPageLogin {
