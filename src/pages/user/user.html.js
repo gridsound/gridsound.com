@@ -30,7 +30,7 @@ GSUsetTemplate( "gs-userPage-edit-form", p =>
 			GSUcreateSpan( null, "avatar" ),
 			GSUcreateDiv( null,
 				GSUcreateSpan( null, "GridSound accepts, for the moment, only " ),
-				GSUcreateAExt( { class: "highlight", href: "https://gravatar.com" },
+				GSUcreateAExt( { href: "https://gravatar.com" },
 					GSUcreateIcon( { icon: "br-wordpress" } ),
 					GSUcreateSpan( null, "WordPress - Gravatar" ),
 				),
