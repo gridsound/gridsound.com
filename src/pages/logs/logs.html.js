@@ -1,7 +1,7 @@
 "use strict";
 
 GSUsetTemplate( "gs-logsPage", () =>
-	GSUcreateDiv( { id: "logsPage", class: "page" },
+	GSUcreateDiv( { class: "page", id: "logsPage" },
 		GSUcreateDiv( { id: "logsPage_title" }, "Logs 🤫" ),
 		GSUcreateDiv( { id: "logsPage_users5min" },
 			GSUcreateSpan( null, "users ping (5min): " ),
