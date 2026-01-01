@@ -30,12 +30,16 @@ class main {
 
 	constructor() {
 		DOM.headAuth.onclick = this.#headAuthBtnClick.bind( this );
+		GSUdomBody.onscroll = this.#onscroll.bind( this );
 		window.onhashchange = () => this.#hashChange();
+		GSUdomListen( DOM.main, {
+			[ GSEV_COMPLAYER_PLAY ]: this.#onplay.bind( this ),
+			[ GSEV_COMPLAYER_STOP ]: this.#onstop.bind( this ),
+		} );
 	}
 
 	// .........................................................................
 	$run() {
-		GSUdomBody.onscroll = this.#onscroll.bind( this );
 		this.#hashChange();
 	}
 	$loggedIn( u ) {
@@ -58,6 +62,16 @@ class main {
 	}
 
 	// .........................................................................
+	#onplay( e ) {
+		GSUforEach( GSUdomQSA( DOM.userPage, "gsui-com-player[playing]" ), elCmp => {
+			if ( elCmp !== e.$target ) {
+				GSUdomRmAttr( elCmp, "playing" );
+			}
+		} );
+	}
+	#onstop( e ) {
+		GSUdomRmAttr( e.$target, "data-head-sticky-shadow" );
+	}
 	#onscroll() {
 		const y = GSUdomHtml.scrollTop | 0;
 
@@ -72,16 +86,41 @@ class main {
 			GSUdomStyle( DOM.head, st );
 			GSUdomStyle( DOM.userPageTop, st );
 			GSUdomStyle( DOM.searchPageForm, st );
-			GSUdomSetAttr( DOM.userPageProfileMenu, "data-head-sticky-shadow", y128 >= 1 ? "on" : "" );
-			GSUdomSetAttr( DOM.searchPageForm, "data-head-sticky-shadow", y128 >= 1 ? "on" : "" );
+			GSUdomSetAttr( DOM.searchPageForm, "data-head-sticky-shadow", y128 >= 1 ? "bottom" : true );
+			GSUdomSetAttr( DOM.userPageProfileMenu, "data-head-sticky-shadow", y128 >= 1 ? "bottom" : true );
+			main.#onscrollCmpPlaying( this.#pageName );
+			main.#onscrollBg();
 		}
-		main.#onscrollBg();
+	}
+	static #onscrollCmpPlaying( page ) {
+		const elCmp = GSUdomQS( "gsui-com-player[playing]" );
+
+		if ( elCmp ) {
+			const { top, bottom } = elCmp.getBoundingClientRect();
+			let shad = false;
+
+			if ( top <= 142 && page === "q" ) {
+				GSUdomRmAttr( DOM.searchPageForm, "data-head-sticky-shadow" );
+				shad = "bottom";
+			} else if ( top <= 170 && page === "u" ) {
+				GSUdomRmAttr( DOM.userPageProfileMenu, "data-head-sticky-shadow" );
+				shad = "bottom";
+			} else if ( bottom >= GSUdomHtml.offsetHeight - 5 ) {
+				shad = "top";
+			}
+			GSUdomSetAttr( elCmp, "data-head-sticky-shadow", shad );
+		}
 	}
 	static #onscrollBg() {
-		const scrollSize = Math.max( 2000, GSUdomHtml.scrollHeight - GSUdomHtml.offsetHeight );
-		const p = GSUmathFix( GSUdomHtml.scrollTop / scrollSize, 3 );
+		if ( GSUdomHtml.scrollTop < 200 ) {
+			GSUdomStyle( DOM.root, "--gscom-scroll", 0 );
+		} else {
+			const startTop = 200;
+			const scrollSize = Math.max( 2000, GSUdomHtml.scrollHeight - GSUdomHtml.offsetHeight );
+			const p = GSUmathFix( ( GSUdomHtml.scrollTop - startTop ) / scrollSize, 3 );
 
-		GSUdomStyle( DOM.root, "--gscom-scroll", p );
+			GSUdomStyle( DOM.root, "--gscom-scroll", p );
+		}
 	}
 	#showPage( pageName, args ) {
 		const [ page, headLink, pageObj ] = this.$pages[ pageName ];

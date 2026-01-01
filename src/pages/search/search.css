@@ -7,6 +7,10 @@
 	flex-direction: column;
 	border-radius: var( --app-rad );
 	background-color: var( --app-bg );
+
+	#searchPage:has( gsui-com-player[ data-head-sticky-shadow="bottom" ] ) & {
+		box-shadow: 0 12px 0 var( --app-bg );
+	}
 }
 
 #searchPageFormFilter {
