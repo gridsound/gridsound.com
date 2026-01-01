@@ -10,11 +10,11 @@ GSUsetTemplate( "gs-homePage", () =>
 			),
 			GSUcreateDiv( { id: "homePage-anim-white-spot" } ),
 			GSUcreateDiv( { id: "homePage-anim-stars" },
-				GSUnewArray( 17, () => GSUcreateDiv( { class: "homePage-anim-star" } ) ),
+				GSUnewArray( 17, () => GSUcreateDiv() ),
 			),
 			GSUcreateDiv( { id: "homePage-anim-icons" },
 				[ "cu-waveform", "piano", "drum", "amp-guitar", "mixer", "music", "sax-hot" ].map( i =>
-					GSUcreateIcon( { class: "homePage-anim-icon", icon: i } ) )
+					GSUcreateIcon( { icon: i } ) )
 			),
 		),
 		GSUcreateDiv( { id: "homePage-screen" },
@@ -25,7 +25,7 @@ GSUsetTemplate( "gs-homePage", () =>
 			GSUcreateDiv( { id: "homePage-screen-brd" } ),
 		),
 		GSUcreateFlex( { id: "homePage-trySynth", x: true, xcenter: true, ycenter: true, g16: true },
-			GSUcreateDiv( { id: "homePage-trySynth-tryme" } ),
+			GSUcreateDiv(),
 			GSUcreateElement( "gsui-joystick", { id: "homePage-trySynth-joystick" } ),
 		),
 	),
