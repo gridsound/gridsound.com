@@ -54,16 +54,17 @@
 	transition: .2s;
 	transition-property: color, background-color, filter;
 	background-color: var( --bg, transparent );
-}
-.headLink + .headLink {
-	border-left: var( --head-brd );
-}
-.headLink:not( .selected ):hover {
-	--bg: rgba( 255, 255, 255, .05 );
-}
-.headLink.selected {
-	--bg: var( --head-selected-bg );
-	cursor: default;
+
+	& + & {
+		border-left: var( --head-brd );
+	}
+	&:not( .selected ):hover {
+		--bg: rgba( 255, 255, 255, .05 );
+	}
+	&.selected {
+		--bg: var( --head-selected-bg );
+		cursor: default;
+	}
 }
 
 /* .......................................................................... */
@@ -72,13 +73,14 @@
 	width: 64px;
 	padding: 0;
 	border-bottom-left-radius: inherit;
-}
-#headIcon::before {
-	content: "";
-	width: 48px;
-	height: 100%;
-	filter: invert( 1 );
-	background: center no-repeat url( "../../assets/logo/gs-gs-logo.svg" );
+
+	&::before {
+		content: "";
+		width: 48px;
+		height: 100%;
+		filter: invert( 1 );
+		background: center no-repeat url( "../../assets/logo/gs-gs-logo.svg" );
+	}
 }
 
 /* .......................................................................... */
@@ -86,20 +88,23 @@
 	position: relative;
 	width: 42px;
 	font-size: 24px;
-}
-#headNewCmp .gsuiIcon + .gsuiIcon {
-	position: absolute;
-	font-size: 12px;
-	margin-left: 22px;
-	margin-top: 16px;
-}
-#headNewCmp .gsuiIcon:nth-child( 2 ) {
-	margin-left: 20px;
-	margin-top: 14px;
-	color: var( --head-bg );
-}
-#headNewCmp .gsuiIcon:nth-child( 3 ) {
-	opacity: .6;
+
+	.gsuiIcon {
+		+ .gsuiIcon {
+			position: absolute;
+			font-size: 12px;
+			margin-left: 22px;
+			margin-top: 16px;
+		}
+		&:nth-child( 2 ) {
+			margin-left: 20px;
+			margin-top: 14px;
+			color: var( --head-bg );
+		}
+		&:nth-child( 3 ) {
+			opacity: .6;
+		}
+	}
 }
 
 /* .......................................................................... */
@@ -111,23 +116,25 @@
 	color: inherit;
 	user-select: none;
 	-webkit-user-select: none;
-}
-.noauth #headUser {
-	display: none;
-}
-#headAvatar {
-	width: 40px;
-	height: 40px;
-	min-width: 40px;
-	border-radius: 4px;
-	color: inherit;
+
+	.noauth & {
+		display: none;
+	}
+	gsui-com-avatar {
+		width: 40px;
+		height: 40px;
+		min-width: 40px;
+		border-radius: 4px;
+		color: inherit;
+	}
 }
 
 /* .......................................................................... */
 #headAuth {
 	border-bottom-right-radius: inherit;
-}
-#headAuth:hover,
-#headAuth.selected {
-	background-color: var( --head-logout-hover-bg );
+
+	&:hover,
+	&.selected {
+		background-color: var( --head-logout-hover-bg );
+	}
 }
