@@ -1,6 +1,6 @@
 "use strict";
 
-GSUsetTemplate( "gs-explorePage", () =>
+GSUsetTemplate( "gscoExplore", () =>
 	GSUcreateDiv( { class: "page", id: "explorePage" },
 		GSUcreateDiv( { id: "exploreSwitch" },
 			GSUcreateA( { href: "#/explore/all" }, "All" ),

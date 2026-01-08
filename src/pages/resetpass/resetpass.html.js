@@ -1,6 +1,6 @@
 "use strict";
 
-GSUsetTemplate( "gs-resetpassPage", () =>
+GSUsetTemplate( "gscoResetPass", () =>
 	GSUcreateDiv( { class: "page", id: "resetpassPage" },
 		GSUcreateElement( "form", { class: "form", id: "resetpassForm" },
 			GSUcreateDiv( { class: "form-title" }, "Reset password" ),

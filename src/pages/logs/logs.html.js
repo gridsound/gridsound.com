@@ -1,6 +1,6 @@
 "use strict";
 
-GSUsetTemplate( "gs-logsPage", () =>
+GSUsetTemplate( "gscoLogs", () =>
 	GSUcreateDiv( { class: "page", id: "logsPage" },
 		GSUcreateDiv( { id: "logsPage_title" }, "Logs 🤫" ),
 		GSUcreateDiv( { id: "logsPage_users5min" },
@@ -13,7 +13,7 @@ GSUsetTemplate( "gs-logsPage", () =>
 	),
 );
 
-GSUsetTemplate( "gs-logsPage-log", p =>
+GSUsetTemplate( "gscoLogsLog", p =>
 	GSUcreateDiv( { class: "logsPage-log" },
 		GSUcreateDiv( { class: "logsPage-log-body" },
 			GSUcreateA( { href: `#/u/${ p.username }` },

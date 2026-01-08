@@ -1,6 +1,6 @@
 "use strict";
 
-class logsPage {
+class gscoLogs {
 	constructor() {
 		Object.seal( this );
 	}
@@ -28,7 +28,7 @@ class logsPage {
 		DOM.logsPage_logs.append( ...logs.map( r => {
 			const [ date, time ] = r.created.split( " " );
 
-			r.icon = logsPage.#icons[ r.action ];
+			r.icon = gscoLogs.#icons[ r.action ];
 			r.time = time;
 			if ( dateSave !== date ) {
 				dateSave = date;
@@ -36,10 +36,10 @@ class logsPage {
 					GSUcreateDiv( { class: "logsPage-date" },
 						GSUcreateSpan( null, date ),
 					),
-					GSUgetTemplate( "gs-logsPage-log", r ),
+					GSUgetTemplate( "gscoLogsLog", r ),
 				];
 			}
-			return [ GSUgetTemplate( "gs-logsPage-log", r ) ];
+			return [ GSUgetTemplate( "gscoLogsLog", r ) ];
 		} ).flat() );
 	}
 	static #icons = {

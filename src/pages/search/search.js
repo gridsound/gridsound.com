@@ -1,6 +1,6 @@
 "use strict";
 
-class searchPage {
+class gscoSearch {
 	constructor() {
 		Object.seal( this );
 		DOM.searchPageForm.onchange = this.#onchangeForm.bind( this );
@@ -76,7 +76,7 @@ class searchPage {
 				lastname: u.lastname,
 			} ) ) );
 		} else {
-			DOM.searchPageResult.append( ...arr.map( cmp => PartialCmp.$domCmp( cmp ) ) );
+			DOM.searchPageResult.append( ...arr.map( cmp => gscoPartialCmp.$domCmp( cmp ) ) );
 		}
 	}
 }

@@ -1,6 +1,6 @@
 "use strict";
 
-class forgotpassPage {
+class gscoForgotPass {
 	constructor() {
 		Object.seal( this );
 		DOM.forgotpassForm.onsubmit =

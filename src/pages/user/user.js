@@ -1,6 +1,6 @@
 "use strict";
 
-class userPage {
+class gscoUser {
 	#id = null;
 	#username = null;
 	#cmps = null;
@@ -31,7 +31,7 @@ class userPage {
 			.then( data => {
 				const u = data.$user;
 
-				this.#cmps = data.$compositions.map( cmp => PartialCmp.$domCmp( cmp ) );
+				this.#cmps = data.$compositions.map( cmp => gscoPartialCmp.$domCmp( cmp ) );
 				this.#updateUser( u );
 				this.#updateNbCmps( u.cmps, u.cmpsDeleted, u.cmpsLiked );
 				GSUdomSetAttr( DOM.userPage, "data-itsme", u.id === gsapiClient.$user.id );
@@ -49,7 +49,7 @@ class userPage {
 		if ( page === "bin" && !this.#cmpsDeleted ) {
 			gsapiClient.$getUserCompositionsDeleted( username )
 				.then( cmps => {
-					this.#cmpsDeleted = cmps.map( cmp => PartialCmp.$domCmp( cmp ) );
+					this.#cmpsDeleted = cmps.map( cmp => gscoPartialCmp.$domCmp( cmp ) );
 					this.#appendCmps( page );
 				} );
 			return;
@@ -58,9 +58,9 @@ class userPage {
 			gsapiClient.$getUserCompositionsLiked( username )
 				.then( cmps => {
 					this.#cmpsLiked = cmps.flatMap( ( cmp, i ) => [
-						PartialCmp.$domCmp( cmp ),
+						gscoPartialCmp.$domCmp( cmp ),
 						cmps[ i + 1 ]?.$user.username === cmp.$user.username
-							? "" : PartialCmp.$domAuthor( cmp.$user ),
+							? "" : gscoPartialCmp.$domAuthor( cmp.$user ),
 					] );
 					this.#appendCmps( page );
 				} );
@@ -103,7 +103,7 @@ class userPage {
 		GSUpopup.$custom( {
 			title: "Profile edition",
 			cancel: "Cancel",
-			element: GSUgetTemplate( "gs-userPage-edit-form", gsapiClient.$user ),
+			element: GSUgetTemplate( "gscoUserEditForm", gsapiClient.$user ),
 			submit: obj => gsapiClient.$updateMyInfo( obj )
 				.then( () => {
 					obj.emailpublic = !!obj.emailpublic;
@@ -134,7 +134,7 @@ class userPage {
 				a.textContent -= 1;
 				b.textContent = +b.textContent + 1;
 			}
-			PartialCmp.$updateCmpActions( elCmp );
+			gscoPartialCmp.$updateCmpActions( elCmp );
 			GSUsetTimeout( () => elCmp.remove(), .35 );
 		}
 	}

@@ -1,5 +1,5 @@
 "use strict";
 
-GSUsetTemplate( "gs-cmpPage", () =>
+GSUsetTemplate( "gscoCmp", () =>
 	GSUcreateDiv( { class: "page", id: "cmpPage" } ),
 );

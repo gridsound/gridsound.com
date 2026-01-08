@@ -1,6 +1,6 @@
 "use strict";
 
-GSUsetTemplate( "gs-authPage", () =>
+GSUsetTemplate( "gscoAuth", () =>
 	GSUcreateDiv( { class: "page", id: "authPage" },
 		GSUcreateElement( "form", { class: "form", id: "authPageSignup" },
 			GSUcreateDiv( { class: "form-title" }, "Create a personal account" ),

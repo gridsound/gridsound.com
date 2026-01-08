@@ -1,6 +1,6 @@
 "use strict";
 
-class authPage {
+class gscoAuth {
 	constructor() {
 		Object.seal( this );
 		DOM.authPageLogin.onsubmit = () => this.#signSubmit( gsapiClient.$login,

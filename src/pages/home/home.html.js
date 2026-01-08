@@ -1,6 +1,6 @@
 "use strict";
 
-GSUsetTemplate( "gs-homePage", () =>
+GSUsetTemplate( "gscoHome", () =>
 	GSUcreateDiv( { class: "page", id: "homePage" },
 		GSUcreateElement( "h1", { id: "homePage-title" }, "Start creating your own music online" ),
 		GSUcreateDiv( { id: "homePage-logo", inert: true } ),
@@ -18,7 +18,7 @@ GSUsetTemplate( "gs-homePage", () =>
 			),
 		),
 		GSUcreateDiv( { id: "homePage-screen" },
-			GSUcreateA( { href: DAWURL },
+			GSUcreateA( { href: gscoDAWURL },
 				GSUcreateElement( "img", { src: "assets/screenshots/daw-1.47.0-small.jpg" } ),
 			),
 			GSUcreateDiv( { id: "homePage-screen-blur" } ),

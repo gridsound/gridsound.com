@@ -1,6 +1,6 @@
 "use strict";
 
-class resetpassPage {
+class gscoResetPass {
 	#email = null;
 	#code = null;
 

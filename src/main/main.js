@@ -1,6 +1,6 @@
 "use strict";
 
-class main {
+class gscoMain {
 	#pageName = null;
 	#scrollSave = 0;
 	#timeoutIdPageChange = null;
@@ -88,8 +88,8 @@ class main {
 			GSUdomStyle( DOM.searchPageForm, st );
 			GSUdomSetAttr( DOM.searchPageForm, "data-head-sticky-shadow", y128 >= 1 ? "bottom" : true );
 			GSUdomSetAttr( DOM.userPageProfileMenu, "data-head-sticky-shadow", y128 >= 1 ? "bottom" : true );
-			main.#onscrollCmpPlaying( this.#pageName );
-			main.#onscrollBg();
+			gscoMain.#onscrollCmpPlaying( this.#pageName );
+			gscoMain.#onscrollBg();
 		}
 	}
 	static #onscrollCmpPlaying( page ) {
@@ -163,7 +163,7 @@ class main {
 			location.hash = "#/";
 		} else if ( h !== "#/" && h.endsWith( "/" ) ) {
 			location.hash = h.substring( 0, h.length - 1 );
-		} else if ( !main.$routes.some( r => r.test( h ) ) ) {
+		} else if ( !gscoMain.$routes.some( r => r.test( h ) ) ) {
 			this.$error( 404 );
 		} else {
 			const arr = h.split( "/" );

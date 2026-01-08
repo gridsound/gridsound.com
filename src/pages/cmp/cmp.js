@@ -1,6 +1,6 @@
 "use strict";
 
-class cmpPage {
+class gscoCmp {
 	constructor() {
 		Object.seal( this );
 	}
@@ -10,9 +10,9 @@ class cmpPage {
 		return gsapiClient.$getComposition( cmpId )
 			.then( data => {
 				DOM.cmpPage.append(
-					PartialCmp.$domCmp( data.composition ),
-					PartialCmp.$domAuthor( data.user ),
-					PartialCmp.$domLikes( data.composition ),
+					gscoPartialCmp.$domCmp( data.composition ),
+					gscoPartialCmp.$domAuthor( data.user ),
+					gscoPartialCmp.$domLikes( data.composition ),
 				);
 			}, err => PAGES.$main.$error( err.code ) );
 	}

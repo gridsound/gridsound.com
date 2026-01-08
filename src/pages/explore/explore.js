@@ -1,6 +1,6 @@
 "use strict";
 
-class explorePage {
+class gscoExplore {
 	constructor() {
 		Object.seal( this );
 	}

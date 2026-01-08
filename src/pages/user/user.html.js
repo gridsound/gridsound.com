@@ -1,6 +1,6 @@
 "use strict";
 
-GSUsetTemplate( "gs-userPage", () =>
+GSUsetTemplate( "gscoUser", () =>
 	GSUcreateDiv( { class: "page", id: "userPage" },
 		GSUcreateDiv( { id: "userPageTop" },
 			GSUcreateElement( "gsui-com-profile", { id: "userPageProfile" } ),
@@ -24,7 +24,7 @@ GSUsetTemplate( "gs-userPage", () =>
 	),
 );
 
-GSUsetTemplate( "gs-userPage-edit-form", p =>
+GSUsetTemplate( "gscoUserEditForm", p =>
 	GSUcreateFlex( { id: "userPageEditForm", y: true, g12: true },
 		GSUcreateLabel( null,
 			GSUcreateSpan( null, "avatar" ),

@@ -1,20 +1,20 @@
 "use strict";
 
-const DAWURL = "//localhost/gridsound/daw/";
+const gscoDAWURL = "//localhost/gridsound/daw/";
 
 GSUdomBody.dataset.skin = "gray";
 GSUdomBody.append( GSUgetTemplate( "gs-main" ) );
 
 GSUdomQS( "#pages" ).append(
-	GSUgetTemplate( "gs-homePage" ),
-	GSUgetTemplate( "gs-searchPage" ),
-	GSUgetTemplate( "gs-userPage" ),
-	GSUgetTemplate( "gs-authPage" ),
-	GSUgetTemplate( "gs-logsPage" ),
-	GSUgetTemplate( "gs-cmpPage" ),
-	GSUgetTemplate( "gs-explorePage" ),
-	GSUgetTemplate( "gs-resetpassPage" ),
-	GSUgetTemplate( "gs-forgotpassPage" ),
+	GSUgetTemplate( "gscoHome" ),
+	GSUgetTemplate( "gscoSearch" ),
+	GSUgetTemplate( "gscoUser" ),
+	GSUgetTemplate( "gscoAuth" ),
+	GSUgetTemplate( "gscoLogs" ),
+	GSUgetTemplate( "gscoCmp" ),
+	GSUgetTemplate( "gscoExplore" ),
+	GSUgetTemplate( "gscoResetPass" ),
+	GSUgetTemplate( "gscoForgotPass" ),
 );
 
 const DOM = {};
@@ -22,18 +22,18 @@ const DOM = {};
 GSUforEach( GSUdomQSA( "[id]" ), el => DOM[ el.id ] = el );
 
 const PAGES = {
-	$cmp: new cmpPage(),
-	$home: new homePage(),
-	$auth: new authPage(),
-	$user: new userPage(),
-	$logs: new logsPage(),
-	$search: new searchPage(),
-	$explore: new explorePage(),
-	$resetpass: new resetpassPage(),
-	$forgotpass: new forgotpassPage(),
+	$cmp: new gscoCmp(),
+	$home: new gscoHome(),
+	$auth: new gscoAuth(),
+	$user: new gscoUser(),
+	$logs: new gscoLogs(),
+	$search: new gscoSearch(),
+	$explore: new gscoExplore(),
+	$resetpass: new gscoResetPass(),
+	$forgotpass: new gscoForgotPass(),
 };
 
-PAGES.$main = new main();
+PAGES.$main = new gscoMain();
 
 gsapiClient.$getMe()
 	.then( me => {

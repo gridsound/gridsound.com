@@ -1,6 +1,6 @@
 "use strict";
 
-class homePage {
+class gscoHome {
 	#ctx = null;
 	#waSynth = null;
 	#waReverb = null;
@@ -90,7 +90,7 @@ class homePage {
 	#audioInit() {
 		this.#ctx = GSUaudioContext();
 		return gswaCrossfade.$loadModule( this.#ctx ).then( () => {
-			const wt = homePage.#createPulseWT();
+			const wt = gscoHome.#createPulseWT();
 
 			// gswaPeriodicWaves.$loadWaves( gswaPeriodicWavesList );
 			gswaPeriodicWaves.$addWavetable( "custom.s0.o0", wt.waves );

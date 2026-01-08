@@ -1,6 +1,6 @@
 "use strict";
 
-GSUsetTemplate( "gs-searchPage", () =>
+GSUsetTemplate( "gscoSearch", () =>
 	GSUcreateDiv( { class: "page", id: "searchPage" },
 		GSUcreateDiv( { id: "searchPage-intro" }, "Search a user or a composition on GridSound" ),
 		GSUcreateElement( "form", { id: "searchPageForm" },

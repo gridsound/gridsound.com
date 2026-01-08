@@ -1,6 +1,6 @@
 "use strict";
 
-class PartialCmp {
+class gscoPartialCmp {
 	static $domAuthor( u ) {
 		return GSUcreateElement( "gsui-com-userlink", {
 			avatar: u.avatar,
@@ -32,16 +32,16 @@ class PartialCmp {
 			rendered: !!cmp.rendered,
 			duration: cmp.durationSec,
 			opensource: cmp.opensource,
-			dawlink: !cmp.deleted && ( itsmine || cmp.opensource ) ? `${ DAWURL }#${ cmp.id }` : false,
+			dawlink: !cmp.deleted && ( itsmine || cmp.opensource ) ? `${ gscoDAWURL }#${ cmp.id }` : false,
 		} );
 
-		PartialCmp.$updateCmpActions( elCmp );
-		elCmp.$setLikeCallbackPromise( PartialCmp.#cbLike );
-		elCmp.$setRendersCallbackPromise( PartialCmp.#cbGetRender );
+		gscoPartialCmp.$updateCmpActions( elCmp );
+		elCmp.$setLikeCallbackPromise( gscoPartialCmp.#cbLike );
+		elCmp.$setRendersCallbackPromise( gscoPartialCmp.#cbGetRender );
 		if ( itsmine ) {
-			elCmp.$setDeleteCallbackPromise( PartialCmp.#cbDelete );
-			elCmp.$setRestoreCallbackPromise( PartialCmp.#cbRestore );
-			elCmp.$setVisibilityCallbackPromise( PartialCmp.#cbPublic );
+			elCmp.$setDeleteCallbackPromise( gscoPartialCmp.#cbDelete );
+			elCmp.$setRestoreCallbackPromise( gscoPartialCmp.#cbRestore );
+			elCmp.$setVisibilityCallbackPromise( gscoPartialCmp.#cbPublic );
 		}
 		return elCmp;
 	}

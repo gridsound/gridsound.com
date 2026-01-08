@@ -1,6 +1,6 @@
 "use strict";
 
-GSUsetTemplate( "gs-forgotpassPage", () =>
+GSUsetTemplate( "gscoForgotPass", () =>
 	GSUcreateDiv( { class: "page", id: "forgotpassPage" },
 		GSUcreateElement( "form", { class: "form", id: "forgotpassForm" },
 			GSUcreateDiv( { class: "form-title" }, "Password forgotten" ),
