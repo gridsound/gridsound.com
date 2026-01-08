@@ -28,7 +28,7 @@ class forgotpassPage {
 					err.code === 400 ? "This is not a valid email" :
 					err.code === 404 ? "The email is not in the database" :
 					err.code === 409 ? "A recovering email has already been sent to this address less than 1 day ago" :
-					`Error ${ err.code }`
+					`Error ${ err.code }`;
 			} )
 			.finally( () => GSUdomRmClass( btn, "btn-loading" ) );
 		return false;

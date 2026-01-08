@@ -32,6 +32,7 @@ const PAGES = {
 	$resetpass: new resetpassPage(),
 	$forgotpass: new forgotpassPage(),
 };
+
 PAGES.$main = new main();
 
 gsapiClient.$getMe()

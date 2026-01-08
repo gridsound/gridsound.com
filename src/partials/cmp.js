@@ -11,7 +11,7 @@ class PartialCmp {
 	}
 	static $domLikes( cmp ) {
 		const elems = cmp.likedby.flatMap( ( u, i ) => [
-			i ? GSUcreateSpan( null, ", " ) : '',
+			i ? GSUcreateSpan( null, ", " ) : "",
 			GSUcreateA( { href: `#/u/${ u }` }, u ),
 		] );
 

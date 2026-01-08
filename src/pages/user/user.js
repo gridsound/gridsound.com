@@ -2,7 +2,6 @@
 
 class userPage {
 	#id = null;
-	#page = null;
 	#username = null;
 	#cmps = null;
 	#cmpsLiked = null;
@@ -61,7 +60,7 @@ class userPage {
 					this.#cmpsLiked = cmps.flatMap( ( cmp, i ) => [
 						PartialCmp.$domCmp( cmp ),
 						cmps[ i + 1 ]?.$user.username === cmp.$user.username
-							? '' : PartialCmp.$domAuthor( cmp.$user ),
+							? "" : PartialCmp.$domAuthor( cmp.$user ),
 					] );
 					this.#appendCmps( page );
 				} );
@@ -105,16 +104,14 @@ class userPage {
 			title: "Profile edition",
 			cancel: "Cancel",
 			element: GSUgetTemplate( "gs-userPage-edit-form", gsapiClient.$user ),
-			submit: obj => {
-				return gsapiClient.$updateMyInfo( obj )
-					.then( () => {
-						obj.emailpublic = !!obj.emailpublic;
-						GSUdomSetAttr( DOM.userPageProfile, obj );
-						return true;
-					} )
-					.catch( err => GSUdomQS( "#userPageEditFormError" ).textContent = err.msg );
-			},
-		} )
+			submit: obj => gsapiClient.$updateMyInfo( obj )
+				.then( () => {
+					obj.emailpublic = !!obj.emailpublic;
+					GSUdomSetAttr( DOM.userPageProfile, obj );
+					return true;
+				} )
+				.catch( err => GSUdomQS( "#userPageEditFormError" ).textContent = err.msg ),
+		} );
 	}
 
 	// .........................................................................
@@ -130,11 +127,11 @@ class userPage {
 				this.#cmps?.unshift( elCmp );
 				GSUarrayRemove( this.#cmpsDeleted, elCmp );
 				a.textContent = +a.textContent + 1;
-				b.textContent = b.textContent - 1;
+				b.textContent -= 1;
 			} else {
 				this.#cmpsDeleted?.unshift( elCmp );
 				GSUarrayRemove( this.#cmps, elCmp );
-				a.textContent = a.textContent - 1;
+				a.textContent -= 1;
 				b.textContent = +b.textContent + 1;
 			}
 			PartialCmp.$updateCmpActions( elCmp );

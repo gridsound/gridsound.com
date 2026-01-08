@@ -7,8 +7,8 @@ class homePage {
 	#startedKey = null;
 	#setAnimSpeedThr = GSUthrottle( ( speed, amp ) => {
 		GSUdomStyle( DOM[ "homePage-trySynth-joystick" ], {
-			'--gsuiJoystick-anim-speed': speed,
-			'--gsuiJoystick-anim-opacity': amp / 1,
+			"--gsuiJoystick-anim-speed": speed,
+			"--gsuiJoystick-anim-opacity": amp / 1,
 		} );
 	}, .2 );
 
@@ -74,7 +74,7 @@ class homePage {
 				},
 				1: {
 					pan: ( x * 2 - 1 ) * -.5,
-					unisondetune: ( 1 - y * .2 ),
+					unisondetune: 1 - y * .2,
 					unisonblend: 1 - x * .9,
 					gain: .5,
 				},
@@ -89,7 +89,7 @@ class homePage {
 	// .........................................................................
 	#audioInit() {
 		this.#ctx = GSUaudioContext();
-		return gswaCrossfade.$loadModule( this.#ctx ).then(() => {
+		return gswaCrossfade.$loadModule( this.#ctx ).then( () => {
 			const wt = homePage.#createPulseWT();
 
 			// gswaPeriodicWaves.$loadWaves( gswaPeriodicWavesList );

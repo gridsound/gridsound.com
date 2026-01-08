@@ -16,16 +16,16 @@ class main {
 		forgotPassword: [ DOM.forgotpassPage, DOM.headAuth,    PAGES.$forgotpass ],
 	};
 	static $routes = Object.freeze( [
-		/^#\/$/,
-		/^#\/u\/.+(\/bin|\/likes)?$/,
-		/^#\/explore(\/all)?$/,
-		/^#\/q(\/u|\/cmp)?$/,
-		/^#\/q(\/u|\/cmp)(\/.+)?$/,
-		/^#\/cmp\/.+$/,
-		/^#\/auth$/,
-		/^#\/logs$/,
-		/^#\/resetPassword\/.+\/.+$/,
-		/^#\/forgotPassword$/,
+		/^#\/$/u,
+		/^#\/u\/.+(\/bin|\/likes)?$/u,
+		/^#\/explore(\/all)?$/u,
+		/^#\/q(\/u|\/cmp)?$/u,
+		/^#\/q(\/u|\/cmp)(\/.+)?$/u,
+		/^#\/cmp\/.+$/u,
+		/^#\/auth$/u,
+		/^#\/logs$/u,
+		/^#\/resetPassword\/.+\/.+$/u,
+		/^#\/forgotPassword$/u,
 	] );
 
 	constructor() {

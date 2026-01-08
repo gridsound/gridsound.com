@@ -51,7 +51,7 @@ GSUsetTemplate( "gs-main", () =>
 					GSUcreateAExt( { class: "gsuiIcon", "data-icon": "br-youtube", href: "//youtube.com/@gridsound" } ),
 					GSUcreateAExt( { class: "gsuiIcon", "data-icon": "br-facebook", href: "//facebook.com/gridsound" } ),
 				),
-				GSUcreateDiv( { id: "footerCopyright" }, `© ${ ( new Date() ).getFullYear() } gridsound.com all rights reserved` ),
+				GSUcreateDiv( { id: "footerCopyright" }, `© ${ new Date().getFullYear() } gridsound.com all rights reserved` ),
 			),
 		),
 	),
