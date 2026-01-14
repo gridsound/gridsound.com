@@ -1,18 +1,15 @@
-export default {
-	title:         "GridSound",
-	desc:          "The platform to compose your own music",
-	favicon:       "assets/ico.svg",
-	url:           "https://gridsound.com/",
-	ogImage:       "https://gridsound.com/assets/og-image.jpg",
-	ogImageW:      800,
-	ogImageH:      400,
-	// manifest:      "manifest.json",
-	// serviceWorker: "serviceWorker.js",
-	// .........................................................................
-	cssSrcA: [
-		"assets/fonts/fonts.css",
+{
+	"title":    "GridSound",
+	"desc":     "The platform to compose your own music",
+	"favicon":  "assets/ico.svg",
+	"url":      "https://gridsound.com/",
+	"ogImage":  "https://gridsound.com/assets/og-image.jpg",
+	"ogImageW": 800,
+	"ogImageH": 400,
+	"cssSrcA": [
+		"assets/fonts/fonts.css"
 	],
-	cssSrcB: [
+	"cssSrcB": [
 		"src/main/form.css",
 		"src/main/root.css",
 		"src/main/reset.css",
@@ -20,18 +17,16 @@ export default {
 		"src/main/head.css",
 		"src/main/footer.css",
 
-		// .....................................................................
 		"src/partials/cmp.css",
 
-		// .....................................................................
 		"src/pages/home/home.css",
 		"src/pages/search/search.css",
 		"src/pages/auth/auth.css",
 		"src/pages/user/user.css",
 		"src/pages/logs/logs.css",
-		"src/pages/explore/explore.css",
+		"src/pages/explore/explore.css"
 	],
-	jsSrcB: [
+	"jsSrcB": [
 		"src/main/main.html.js",
 		"src/pages/cmp/cmp.html.js",
 		"src/pages/home/home.html.js",
@@ -43,13 +38,10 @@ export default {
 		"src/pages/forgotpass/forgotpass.html.js",
 		"src/pages/resetpass/resetpass.html.js",
 
-		// .....................................................................
 		"src/main/main.js",
 
-		// .....................................................................
 		"src/partials/cmp.js",
 
-		// .....................................................................
 		"src/pages/auth/auth.js",
 		"src/pages/home/home.js",
 		"src/pages/user/user.js",
@@ -60,11 +52,9 @@ export default {
 		"src/pages/explore/explore.js",
 		"src/pages/forgotpass/forgotpass.js",
 
-		// .....................................................................
-		"src/run.js",
+		"src/run.js"
 	],
-	// .........................................................................
-	cssDep: [
+	"cssDep": [
 		"gs-ui-components/gsui.css",
 		"gs-ui-components/gsui-gray.css",
 		"gs-ui-components/gsui-flex.css",
@@ -78,13 +68,11 @@ export default {
 		"gs-ui-components/gsuiComUserLink/gsuiComUserLink.css",
 		"gs-ui-components/gsuiComPlayer/gsuiComPlayer.css",
 		"gs-ui-components/gsuiJoystick/gsuiJoystick.css",
-		"gs-ui-components/gsuiPopup/gsuiPopup.css",
+		"gs-ui-components/gsuiPopup/gsuiPopup.css"
 	],
-	// .........................................................................
-	jsDep: [
+	"jsDep": [
 		"gs-ui-components/gsui-constantes.js",
 
-		// .....................................................................
 		"gs-utils/gs-utils.js",
 		"gs-utils/gs-utils-dom.js",
 		"gs-utils/gs-utils-func.js",
@@ -97,10 +85,8 @@ export default {
 		"gs-utils/gs-utils-models.js",
 		"gs-utils/gs-utils-checkType.dev.js",
 
-		// .....................................................................
 		"gs-api-client/gsapiClient.js",
 
-		// .....................................................................
 		"gs-wa-components/gswaNoise/gswaNoise.js",
 		"gs-wa-components/gswaReverbIR/gswaReverbIR.js",
 		"gs-wa-components/gswaCrossfade/gswaCrossfade.js",
@@ -129,12 +115,10 @@ export default {
 		"gs-wa-components/gswaMIDIDevices/gswaMIDIInput.js",
 		"gs-wa-components/gswaMIDIDevices/gswaMIDIOutput.js",
 
-		// .....................................................................
 		"gs-ui-components/gsuiComProfile/gsuiComProfile.html.js",
 		"gs-ui-components/gsuiComPlayer/gsuiComPlayer.html.js",
 		"gs-ui-components/gsuiPopup/gsuiPopup.html.js",
 
-		// .....................................................................
 		"gs-ui-components/gsui0ne/gsui0ne.js",
 		"gs-ui-components/gsuiRipple/gsuiRipple.js",
 		"gs-ui-components/gsuiDropdown/getAbsPos.js",
@@ -146,6 +130,6 @@ export default {
 		"gs-ui-components/gsuiComUserLink/gsuiComUserLink.js",
 		"gs-ui-components/gsuiComPlayer/gsuiComPlayer.js",
 		"gs-ui-components/gsuiJoystick/gsuiJoystick.js",
-		"gs-ui-components/gsuiPopup/gsuiPopup.js",
-	],
-};
+		"gs-ui-components/gsuiPopup/gsuiPopup.js"
+	]
+}
