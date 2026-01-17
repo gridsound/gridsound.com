@@ -1,3 +1,17 @@
+gsui-com-player[ playing ] {
+	z-index: 1;
+
+	#userPage &,
+	#searchPage & {
+		position: sticky;
+		top: 170px;
+		bottom: 0;
+	}
+	#searchPage & {
+		top: 142px;
+	}
+}
+
 .cmp-likes {
 	font-size: 12px;
 

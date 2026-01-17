@@ -74,16 +74,6 @@
 }
 
 /* .......................................................................... */
-gsui-com-player[ playing ] {
-	position: sticky;
-	z-index: 1;
-	top: 170px;
-	bottom: 0;
-
-	#searchPage & {
-		top: 142px;
-	}
-}
 #userPagePlaylist {
 	display: flex;
 	flex-direction: column;
