@@ -80,6 +80,7 @@
 		"gs-utils/gs-utils-math-fft.js",
 		"gs-utils/gs-utils-json.js",
 		"gs-utils/gs-utils-audio.js",
+		"gs-utils/gs-utils-jquery.js",
 		"gs-utils/gs-utils-audio-nodes.dev.js",
 		"gs-utils/gs-utils-files.js",
 		"gs-utils/gs-utils-models.js",

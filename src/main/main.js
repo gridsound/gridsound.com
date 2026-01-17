@@ -65,7 +65,7 @@ class gscoMain {
 	#onplay( e ) {
 		GSUforEach( GSUdomQSA( DOM.userPage, "gsui-com-player[playing]" ), elCmp => {
 			if ( elCmp !== e.$target ) {
-				GSUdomRmAttr( elCmp, "playing" );
+				elCmp.$pause();
 			}
 		} );
 	}
