@@ -2,6 +2,7 @@
 	--y32: 0;
 	--y128: 0;
 
+	/* ...................................................................... */
 	--app-rad: 6px;
 	--app-bg: #1b1b31;
 	--app-bg-rgb: 27 27 49;
@@ -9,9 +10,11 @@
 	--a-text-dark: #77c;
 	--form-error-color: #ee5f5f;
 
+	/* ...................................................................... */
 	--main-width: 640px;
 	--main-padding: 20px;
 
+	/* ...................................................................... */
 	--head-height: 80px;
 	--head-padding: 10px;
 	--head-logout-hover-bg: #ee5f5f;
@@ -21,6 +24,7 @@
 	--head-bg: #3b456e;
 	--head-brd: 1px solid #2e3653;
 
+	/* ...................................................................... */
 	--auth-bg: #fff;
 	--auth-text: #333;
 	--auth-show-dur: .3s;
@@ -28,7 +32,8 @@
 	--auth-signup-bg: #607d8b;
 	--auth-signup-text: #fff;
 
+	/* ...................................................................... */
 	--cmp-height: 64px;
 	--cmp-bg: #2e355b;
-	--cmp-bgGrad: linear-gradient(45deg, #0003, transparent);
+	--cmp-bgGrad: linear-gradient( 45deg, #0003, transparent );
 }

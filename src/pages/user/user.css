@@ -78,7 +78,7 @@ gsui-com-player[ playing ] {
 	position: sticky;
 	z-index: 1;
 	top: 170px;
-	bottom: 0px;
+	bottom: 0;
 
 	#searchPage & {
 		top: 142px;
@@ -90,7 +90,6 @@ gsui-com-player[ playing ] {
 	gap: inherit;
 
 	body[ data-hash$="/likes" ] & gsui-com-userlink {
-		margin-top: -8px;
 		margin-top: 0;
 		margin-bottom: 16px;
 	}
