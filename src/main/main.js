@@ -67,6 +67,7 @@ class gscoMain {
 				elCmp.$pause();
 			}
 		} );
+		GSUsetTimeout( () => this.#onscroll(), .1 );
 	}
 	#onstop( e ) {
 		GSUdomRmAttr( e.$target, "data-head-sticky-shadow" );
