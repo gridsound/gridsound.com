@@ -49,7 +49,7 @@ class gscoLogs {
 		"SAVE-CMP": "music",
 		RENDER: "render",
 		DELETE: "trash",
-		RESTORE: "trash-restore",
+		RESTORE: "untrash",
 		UPDATE: "pen",
 		LOGIN: "login",
 		"LOGIN-FAIL": "login",
