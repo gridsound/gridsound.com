@@ -2,7 +2,6 @@
 
 class gscoMain {
 	#pageName = null;
-	#scrollSave = 0;
 	#timeoutIdPageChange = null;
 	$pages = {
 		"":             [ DOM.homePage,       DOM.headIcon,    PAGES.$home ],
@@ -71,26 +70,23 @@ class gscoMain {
 	}
 	#onstop( e ) {
 		GSUdomRmAttr( e.$target, "data-head-sticky-shadow" );
+		GSUsetTimeout( () => this.#onscroll(), .1 );
 	}
 	#onscroll() {
 		const y = GSUdomHtml.scrollTop | 0;
+		const y128 = Math.min( y, 118 ) / 118;
+		const st = {
+			"--y32": Math.min( y, 32 ) / 32,
+			"--y128": y128,
+		};
 
-		if ( y !== this.#scrollSave ) {
-			const y128 = Math.min( y, 118 ) / 118;
-			const st = {
-				"--y32": Math.min( y, 32 ) / 32,
-				"--y128": y128,
-			};
-
-			this.#scrollSave = y;
-			GSUdomStyle( DOM.head, st );
-			GSUdomStyle( DOM.userPageTop, st );
-			GSUdomStyle( DOM.searchPageForm, st );
-			GSUdomSetAttr( DOM.searchPageForm, "data-head-sticky-shadow", y128 >= 1 ? "bottom" : true );
-			GSUdomSetAttr( DOM.userPageProfileMenu, "data-head-sticky-shadow", y128 >= 1 ? "bottom" : true );
-			gscoMain.#onscrollCmpPlaying( this.#pageName );
-			gscoMain.#onscrollBg();
-		}
+		GSUdomStyle( DOM.head, st );
+		GSUdomStyle( DOM.userPageTop, st );
+		GSUdomStyle( DOM.searchPageForm, st );
+		GSUdomSetAttr( DOM.searchPageForm, "data-head-sticky-shadow", y128 >= 1 ? "bottom" : true );
+		GSUdomSetAttr( DOM.userPageProfileMenu, "data-head-sticky-shadow", y128 >= 1 ? "bottom" : true );
+		gscoMain.#onscrollCmpPlaying( this.#pageName );
+		gscoMain.#onscrollBg();
 	}
 	static #onscrollCmpPlaying( page ) {
 		const elCmp = GSUdomQS( "gsui-com-player[playing]" );
