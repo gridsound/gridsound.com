@@ -30,6 +30,7 @@ class gscoMain {
 	constructor() {
 		DOM.headAuth.onclick = this.#headAuthBtnClick.bind( this );
 		GSUdomBody.onscroll = this.#onscroll.bind( this );
+		GSUdomObserveSize( GSUdomBody, GSUdomBody.onscroll );
 		window.onhashchange = () => this.#hashChange();
 		GSUdomListen( DOM.main, {
 			[ GSEV_COMPLAYER_PLAY ]: this.#onplay.bind( this ),
@@ -75,7 +76,9 @@ class gscoMain {
 	}
 	#onscroll() {
 		const y = GSUdomHtml.scrollTop | 0;
-		const y128 = Math.min( y, 118 ) / 118;
+		const y128 = DOM.userPageProfile.$isSmall()
+			? Math.min( y, 64 ) / 64
+			: Math.min( y, 118 ) / 118;
 		const st = {
 			"--y32": Math.min( y, 32 ) / 32,
 			"--y128": y128,
