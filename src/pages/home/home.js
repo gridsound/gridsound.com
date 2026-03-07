@@ -92,7 +92,6 @@ class gscoHome {
 		return gswaCrossfade.$loadModule( this.#ctx ).then( () => {
 			const wt = gscoHome.#createPulseWT();
 
-			// gswaPeriodicWaves.$loadWaves( gswaPeriodicWavesList );
 			gswaPeriodicWaves.$addWavetable( "custom.s0.o0", wt.waves );
 			this.#waSynth = new gswaSynth();
 			this.#waReverb = new gswaFxReverb();
