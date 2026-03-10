@@ -21,12 +21,12 @@ class gscoUser {
 
 	// .........................................................................
 	$show( username, page ) {
-		const links = GSUdomQSA( DOM.userPageProfileMenu, "a" );
+		const links = $( DOM.userPageProfileMenu, "a" );
 
 		this.#username = username;
-		GSUdomSetAttr( links[ 0 ], "href", `#/u/${ username }` );
-		GSUdomSetAttr( links[ 1 ], "href", `#/u/${ username }/bin` );
-		GSUdomSetAttr( links[ 2 ], "href", `#/u/${ username }/likes` );
+		links.$at( 0 ).$setAttr( "href", `#/u/${ username }` );
+		links.$at( 1 ).$setAttr( "href", `#/u/${ username }/bin` );
+		links.$at( 2 ).$setAttr( "href", `#/u/${ username }/likes` );
 		return gsapiClient.$getUserCompositions( username )
 			.then( data => {
 				const u = data.$user;
@@ -92,10 +92,9 @@ class gscoUser {
 			: gsapiClient.$getUserFollowing
 		)( this.#id )
 			.then( arr => {
-				const list = GSUdomQS( "#userPageFollowList" );
-
-				GSUdomEmpty( list );
-				list.append( ...arr.map( u => GSUcreateElement( "gsui-com-userlink", u ) ) );
+				$( "#userPageFollowList" )
+					.$empty()
+					.$append( ...arr.map( u => GSUcreateElement( "gsui-com-userlink", u ) ) );
 			} )
 			.catch( err => { throw err.msg; } );
 	}
@@ -110,7 +109,7 @@ class gscoUser {
 					GSUdomSetAttr( DOM.userPageProfile, obj );
 					return true;
 				} )
-				.catch( err => GSUdomQS( "#userPageEditFormError" ).textContent = err.msg ),
+				.catch( err => $( "#userPageEditFormError" ).$text( err.msg ) ),
 		} );
 	}
 

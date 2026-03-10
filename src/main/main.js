@@ -65,7 +65,7 @@ class gscoMain {
 
 	// .........................................................................
 	#onplay( e ) {
-		GSUforEach( GSUdomQSA( DOM.userPage, "gsui-com-player[playing]" ), elCmp => {
+		$( DOM.userPage, "gsui-com-player[playing]" ).$each( elCmp => {
 			if ( elCmp !== e.$target ) {
 				elCmp.$pause();
 			}
@@ -95,10 +95,10 @@ class gscoMain {
 		gscoMain.#onscrollBg();
 	}
 	static #onscrollCmpPlaying( page ) {
-		const elCmp = GSUdomQS( "gsui-com-player[playing]" );
+		const elCmp = $( "gsui-com-player[playing]" );
 
-		if ( elCmp ) {
-			const { top, bottom } = elCmp.getBoundingClientRect();
+		if ( elCmp.$size() ) {
+			const { top, bottom } = elCmp.$bcr();
 			let shad = false;
 
 			if ( top <= 142 && page === "q" ) {
@@ -110,7 +110,7 @@ class gscoMain {
 			} else if ( bottom >= $html.$get( 0 ).offsetHeight - 5 ) {
 				shad = "top";
 			}
-			GSUdomSetAttr( elCmp, "data-head-sticky-shadow", shad );
+			elCmp.$setAttr( "data-head-sticky-shadow", shad );
 		}
 	}
 	static #onscrollBg() {

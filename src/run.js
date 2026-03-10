@@ -5,7 +5,7 @@ const gscoDAWURL = "//localhost/gridsound/daw/";
 $body.$setAttr( "data-skin", "gray" )
 	.$append( GSUgetTemplate( "gs-main" ) );
 
-GSUdomQS( "#pages" ).append(
+$( "#pages" ).$append(
 	GSUgetTemplate( "gscoHome" ),
 	GSUgetTemplate( "gscoSearch" ),
 	GSUgetTemplate( "gscoUser" ),
@@ -19,7 +19,7 @@ GSUdomQS( "#pages" ).append(
 
 const DOM = {};
 
-GSUforEach( GSUdomQSA( "[id]" ), el => DOM[ el.id ] = el );
+$( "[id]" ).$each( el => DOM[ el.id ] = el );
 
 const PAGES = {
 	$cmp: new gscoCmp(),

@@ -16,7 +16,7 @@ class gscoLogs {
 
 	// .........................................................................
 	#displayConnectedUsers( elList, users ) {
-		GSUforEach( GSUdomQSA( elList, "a" ), el => el.remove() );
+		$( elList, "a" ).$remove();
 		elList.append( ...users.map( u => {
 			return GSUcreateA( { href: `#/u/${ u }` }, u );
 		} ) );

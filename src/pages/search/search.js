@@ -24,10 +24,10 @@ class gscoSearch {
 
 	// .........................................................................
 	#getFilter() {
-		return GSUdomQS( DOM.searchPageForm, "input[name='search-filter']:checked" ).value;
+		return $( DOM.searchPageForm, "input[name='search-filter']:checked" ).$value();
 	}
 	#updateFilter( f ) {
-		GSUdomQS( DOM.searchPageForm, `input[value="${ f }"]` ).checked = true;
+		$( DOM.searchPageForm, `input[value="${ f }"]` ).$prop( "checked", true );
 		GSUdomSetAttr( DOM.searchPageFormSubmit, "data-icon", f === "u" ? "cu-search-user" : "cu-search-music" );
 	}
 	#updateQInput( q ) {
