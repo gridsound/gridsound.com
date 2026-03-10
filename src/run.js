@@ -19,7 +19,7 @@ $( "#pages" ).$append(
 
 const DOM = {};
 
-$( "[id]" ).$each( el => DOM[ el.id ] = el );
+$( "[id]" ).$each( el => DOM[ el.id ] = $( el ) );
 
 const PAGES = {
 	$cmp: new gscoCmp(),
@@ -40,6 +40,6 @@ gsapiClient.$getMe()
 		PAGES.$main.$loggedIn( me );
 	} )
 	.finally( () => {
-		DOM.headAuth.dataset.spin = "";
+		DOM.headAuth.$addAttr( "data-spin" );
 		PAGES.$main.$run();
 	} );

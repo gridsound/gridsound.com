@@ -10,6 +10,6 @@ class gscoExplore {
 		this.$update( all );
 	}
 	$update( all ) {
-		GSUdomSetAttr( DOM.exploreSwitch, "data-all", all === "all" );
+		DOM.exploreSwitch.$setAttr( "data-all", all === "all" );
 	}
 }

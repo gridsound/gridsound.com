@@ -6,7 +6,7 @@ class gscoHome {
 	#waReverb = null;
 	#startedKey = null;
 	#setAnimSpeedThr = GSUthrottle( ( speed, amp ) => {
-		GSUdomStyle( DOM[ "homePage-trySynth-joystick" ], {
+		DOM[ "homePage-trySynth-joystick" ].$css( {
 			"--gsuiJoystick-anim-speed": speed,
 			"--gsuiJoystick-anim-opacity": amp / 1,
 		} );
@@ -14,7 +14,7 @@ class gscoHome {
 
 	constructor() {
 		Object.seal( this );
-		GSUdomListen( DOM[ "homePage-trySynth-joystick" ], {
+		GSUdomListen( DOM[ "homePage-trySynth-joystick" ].$get( 0 ), {
 			[ GSEV_JOYSTICK_END ]: () => this.#onendJoystick(),
 			[ GSEV_JOYSTICK_MOVE ]: ( _, x, y ) => this.#onmoveJoystick( x, y ),
 			[ GSEV_JOYSTICK_START ]: ( _, x, y ) => {
@@ -30,12 +30,12 @@ class gscoHome {
 	// .........................................................................
 	$show() {
 		GSUsetTimeout( () => {
-			GSUdomAddClass( DOM.homePage, "startAnim" );
-			GSUsetTimeout( () => GSUdomAddClass( DOM.homePage, "loopAnim" ), 1 );
+			DOM.homePage.$addClass( "startAnim" );
+			GSUsetTimeout( () => DOM.homePage.$addClass( "loopAnim" ), 1 );
 		}, .05 );
 	}
 	$quit() {
-		GSUdomRmClass( DOM.homePage, "startAnim", "loopAnim" );
+		DOM.homePage.$rmClass( "startAnim", "loopAnim" );
 	}
 
 	// .........................................................................

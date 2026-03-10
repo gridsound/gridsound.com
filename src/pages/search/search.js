@@ -3,44 +3,44 @@
 class gscoSearch {
 	constructor() {
 		Object.seal( this );
-		DOM.searchPageForm.onchange = this.#onchangeForm.bind( this );
-		DOM.searchPageForm.onsubmit = this.#onsubmitForm.bind( this );
+		DOM.searchPageForm.$on( {
+			change: this.#onchangeForm.bind( this ),
+			submit: this.#onsubmitForm.bind( this ),
+		} );
 		this.#updateFilter( "u" );
 	}
 
 	// .........................................................................
 	$show( filter, q ) {
 		this.#query( filter, q );
-		GSUsetTimeout( () => {
-			DOM.searchPageFormQ.focus();
-		}, .2 );
+		GSUsetTimeout( () => DOM.searchPageFormQ.$focus(), .2 );
 	}
 	$update( filter, q ) {
 		this.#query( filter, q );
 	}
 	$quit() {
-		GSUdomEmpty( DOM.searchPageResult );
+		DOM.searchPageResult.$empty();
 	}
 
 	// .........................................................................
 	#getFilter() {
-		return $( DOM.searchPageForm, "input[name='search-filter']:checked" ).$value();
+		return DOM.searchPageForm.$query( "input[name='search-filter']:checked" ).$value();
 	}
 	#updateFilter( f ) {
-		$( DOM.searchPageForm, `input[value="${ f }"]` ).$prop( "checked", true );
-		GSUdomSetAttr( DOM.searchPageFormSubmit, "data-icon", f === "u" ? "cu-search-user" : "cu-search-music" );
+		DOM.searchPageForm.$query( `input[value="${ f }"]` ).$prop( "checked", true );
+		DOM.searchPageFormSubmit.$setAttr( "data-icon", f === "u" ? "cu-search-user" : "cu-search-music" );
 	}
 	#updateQInput( q ) {
-		DOM.searchPageFormQ.value = decodeURI( q );
+		DOM.searchPageFormQ.$value( decodeURI( q ) );
 	}
 	#query( filter = "u", q = "" ) {
 		const q2 = decodeURI( q );
 
 		this.#updateFilter( filter );
 		this.#updateQInput( q2 );
-		GSUdomEmpty( DOM.searchPageResult );
-		DOM.searchPageResultIntro.firstChild.textContent =
-		DOM.searchPageResultIntro.lastChild.textContent = "";
+		DOM.searchPageResult.$empty();
+		DOM.searchPageResultIntro.$child( 0 ).$text( "" );
+		DOM.searchPageResultIntro.$child( -1 ).$text( "" );
 		if ( q2 ) {
 			gsapiClient.$search( filter, q2 ).then( this.#printResult.bind( this, filter, q2 ) );
 		}
@@ -51,7 +51,7 @@ class gscoSearch {
 		}
 	}
 	#onsubmitForm() {
-		const q = GSUtrim2( DOM.searchPageFormQ.value );
+		const q = GSUtrim2( DOM.searchPageFormQ.$value() );
 
 		location.hash = `#/q/${ this.#getFilter() }/${ q }`;
 		return false;
@@ -66,17 +66,17 @@ class gscoSearch {
 			len < limit ? `are ${ len }` :
 			`are at least ${ limit }`;
 
-		DOM.searchPageResultIntro.firstChild.textContent = `There ${ there } ${ what } matching `;
-		DOM.searchPageResultIntro.lastChild.textContent = `"${ q }"`;
+		DOM.searchPageResultIntro.$child( 0 ).$text( `There ${ there } ${ what } matching ` );
+		DOM.searchPageResultIntro.$child( -1 ).$text( `"${ q }"` );
 		if ( filter === "u" ) {
-			DOM.searchPageResult.append( ...arr.map( u => GSUcreateElement( "gsui-com-userlink", {
+			DOM.searchPageResult.$append( ...arr.map( u => GSUcreateElement( "gsui-com-userlink", {
 				avatar: u.avatar,
 				username: u.username,
 				firstname: u.firstname,
 				lastname: u.lastname,
 			} ) ) );
 		} else {
-			DOM.searchPageResult.append( ...arr.map( cmp => gscoPartialCmp.$domCmp( cmp ) ) );
+			DOM.searchPageResult.$append( ...arr.map( cmp => gscoPartialCmp.$domCmp( cmp ) ) );
 		}
 	}
 }

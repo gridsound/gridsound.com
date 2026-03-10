@@ -9,7 +9,7 @@ class gscoCmp {
 	$show( cmpId ) {
 		return gsapiClient.$getComposition( cmpId )
 			.then( data => {
-				DOM.cmpPage.append(
+				DOM.cmpPage.$append(
 					gscoPartialCmp.$domCmp( data.composition ),
 					gscoPartialCmp.$domAuthor( data.user ),
 					gscoPartialCmp.$domLikes( data.composition ),
@@ -17,6 +17,6 @@ class gscoCmp {
 			}, err => PAGES.$main.$error( err.code ) );
 	}
 	$quit() {
-		GSUdomEmpty( DOM.cmpPage );
+		DOM.cmpPage.$empty();
 	}
 }

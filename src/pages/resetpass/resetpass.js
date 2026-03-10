@@ -6,34 +6,34 @@ class gscoResetPass {
 
 	constructor() {
 		Object.seal( this );
-		DOM.resetpassForm.onsubmit =
-			this.#submit.bind( this,
-				DOM.resetpassFormSubmit,
-				DOM.resetpassFormError,
-				DOM.resetpassFormPass,
-				DOM.resetpassFormPass2 );
+		DOM.resetpassForm.$on( "submit", this.#submit.bind( this,
+			DOM.resetpassFormSubmit,
+			DOM.resetpassFormError,
+			DOM.resetpassFormPass,
+			DOM.resetpassFormPass2,
+		) );
 	}
 
 	// .........................................................................
 	$show( email, code ) {
-		DOM.resetpassPage.classList.remove( "sended" );
+		DOM.resetpassPage.$rmClass( "sended" );
 		this.#email = email;
 		this.#code = code;
-		DOM.resetpassFormPass2.value =
-		DOM.resetpassFormPass.value = "";
+		DOM.resetpassFormPass2.$value( "" );
+		DOM.resetpassFormPass.$value( "" );
 	}
 
 	// .........................................................................
 	#submit( btn, error, pass, pass2 ) {
-		if ( pass.value === pass2.value ) {
-			error.textContent = "";
-			btn.classList.add( "btn-loading" );
-			gsapiClient.$resetPassword( this.#email, this.#code, pass.value )
-				.finally( () => btn.classList.remove( "btn-loading" ) )
+		if ( pass.$value() === pass2.$value() ) {
+			error.$text( "" );
+			btn.$addClass( "btn-loading" );
+			gsapiClient.$resetPassword( this.#email, this.#code, pass.$value() )
+				.finally( () => btn.$rmClass( "btn-loading" ) )
 				.then( () => {
-					DOM.resetpassPage.classList.add( "sended" );
+					DOM.resetpassPage.$addClass( "sended" );
 				}, err => {
-					error.textContent = err.msg;
+					error.$text( err.msg );
 				} );
 		}
 		return false;

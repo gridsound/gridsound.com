@@ -16,16 +16,15 @@ class gscoLogs {
 
 	// .........................................................................
 	#displayConnectedUsers( elList, users ) {
-		$( elList, "a" ).$remove();
-		elList.append( ...users.map( u => {
+		elList.$query( "a" ).$remove();
+		elList.$append( ...users.map( u => {
 			return GSUcreateA( { href: `#/u/${ u }` }, u );
 		} ) );
 	}
 	#displayLogs( logs ) {
 		let dateSave = null;
 
-		GSUdomEmpty( DOM.logsPage_logs );
-		DOM.logsPage_logs.append( ...logs.map( r => {
+		DOM.logsPage_logs.$empty().$append( ...logs.map( r => {
 			const [ date, time ] = r.created.split( " " );
 
 			r.icon = gscoLogs.#icons[ r.action ];

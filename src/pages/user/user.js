@@ -9,19 +9,19 @@ class gscoUser {
 
 	constructor() {
 		Object.seal( this );
-		GSUdomListen( DOM.userPage, {
+		GSUdomListen( DOM.userPage.$get( 0 ), {
 			[ GSEV_COMPLAYER_ACTION ]: this.#onAction.bind( this ),
 			[ GSEV_COMPROFILE_EDIT ]: this.#showEditForm.bind( this ),
 			[ GSEV_COMPROFILE_FOLLOWERS ]: this.#showFollowList.bind( this, "followers" ),
 			[ GSEV_COMPROFILE_FOLLOWING ]: this.#showFollowList.bind( this, "following" ),
 		} );
-		DOM.userPageProfile.$setFollowCallbackPromise( b => ( b ? gsapiClient.$followUser : gsapiClient.$unfollowUser )( this.#id ) );
-		DOM.userPageProfile.$setVerifyEmailCallbackPromise( () => gsapiClient.$resendConfirmationEmail().catch( err => { throw err.msg; } ) );
+		DOM.userPageProfile.$get( 0 ).$setFollowCallbackPromise( b => ( b ? gsapiClient.$followUser : gsapiClient.$unfollowUser )( this.#id ) );
+		DOM.userPageProfile.$get( 0 ).$setVerifyEmailCallbackPromise( () => gsapiClient.$resendConfirmationEmail().catch( err => { throw err.msg; } ) );
 	}
 
 	// .........................................................................
 	$show( username, page ) {
-		const links = $( DOM.userPageProfileMenu, "a" );
+		const links = DOM.userPageProfileMenu.$query( "a" );
 
 		this.#username = username;
 		links.$at( 0 ).$setAttr( "href", `#/u/${ username }` );
@@ -34,8 +34,10 @@ class gscoUser {
 				this.#cmps = data.$compositions.map( cmp => gscoPartialCmp.$domCmp( cmp ) );
 				this.#updateUser( u );
 				this.#updateNbCmps( u.cmps, u.cmpsDeleted, u.cmpsLiked );
-				GSUdomSetAttr( DOM.userPage, "data-itsme", u.id === gsapiClient.$user.id );
-				GSUdomSetAttr( DOM.userPage, "data-premium", u.premium );
+				DOM.userPage.$setAttr( {
+					"data-itsme": u.id === gsapiClient.$user.id,
+					"data-premium": u.premium,
+				} );
 				this.$update( username, page );
 			}, e => PAGES.$main.$error( e.code ) );
 	}
@@ -45,7 +47,7 @@ class gscoUser {
 			this.$show( username, page );
 			return;
 		}
-		GSUdomEmpty( DOM.userPagePlaylist );
+		DOM.userPagePlaylist.$empty();
 		if ( page === "bin" && !this.#cmpsDeleted ) {
 			gsapiClient.$getUserCompositionsDeleted( username )
 				.then( cmps => {
@@ -69,8 +71,8 @@ class gscoUser {
 		this.#appendCmps( page );
 	}
 	$quit() {
-		GSUdomEmpty( DOM.userPagePlaylist );
-		GSUdomRmAttr( DOM.userPage, "data-premium" );
+		DOM.userPagePlaylist.$empty();
+		DOM.userPage.$rmAttr( "data-premium" );
 		this.#updateNbCmps( 0, 0, 0 );
 		this.#id =
 		this.#cmps =
@@ -106,7 +108,7 @@ class gscoUser {
 			submit: obj => gsapiClient.$updateMyInfo( obj )
 				.then( () => {
 					obj.emailpublic = !!obj.emailpublic;
-					GSUdomSetAttr( DOM.userPageProfile, obj );
+					DOM.userPageProfile.$setAttr( obj );
 					return true;
 				} )
 				.catch( err => $( "#userPageEditFormError" ).$text( err.msg ) ),
@@ -125,13 +127,13 @@ class gscoUser {
 			if ( restoring ) {
 				this.#cmps?.unshift( elCmp );
 				GSUarrayRemove( this.#cmpsDeleted, elCmp );
-				a.textContent = +a.textContent + 1;
-				b.textContent -= 1;
+				a.$text( +a.$text() + 1 );
+				b.$text( +b.$text() - 1 );
 			} else {
 				this.#cmpsDeleted?.unshift( elCmp );
 				GSUarrayRemove( this.#cmps, elCmp );
-				a.textContent -= 1;
-				b.textContent = +b.textContent + 1;
+				a.$text( +a.$text() - 1 );
+				b.$text( +b.$text() + 1 );
 			}
 			gscoPartialCmp.$updateCmpActions( elCmp );
 			GSUsetTimeout( () => elCmp.remove(), .35 );
@@ -144,19 +146,19 @@ class gscoUser {
 			pg === "likes" ? this.#cmpsLiked : null;
 
 		if ( cmps ) {
-			DOM.userPagePlaylist.append( ...cmps );
+			DOM.userPagePlaylist.$append( ...cmps );
 		}
 	}
 	#updateNbCmps( a, b, c ) {
-		DOM.userPageProfileNbCmps.textContent = a;
-		DOM.userPageProfileNbCmpsDeleted.textContent = b;
-		DOM.userPageProfileNbCmpsLiked.textContent = c;
+		DOM.userPageProfileNbCmps.$text( a );
+		DOM.userPageProfileNbCmpsDeleted.$text( b );
+		DOM.userPageProfileNbCmpsLiked.$text( c );
 	}
 	#updateUser( u ) {
 		const itsme = u.id === gsapiClient.$user.id;
 
 		this.#id = u.id;
-		GSUdomSetAttr( DOM.userPageProfile, {
+		DOM.userPageProfile.$setAttr( {
 			itsme,
 			username: u.username,
 			lastname: u.lastname,

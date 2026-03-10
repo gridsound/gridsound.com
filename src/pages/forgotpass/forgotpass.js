@@ -3,34 +3,35 @@
 class gscoForgotPass {
 	constructor() {
 		Object.seal( this );
-		DOM.forgotpassForm.onsubmit =
-			this.#submit.bind( this,
-				DOM.forgotpassFormSubmit,
-				DOM.forgotpassFormError,
-				DOM.forgotpassFormEmail );
+		DOM.forgotpassForm.$on( "submit", this.#submit.bind( this,
+			DOM.forgotpassFormSubmit,
+			DOM.forgotpassFormError,
+			DOM.forgotpassFormEmail,
+		) );
 	}
 
 	// .........................................................................
 	$show() {
-		GSUdomRmClass( DOM.forgotpassPage, "sended" );
-		DOM.forgotpassFormEmail.value = "";
+		DOM.forgotpassPage.$rmClass( "sended" );
+		DOM.forgotpassFormEmail.$value( "" );
 	}
 
 	// .........................................................................
 	#submit( btn, error, email ) {
-		GSUdomAddClass( btn, "btn-loading" );
-		error.textContent = "";
-		gsapiClient.$recoverPassword( email.value )
+		btn.$addClass( "btn-loading" );
+		error.$text( "" );
+		gsapiClient.$recoverPassword( email.$value() )
 			.then( () => {
-				GSUdomAddClass( DOM.forgotpassPage, "sended" );
+				DOM.forgotpassPage.$addClass( "sended" );
 			}, err => {
-				error.textContent =
+				error.$text(
 					err.code === 400 ? "This is not a valid email" :
 					err.code === 404 ? "The email is not in the database" :
 					err.code === 409 ? "A recovering email has already been sent to this address less than 1 day ago" :
-					`Error ${ err.code }`;
+					`Error ${ err.code }`
+				);
 			} )
-			.finally( () => GSUdomRmClass( btn, "btn-loading" ) );
+			.finally( () => btn.$rmClass( "btn-loading" ) );
 		return false;
 	}
 }
