@@ -46,12 +46,13 @@ class gscoPartialCmp {
 		return elCmp;
 	}
 	static $updateCmpActions( elCmp ) {
-		const open = GSUdomHasAttr( elCmp, "opensource" );
-		const priv4te = GSUdomHasAttr( elCmp, "private" );
+		const cmp = $( elCmp );
+		const open = cmp.$hasAttr( "opensource" );
+		const priv4te = cmp.$hasAttr( "private" );
 		let actions;
 
-		if ( GSUdomHasAttr( elCmp, "itsmine" ) ) {
-			if ( GSUdomHasAttr( elCmp, "deleted" ) ) {
+		if ( cmp.$hasAttr( "itsmine" ) ) {
+			if ( cmp.$hasAttr( "deleted" ) ) {
 				actions = "restore";
 			} else {
 				actions = "fork delete";
@@ -64,7 +65,7 @@ class gscoPartialCmp {
 		} else if ( open ) {
 			actions = "fork";
 		}
-		GSUdomSetAttr( elCmp, "actions", actions );
+		cmp.$setAttr( "actions", actions );
 	}
 	static #cbLike( el, act ) { return gsapiClient.$likeComposition( el.dataset.id, act ); }
 	static #cbGetRender( el ) { return gsapiClient.$getCompositionRenders( el.dataset.id ).then( arr => arr[ 0 ]?.url ); }

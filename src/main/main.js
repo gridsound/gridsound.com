@@ -28,9 +28,11 @@ class gscoMain {
 	] );
 
 	constructor() {
+		const onscroll = this.#onscroll.bind( this );
+
 		DOM.headAuth.onclick = this.#headAuthBtnClick.bind( this );
-		GSUdomBody.onscroll = this.#onscroll.bind( this );
-		GSUdomObserveSize( GSUdomBody, GSUdomBody.onscroll );
+		$body.$on( "scroll", onscroll );
+		GSUdomObserveSize( $body.$get( 0 ), onscroll );
 		window.onhashchange = () => this.#hashChange();
 		GSUdomListen( DOM.main, {
 			[ GSEV_COMPLAYER_PLAY ]: this.#onplay.bind( this ),
@@ -75,7 +77,7 @@ class gscoMain {
 		GSUsetTimeout( () => this.#onscroll(), .1 );
 	}
 	#onscroll() {
-		const y = GSUdomHtml.scrollTop | 0;
+		const y = $html.$scrollY() | 0;
 		const y128 = DOM.userPageProfile.$isSmall()
 			? Math.min( y, 64 ) / 64
 			: Math.min( y, 118 ) / 118;
@@ -105,19 +107,19 @@ class gscoMain {
 			} else if ( top <= 170 && page === "u" ) {
 				GSUdomRmAttr( DOM.userPageProfileMenu, "data-head-sticky-shadow" );
 				shad = "bottom";
-			} else if ( bottom >= GSUdomHtml.offsetHeight - 5 ) {
+			} else if ( bottom >= $html.$get( 0 ).offsetHeight - 5 ) {
 				shad = "top";
 			}
 			GSUdomSetAttr( elCmp, "data-head-sticky-shadow", shad );
 		}
 	}
 	static #onscrollBg() {
-		if ( GSUdomHtml.scrollTop < 200 ) {
+		if ( $html.$scrollY() < 200 ) {
 			GSUdomStyle( DOM.root, "--gscom-scroll", 0 );
 		} else {
 			const startTop = 200;
-			const scrollSize = Math.max( 2000, GSUdomHtml.scrollHeight - GSUdomHtml.offsetHeight );
-			const p = GSUmathFix( ( GSUdomHtml.scrollTop - startTop ) / scrollSize, 3 );
+			const scrollSize = Math.max( 2000, $html.$scrollH() - $html.$get( 0 ).offsetHeight );
+			const p = GSUmathFix( ( $html.$scrollY() - startTop ) / scrollSize, 3 );
 
 			GSUdomStyle( DOM.root, "--gscom-scroll", p );
 		}
@@ -158,7 +160,7 @@ class gscoMain {
 	#hashChange() {
 		const h = location.hash;
 
-		GSUdomSetAttr( GSUdomBody, "data-hash", h );
+		$body.$setAttr( "data-hash", h );
 		if ( !h ) {
 			location.hash = "#/";
 		} else if ( h !== "#/" && h.endsWith( "/" ) ) {

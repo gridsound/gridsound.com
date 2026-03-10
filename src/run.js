@@ -2,8 +2,8 @@
 
 const gscoDAWURL = "//localhost/gridsound/daw/";
 
-GSUdomBody.dataset.skin = "gray";
-GSUdomBody.append( GSUgetTemplate( "gs-main" ) );
+$body.$setAttr( "data-skin", "gray" )
+	.$append( GSUgetTemplate( "gs-main" ) );
 
 GSUdomQS( "#pages" ).append(
 	GSUgetTemplate( "gscoHome" ),
