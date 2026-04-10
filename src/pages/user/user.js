@@ -117,26 +117,27 @@ class gscoUser {
 
 	// .........................................................................
 	#onAction( e, act ) {
-		const restoring = act === "restore";
+		switch ( act ) {
+			case "delete":
+			case "restore": {
+				const a = DOM.userPageProfileNbCmps;
+				const b = DOM.userPageProfileNbCmpsDeleted;
+				const elCmp = e.$target;
 
-		if ( act === "delete" || restoring ) {
-			const a = DOM.userPageProfileNbCmps;
-			const b = DOM.userPageProfileNbCmpsDeleted;
-			const elCmp = e.$target;
-
-			if ( restoring ) {
-				this.#cmps?.unshift( elCmp );
-				GSUarrayRemove( this.#cmpsDeleted, elCmp );
-				a.$text( +a.$text() + 1 );
-				b.$text( +b.$text() - 1 );
-			} else {
-				this.#cmpsDeleted?.unshift( elCmp );
-				GSUarrayRemove( this.#cmps, elCmp );
-				a.$text( +a.$text() - 1 );
-				b.$text( +b.$text() + 1 );
-			}
-			gscoPartialCmp.$updateCmpActions( elCmp );
-			GSUsetTimeout( () => elCmp.remove(), .35 );
+				if ( act === "restore" ) {
+					this.#cmps?.unshift( elCmp );
+					GSUarrayRemove( this.#cmpsDeleted, elCmp );
+					a.$text( +a.$text() + 1 );
+					b.$text( +b.$text() - 1 );
+				} else {
+					this.#cmpsDeleted?.unshift( elCmp );
+					GSUarrayRemove( this.#cmps, elCmp );
+					a.$text( +a.$text() - 1 );
+					b.$text( +b.$text() + 1 );
+				}
+				gscoPartialCmp.$updateCmpActions( elCmp );
+				GSUsetTimeout( () => elCmp.remove(), .35 );
+			} break;
 		}
 	}
 	#appendCmps( pg ) {
