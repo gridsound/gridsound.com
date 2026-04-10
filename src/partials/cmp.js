@@ -37,6 +37,7 @@ class gscoPartialCmp {
 
 		gscoPartialCmp.$updateCmpActions( elCmp );
 		elCmp.$setLikeCallbackPromise( gscoPartialCmp.#cbLike );
+		elCmp.$setForkCallbackPromise( gscoPartialCmp.#cbFork );
 		elCmp.$setRendersCallbackPromise( gscoPartialCmp.#cbGetRender );
 		if ( itsmine ) {
 			elCmp.$setDeleteCallbackPromise( gscoPartialCmp.#cbDelete );
@@ -67,9 +68,10 @@ class gscoPartialCmp {
 		}
 		cmp.$setAttr( "actions", actions );
 	}
-	static #cbLike( el, act ) { return gsapiClient.$likeComposition( el.dataset.id, act ); }
-	static #cbGetRender( el ) { return gsapiClient.$getCompositionRenders( el.dataset.id ).then( arr => arr[ 0 ]?.url ); }
+	static #cbFork( el ) { return gsapiClient.$forkComposition( el.dataset.id ).catch( err => { throw err.msg; } ); }
 	static #cbDelete( el ) { return gsapiClient.$deleteComposition( el.dataset.id ).catch( err => { throw err.msg; } ); }
 	static #cbRestore( el ) { return gsapiClient.$restoreComposition( el.dataset.id ).catch( err => { throw err.msg; } ); }
+	static #cbGetRender( el ) { return gsapiClient.$getCompositionRenders( el.dataset.id ).then( arr => arr[ 0 ]?.url ); }
+	static #cbLike( el, act ) { return gsapiClient.$likeComposition( el.dataset.id, act ); }
 	static #cbPublic( el, vis ) { return gsapiClient.$changeCompositionVisibility( el.dataset.id, vis ).catch( err => { throw err.msg; } ); }
 }

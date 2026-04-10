@@ -116,8 +116,22 @@ class gscoUser {
 	}
 
 	// .........................................................................
-	#onAction( e, act ) {
+	#onAction( e, act, res ) {
 		switch ( act ) {
+			case "fork":
+				if ( this.#id !== gsapiClient.$user.id ) {
+					window.location.hash = `/u/${ gsapiClient.$user.username }`;
+				} else {
+					gsapiClient.$getComposition( res.msg ).then( data => {
+						const elCmp = gscoPartialCmp.$domCmp( data.composition );
+
+						this.#cmps?.unshift( elCmp );
+						DOM.userPagePlaylist.$prepend( elCmp );
+						$( elCmp ).$addAttr( "forking" );
+						$html.$scrollY( 0 );
+					} );
+				}
+				break;
 			case "delete":
 			case "restore": {
 				const a = DOM.userPageProfileNbCmps;
