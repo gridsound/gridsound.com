@@ -21,7 +21,7 @@ GSUsetTemplate( "gscoSearch", () =>
 		),
 		GSUcreateDiv( { id: "searchPageResultIntro" },
 			GSUcreateSpan(),
-			GSUcreateElement( "b" ),
+			GSUcreateB(),
 		),
 		GSUcreateDiv( { id: "searchPageResult" } ),
 	),

@@ -34,7 +34,7 @@ class gscoMain {
 	constructor() {
 		const onscroll = this.#onscroll.bind( this );
 
-		DOM.headAuth.$on( "click", this.#headAuthBtnClick.bind( this ) );
+		DOM.headAuth.$onclick( this.#headAuthBtnClick.bind( this ) );
 		$body.$on( "scroll", onscroll );
 		GSUdomObserveSize( $body.$get( 0 ), onscroll );
 		window.onhashchange = () => this.#hashChange();
