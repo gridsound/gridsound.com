@@ -83,7 +83,7 @@ class gscoUser {
 
 	// .........................................................................
 	#showFollowList( list ) {
-		GSUpopup.$custom( {
+		$popup.$custom( {
 			title: `${ this.#username }'s ${ list }`,
 			element: $.$flex( { id: "userPageFollowList", y: true, g4: true },
 				$.$icon( { spin: "on", style: "font-size:36px" } ),
@@ -101,7 +101,7 @@ class gscoUser {
 			.catch( err => { throw err.msg; } );
 	}
 	#showEditForm() {
-		GSUpopup.$custom( {
+		$popup.$custom( {
 			title: "Profile edition",
 			cancel: "Cancel",
 			element: $.$getTemplate( "gscoUserEditForm", gsapiClient.$user ),
