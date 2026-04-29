@@ -18,7 +18,7 @@ class gscoLogs {
 	#displayConnectedUsers( elList, users ) {
 		elList.$query( "a" ).$remove();
 		elList.$append( ...users.map( u => {
-			return GSUcreateA( { href: `#/u/${ u }` }, u );
+			return $.$link( { href: `#/u/${ u }` }, u );
 		} ) );
 	}
 	#displayLogs( logs ) {
@@ -32,8 +32,8 @@ class gscoLogs {
 			if ( dateSave !== date ) {
 				dateSave = date;
 				return [
-					GSUcreateDiv( { class: "logsPage-date" },
-						GSUcreateSpan( null, date ),
+					$.$div( { class: "logsPage-date" },
+						$.$span( null, date ),
 					),
 					GSUgetTemplate( "gscoLogsLog", r ),
 				];

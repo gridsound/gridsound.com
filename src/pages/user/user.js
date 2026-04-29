@@ -9,7 +9,7 @@ class gscoUser {
 
 	constructor() {
 		Object.seal( this );
-		GSUdomListen( DOM.userPage.$get( 0 ), {
+		GSUdomListen( DOM.userPage, {
 			[ GSEV_COMPLAYER_ACTION ]: this.#onAction.bind( this ),
 			[ GSEV_COMPROFILE_EDIT ]: this.#showEditForm.bind( this ),
 			[ GSEV_COMPROFILE_FOLLOWERS ]: this.#showFollowList.bind( this, "followers" ),
@@ -85,8 +85,8 @@ class gscoUser {
 	#showFollowList( list ) {
 		GSUpopup.$custom( {
 			title: `${ this.#username }'s ${ list }`,
-			element: GSUcreateFlex( { id: "userPageFollowList", y: true, g4: true },
-				GSUcreateIcon( { spin: "on", style: { fontSize: "36px" } } ),
+			element: $.$flex( { id: "userPageFollowList", y: true, g4: true },
+				$.$icon( { spin: "on", style: "font-size:36px" } ),
 			),
 		} );
 		( list === "followers"
@@ -96,7 +96,7 @@ class gscoUser {
 			.then( arr => {
 				$( "#userPageFollowList" )
 					.$empty()
-					.$append( ...arr.map( u => GSUcreateElement( "gsui-com-userlink", u ) ) );
+					.$append( ...arr.map( u => $.$elem( "gsui-com-userlink", u ) ) );
 			} )
 			.catch( err => { throw err.msg; } );
 	}
@@ -136,7 +136,7 @@ class gscoUser {
 			case "restore": {
 				const a = DOM.userPageProfileNbCmps;
 				const b = DOM.userPageProfileNbCmpsDeleted;
-				const elCmp = e.$target;
+				const elCmp = e.$target.$get( 0 );
 
 				if ( act === "restore" ) {
 					this.#cmps?.unshift( elCmp );

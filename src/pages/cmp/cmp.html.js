@@ -1,5 +1,5 @@
 "use strict";
 
 GSUsetTemplate( "gscoCmp", () =>
-	GSUcreateDiv( { class: "page", id: "cmpPage" } ),
+	$.$div( { class: "page", id: "cmpPage" } ),
 );

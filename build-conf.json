@@ -59,6 +59,7 @@
 		"gs-ui-components/gsui-gray.css",
 		"gs-ui-components/gsui-flex.css",
 		"gs-ui-components/gsuiIcon/gsuiIcon.css",
+		"gs-ui-components/gsuiCursor/gsuiCursor.css",
 		"gs-ui-components/gsuiRipple/gsuiRipple.css",
 		"gs-ui-components/gsuiDropdown/gsuiDropdown.css",
 		"gs-ui-components/gsuiActionMenu/gsuiActionMenu.css",

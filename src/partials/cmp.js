@@ -2,7 +2,7 @@
 
 class gscoPartialCmp {
 	static $domAuthor( u ) {
-		return GSUcreateElement( "gsui-com-userlink", {
+		return $.$elem( "gsui-com-userlink", {
 			avatar: u.avatar,
 			username: u.username,
 			firstname: u.firstname,
@@ -11,15 +11,15 @@ class gscoPartialCmp {
 	}
 	static $domLikes( cmp ) {
 		const elems = cmp.likedby.flatMap( ( u, i ) => [
-			i ? GSUcreateSpan( null, ", " ) : "",
-			GSUcreateA( { href: `#/u/${ u }` }, u ),
+			i ? $.$span( null, ", " ) : "",
+			$.$link( { href: `#/u/${ u }` }, u ),
 		] );
 
-		return GSUcreateDiv( { class: "cmp-likes" }, ...elems );
+		return $.$div( { class: "cmp-likes" }, ...elems );
 	}
 	static $domCmp( cmp ) {
 		const itsmine = gsapiClient.$user.id === cmp.iduser;
-		const elCmp = GSUcreateElement( "gsui-com-player", {
+		const elCmp = $.$elem( "gsui-com-player", {
 			"data-id": cmp.id,
 			itsmine,
 			bpm: cmp.bpm,

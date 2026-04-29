@@ -69,7 +69,7 @@ class gscoSearch {
 		DOM.searchPageResultIntro.$child( 0 ).$text( `There ${ there } ${ what } matching ` );
 		DOM.searchPageResultIntro.$child( -1 ).$text( `"${ q }"` );
 		if ( filter === "u" ) {
-			DOM.searchPageResult.$append( ...arr.map( u => GSUcreateElement( "gsui-com-userlink", {
+			DOM.searchPageResult.$append( ...arr.map( u => $.$elem( "gsui-com-userlink", {
 				avatar: u.avatar,
 				username: u.username,
 				firstname: u.firstname,

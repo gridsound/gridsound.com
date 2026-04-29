@@ -1,12 +1,12 @@
 "use strict";
 
 GSUsetTemplate( "gscoExplore", () =>
-	GSUcreateDiv( { class: "page", id: "explorePage" },
-		GSUcreateDiv( { id: "exploreSwitch" },
-			GSUcreateA( { href: "#/explore/all" }, "All" ),
-			GSUcreateA( { href: "#/explore" }, "You" ),
+	$.$div( { class: "page", id: "explorePage" },
+		$.$div( { id: "exploreSwitch" },
+			$.$link( { href: "#/explore/all" }, "All" ),
+			$.$link( { href: "#/explore" }, "You" ),
 		),
-		GSUcreateDiv( { id: "exploreBody" },
+		$.$div( { id: "exploreBody" },
 			"plop"
 		),
 	),

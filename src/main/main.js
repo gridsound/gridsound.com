@@ -38,7 +38,7 @@ class gscoMain {
 		$body.$on( "scroll", onscroll );
 		GSUdomObserveSize( $body.$get( 0 ), onscroll );
 		window.onhashchange = () => this.#hashChange();
-		GSUdomListen( DOM.main.$get( 0 ), {
+		GSUdomListen( DOM.main, {
 			[ GSEV_COMPLAYER_PLAY ]: this.#onplay.bind( this ),
 			[ GSEV_COMPLAYER_STOP ]: this.#onstop.bind( this ),
 		} );
@@ -70,14 +70,14 @@ class gscoMain {
 	// .........................................................................
 	#onplay( e ) {
 		DOM.userPage.$query( "gsui-com-player[playing]" ).$each( elCmp => {
-			if ( elCmp !== e.$target ) {
+			if ( !e.$target.$is( elCmp ) ) {
 				elCmp.$pause();
 			}
 		} );
 		GSUsetTimeout( () => this.#onscroll(), .1 );
 	}
 	#onstop( e ) {
-		GSUdomRmAttr( e.$target, "data-head-sticky-shadow" );
+		e.$target.$rmAttr( "data-head-sticky-shadow" );
 		GSUsetTimeout( () => this.#onscroll(), .1 );
 	}
 	#onscroll() {
