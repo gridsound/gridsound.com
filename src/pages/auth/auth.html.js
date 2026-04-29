@@ -1,6 +1,6 @@
 "use strict";
 
-GSUsetTemplate( "gscoAuth", () =>
+$.$setTemplate( "gscoAuth", () =>
 	$.$div( { class: "page", id: "authPage" },
 		$.$elem( "form", { class: "form", id: "authPageSignup" },
 			$.$div( { class: "form-title" }, "Create a personal account" ),

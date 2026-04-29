@@ -1,6 +1,6 @@
 "use strict";
 
-GSUsetTemplate( "gscoForgotPass", () =>
+$.$setTemplate( "gscoForgotPass", () =>
 	$.$div( { class: "page", id: "forgotpassPage" },
 		$.$elem( "form", { class: "form", id: "forgotpassForm" },
 			$.$div( { class: "form-title" }, "Password forgotten" ),

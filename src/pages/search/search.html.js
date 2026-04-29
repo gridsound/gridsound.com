@@ -1,6 +1,6 @@
 "use strict";
 
-GSUsetTemplate( "gscoSearch", () =>
+$.$setTemplate( "gscoSearch", () =>
 	$.$div( { class: "page", id: "searchPage" },
 		$.$div( { id: "searchPage-intro" }, "Search a user or a composition on GridSound" ),
 		$.$elem( "form", { id: "searchPageForm" },

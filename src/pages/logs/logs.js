@@ -35,10 +35,10 @@ class gscoLogs {
 					$.$div( { class: "logsPage-date" },
 						$.$span( null, date ),
 					),
-					GSUgetTemplate( "gscoLogsLog", r ),
+					$.$getTemplate( "gscoLogsLog", r ),
 				];
 			}
-			return [ GSUgetTemplate( "gscoLogsLog", r ) ];
+			return [ $.$getTemplate( "gscoLogsLog", r ) ];
 		} ).flat() );
 	}
 	static #icons = {

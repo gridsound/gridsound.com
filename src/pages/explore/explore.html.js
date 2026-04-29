@@ -1,6 +1,6 @@
 "use strict";
 
-GSUsetTemplate( "gscoExplore", () =>
+$.$setTemplate( "gscoExplore", () =>
 	$.$div( { class: "page", id: "explorePage" },
 		$.$div( { id: "exploreSwitch" },
 			$.$link( { href: "#/explore/all" }, "All" ),

@@ -104,7 +104,7 @@ class gscoUser {
 		GSUpopup.$custom( {
 			title: "Profile edition",
 			cancel: "Cancel",
-			element: GSUgetTemplate( "gscoUserEditForm", gsapiClient.$user ),
+			element: $.$getTemplate( "gscoUserEditForm", gsapiClient.$user ),
 			submit: obj => gsapiClient.$updateMyInfo( obj )
 				.then( () => {
 					obj.emailpublic = !!obj.emailpublic;

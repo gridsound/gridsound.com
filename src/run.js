@@ -3,18 +3,18 @@
 const gscoDAWURL = "//localhost/gridsound/daw/";
 
 $body.$setAttr( "data-skin", "gray" )
-	.$append( GSUgetTemplate( "gs-main" ) );
+	.$append( $.$getTemplate( "gs-main" ) );
 
 $( "#pages" ).$append(
-	GSUgetTemplate( "gscoHome" ),
-	GSUgetTemplate( "gscoSearch" ),
-	GSUgetTemplate( "gscoUser" ),
-	GSUgetTemplate( "gscoAuth" ),
-	GSUgetTemplate( "gscoLogs" ),
-	GSUgetTemplate( "gscoCmp" ),
-	GSUgetTemplate( "gscoExplore" ),
-	GSUgetTemplate( "gscoResetPass" ),
-	GSUgetTemplate( "gscoForgotPass" ),
+	$.$getTemplate( "gscoHome" ),
+	$.$getTemplate( "gscoSearch" ),
+	$.$getTemplate( "gscoUser" ),
+	$.$getTemplate( "gscoAuth" ),
+	$.$getTemplate( "gscoLogs" ),
+	$.$getTemplate( "gscoCmp" ),
+	$.$getTemplate( "gscoExplore" ),
+	$.$getTemplate( "gscoResetPass" ),
+	$.$getTemplate( "gscoForgotPass" ),
 );
 
 const DOM = {};

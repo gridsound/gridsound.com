@@ -1,6 +1,6 @@
 "use strict";
 
-GSUsetTemplate( "gscoLogs", () =>
+$.$setTemplate( "gscoLogs", () =>
 	$.$div( { class: "page", id: "logsPage" },
 		$.$div( { id: "logsPage_title" }, "Logs 🤫" ),
 		$.$div( { id: "logsPage_users5min" },
@@ -13,7 +13,7 @@ GSUsetTemplate( "gscoLogs", () =>
 	),
 );
 
-GSUsetTemplate( "gscoLogsLog", p =>
+$.$setTemplate( "gscoLogsLog", p =>
 	$.$div( { class: "logsPage-log" },
 		$.$div( { class: "logsPage-log-body" },
 			$.$link( { href: `#/u/${ p.username }` },

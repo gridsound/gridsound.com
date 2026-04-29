@@ -1,6 +1,6 @@
 "use strict";
 
-GSUsetTemplate( "gscoUser", () =>
+$.$setTemplate( "gscoUser", () =>
 	$.$div( { class: "page", id: "userPage" },
 		$.$div( { id: "userPageTop" },
 			$.$elem( "gsui-com-profile", { id: "userPageProfile" } ),
@@ -24,7 +24,7 @@ GSUsetTemplate( "gscoUser", () =>
 	),
 );
 
-GSUsetTemplate( "gscoUserEditForm", p =>
+$.$setTemplate( "gscoUserEditForm", p =>
 	$.$flex( { id: "userPageEditForm", y: true, g12: true },
 		$.$label( null,
 			$.$span( null, "avatar" ),

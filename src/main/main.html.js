@@ -1,6 +1,6 @@
 "use strict";
 
-GSUsetTemplate( "gs-main", () =>
+$.$setTemplate( "gs-main", () =>
 	$.$div( { id: "root", class: "noauth" },
 		$.$flex( { id: "bg", x: true, inert: false },
 			$.$div( { "data-side": "start" },

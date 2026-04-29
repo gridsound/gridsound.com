@@ -1,6 +1,6 @@
 "use strict";
 
-GSUsetTemplate( "gscoHome", () =>
+$.$setTemplate( "gscoHome", () =>
 	$.$div( { class: "page", id: "homePage" },
 		$.$elem( "h1", { id: "homePage-title" }, "Start creating your own music online" ),
 		$.$div( { id: "homePage-logo", inert: true } ),
