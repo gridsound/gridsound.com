@@ -14,7 +14,7 @@ class gscoHome {
 
 	constructor() {
 		Object.seal( this );
-		GSUdomListen( DOM[ "homePage-trySynth-joystick" ], {
+		DOM[ "homePage-trySynth-joystick" ].$listen( {
 			[ GSEV_JOYSTICK_END ]: () => this.#onendJoystick(),
 			[ GSEV_JOYSTICK_MOVE ]: ( _, x, y ) => this.#onmoveJoystick( x, y ),
 			[ GSEV_JOYSTICK_START ]: ( _, x, y ) => {

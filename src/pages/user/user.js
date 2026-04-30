@@ -9,7 +9,7 @@ class gscoUser {
 
 	constructor() {
 		Object.seal( this );
-		GSUdomListen( DOM.userPage, {
+		DOM.userPage.$listen( {
 			[ GSEV_COMPLAYER_ACTION ]: this.#onAction.bind( this ),
 			[ GSEV_COMPROFILE_EDIT ]: this.#showEditForm.bind( this ),
 			[ GSEV_COMPROFILE_FOLLOWERS ]: this.#showFollowList.bind( this, "followers" ),

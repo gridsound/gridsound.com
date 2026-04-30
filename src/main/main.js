@@ -35,10 +35,11 @@ class gscoMain {
 		const onscroll = this.#onscroll.bind( this );
 
 		DOM.headAuth.$onclick( this.#headAuthBtnClick.bind( this ) );
-		$body.$on( "scroll", onscroll );
-		GSUdomObserveSize( $body.$get( 0 ), onscroll );
+		$body
+			.$on( "scroll", onscroll )
+			.$observeSize( onscroll );
 		window.onhashchange = () => this.#hashChange();
-		GSUdomListen( DOM.main, {
+		DOM.main.$listen( {
 			[ GSEV_COMPLAYER_PLAY ]: this.#onplay.bind( this ),
 			[ GSEV_COMPLAYER_STOP ]: this.#onstop.bind( this ),
 		} );
