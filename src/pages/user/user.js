@@ -31,7 +31,7 @@ class gscoUser {
 			.then( data => {
 				const u = data.$user;
 
-				this.#cmps = data.$compositions.map( cmp => gscoPartialCmp.$domCmp( cmp ) );
+				this.#cmps = data.$compositions.map( cmp => gscoPartialCmp.$domCmp( { $cmp: cmp } ) );
 				this.#updateUser( u );
 				this.#updateNbCmps( u.cmps, u.cmpsDeleted, u.cmpsLiked );
 				DOM.userPage.$setAttr( {
@@ -51,7 +51,7 @@ class gscoUser {
 		if ( page === "bin" && !this.#cmpsDeleted ) {
 			gsapiClient.$getUserCompositionsDeleted( username )
 				.then( cmps => {
-					this.#cmpsDeleted = cmps.map( cmp => gscoPartialCmp.$domCmp( cmp ) );
+					this.#cmpsDeleted = cmps.map( cmp => gscoPartialCmp.$domCmp( { $cmp: cmp } ) );
 					this.#appendCmps( page );
 				} );
 			return;
@@ -59,11 +59,10 @@ class gscoUser {
 		if ( page === "likes" && !this.#cmpsLiked ) {
 			gsapiClient.$getUserCompositionsLiked( username )
 				.then( cmps => {
-					this.#cmpsLiked = cmps.flatMap( ( cmp, i ) => [
-						gscoPartialCmp.$domCmp( cmp ),
-						cmps[ i + 1 ]?.$user.username === cmp.$user.username
-							? "" : gscoPartialCmp.$domAuthor( cmp.$user ),
-					] );
+					this.#cmpsLiked = cmps.map( ( cmp, i ) => gscoPartialCmp.$domCmp( {
+						$cmp: cmp,
+						$u: cmp.$user.username !== cmps[ i + 1 ]?.$user.username && cmp.$user,
+					} ) );
 					this.#appendCmps( page );
 				} );
 			return;
@@ -123,7 +122,7 @@ class gscoUser {
 					window.location.hash = `/u/${ gsapiClient.$user.username }`;
 				} else {
 					gsapiClient.$getComposition( res.msg ).then( data => {
-						const elCmp = gscoPartialCmp.$domCmp( data.composition );
+						const elCmp = gscoPartialCmp.$domCmp( { $cmp: data.composition } );
 
 						this.#cmps?.unshift( elCmp );
 						DOM.userPagePlaylist.$prepend( elCmp );

@@ -1,3 +1,9 @@
+.player-wrap {
+	display: flex;
+	flex-direction: column;
+	gap: inherit;
+}
+
 gsui-com-player[ playing ] {
 	z-index: 1;
 

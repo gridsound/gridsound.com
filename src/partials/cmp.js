@@ -17,23 +17,24 @@ class gscoPartialCmp {
 
 		return $.$div( { class: "cmp-likes" }, ...elems );
 	}
-	static $domCmp( cmp ) {
-		const itsmine = gsapiClient.$user.id === cmp.iduser;
+	static $domCmp( { $cmp, $u } ) {
+		const itsmine = gsapiClient.$user.id === $cmp.iduser;
 		const elCmp = $.$elem( "gsui-com-player", {
-			"data-id": cmp.id,
+			"data-id": $cmp.id,
 			itsmine,
-			bpm: cmp.bpm,
-			name: cmp.name,
-			link: `#/cmp/${ cmp.id }`,
-			likes: cmp.likes,
-			liked: cmp.liked,
-			private: !cmp.public,
-			deleted: !!cmp.deleted,
-			rendered: !!cmp.rendered,
-			duration: cmp.durationSec,
-			opensource: cmp.opensource,
-			dawlink: !cmp.deleted && ( itsmine || cmp.opensource ) ? `${ gscoDAWURL }#${ cmp.id }` : false,
+			bpm: $cmp.bpm,
+			name: $cmp.name,
+			link: `#/cmp/${ $cmp.id }`,
+			likes: $cmp.likes,
+			liked: $cmp.liked,
+			private: !$cmp.public,
+			deleted: !!$cmp.deleted,
+			rendered: !!$cmp.rendered,
+			duration: $cmp.durationSec,
+			opensource: $cmp.opensource,
+			dawlink: !$cmp.deleted && ( itsmine || $cmp.opensource ) ? `${ gscoDAWURL }#${ $cmp.id }` : false,
 		} );
+		const child = [ elCmp ];
 
 		gscoPartialCmp.$updateCmpActions( elCmp );
 		elCmp.$setLikeCallbackPromise( gscoPartialCmp.#cbLike );
@@ -44,7 +45,10 @@ class gscoPartialCmp {
 			elCmp.$setRestoreCallbackPromise( gscoPartialCmp.#cbRestore );
 			elCmp.$setVisibilityCallbackPromise( gscoPartialCmp.#cbPublic );
 		}
-		return elCmp;
+		if ( $u ) {
+			child.push( gscoPartialCmp.$domAuthor( $u ) );
+		}
+		return $.$div( { class: "player-wrap" }, child );
 	}
 	static $updateCmpActions( elCmp ) {
 		const cmp = $( elCmp );

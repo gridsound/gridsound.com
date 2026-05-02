@@ -10,8 +10,7 @@ class gscoCmp {
 		return gsapiClient.$getComposition( cmpId )
 			.then( data => {
 				DOM.cmpPage.$append(
-					gscoPartialCmp.$domCmp( data.composition ),
-					gscoPartialCmp.$domAuthor( data.user ),
+					gscoPartialCmp.$domCmp( { $cmp: data.composition, $u: data.user } ),
 					gscoPartialCmp.$domLikes( data.composition ),
 				);
 			}, err => PAGES.$main.$error( err.code ) );
