@@ -68,15 +68,8 @@ class gscoSearch {
 
 		DOM.searchPageResultIntro.$child( 0 ).$text( `There ${ there } ${ what } matching ` );
 		DOM.searchPageResultIntro.$child( -1 ).$text( `"${ q }"` );
-		if ( filter === "u" ) {
-			DOM.searchPageResult.$append( ...arr.map( u => $.$elem( "gsui-com-userlink", {
-				avatar: u.avatar,
-				username: u.username,
-				firstname: u.firstname,
-				lastname: u.lastname,
-			} ) ) );
-		} else {
-			DOM.searchPageResult.$append( ...arr.map( cmp => gscoPartialCmp.$domCmp( cmp ) ) );
-		}
+		DOM.searchPageResult.$append( ...arr.map( filter === "u"
+			? u => gscoPartialCmp.$domAuthor( u )
+			: cmp => gscoPartialCmp.$domCmp( { $cmp: cmp } ) ) );
 	}
 }
