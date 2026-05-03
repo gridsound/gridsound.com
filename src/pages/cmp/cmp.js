@@ -15,6 +15,10 @@ class gscoCmp {
 				);
 			}, err => PAGES.$main.$error( err.code ) );
 	}
+	$update( cmpId ) {
+		this.$quit();
+		this.$show( cmpId );
+	}
 	$quit() {
 		DOM.cmpPage.$empty();
 	}
