@@ -1,7 +1,26 @@
-.player-wrap {
+.player {
 	display: flex;
 	flex-direction: column;
 	gap: inherit;
+
+	.forkedfrom {
+		display: flex;
+		align-items: baseline;
+		gap: 8px;
+		margin-top: -12px;
+
+		&::before {
+			content: "forked from";
+			font-size: 10px;
+			font-weight: bold;
+			text-transform: uppercase;
+			opacity: .5;
+		}
+		> span { opacity: .5; }
+		a:hover { text-decoration: underline; }
+		a:last-child { font-style: italic; }
+		a:empty::before { content: "???"; }
+	}
 }
 
 gsui-com-player[ playing ] {

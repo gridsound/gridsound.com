@@ -9,6 +9,13 @@ class gscoPartialCmp {
 			lastname: u.lastname,
 		} );
 	}
+	static $domForkedFrom( cmp ) {
+		return $.$div( { class: "forkedfrom" },
+			$.$link( { href: `#/u/${ cmp.forkedfrom_username }` }, cmp.forkedfrom_username ),
+			$.$span( null, " · " ),
+			$.$link( { href: `#/cmp/${ cmp.forkedfrom }` }, cmp.forkedfrom_cmpname ),
+		);
+	}
 	static $domLikes( cmp ) {
 		const elems = cmp.likedby.flatMap( ( u, i ) => [
 			i ? $.$span( null, ", " ) : "",
@@ -45,10 +52,13 @@ class gscoPartialCmp {
 			elCmp.$setRestoreCallbackPromise( gscoPartialCmp.#cbRestore );
 			elCmp.$setVisibilityCallbackPromise( gscoPartialCmp.#cbPublic );
 		}
+		if ( $cmp.forkedfrom ) {
+			child.push( gscoPartialCmp.$domForkedFrom( $cmp ) );
+		}
 		if ( $u ) {
 			child.push( gscoPartialCmp.$domAuthor( $u ) );
 		}
-		return $.$div( { class: "player-wrap" }, child );
+		return $.$div( { class: "player" }, child );
 	}
 	static $updateCmpActions( elCmp ) {
 		const cmp = $( elCmp );

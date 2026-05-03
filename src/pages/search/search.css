@@ -20,7 +20,6 @@
 	label {
 		display: flex;
 		gap: 8px;
-		cursor: pointer;
 	}
 	input {
 		margin: 0;
@@ -51,7 +50,6 @@
 	border: 0;
 	border-radius: 0 8px 8px 0;
 	font-size: 22px;
-	cursor: pointer;
 	background-color: #fff3;
 }
 

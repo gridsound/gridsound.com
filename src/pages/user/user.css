@@ -9,7 +9,6 @@
 	pointer-events: none;
 }
 
-
 /* .......................................................................... */
 @media ( max-width: 600px ) {
 	#userPageTop {
@@ -74,7 +73,7 @@
 	#userPage:not( [ data-itsme ][ data-premium ] ) &[ data-action="cmpsDeleted" ] {
 		display: none;
 	}
-	body:not( [ data-hash$="/bin" ] ):not( [ data-hash$="/likes" ] ) &[ data-action="cmps" ],
+	body:not( [ data-hash$="/bin" ], [ data-hash$="/likes" ] ) &[ data-action="cmps" ],
 	[ data-hash$="/bin" ] &[ data-action="cmpsDeleted" ],
 	[ data-hash$="/likes" ] &[ data-action="cmpsLiked" ] {
 		opacity: 1;
