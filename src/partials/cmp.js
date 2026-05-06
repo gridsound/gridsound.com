@@ -39,7 +39,6 @@ class gscoPartialCmp {
 			opensource: $cmp.opensource,
 			dawlink: !$cmp.deleted && ( itsmine || $cmp.opensource ) ? `${ gscoDAWURL }#${ $cmp.id }` : false,
 		} );
-		const child = [ elCmp ];
 
 		gscoPartialCmp.$updateCmpActions( elCmp );
 		elCmp.$setLikeCallbackPromise( gscoPartialCmp.#cbLike );
@@ -50,16 +49,12 @@ class gscoPartialCmp {
 			elCmp.$setRestoreCallbackPromise( gscoPartialCmp.#cbRestore );
 			elCmp.$setVisibilityCallbackPromise( gscoPartialCmp.#cbPublic );
 		}
-		if ( $cmp.forkedfrom ) {
-			child.push( gscoPartialCmp.#domForkedFrom( $cmp ) );
-		}
-		if ( $u ) {
-			child.push( gscoPartialCmp.$domAuthor( $u ) );
-		}
-		if ( $likedby ) {
-			child.push( gscoPartialCmp.#domLikes( $likedby ) );
-		}
-		return $.$div( { class: "player" }, child );
+		return $.$div( { class: "player" },
+			elCmp,
+			$cmp.forkedfrom && gscoPartialCmp.#domForkedFrom( $cmp ),
+			$u && gscoPartialCmp.$domAuthor( $u ),
+			$likedby && gscoPartialCmp.#domLikes( $likedby )
+		);
 	}
 	static $updateCmpActions( elCmp ) {
 		const cmp = $( elCmp );
