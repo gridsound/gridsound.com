@@ -12,17 +12,15 @@ class gscoPartialCmp {
 	static $domForkedFrom( cmp ) {
 		return $.$div( { class: "forkedfrom" },
 			$.$link( { href: `#/u/${ cmp.forkedfrom_username }` }, cmp.forkedfrom_username ),
-			$.$span( null, " · " ),
+			$.$span(),
 			$.$link( { href: `#/cmp/${ cmp.forkedfrom }` }, cmp.forkedfrom_cmpname ),
 		);
 	}
 	static $domLikes( cmp ) {
-		const elems = cmp.likedby.flatMap( ( u, i ) => [
-			i ? $.$span( null, ", " ) : "",
+		return $.$div( { class: "likes" }, ...cmp.likedby.flatMap( ( u, i ) => [
+			i ? $.$span() : "",
 			$.$link( { href: `#/u/${ u }` }, u ),
-		] );
-
-		return $.$div( { class: "cmp-likes" }, ...elems );
+		] ) );
 	}
 	static $domCmp( { $cmp, $u } ) {
 		const itsmine = gsapiClient.$user.id === $cmp.iduser;
