@@ -9,20 +9,20 @@ class gscoPartialCmp {
 			lastname: u.lastname,
 		} );
 	}
-	static $domForkedFrom( cmp ) {
+	static #domForkedFrom( cmp ) {
 		return $.$div( { class: "forkedfrom" },
 			$.$link( { href: `#/u/${ cmp.forkedfrom_username }` }, cmp.forkedfrom_username ),
 			$.$span(),
 			$.$link( { href: `#/cmp/${ cmp.forkedfrom }` }, cmp.forkedfrom_cmpname ),
 		);
 	}
-	static $domLikes( cmp ) {
-		return $.$div( { class: "likes" }, ...cmp.likedby.flatMap( ( u, i ) => [
+	static #domLikes( likedby ) {
+		return $.$div( { class: "likes" }, ...likedby.flatMap( ( u, i ) => [
 			i ? $.$span() : "",
 			$.$link( { href: `#/u/${ u }` }, u ),
 		] ) );
 	}
-	static $domCmp( { $cmp, $u } ) {
+	static $domCmp( { $cmp, $u, $likedby } ) {
 		const itsmine = gsapiClient.$user.id === $cmp.iduser;
 		const elCmp = $.$elem( "gsui-com-player", {
 			"data-id": $cmp.id,
@@ -51,10 +51,13 @@ class gscoPartialCmp {
 			elCmp.$setVisibilityCallbackPromise( gscoPartialCmp.#cbPublic );
 		}
 		if ( $cmp.forkedfrom ) {
-			child.push( gscoPartialCmp.$domForkedFrom( $cmp ) );
+			child.push( gscoPartialCmp.#domForkedFrom( $cmp ) );
 		}
 		if ( $u ) {
 			child.push( gscoPartialCmp.$domAuthor( $u ) );
+		}
+		if ( $likedby ) {
+			child.push( gscoPartialCmp.#domLikes( $likedby ) );
 		}
 		return $.$div( { class: "player" }, child );
 	}

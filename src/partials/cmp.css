@@ -16,6 +16,18 @@
 			top: 142px;
 		}
 	}
+
+	.forkedfrom,
+	.likes {
+		&::before {
+			margin-right: 8px;
+			font-size: 10px;
+			font-weight: bold;
+			text-transform: uppercase;
+			opacity: .5;
+		}
+	}
+
 	.forkedfrom {
 		display: flex;
 		align-items: baseline;
@@ -23,11 +35,6 @@
 
 		&::before {
 			content: "forked from";
-			margin-right: 8px;
-			font-size: 10px;
-			font-weight: bold;
-			text-transform: uppercase;
-			opacity: .5;
 		}
 		> span::before {
 			content: "\A0·\A0";
@@ -37,16 +44,11 @@
 		a:last-child { font-style: italic; }
 		a:empty::before { content: "???"; }
 	}
-	+ .likes {
+	.likes {
 		font-size: 12px;
 
 		&:not( :empty )::before {
 			content: "Liked by";
-			margin-right: 8px;
-			font-size: 10px;
-			font-weight: bold;
-			text-transform: uppercase;
-			opacity: .5;
 		}
 		span::before {
 			content: ", ";
