@@ -2,7 +2,6 @@
 
 class gscoUser {
 	#id = null;
-	#bio = null;
 	#username = null;
 	#cmps = null;
 	#cmpsLiked = null;
@@ -191,8 +190,7 @@ class gscoUser {
 		const itsme = u.id === gsapiClient.$user.id;
 
 		this.#id = u.id;
-		this.#bio = u.bio;
-		DOM.userPage.$setAttr( "data-nobio", !u.bio );
+		DOM.userPage.$setAttr( "data-nobio", !itsme && !u.bio );
 		DOM.userPageBioText.$text( u.bio );
 		DOM.userPageProfile.$setAttr( {
 			itsme,
