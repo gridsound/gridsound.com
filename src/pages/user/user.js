@@ -2,6 +2,7 @@
 
 class gscoUser {
 	#id = null;
+	#bio = null;
 	#username = null;
 	#cmps = null;
 	#cmpsLiked = null;
@@ -17,6 +18,23 @@ class gscoUser {
 		} );
 		DOM.userPageProfile.$get( 0 ).$setFollowCallbackPromise( b => ( b ? gsapiClient.$followUser : gsapiClient.$unfollowUser )( this.#id ) );
 		DOM.userPageProfile.$get( 0 ).$setVerifyEmailCallbackPromise( () => gsapiClient.$resendConfirmationEmail().catch( err => { throw err.msg; } ) );
+		DOM.userPageBioEdit.$onclick( () => {
+			DOM.userPageBio.$addAttr( "data-editing" );
+			DOM.userPageBioTextarea.$value( DOM.userPageBioText.$text() ).$focus();
+		} );
+		DOM.userPageBioCancel.$onclick( () => {
+			DOM.userPageBio.$rmAttr( "data-editing" );
+			DOM.userPageBioTextarea.$value( "" );
+		} );
+		DOM.userPageBioSave.$onclick( () => {
+			DOM.userPageBioSave.$addAttr( "loading" );
+			gsapiClient.$updateMyBio( DOM.userPageBioTextarea.$value() )
+				.then( bio => {
+					DOM.userPageBioText.$text( bio );
+					DOM.userPageBioSave.$rmAttr( "loading" );
+					DOM.userPageBio.$rmAttr( "data-editing" );
+				} );
+		} );
 	}
 
 	// .........................................................................
@@ -26,7 +44,8 @@ class gscoUser {
 		this.#username = username;
 		links.$at( 0 ).$setAttr( "href", `#/u/${ username }` );
 		links.$at( 1 ).$setAttr( "href", `#/u/${ username }/bin` );
-		links.$at( 2 ).$setAttr( "href", `#/u/${ username }/likes` );
+		links.$at( 2 ).$setAttr( "href", `#/u/${ username }/bio` );
+		links.$at( 3 ).$setAttr( "href", `#/u/${ username }/likes` );
 		return gsapiClient.$getUserCompositions( username )
 			.then( data => {
 				const u = data.$user;
@@ -172,6 +191,9 @@ class gscoUser {
 		const itsme = u.id === gsapiClient.$user.id;
 
 		this.#id = u.id;
+		this.#bio = u.bio;
+		DOM.userPage.$setAttr( "data-nobio", !u.bio );
+		DOM.userPageBioText.$text( u.bio );
 		DOM.userPageProfile.$setAttr( {
 			itsme,
 			username: u.username,

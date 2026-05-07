@@ -70,11 +70,13 @@
 	&[ data-action="cmpsLiked" ] {
 		margin-left: auto;
 	}
-	#userPage:not( [ data-itsme ][ data-premium ] ) &[ data-action="cmpsDeleted" ] {
+	#userPage:not( [ data-itsme ][ data-premium ] ) &[ data-action="cmpsDeleted" ],
+	#userPage[ data-nobio ] &[ data-action="bio" ] {
 		display: none;
 	}
-	body:not( [ data-hash$="/bin" ], [ data-hash$="/likes" ] ) &[ data-action="cmps" ],
+	body:not( [ data-hash$="/bin" ], [ data-hash$="/bio" ], [ data-hash$="/likes" ] ) &[ data-action="cmps" ],
 	[ data-hash$="/bin" ] &[ data-action="cmpsDeleted" ],
+	[ data-hash$="/bio" ] &[ data-action="bio" ],
 	[ data-hash$="/likes" ] &[ data-action="cmpsLiked" ] {
 		opacity: 1;
 	}
@@ -89,6 +91,55 @@
 	body[ data-hash$="/likes" ] & gsui-com-userlink {
 		margin-top: 0;
 		margin-bottom: 16px;
+	}
+}
+
+/* .......................................................................... */
+#userPageBio {
+	display: flex;
+	flex-direction: column;
+	gap: inherit;
+
+	body:not( [ data-hash$="/bio" ] ) & {
+		display: none;
+	}
+	textarea {
+		height: 200px;
+		min-height: 60px;
+		max-height: 500px;
+		border: 0;
+		outline: 0;
+		padding: 16px;
+		background-color: #0002;
+		resize: vertical;
+
+		&:focus {
+			background-color: #0005;
+		}
+		#userPageBio:not( [ data-editing ] ) & {
+			display: none;
+		}
+	}
+}
+#userPage:not( [ data-itsme ] ) #userPageBioEdit,
+#userPageBio[ data-editing ] #userPageBioEdit,
+#userPageBio:not( [ data-editing ] ) #userPageBioCancel,
+#userPageBio:not( [ data-editing ] ) #userPageBioSave {
+	display: none;
+}
+#userPageBioText {
+	padding: 16px;
+	border-radius: 8px;
+	white-space: pre;
+	font-family: var( --gsui-font-monospace );
+	background-color: #0002;
+
+	#userPageBio[ data-editing ] & {
+		display: none;
+	}
+	&:empty::after {
+		content: "No bio written yet...";
+		font-style: italic;
 	}
 }
 
