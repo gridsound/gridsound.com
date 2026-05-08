@@ -33,7 +33,7 @@
 		display: none;
 	}
 	&:empty::after {
-		content: "No bio written yet...";
+		content: attr( data-placeholder );
 		font-style: italic;
 	}
 }

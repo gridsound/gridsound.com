@@ -3,7 +3,7 @@
 class gscoPartialEditText {
 	static $createForm( o ) {
 		const dom = $( $.$flex( { class: "editText", y: true, g16: true },
-			$.$div( { class: "editText-text" } ),
+			$.$div( { class: "editText-text", "data-placeholder": o.$placeholder } ),
 			$.$elem( "textarea", { class: "editText-textarea" } ),
 			$.$flex( { x: true, xcenter: true, g16: true },
 				$.$elem( "gsui-com-button", { action: "edit", text: o.$edit } ),

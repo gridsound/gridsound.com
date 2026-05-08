@@ -21,6 +21,7 @@ class gscoUser {
 			$edit: "edit bio",
 			$save: "save bio",
 			$cancel: "cancel",
+			$placeholder: "No bio written yet...",
 			$onsave: txt => gsapiClient.$updateMyBio( txt ),
 		} ) );
 	}
