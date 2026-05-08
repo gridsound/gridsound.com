@@ -17,23 +17,12 @@ class gscoUser {
 		} );
 		DOM.userPageProfile.$get( 0 ).$setFollowCallbackPromise( b => ( b ? gsapiClient.$followUser : gsapiClient.$unfollowUser )( this.#id ) );
 		DOM.userPageProfile.$get( 0 ).$setVerifyEmailCallbackPromise( () => gsapiClient.$resendConfirmationEmail().catch( err => { throw err.msg; } ) );
-		DOM.userPageBioEdit.$onclick( () => {
-			DOM.userPageBio.$addAttr( "data-editing" );
-			DOM.userPageBioTextarea.$value( DOM.userPageBioText.$text() ).$focus();
-		} );
-		DOM.userPageBioCancel.$onclick( () => {
-			DOM.userPageBio.$rmAttr( "data-editing" );
-			DOM.userPageBioTextarea.$value( "" );
-		} );
-		DOM.userPageBioSave.$onclick( () => {
-			DOM.userPageBioSave.$addAttr( "loading" );
-			gsapiClient.$updateMyBio( DOM.userPageBioTextarea.$value() )
-				.then( bio => {
-					DOM.userPageBioText.$text( bio );
-					DOM.userPageBioSave.$rmAttr( "loading" );
-					DOM.userPageBio.$rmAttr( "data-editing" );
-				} );
-		} );
+		DOM.userPageBio.$append( gscoPartialEditText.$createForm( {
+			$edit: "edit bio",
+			$save: "save bio",
+			$cancel: "cancel",
+			$onsave: txt => gsapiClient.$updateMyBio( txt ),
+		} ) );
 	}
 
 	// .........................................................................
@@ -191,7 +180,7 @@ class gscoUser {
 
 		this.#id = u.id;
 		DOM.userPage.$setAttr( "data-nobio", !itsme && !u.bio );
-		DOM.userPageBioText.$text( u.bio );
+		DOM.userPageBio.$query( ".editText-text" ).$text( u.bio );
 		DOM.userPageProfile.$setAttr( {
 			itsme,
 			username: u.username,

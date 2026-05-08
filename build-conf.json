@@ -19,6 +19,7 @@
 		"src/main/footer.css",
 
 		"src/partials/cmp.css",
+		"src/partials/editText.css",
 
 		"src/pages/home/home.css",
 		"src/pages/search/search.css",
@@ -42,6 +43,7 @@
 		"src/main/main.js",
 
 		"src/partials/cmp.js",
+		"src/partials/editText.js",
 
 		"src/pages/auth/auth.js",
 		"src/pages/home/home.js",

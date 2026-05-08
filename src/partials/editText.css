@@ -1,0 +1,39 @@
+.editText {
+	textarea {
+		height: 200px;
+		min-height: 60px;
+		max-height: 500px;
+		border: 0;
+		outline: 0;
+		padding: 16px;
+		background-color: #0002;
+		resize: vertical;
+
+		&:focus {
+			background-color: #0005;
+		}
+		.editText:not( [ data-editing ] ) & {
+			display: none;
+		}
+	}
+	&[ data-editing ] [ action=edit ],
+	&:not( [ data-editing ] ) [ action=cancel ],
+	&:not( [ data-editing ] ) [ action=save ] {
+		display: none;
+	}
+}
+.editText-text {
+	padding: 16px;
+	border-radius: 8px;
+	white-space: pre;
+	font-family: var( --gsui-font-monospace );
+	background-color: #0002;
+
+	.editText[ data-editing ] & {
+		display: none;
+	}
+	&:empty::after {
+		content: "No bio written yet...";
+		font-style: italic;
+	}
+}
