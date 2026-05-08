@@ -35,16 +35,11 @@
 	padding: calc( 8px * var( --y32 ) ) calc( 10px * var( --y32 ) );
 	border-radius: 0 0 var( --rad ) var( --rad );
 	pointer-events: auto;
+	background-color: rgb( from var( --gsuiComProfile-bg ) r g b / var( --y32 ) );
 
 	#userPage:has( gsui-com-player[ data-head-sticky-shadow="bottom" ] ) & {
 		box-shadow: 0 12px 0 var( --app-bg );
 	}
-}
-#userPageProfileMenuBg {
-	position: absolute;
-	inset: 0;
-	background-color: #32374c;
-	opacity: var( --y32 );
 }
 
 /* .......................................................................... */

@@ -5,7 +5,6 @@ $.$setTemplate( "gscoUser", () =>
 		$.$div( { id: "userPageTop" },
 			$.$elem( "gsui-com-profile", { id: "userPageProfile" } ),
 			$.$div( { id: "userPageProfileMenu" },
-				$.$div( { id: "userPageProfileMenuBg", inert: true } ),
 				$.$link( { class: "userPageProfileMenu-btn gsui-ellipsis", "data-action": "cmps" },
 					$.$span( { inert: true, id: "userPageProfileNbCmps" } ),
 					$.$span( { inert: true, class: "gsui-ellipsis" }, "composition·s" ),
