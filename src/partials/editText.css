@@ -26,6 +26,7 @@
 	padding: 16px;
 	border-radius: 8px;
 	white-space: pre;
+	text-wrap: wrap;
 	font-family: var( --gsui-font-monospace );
 	background-color: #0002;
 
