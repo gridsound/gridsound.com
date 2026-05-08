@@ -22,6 +22,7 @@
 		"src/partials/editText.css",
 
 		"src/pages/home/home.css",
+		"src/pages/cmp/cmp.css",
 		"src/pages/search/search.css",
 		"src/pages/auth/auth.css",
 		"src/pages/user/user.css",

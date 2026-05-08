@@ -27,8 +27,8 @@ class gscoPartialEditText {
 				case "save":
 					dom.$query( "[action=save]" ).$addAttr( "loading" );
 					o.$onsave( dom.$query( "textarea" ).$value() )
-						.then( bio => {
-							dom.$query( ".editText-text" ).$text( bio );
+						.then( str => {
+							dom.$query( ".editText-text" ).$text( str );
 							dom.$rmAttr( "data-editing" );
 						} )
 						.finally( () => {
