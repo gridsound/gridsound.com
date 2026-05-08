@@ -16,9 +16,10 @@
 			top: 142px;
 		}
 	}
-
 	.forkedfrom,
 	.likes {
+		margin-top: -12px;
+		
 		&::before {
 			margin-right: 8px;
 			font-size: 10px;
@@ -27,11 +28,9 @@
 			opacity: .5;
 		}
 	}
-
 	.forkedfrom {
 		display: flex;
 		align-items: baseline;
-		margin-top: -12px;
 
 		&::before {
 			content: "forked from";

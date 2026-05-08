@@ -52,8 +52,8 @@ class gscoPartialCmp {
 		return $.$div( { class: "player" },
 			elCmp,
 			$cmp.forkedfrom && gscoPartialCmp.#domForkedFrom( $cmp ),
+			$likedby && gscoPartialCmp.#domLikes( $likedby ),
 			$u && gscoPartialCmp.$domAuthor( $u ),
-			$likedby && gscoPartialCmp.#domLikes( $likedby )
 		);
 	}
 	static $updateCmpActions( elCmp ) {
