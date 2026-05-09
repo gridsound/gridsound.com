@@ -13,7 +13,7 @@ class gscoPartialEditText {
 		) );
 
 		dom.$query( "gs-flex" ).$onclick( e => {
-			const act = $( e.target ).$parent().$getAttr( "action" );
+			const act = $( e.target ).$getAttr( "action" );
 
 			switch ( act ) {
 				case "edit":
