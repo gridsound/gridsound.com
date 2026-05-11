@@ -93,7 +93,7 @@
 	body:not( [ data-hash$="/bio" ] ) & {
 		display: none;
 	}
-	#userPage:not( [ data-itsme ] ) & [ action=edit ] {
+	#userPage:not( [ data-itsme ] ) & [ action="edit" ] {
 		display: none;
 	}
 }

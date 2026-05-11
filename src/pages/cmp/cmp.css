@@ -1,5 +1,5 @@
 #cmpPageDesc {
-	#cmpPage:not( [ data-itsme ] ) & [ action=edit ] {
+	#cmpPage:not( [ data-itsme ] ) & [ action="edit" ] {
 		display: none;
 	}
 }

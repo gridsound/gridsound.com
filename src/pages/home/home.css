@@ -66,7 +66,7 @@
 	}
 }
 @keyframes homePage-anim-white-spot-anim {
-	  0% { filter: blur( 20px ) }
+	000% { filter: blur( 20px ) }
 	100% { filter: blur( 40px ) }
 }
 
@@ -116,7 +116,7 @@
 	}
 }
 @keyframes homePage-anim-light-anim {
-	  0% { transform: rotate( -30deg ) }
+	000% { transform: rotate( -30deg ) }
 	100% { transform: rotate( +30deg ) }
 }
 
@@ -184,12 +184,12 @@
 			opacity: 1;
 
 			&[ data-icon="cu-waveform" ] { left: 10%; top: 30%; rotate:  23deg; }
-			&[ data-icon="piano" ]       { left: 67%; top:  5%; rotate:  -8deg; transition-delay: .05s }
-			&[ data-icon="drum" ]        { left: 34%; top:  2%; rotate: -30deg; transition-delay: .15s }
-			&[ data-icon="amp-guitar" ]  { left: 89%; top: 26%; rotate:  20deg; transition-delay: .18s }
-			&[ data-icon="mixer" ]       { left: 31%; top: 36%; rotate: -35deg; transition-delay: .22s }
-			&[ data-icon="music" ]       { left: 49%; top: 26%; rotate:  12deg; transition-delay: .35s }
-			&[ data-icon="sax-hot" ]     { left: 68%; top: 39%; rotate:  12deg; transition-delay: .35s }
+			&[ data-icon="piano" ]       { left: 67%; top:  5%; rotate:  -8deg; transition-delay: .05s; }
+			&[ data-icon="drum" ]        { left: 34%; top:  2%; rotate: -30deg; transition-delay: .15s; }
+			&[ data-icon="amp-guitar" ]  { left: 89%; top: 26%; rotate:  20deg; transition-delay: .18s; }
+			&[ data-icon="mixer" ]       { left: 31%; top: 36%; rotate: -35deg; transition-delay: .22s; }
+			&[ data-icon="music" ]       { left: 49%; top: 26%; rotate:  12deg; transition-delay: .35s; }
+			&[ data-icon="sax-hot" ]     { left: 68%; top: 39%; rotate:  12deg; transition-delay: .35s; }
 		}
 		.loopAnim & {
 			animation: homePage-anim-icon-anim 3s infinite alternate;
@@ -204,7 +204,7 @@
 	}
 }
 @keyframes homePage-anim-icon-anim {
-	  0% { margin-top: 0 }
+	000% { margin-top: 0 }
 	100% { margin-top: -20px }
 }
 
@@ -248,7 +248,7 @@
 	inset: -20px;
 	border-radius: 50px;
 	filter: blur( 80px );
-	background-image: linear-gradient( 45deg, #9100ff, #ff007a )
+	background-image: linear-gradient( 45deg, #9100ff, #ff007a );
 }
 #homePage-screen-brd {
 	position: absolute;
@@ -275,8 +275,8 @@
 	}
 }
 @keyframes homePage-screen-brd-anim {
-	  0% { background-position-y: 200px }
-	100% { background-position-y:   0px }
+	000% { background-position-y: 200px }
+	100% { background-position-y:   0 }
 }
 
 /* .......................................................................... */
@@ -306,7 +306,7 @@
 	}
 }
 @keyframes gsuiJoystick-anim-bg {
-	  0% { background-color: #0005 }
-	 50% { background-color: rgb( 255 255 180 / var( --gsuiJoystick-anim-opacity ) ) }
+	000% { background-color: #0005 }
+	050% { background-color: rgb( 255 255 180 / var( --gsuiJoystick-anim-opacity ) ) }
 	100% { background-color: #0005 }
 }

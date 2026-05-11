@@ -19,7 +19,7 @@
 	.forkedfrom,
 	.likes {
 		margin-top: -12px;
-		
+
 		&::before {
 			margin-right: 8px;
 			font-size: 10px;

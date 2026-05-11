@@ -16,9 +16,9 @@
 			display: none;
 		}
 	}
-	&[ data-editing ] [ action=edit ],
-	&:not( [ data-editing ] ) [ action=cancel ],
-	&:not( [ data-editing ] ) [ action=save ] {
+	&[ data-editing ] [ action="edit" ],
+	&:not( [ data-editing ] ) [ action="cancel" ],
+	&:not( [ data-editing ] ) [ action="save" ] {
 		display: none;
 	}
 }

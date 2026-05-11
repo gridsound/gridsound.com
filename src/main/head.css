@@ -31,8 +31,8 @@
 [ data-head-sticky-shadow="bottom" ] { --mul: 1 }
 [ data-head-sticky-shadow*="to" ] {
 	box-shadow:
-		0 calc( ( 4px +  0px ) * var( --mul ) ) 0 var( --app-bg ),
-		0 calc( ( 4px +  2px ) * var( --mul ) ) 0 var( --head-bg ),
+		0 calc( ( 4px + 00px ) * var( --mul ) ) 0 var( --app-bg ),
+		0 calc( ( 4px + 02px ) * var( --mul ) ) 0 var( --head-bg ),
 		0 calc( ( 4px + 16px ) * var( --mul ) ) 0 rgb( from var( --app-bg ) r g b / .9 );
 }
 
