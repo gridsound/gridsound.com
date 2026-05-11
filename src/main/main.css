@@ -1,3 +1,13 @@
+html,
+body {
+	overflow: initial;
+	scroll-behavior: smooth;
+}
+html {
+	overflow-y: scroll;
+}
+
+/* .......................................................................... */
 #root {
 	--gscom-scroll: 0;
 	--page-trans-dur: .3s;

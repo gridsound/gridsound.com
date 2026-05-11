@@ -44,24 +44,10 @@
 
 /* .......................................................................... */
 .userPageProfileMenu-btn {
-	z-index: 1;
 	display: flex;
 	gap: 4px;
-	border: 0;
-	padding: 0;
-	color: inherit;
-	font: inherit;
-	font-size: 14px;
-	text-decoration: none;
 	opacity: .3;
-	background: none;
 
-	span:first-child {
-		font-weight: bold;
-	}
-	span:last-child {
-		opacity: .7;
-	}
 	&[ data-action="cmpsLiked" ] {
 		margin-left: auto;
 	}
@@ -73,11 +59,20 @@
 	#userPage[ data-nobio ] &[ data-action="bio" ] {
 		display: none;
 	}
+	&:hover {
+		opacity: .7;
+	}
 	body:not( [ data-hash$="/bin" ], [ data-hash$="/bio" ], [ data-hash$="/likes" ] ) &[ data-action="cmps" ],
 	[ data-hash$="/bin" ] &[ data-action="cmpsDeleted" ],
 	[ data-hash$="/bio" ] &[ data-action="bio" ],
 	[ data-hash$="/likes" ] &[ data-action="cmpsLiked" ] {
 		opacity: 1;
+	}
+	span:first-child {
+		font-weight: bold;
+	}
+	span + span {
+		opacity: .7;
 	}
 }
 
