@@ -32,6 +32,9 @@
 		display: flex;
 		align-items: baseline;
 
+		gsui-com-player[ data-head-sticky-shadow ] + & {
+			visibility: hidden;
+		}
 		&::before {
 			content: "forked from";
 		}
