@@ -43,6 +43,7 @@ class gscoMain {
 			[ GSEV_COMPLAYER_PLAY ]: this.#onplay.bind( this ),
 			[ GSEV_COMPLAYER_STOP ]: this.#onstop.bind( this ),
 		} );
+		gsuiTooltip.$start();
 	}
 
 	// .........................................................................

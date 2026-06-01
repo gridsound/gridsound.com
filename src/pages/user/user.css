@@ -51,10 +51,6 @@
 	&[ data-action="cmpsLiked" ] {
 		margin-left: auto;
 	}
-	&[ data-action="cmpsDeleted" ] {
-		&::before { content: "(" }
-		&::after { content: ")" }
-	}
 	#userPage:not( [ data-itsme ][ data-premium ] ) &[ data-action="cmpsDeleted" ],
 	#userPage[ data-nobio ] &[ data-action="bio" ] {
 		display: none;
@@ -67,12 +63,6 @@
 	[ data-hash$="/bio" ] &[ data-action="bio" ],
 	[ data-hash$="/likes" ] &[ data-action="cmpsLiked" ] {
 		opacity: 1;
-	}
-	span:first-child {
-		font-weight: bold;
-	}
-	span + span {
-		opacity: .7;
 	}
 }
 
