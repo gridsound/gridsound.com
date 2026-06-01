@@ -9,7 +9,7 @@ $.$setTemplate( "gscoUser", () =>
 					$.$bold( { inert: true, id: "userPageProfileNbCmps" } ),
 					$.$span( { inert: true, class: "gsui-ellipsis" }, "music·s" ),
 				),
-				$.$link( { class: "userPageProfileMenu-btn gsui-ellipsis", "data-action": "cmpsDeleted", title: "Recycle bin" },
+				$.$link( { class: "userPageProfileMenu-btn gsui-ellipsis", "data-action": "cmpsDeleted", "data-tooltip": "Composition <b>deleted</b>" },
 					$.$bold( { inert: true, id: "userPageProfileNbCmpsDeleted" } ),
 					$.$icon( { icon: "trash" } ),
 				),
