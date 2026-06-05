@@ -20,12 +20,15 @@
 	.likes {
 		margin-top: -12px;
 
-		&::before {
+		> b {
 			margin-right: 8px;
 			font-size: 10px;
-			font-weight: bold;
 			text-transform: uppercase;
 			opacity: .5;
+
+			&:only-child {
+				display: none;
+			}
 		}
 	}
 	.forkedfrom {
@@ -34,9 +37,6 @@
 
 		gsui-com-player[ data-head-sticky-shadow ] + & {
 			visibility: hidden;
-		}
-		&::before {
-			content: "forked from";
 		}
 		> span::before {
 			content: "\A0·\A0";
@@ -49,9 +49,6 @@
 	.likes {
 		font-size: 12px;
 
-		&:not( :empty )::before {
-			content: "Liked by";
-		}
 		span::before {
 			content: ", ";
 			opacity: .5;

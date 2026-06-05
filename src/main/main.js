@@ -55,7 +55,7 @@ class gscoMain {
 		DOM.headAuth.$setAttr( {
 			"data-spin": "",
 			"data-icon": "logout",
-			"data-tooltip": "Logout",
+			"data-tooltip": GSTX.$user_logout,
 			href: "",
 		} );
 		DOM.headUser.$setAttr( "href", `#/u/${ u.username }` );

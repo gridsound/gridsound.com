@@ -11,16 +11,19 @@ class gscoPartialCmp {
 	}
 	static #domForkedFrom( cmp ) {
 		return $.$div( { class: "forkedfrom" },
+			$.$bold( null, GSTX.$forkedFrom ),
 			$.$link( { href: `#/u/${ cmp.forkedfrom_username }` }, cmp.forkedfrom_username ),
 			$.$span(),
 			$.$link( { href: `#/cmp/${ cmp.forkedfrom }` }, cmp.forkedfrom_cmpname ),
 		);
 	}
 	static #domLikes( likedby ) {
-		return $.$div( { class: "likes" }, ...likedby.flatMap( ( u, i ) => [
-			i ? $.$span() : "",
-			$.$link( { href: `#/u/${ u }` }, u ),
-		] ) );
+		return $.$div( { class: "likes" },
+			$.$bold( null, GSTX.$likedBy ),
+			...likedby.flatMap( ( u, i ) => [
+				i ? $.$span() : "",
+				$.$link( { href: `#/u/${ u }` }, u ),
+			] ) );
 	}
 	static $domCmp( { $cmp, $u, $likedby } ) {
 		const itsmine = gsapiClient.$user.id === $cmp.iduser;

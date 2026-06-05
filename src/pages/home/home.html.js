@@ -2,8 +2,8 @@
 
 $.$setTemplate( "gscoHome", () =>
 	$.$div( { class: "page", id: "homePage" },
-		$.$elem( "h1", { id: "homePage-title" }, "Start creating your own music online" ),
-		$.$div( { id: "homePage-logo", inert: true } ),
+		$.$elem( "h1", { id: "homePage-title" }, GSTX.$startCreatingNow ),
+		$.$div( { id: "homePage-logo", "data-content": GSTX.$with, inert: true } ),
 		$.$div( { id: "homePage-anim", inert: true },
 			$.$div( { id: "homePage-anim-lights" },
 				GSUnewArray( 5, () => $.$div( { class: "homePage-anim-light" } ) ),
@@ -25,7 +25,7 @@ $.$setTemplate( "gscoHome", () =>
 			$.$div( { id: "homePage-screen-brd" } ),
 		),
 		$.$flex( { id: "homePage-trySynth", x: true, xcenter: true, ycenter: true, g16: true },
-			$.$div(),
+			$.$div( null, GSTX.$tryMe ),
 			$.$elem( "gsui-joystick", { id: "homePage-trySynth-joystick" } ),
 		),
 	),

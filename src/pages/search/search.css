@@ -56,10 +56,6 @@
 /* .......................................................................... */
 #searchPageResultIntro {
 	padding: 0 1px;
-
-	b {
-		font-style: italic;
-	}
 }
 #searchPageResult {
 	display: flex;

@@ -74,8 +74,6 @@
 		"gs-ui-components/gsuiPopup/gsuiPopup.css"
 	],
 	"jsDep": [
-		"gs-ui-components/gsui-constantes.js",
-
 		"gs-utils/gs-utils.js",
 		"gs-utils/gs-utils-func.js",
 		"gs-utils/gs-utils-math.js",
@@ -86,6 +84,9 @@
 		"gs-utils/gs-utils-jquery.js",
 		"gs-utils/gs-utils-files.js",
 		"gs-utils/gs-utils-models.js",
+
+		"gs-ui-components/gsui-constantes.js",
+		"gs-ui-components/gsui-texts.js",
 
 		"gs-api-client/gsapiClient.js",
 

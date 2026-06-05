@@ -18,10 +18,10 @@ class gscoUser {
 		DOM.userPageProfile.$get( 0 ).$setFollowCallbackPromise( b => ( b ? gsapiClient.$followUser : gsapiClient.$unfollowUser )( this.#id ) );
 		DOM.userPageProfile.$get( 0 ).$setVerifyEmailCallbackPromise( () => gsapiClient.$resendConfirmationEmail().catch( err => { throw err.msg; } ) );
 		DOM.userPageBio.$append( gscoPartialEditText.$createForm( {
-			$edit: "edit bio",
-			$save: "save bio",
-			$cancel: "cancel",
-			$placeholder: "No bio written yet...",
+			$edit: GSTX.$editBio,
+			$save: GSTX.$saveBio,
+			$cancel: GSTX.$cancel,
+			$placeholder: GSTX.$noBioWritten,
 			$onsave: txt => gsapiClient.$updateMyBio( txt ),
 		} ) );
 	}
@@ -172,15 +172,18 @@ class gscoUser {
 		}
 	}
 	#updateNbCmps( a, b, c ) {
-		DOM.userPageProfileNbCmps.$text( a );
+		DOM.userPageProfileNbCmps.$text( a ).$next().$text( GSTXplural( GSTX.$music, a ) );
 		DOM.userPageProfileNbCmpsDeleted.$text( b );
-		DOM.userPageProfileNbCmpsLiked.$text( c );
+		DOM.userPageProfileNbCmpsLiked.$text( c ).$next().$text( GSTXplural( GSTX.$like, c ) );
 	}
 	#updateUser( u ) {
 		const itsme = u.id === gsapiClient.$user.id;
 
 		this.#id = u.id;
 		DOM.userPage.$setAttr( "data-nobio", !itsme && !u.bio );
+		DOM.userPageProfileBioLink.$setAttr( "data-tooltip", itsme
+			? GSTX.$writeYourBio
+			: GSTXreplace( GSTX.$readTheirBio, u.username ) );
 		DOM.userPageBio.$query( ".editText-text" ).$text( u.bio );
 		DOM.userPageProfile.$setAttr( {
 			itsme,

@@ -39,8 +39,7 @@ class gscoSearch {
 		this.#updateFilter( filter );
 		this.#updateQInput( q2 );
 		DOM.searchPageResult.$empty();
-		DOM.searchPageResultIntro.$child( 0 ).$text( "" );
-		DOM.searchPageResultIntro.$child( -1 ).$text( "" );
+		DOM.searchPageResultIntro.$empty();
 		if ( q2 ) {
 			gsapiClient.$search( filter, q2 ).then( this.#printResult.bind( this, filter, q2 ) );
 		}
@@ -58,17 +57,16 @@ class gscoSearch {
 	}
 	#printResult( filter, q, arr ) {
 		const len = arr.length;
-		const what = ( filter === "u" ? "user" : "composition" ) + ( len < 2 ? "" : "s" );
-		const limit = 20;
-		const there =
-			!len ? "is no" :
-			len < 2 ? "is one" :
-			len < limit ? `are ${ len }` :
-			`are at least ${ limit }`;
+		const isU = filter === "u";
+		const txt =
+			len === 0 ? isU ? GSTX.$search_user_0   : GSTX.$search_cmps_0 :
+			len === 1 ? isU ? GSTX.$search_user_1   : GSTX.$search_cmps_1 :
+			len < 20  ? isU ? GSTX.$search_user_n   : GSTX.$search_cmps_n :
+			            isU ? GSTX.$search_user_max : GSTX.$search_cmps_max;
 
-		DOM.searchPageResultIntro.$child( 0 ).$text( `There ${ there } ${ what } matching ` );
-		DOM.searchPageResultIntro.$child( -1 ).$text( `"${ q }"` );
-		DOM.searchPageResult.$append( ...arr.map( filter === "u"
+		DOM.searchPageResultIntro.$empty();
+		DOM.searchPageResultIntro.$append( ...$.$simpleStringHTML( GSTXreplace( txt, q, len ) ) );
+		DOM.searchPageResult.$append( ...arr.map( isU
 			? u => gscoPartialCmp.$domAuthor( u )
 			: cmp => gscoPartialCmp.$domCmp( { $cmp: cmp } ) ) );
 	}
