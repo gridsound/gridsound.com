@@ -143,21 +143,24 @@ class gscoUser {
 			case "restore": {
 				const a = DOM.userPageProfileNbCmps;
 				const b = DOM.userPageProfileNbCmpsDeleted;
-				const elCmp = e.$target.$get( 0 );
+				const elCmp = e.$target;
+				const elPla = e.$target.$closest( ".player" ).$get( 0 );
 
 				if ( act === "restore" ) {
-					this.#cmps?.unshift( elCmp );
-					GSUarrayRemove( this.#cmpsDeleted, elCmp );
+					this.#cmps?.unshift( elPla );
+					GSUarrayRemove( this.#cmpsDeleted, elPla );
 					a.$text( +a.$text() + 1 );
 					b.$text( +b.$text() - 1 );
 				} else {
-					this.#cmpsDeleted?.unshift( elCmp );
-					GSUarrayRemove( this.#cmps, elCmp );
+					this.#cmpsDeleted?.unshift( elPla );
+					GSUarrayRemove( this.#cmps, elPla );
 					a.$text( +a.$text() - 1 );
 					b.$text( +b.$text() + 1 );
 				}
-				gscoPartialCmp.$updateCmpActions( elCmp );
-				GSUsetTimeout( () => elCmp.remove(), .35 );
+				GSUsetTimeout( () => {
+					elPla.remove();
+					gscoPartialCmp.$updateCmpActions( elCmp );
+				}, .35 );
 			} break;
 		}
 	}

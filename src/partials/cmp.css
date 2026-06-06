@@ -3,7 +3,10 @@
 	flex-direction: column;
 	gap: inherit;
 
-	&:has( gsui-com-player[ playing ] ) {
+	&:has( [ deleting ], [ restoring ] ) > div {
+		opacity: 0;
+	}
+	&:has( [ playing ] ) {
 		z-index: 1;
 
 		#userPage &,
