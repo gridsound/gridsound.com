@@ -76,6 +76,43 @@
 		margin-top: 0;
 		margin-bottom: 16px;
 	}
+	&:empty {
+		display: none;
+	}
+}
+#userPagePHmain,
+#userPagePHlikes {
+	position: relative;
+	z-index: 0;
+	display: none;
+	align-self: center;
+	flex-direction: column;
+	justify-content: center;
+	gap: 32px;
+	margin-top: 20px;
+	max-width: 256px;
+	text-align: center;
+	opacity: .5;
+
+	.gsuiIcon {
+		position: relative;
+		z-index: 1;
+		font-size: 100px;
+	}
+	&::after {
+		content: "";
+		position: absolute;
+		inset: auto 50% -6px;
+		margin-left: -90px;
+		width: 180px;
+		height: 40px;
+		border-radius: 50%;
+		background-color: #fff2;
+	}
+}
+#userPage[ data-page="main" ] #userPagePlaylist:empty ~ #userPagePHmain,
+#userPage[ data-page="likes" ] #userPagePlaylist:empty ~ #userPagePHlikes {
+	display: flex;
 }
 
 /* .......................................................................... */

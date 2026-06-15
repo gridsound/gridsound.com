@@ -24,6 +24,14 @@ $.$setTemplate( "gscoUser", () =>
 		),
 		$.$div( { id: "userPageBio" } ),
 		$.$div( { id: "userPagePlaylist" } ),
+		$.$div( { id: "userPagePHmain" },
+			$.$span(),
+			$.$icon( { icon: "music" } ),
+		),
+		$.$div( { id: "userPagePHlikes" },
+			$.$span(),
+			$.$icon( { icon: "heart" } ),
+		),
 	),
 );
 
