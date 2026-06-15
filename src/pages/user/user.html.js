@@ -39,7 +39,7 @@ $.$setTemplate( "gscoUserEditForm", p =>
 	$.$flex( { id: "userPageEditForm", y: true, g12: true },
 		$.$label( null,
 			$.$span( null, GSTX.$avatar ),
-			$.$div( null, ...$.$simpleStringHTML( GSTX.$gravatarWarn ) ),
+			$.$div( null, $.$simpleStringHTML( GSTX.$gravatarWarn ) ),
 		),
 		$.$label( null,
 			$.$span( null, GSTX.$firstName ),

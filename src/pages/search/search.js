@@ -64,8 +64,7 @@ class gscoSearch {
 			len < 20  ? isU ? GSTX.$search_user_n   : GSTX.$search_cmps_n :
 			            isU ? GSTX.$search_user_max : GSTX.$search_cmps_max;
 
-		DOM.searchPageResultIntro.$empty();
-		DOM.searchPageResultIntro.$append( ...$.$simpleStringHTML( GSTXreplace( txt, q, len ) ) );
+		DOM.searchPageResultIntro.$textHTML( GSTXreplace( txt, q, len ) );
 		DOM.searchPageResult.$append( ...arr.map( isU
 			? u => gscoPartialCmp.$domAuthor( u )
 			: cmp => gscoPartialCmp.$domCmp( { $cmp: cmp } ) ) );

@@ -184,8 +184,8 @@ class gscoUser {
 		const itsme = u.id === gsapiClient.$user.id;
 
 		this.#id = u.id;
-		DOM.userPagePHmain.$child( 0 ).$empty().$append( ...$.$simpleStringHTML( itsme ? GSTX.$yourMusicsPH : GSTX.$theirMusicsPH ) );
-		DOM.userPagePHlikes.$child( 0 ).$empty().$append( ...$.$simpleStringHTML( itsme ? GSTX.$yourLikesPH : GSTX.$theirLikesPH ) );
+		DOM.userPagePHmain.$child( 0 ).$textHTML( itsme ? GSTX.$yourMusicsPH : GSTX.$theirMusicsPH );
+		DOM.userPagePHlikes.$child( 0 ).$textHTML( itsme ? GSTX.$yourLikesPH : GSTX.$theirLikesPH );
 		DOM.userPage.$setAttr( "data-nobio", !itsme && !u.bio );
 		DOM.userPageProfileBioLink.$setAttr( "data-tooltip", itsme
 			? GSTX.$writeYourBio
