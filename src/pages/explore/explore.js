@@ -13,9 +13,10 @@ class gscoExplore {
 		const all2 = all === "all"
 		const nbFollow = gsapiClient.$user.following;
 		const intro =
-			all2           ? GSTX.$explore_all :
+			all2 ? GSTX.$explore_all :
 			nbFollow === 1 ? GSTX.$explore_you1 :
 			nbFollow === 0 ? GSTX.$explore_you0 :
+			!nbFollow ? GSTX.$explore_who :
 			GSTXreplace( GSTX.$explore_you, gsapiClient.$user.following );
 
 		DOM.exploreSwitch.$setAttr( "data-all", all2 );
@@ -64,7 +65,7 @@ class gscoExplore {
 						} ),
 					);
 				}
-				return $.$div( { class: "explore-item", "data-what": o.type }, ...elems );
+				return $.$div( { class: "explore-item", "data-what": o.type }, elems );
 			} ) );
 		} );
 	}
