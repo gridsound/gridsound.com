@@ -9,6 +9,9 @@ class gscoExplore {
 	$show( all ) {
 		this.$update( all );
 	}
+	$quit() {
+		DOM.exploreBody.$empty();
+	}
 	$update( all ) {
 		const all2 = all === "all"
 		const nbFollow = gsapiClient.$user.following;
