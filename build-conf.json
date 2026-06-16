@@ -71,7 +71,9 @@
 		"gs-ui-components/gsuiComUserLink/gsuiComUserLink.css",
 		"gs-ui-components/gsuiComPlayer/gsuiComPlayer.css",
 		"gs-ui-components/gsuiJoystick/gsuiJoystick.css",
-		"gs-ui-components/gsuiPopup/gsuiPopup.css"
+		"gs-ui-components/gsuiPopup/gsuiPopup.css",
+		"gs-ui-components/gsuiScratch/gsuiScratch.css",
+		"gs-ui-components/gsuiSlider/gsuiSlider.css"
 	],
 	"jsDep": [
 		"gs-utils/gs-utils.js",
@@ -120,6 +122,7 @@
 		"gs-ui-components/gsuiComProfile/gsuiComProfile.html.js",
 		"gs-ui-components/gsuiComPlayer/gsuiComPlayer.html.js",
 		"gs-ui-components/gsuiPopup/gsuiPopup.html.js",
+		"gs-ui-components/gsuiSlider/gsuiSlider.html.js",
 
 		"gs-ui-components/gsui0ne/gsui0ne.js",
 		"gs-ui-components/gsuiRipple/gsuiRipple.js",
@@ -130,6 +133,9 @@
 		"gs-ui-components/gsuiComUserLink/gsuiComUserLink.js",
 		"gs-ui-components/gsuiComPlayer/gsuiComPlayer.js",
 		"gs-ui-components/gsuiJoystick/gsuiJoystick.js",
-		"gs-ui-components/gsuiPopup/gsuiPopup.js"
+		"gs-ui-components/gsuiPopup/gsuiPopup.js",
+		"gs-ui-components/gsuiScratch/gsuiScratch.js",
+		"gs-ui-components/gsuiSlider/gsuiSlider.js",
+		"gs-ui-components/gsuiWaveform/gsuiWaveform.js"
 	]
 }
