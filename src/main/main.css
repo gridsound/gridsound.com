@@ -1,13 +1,11 @@
-html,
-body {
-	overflow: initial;
+html {
+	overflow: hidden scroll;
 	scroll-behavior: smooth;
 }
-html {
-	overflow-y: scroll;
-}
 body {
+	overflow: initial;
 	height: auto;
+	scroll-behavior: smooth;
 }
 * {
 	scrollbar-width: thin;
