@@ -95,7 +95,9 @@ class gscoMain {
 
 		DOM.head.$css( st );
 		DOM.userPageTop.$css( st );
+		DOM.explorePage.$css( st );
 		DOM.searchPageForm.$css( st );
+		DOM.exploreSwitch.$setAttr( "data-head-sticky-shadow", sticky );
 		DOM.searchPageForm.$setAttr( "data-head-sticky-shadow", sticky );
 		DOM.userPageProfileMenu.$setAttr( "data-head-sticky-shadow", sticky );
 		gscoMain.#onscrollCmpPlaying( this.#pageName );
