@@ -37,7 +37,7 @@
 	flex-direction: column;
 	gap: inherit;
 
-	& + &::before {
+	&::before {
 		content: "";
 		width: 100%;
 		border-top: 10px dotted;
