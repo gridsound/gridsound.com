@@ -81,6 +81,7 @@
 	}
 }
 #userPagePHmain,
+#userPagePHbin,
 #userPagePHlikes {
 	position: relative;
 	z-index: 0;
@@ -102,7 +103,7 @@
 	&::after {
 		content: "";
 		position: absolute;
-		inset: auto 50% -6px;
+		inset: auto 50% -12px;
 		margin-left: -90px;
 		width: 180px;
 		height: 40px;
@@ -111,6 +112,7 @@
 	}
 }
 #userPage[ data-page="main" ] #userPagePlaylist:empty ~ #userPagePHmain,
+#userPage[ data-page="bin" ] #userPagePlaylist:empty ~ #userPagePHbin,
 #userPage[ data-page="likes" ] #userPagePlaylist:empty ~ #userPagePHlikes {
 	display: flex;
 }
