@@ -57,26 +57,32 @@ class gscoUser {
 		}
 		DOM.userPage.$setAttr( "data-page", page || "main" );
 		DOM.userPagePlaylist.$empty();
-		if ( page === "bin" && !this.#cmpsDeleted ) {
-			gsapiClient.$getUserCompositionsDeleted( username )
-				.then( cmps => {
-					this.#cmpsDeleted = cmps.map( cmp => gscoPartialCmp.$domCmp( { $cmp: cmp } ) );
-					this.#appendCmps( page );
-				} );
-			return;
+		if (
+			( page === "bin" && !this.#cmpsDeleted ) ||
+			( page === "likes" && !this.#cmpsLiked )
+		) {
+			DOM.userPage.$addAttr( "data-loading" );
+			(
+				page === "bin"
+					? gsapiClient.$getUserCompositionsDeleted( username )
+					: gsapiClient.$getUserCompositionsLiked( username )
+			)
+				.then( page === "bin"
+					? cmps => {
+						this.#cmpsDeleted = cmps.map( cmp => gscoPartialCmp.$domCmp( { $cmp: cmp } ) );
+					}
+					: cmps => {
+						this.#cmpsLiked = cmps.map( ( cmp, i ) => gscoPartialCmp.$domCmp( {
+							$cmp: cmp,
+							$u: cmp.$user.username !== cmps[ i + 1 ]?.$user.username && cmp.$user,
+						} ) );
+					}
+				)
+				.then( () => this.#appendCmps( page ) )
+				.finally( () => DOM.userPage.$rmAttr( "data-loading" ) );
+		} else {
+			this.#appendCmps( page );
 		}
-		if ( page === "likes" && !this.#cmpsLiked ) {
-			gsapiClient.$getUserCompositionsLiked( username )
-				.then( cmps => {
-					this.#cmpsLiked = cmps.map( ( cmp, i ) => gscoPartialCmp.$domCmp( {
-						$cmp: cmp,
-						$u: cmp.$user.username !== cmps[ i + 1 ]?.$user.username && cmp.$user,
-					} ) );
-					this.#appendCmps( page );
-				} );
-			return;
-		}
-		this.#appendCmps( page );
 	}
 	$quit() {
 		DOM.userPagePlaylist.$empty();

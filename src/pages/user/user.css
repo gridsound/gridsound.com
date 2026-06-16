@@ -80,6 +80,19 @@
 		display: none;
 	}
 }
+#userPagePlaylistLoading {
+	display: none;
+	align-items: center;
+	justify-content: center;
+	margin: 20px 0;
+	font-size: 48px;
+	transition: .2s;
+	transition-property: opacity, visibility;
+
+	[ data-loading ] & {
+		display: flex;
+	}
+}
 #userPagePHmain,
 #userPagePHbin,
 #userPagePHlikes {
@@ -111,10 +124,12 @@
 		background-color: #fff2;
 	}
 }
-#userPage[ data-page="main" ] #userPagePlaylist:empty ~ #userPagePHmain,
-#userPage[ data-page="bin" ] #userPagePlaylist:empty ~ #userPagePHbin,
-#userPage[ data-page="likes" ] #userPagePlaylist:empty ~ #userPagePHlikes {
-	display: flex;
+#userPage:not( [ data-loading ] ) #userPagePlaylist:empty {
+	[ data-page="main" ] & ~ #userPagePHmain,
+	[ data-page="bin" ] & ~ #userPagePHbin,
+	[ data-page="likes" ] & ~ #userPagePHlikes {
+		display: flex;
+	}
 }
 
 /* .......................................................................... */
