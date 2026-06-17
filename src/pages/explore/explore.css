@@ -54,7 +54,7 @@
 	gsui-com-userlink {
 		font-size: 11px;
 
-		.gsuiIcon {
+		gsui-icon {
 			width: 0;
 			visibility: hidden;
 			margin-right: -.9ch;

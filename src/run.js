@@ -40,6 +40,6 @@ gsapiClient.$getMe()
 		PAGES.$main.$loggedIn( me );
 	} )
 	.finally( () => {
-		DOM.headAuth.$addAttr( "data-spin" );
+		DOM.headAuth.$child( 0 ).$rmAttr( "data-spin" );
 		PAGES.$main.$run();
 	} );

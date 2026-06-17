@@ -169,7 +169,7 @@
 	position: absolute;
 	inset: 0;
 
-	i {
+	gsui-icon {
 		position: absolute;
 		top: 100%;
 		left: 50%;

@@ -74,7 +74,7 @@
 		font-weight: bold;
 		background-color: var( --bg, #795 );
 	}
-	.gsuiIcon {
+	gsui-icon {
 		margin-right: 1ch;
 	}
 }
@@ -82,7 +82,7 @@
 .logsPage-log-target {
 	white-space: break-spaces;
 
-	.gsuiIcon {
+	gsui-icon {
 		margin-right: .5ch;
 	}
 }

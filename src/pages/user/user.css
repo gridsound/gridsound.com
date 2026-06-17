@@ -108,7 +108,7 @@
 	text-align: center;
 	opacity: .5;
 
-	.gsuiIcon {
+	gsui-icon {
 		position: relative;
 		z-index: 1;
 		font-size: 100px;
