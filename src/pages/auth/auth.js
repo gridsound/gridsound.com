@@ -28,7 +28,7 @@ class gscoAuth {
 	#signSubmit( actFn, btn, error, inps ) {
 		btn.$addClass( "btn-loading" );
 		error.$text( "" );
-		DOM.headAuth.$setAttr( "data-spin", "on" );
+		DOM.headAuth.$child( 0 ).$addAttr( "spin" );
 		actFn( ...inps.map( inp => inp.$value() ) )
 			.finally( () => btn.$rmClass( "btn-loading" ) )
 			.then( me => {
@@ -36,7 +36,7 @@ class gscoAuth {
 				PAGES.$main.$loggedIn( me );
 				location.hash = `#/u/${ me.usernameLow }`;
 			}, res => {
-				DOM.headAuth.$rmAttr( "data-spin", "on" );
+				DOM.headAuth.$child( 0 ).$rmAttr( "spin" );
 				error.$text( res.msg );
 			} );
 		return false;

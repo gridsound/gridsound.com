@@ -28,7 +28,7 @@ class gscoSearch {
 	}
 	#updateFilter( f ) {
 		DOM.searchPageForm.$query( `input[value="${ f }"]` ).$prop( "checked", true );
-		DOM.searchPageFormSubmit.$child( 0 ).$setAttr( "data-icon", f === "u" ? "cu-search-user" : "cu-search-music" );
+		DOM.searchPageFormSubmit.$child( 0 ).$setAttr( "icon", f === "u" ? "cu-search-user" : "cu-search-music" );
 	}
 	#updateQInput( q ) {
 		DOM.searchPageFormQ.$value( decodeURI( q ) );

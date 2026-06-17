@@ -100,7 +100,7 @@ class gscoUser {
 		$popup.$custom( {
 			title: `${ this.#username }'s ${ list }`,
 			element: $.$flex( { id: "userPageFollowList", y: true, g4: true },
-				$.$icon( { spin: "on", style: "font-size:36px" } ),
+				$.$icon( { spin: true, style: "font-size:36px" } ),
 			),
 		} );
 		( list === "followers"

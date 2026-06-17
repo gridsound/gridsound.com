@@ -54,9 +54,11 @@ class gscoMain {
 		gsapiClient.$setIntervalPing();
 		DOM.headAuth.$setAttr( {
 			href: "",
-			"data-icon": "logout",
 			"data-tooltip": GSTX.$user_logout,
-		} ).$child( 0 ).$rmAttr( "data-spin" );
+		} ).$child( 0 ).$setAttr( {
+			icon: "logout",
+			spin: false,
+		} );
 		DOM.headUser.$setAttr( "href", `#/u/${ u.username }` );
 		DOM.headUsername.$text( u.username );
 		DOM.root.$rmClass( "noauth" );
@@ -186,9 +188,9 @@ class gscoMain {
 		const btn = DOM.headAuth;
 		const ico = btn.$child( 0 );
 
-		if ( !btn.$getAttr( "href" ) && !ico.$hasAttr( "data-spin" ) ) {
-			ico.$addAttr( "data-spin" );
-			gsapiClient.$logoutRefresh().catch( () => ico.$rmAttr( "data-spin" ) );
+		if ( !btn.$getAttr( "href" ) && !ico.$hasAttr( "spin" ) ) {
+			ico.$addAttr( "spin" );
+			gsapiClient.$logoutRefresh().catch( () => ico.$rmAttr( "spin" ) );
 			return false;
 		}
 	}

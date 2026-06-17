@@ -183,13 +183,13 @@
 		.startAnim & {
 			opacity: 1;
 
-			&[ data-icon="cu-waveform" ] { left: 10%; top: 30%; rotate:  23deg; }
-			&[ data-icon="piano" ]       { left: 67%; top:  5%; rotate:  -8deg; transition-delay: .05s; }
-			&[ data-icon="drum" ]        { left: 34%; top:  2%; rotate: -30deg; transition-delay: .15s; }
-			&[ data-icon="amp-guitar" ]  { left: 89%; top: 26%; rotate:  20deg; transition-delay: .18s; }
-			&[ data-icon="mixer" ]       { left: 31%; top: 36%; rotate: -35deg; transition-delay: .22s; }
-			&[ data-icon="music" ]       { left: 49%; top: 26%; rotate:  12deg; transition-delay: .35s; }
-			&[ data-icon="sax-hot" ]     { left: 68%; top: 39%; rotate:  12deg; transition-delay: .35s; }
+			&[ icon="cu-waveform" ] { left: 10%; top: 30%; rotate:  23deg; }
+			&[ icon="piano" ]       { left: 67%; top:  5%; rotate:  -8deg; transition-delay: .05s; }
+			&[ icon="drum" ]        { left: 34%; top:  2%; rotate: -30deg; transition-delay: .15s; }
+			&[ icon="amp-guitar" ]  { left: 89%; top: 26%; rotate:  20deg; transition-delay: .18s; }
+			&[ icon="mixer" ]       { left: 31%; top: 36%; rotate: -35deg; transition-delay: .22s; }
+			&[ icon="music" ]       { left: 49%; top: 26%; rotate:  12deg; transition-delay: .35s; }
+			&[ icon="sax-hot" ]     { left: 68%; top: 39%; rotate:  12deg; transition-delay: .35s; }
 		}
 		.loopAnim & {
 			animation: homePage-anim-icon-anim 3s infinite alternate;
