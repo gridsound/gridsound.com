@@ -1,7 +1,5 @@
 "use strict";
 
-const gscoDAWURL = "//localhost/gridsound/daw/";
-
 $body.$setAttr( "data-skin", "gray" )
 	.$append( $.$getTemplate( "gs-main" ) );
 

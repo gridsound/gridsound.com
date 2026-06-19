@@ -18,7 +18,7 @@ $.$setTemplate( "gscoHome", () =>
 			),
 		),
 		$.$div( { id: "homePage-screen" },
-			$.$link( { href: gscoDAWURL },
+			$.$link( { href: GSURL.$gsDAW },
 				$.$elem( "img", { src: "assets/screenshots/daw-1.47.0-small.jpg" } ),
 			),
 			$.$div( { id: "homePage-screen-blur" } ),
