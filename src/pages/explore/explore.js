@@ -23,15 +23,15 @@ class gscoExplore {
 			GSTXreplace( GSTX.$explore_you, gsapiClient.$user.following );
 
 		DOM.exploreSwitch.$setAttr( "data-all", all2 );
-		DOM.exploreBody.$empty();
 		DOM.exploreIntro.$textHTML( intro );
-		// show loading...
+		DOM.exploreBody.$empty().$addAttr( "data-loading" );
 		( all2
 			? gsapiClient.$getAllActivities()
 			: gsapiClient.$getMyActivities()
 		).then( obj => {
-			// hide loading...
 			DOM.exploreBody.$append( ...obj.map( gscoExplore.#createItem ) );
+		} ).finally( () => {
+			DOM.exploreBody.$rmAttr( "data-loading" );
 		} );
 	}
 

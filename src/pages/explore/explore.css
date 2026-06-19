@@ -30,6 +30,19 @@
 	flex-direction: column;
 	gap: inherit;
 }
+#exploreBodyLoading {
+	display: none;
+	align-items: center;
+	justify-content: center;
+	margin: 20px 0;
+	font-size: 48px;
+	transition: .2s;
+	transition-property: opacity, visibility;
+
+	#exploreBody[ data-loading ] + & {
+		display: flex;
+	}
+}
 
 /* .......................................................................... */
 .explore-item {

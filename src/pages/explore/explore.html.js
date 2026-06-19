@@ -8,5 +8,8 @@ $.$setTemplate( "gscoExplore", () =>
 		),
 		$.$div( { id: "exploreIntro" } ),
 		$.$div( { id: "exploreBody" } ),
+		$.$div( { id: "exploreBodyLoading" },
+			$.$icon( { spin: true } ),
+		),
 	),
 );
