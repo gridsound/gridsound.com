@@ -2,3 +2,13 @@ RewriteEngine On
 RewriteCond %{HTTPS} off          [OR]
 RewriteCond %{HTTP_HOST} ^www\.   [NC]
 RewriteRule ^ https://gridsound.com%{REQUEST_URI} [R=301,L,NE]
+
+RewriteRule ^index\.html$ / [R=302,L]
+RewriteRule ^daw(/.*|)$ https://daw.gridsound.com/ [R=302,L]
+RewriteRule ^gammes(/.*|)$ https://gammes.gridsound.com/ [R=302,L]
+RewriteRule ^soundbox(/.*|)$ https://soundbox.gridsound.com/ [R=302,L]
+
+RewriteCond %{QUERY_STRING} .
+RewriteRule ^ %{REQUEST_URI}? [R=302,L]
+
+ErrorDocument 404 https://gridsound.com/#%{REQUEST_URI}
