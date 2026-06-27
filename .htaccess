@@ -13,6 +13,17 @@ RewriteRule ^ %{REQUEST_URI}? [R=302,L]
 
 ErrorDocument 404 https://gridsound.com/#%{REQUEST_URI}
 
+###################################################
+##                                               ##
+##     ↑ For production only,                    ##
+##       the URL rewriting part.                 ##
+##                                               ##
+##     ↓ For production AND local,               ##
+##       we need to be `crossOriginIsolated`     ##
+##       to use the `SharedArrayBuffer`.         ##
+##                                               ##
+###################################################
+
 <IfModule mod_headers.c>
 	Header set Cross-Origin-Opener-Policy "same-origin"
 	Header set Cross-Origin-Embedder-Policy "require-corp"
