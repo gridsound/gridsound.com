@@ -40,11 +40,11 @@ class gscoHome {
 
 	// .........................................................................
 	#onendJoystick() {
-		this.#waSynth.$stopAllKeys();
+		this.#waSynth.$synStopAllKeys( this.#ctx );
 		this.#startedKey = null;
 	}
 	#onstartJoystick( x, y ) {
-		this.#startedKey = this.#waSynth.$startKey( [
+		this.#startedKey = this.#waSynth.$synStartKey( this.#ctx, [
 			[ null, GSUgetModel( "key", { key: 2 * 12 + 8 } ) ],
 		], this.#ctx.currentTime, 0, Infinity );
 		this.#onmoveJoystick( x, y );
@@ -52,13 +52,14 @@ class gscoHome {
 	#onmoveJoystick( x, y ) {
 		const lfoSpeed = 1 + GSUmathEaseInCirc( x ) * 63;
 		const lfoAmp = .2 + y * .8;
-		const waKey = this.#waSynth.$getKeyNode( this.#startedKey );
+		const waKey = this.#waSynth.$synGetKeyNode( this.#startedKey );
 
 		GSUforEach( waKey.$oscNodes.get( "0" ).uniNodes, osc => {
-			osc[ 0 ].$setWavetableAtTime( 1 - x, this.#ctx.currentTime );
+			osc[ 0 ].$cancelWtpos();
+			osc[ 0 ].$setWtposAtTime( 1 - x, this.#ctx.currentTime );
 		} );
 		this.#setAnimSpeedThr( lfoSpeed, lfoAmp );
-		this.#waSynth.$change( {
+		this.#waSynth.$synChange( this.#ctx, {
 			lfos: {
 				gain: {
 					amp: lfoAmp,
@@ -80,27 +81,28 @@ class gscoHome {
 				},
 			},
 		} );
-		this.#waReverb.$change( {
-			// wet: .5 + ( 1 - y ) * 3.5,
-			wet: 4,
-		} );
+		// this.#waReverb.$change( {
+		// 	// wet: .5 + ( 1 - y ) * 3.5,
+		// 	wet: 4,
+		// } );
 	}
 
 	// .........................................................................
 	#audioInit() {
 		this.#ctx = GSUaudioContext();
-		return gswaCrossfade.$loadModule( this.#ctx ).then( () => {
+		return gswaOscillator.$loadModule( this.#ctx ).then( () => {
 			const wt = gscoHome.#createPulseWT();
+			const wt2 = Object.values( wt.waves ).sort( ( a, b ) => a.index - b.index ).map( w => w.curve );
 
-			gswaPeriodicWaves.$addWavetable( "custom.s0.o0", wt.waves );
+			gswaWTbuffers.$wtSet( "custom.s0.o0", wt2 );
 			this.#waSynth = new gswaSynth();
 			this.#waReverb = new gswaFxReverb();
 			this.#waReverb.$setContext( this.#ctx );
 			this.#waReverb.$getOutput().connect( this.#ctx.destination );
-			this.#waSynth.$setContext( this.#ctx );
-			this.#waSynth.$setBPM( 60 );
+			this.#waSynth.$synSetContext( this.#ctx );
+			this.#waSynth.$synSetBPM( 60 );
 			this.#waSynth.$output.connect( this.#waReverb.$getInput() );
-			this.#waSynth.$change( {
+			this.#waSynth.$synChange( this.#ctx, {
 				envs: {
 					gain: {
 						toggle: true,
@@ -129,7 +131,7 @@ class gscoHome {
 				oscillators: {
 					0: GSUgetModel( "oscillator", {
 						wave: "custom.s0.o0",
-						unisonvoices: 5,
+						unisonvoices: 2,
 						wavetable: wt,
 						gain: .9,
 					} ),
@@ -166,7 +168,7 @@ class gscoHome {
 					duration: 1,
 					curve: {
 						0: { x: 0, y: 0, type: null,    val: null },
-						1: { x: 1, y: 1, type: "curve", val: 0 },
+						1: { x: 0, y: 0, type: "curve", val: 0 },
 					},
 				},
 			},
