@@ -59,19 +59,13 @@
 }
 .explore-item-head {
 	display: flex;
-	align-items: baseline;
+	align-items: center;
 	gap: 10px;
 	margin-bottom: -14px;
 	opacity: .5;
 
 	gsui-com-userlink {
 		font-size: 11px;
-
-		gsui-icon {
-			width: 0;
-			visibility: hidden;
-			margin-right: -.9ch;
-		}
 	}
 	> b {
 		font-size: 10px;
