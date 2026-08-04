@@ -18,7 +18,7 @@ $.$setTemplate( "gs-main", () =>
 			$.$div( { id: "headWrap" },
 				$.$div( { id: "head" },
 					$.$link( { id: "headIcon", class: "headLink", href: "#/" } ),
-					$.$link( { id: "headExplore", class: "headLink", href: "#/explore", "data-tooltip": GSTX.$exploreNewThings }, $.$icon( { icon: "users" } ) ),
+					$.$link( { id: "headExplore", class: "headLink", href: "#/explore/all", "data-tooltip": GSTX.$exploreNewThings }, $.$icon( { icon: "users" } ) ),
 					$.$link( { id: "headSearch", class: "headLink", href: "#/q", "data-tooltip": GSTX.$searchUsersCmps }, $.$icon( { icon: "search" } ) ),
 					$.$div( { id: "headSep" } ),
 					$.$linkExt( { id: "headNewCmp", class: "headLink", href: GSURL.$gsDAW, "data-tooltip": GSTX.$createNewCmp }, $.$icon( { icon: "cu-music-plus" } ) ),

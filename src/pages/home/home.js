@@ -40,61 +40,72 @@ class gscoHome {
 
 	// .........................................................................
 	#onendJoystick() {
-		this.#waSynth.$synStopAllKeys( this.#ctx );
+		this.#waSynth.$synStopAllKeys();
 		this.#startedKey = null;
 	}
 	#onstartJoystick( x, y ) {
-		this.#startedKey = this.#waSynth.$synStartKey( this.#ctx, [
-			[ null, GSUgetModel( "key", { key: 2 * 12 + 8 } ) ],
+		this.#startedKey = this.#waSynth.$synStartKey( [
+			[ null, GSUgetModel( "key", { key: 3 * 12 } ) ],
 		], this.#ctx.currentTime, 0, Infinity );
 		this.#onmoveJoystick( x, y );
 	}
 	#onmoveJoystick( x, y ) {
-		const lfoSpeed = 1 + GSUmathEaseInCirc( x ) * 63;
+		const lfoSpeed = 1 + GSUmathEaseInCirc( x ) * 60;
 		const lfoAmp = .2 + y * .8;
-		const waKey = this.#waSynth.$synGetKeyNode( this.#startedKey );
+		// const waKey = this.#waSynth.$synGetKeyNode( this.#startedKey );
 
-		GSUforEach( waKey.$oscNodes.get( "0" ).uniNodes, osc => {
-			osc[ 0 ].$cancelWtpos();
-			osc[ 0 ].$setWtposAtTime( 1 - x, this.#ctx.currentTime );
-		} );
+		// GSUforEach( waKey.$oscNodes.get( "0" ).uniNodes, osc => {
+		// 	osc[ 0 ].$cancelWtpos();
+		// 	osc[ 0 ].$setWtposAtTime( 1 - x, this.#ctx.currentTime );
+		// } );
 		this.#setAnimSpeedThr( lfoSpeed, lfoAmp );
-		this.#waSynth.$synChange( this.#ctx, {
-			lfos: {
-				gain: {
-					amp: lfoAmp,
-					speed: lfoSpeed,
+		this.#waSynth?.$synChange( this.#ctx, {
+			envs: {
+				lowpass: {
+					q: 4 - x * 4,
 				},
+				wtpos: {
+					sustain: y,
+				},
+			},
+			lfos: {
+				lowpass: {
+					amp: lfoAmp,
+					speed: lfoSpeed * 1.0,
+				},
+				// pan: {
+				// 	amp: lfoAmp,
+				// 	speed: lfoSpeed * 1.5,
+				// },
 			},
 			oscillators: {
 				0: {
-					pan: ( x * 2 - 1 ) * .5,
-					unisondetune: y * .5,
-					unisonblend: .5 - x * .5,
-					gain: .9,
+					// pan: ( x * 2 - 1 ) * .7,
+					// unisondetune: y * .5,
+					// unisonblend: .5 - x * .5,
+					// gain: .9,
 				},
 				1: {
-					pan: ( x * 2 - 1 ) * -.5,
-					unisondetune: 1 - y * .2,
-					unisonblend: 1 - x * .9,
-					gain: .5,
+					// pan: ( x * 2 - 1 ) * -.7,
+					// unisondetune: 1 - y * .2,
+					// unisonblend: 1 - x * .9,
+					// gain: .5,
 				},
 			},
 		} );
 		// this.#waReverb.$change( {
 		// 	// wet: .5 + ( 1 - y ) * 3.5,
-		// 	wet: 4,
 		// } );
 	}
 
 	// .........................................................................
 	#audioInit() {
 		this.#ctx = GSUaudioContext();
-		return gswaOscillator.$loadModule( this.#ctx ).then( () => {
+		return gswaOsc.$oscLoadModule( this.#ctx ).then( () => {
 			const wt = gscoHome.#createPulseWT();
 			const wt2 = Object.values( wt.waves ).sort( ( a, b ) => a.index - b.index ).map( w => w.curve );
 
-			gswaWTbuffers.$wtSet( "custom.s0.o0", wt2 );
+			gswaBuffers.$sabSetWavetable( "custom.s0.o0", wt2 );
 			this.#waSynth = new gswaSynth();
 			this.#waReverb = new gswaFxReverb();
 			this.#waReverb.$setContext( this.#ctx );
@@ -110,42 +121,64 @@ class gscoHome {
 						hold: 0,
 						decay: .1,
 						sustain: .6,
-						release: .5,
+						release: 2,
 					},
 					lowpass: {
 						toggle: true,
+						// attack: 0,
+						// hold: 1,
+						// decay: 1,
+						sustain: .5,
+						release: .5,
+						q: 2,
+					},
+					wtpos: {
+						toggle: true,
 						attack: 0,
-						hold: 1,
-						decay: 1,
+						hold: 0,
+						decay: 0,
 						sustain: 1,
-						release: .25,
-						q: 5,
+						release: 9999,
 					},
 				},
 				lfos: {
-					gain: {
+					lowpass: {
 						toggle: true,
-						attack: .01,
+						// attack: .01,
+						speed: 4,
+						amp: .9,
 					},
+					// pan: {
+					// 	toggle: true,
+					// 	attack: .5,
+					// 	speed: 1.5,
+					// 	amp: 1,
+					// },
 				},
 				oscillators: {
 					0: GSUgetModel( "oscillator", {
 						wave: "custom.s0.o0",
-						unisonvoices: 2,
+						// unisonvoices: 2,
 						wavetable: wt,
-						gain: .9,
+						gain: .3,
 					} ),
 					1: GSUgetModel( "oscillator", {
-						wave: "sawtooth",
-						unisonvoices: 3,
+						wave: "sine",
+						// unisonvoices: 3,
+						detune: -6,
+						gain: .35,
+					} ),
+					2: GSUgetModel( "oscillator", {
+						wave: "sine",
+						// unisonvoices: 3,
 						detune: -12,
-						gain: .6,
+						gain: .35,
 					} ),
 				},
 			} );
 			this.#waReverb.$change( {
 				dry: 1,
-				wet: 2,
+				wet: 4,
 				delay: 0,
 				fadein: 0,
 				decay: .5,
@@ -163,15 +196,6 @@ class gscoHome {
 				index: i / ( nbSteps - 1 ),
 				curve: GSUnewArray( sz, j => j < szp * ( nbSteps - i ) ? 1 : -1 ),
 			} ] ) ),
-			wtposCurves: {
-				0: {
-					duration: 1,
-					curve: {
-						0: { x: 0, y: 0, type: null,    val: null },
-						1: { x: 0, y: 0, type: "curve", val: 0 },
-					},
-				},
-			},
 		};
 	}
 }
