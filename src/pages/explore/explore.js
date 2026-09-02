@@ -29,7 +29,7 @@ class gscoExplore {
 			? gsapiClient.$getAllActivities()
 			: gsapiClient.$getMyActivities()
 		).then( obj => {
-			DOM.exploreBody.$append( ...obj.map( gscoExplore.#createItem ) );
+			DOM.exploreBody.$append( ...obj.map( gscoExplore.#createItem ).flat( 1 ) );
 		} ).finally( () => {
 			DOM.exploreBody.$rmAttr( "data-loading" );
 		} );
@@ -42,8 +42,9 @@ class gscoExplore {
 		like: GSTX.$explore_newLike,
 	} );
 	static #createItem( o ) {
-		return $.$div( { class: "explore-item", "data-what": o.type },
-			$.$div( { class: "explore-item-head" },
+		return [
+			$.$div( { class: "explore-item-sep" } ),
+			$.$div( { class: "explore-item-head", "data-what": o.type },
 				$.$elem( "gsui-com-userlink", o.$actor ),
 				$.$bold( null, gscoExplore.#msgs[ o.type ] || "???" ),
 			),
@@ -51,6 +52,6 @@ class gscoExplore {
 				$u: o.$author,
 				$cmp: o.$cmp,
 			} ),
-		);
+		];
 	}
 }

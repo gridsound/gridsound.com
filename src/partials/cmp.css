@@ -15,6 +15,7 @@
 
 		#userPage & { top: 170px }
 		#searchPage & { top: 142px }
+		#explorePage & { top: 90px }
 	}
 	&[ data-head-sticky-shadow="bottom" ] {
 		.forkedfrom,

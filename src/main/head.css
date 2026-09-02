@@ -35,6 +35,7 @@
 		0 calc( ( 4px + 02px ) * var( --mul ) ) 0 var( --head-bg ),
 		0 calc( ( 4px + 16px ) * var( --mul ) ) 0 rgb( from var( --app-bg ) r g b / .9 );
 }
+#explorePage:has( .player[ data-head-sticky-shadow="bottom" ] ) #exploreSwitch,
 #searchPage:has( .player[ data-head-sticky-shadow="bottom" ] ) #searchPageForm,
 #userPage:has( .player[ data-head-sticky-shadow="bottom" ] ) #userPageProfileMenu {
 	box-shadow: 0 20px 0 var( --app-bg );

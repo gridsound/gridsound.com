@@ -45,19 +45,8 @@
 }
 
 /* .......................................................................... */
-.explore-item {
-	display: flex;
-	flex-direction: column;
-	gap: inherit;
-
-	&::before {
-		content: "";
-		width: 100%;
-		border-top: 10px dotted;
-		opacity: .025;
-	}
-}
 .explore-item-head {
+	position: relative;
 	display: flex;
 	align-items: center;
 	gap: 10px;
@@ -71,4 +60,9 @@
 		font-size: 10px;
 		text-transform: uppercase;
 	}
+}
+.explore-item-sep {
+	width: 100%;
+	border-top: 10px dotted;
+	opacity: .025;
 }

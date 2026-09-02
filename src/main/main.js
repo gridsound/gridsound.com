@@ -111,7 +111,10 @@ class gscoMain {
 			const { top, bottom } = elCmp.$bcr();
 			let shad = false;
 
-			if ( top <= 142 && page === "q" ) {
+			if ( top <= 90 && page === "explore" ) {
+				DOM.exploreSwitch.$rmAttr( "data-head-sticky-shadow" );
+				shad = "bottom";
+			} else if ( top <= 142 && page === "q" ) {
 				DOM.searchPageForm.$rmAttr( "data-head-sticky-shadow" );
 				shad = "bottom";
 			} else if ( top <= 170 && page === "u" ) {
