@@ -36,10 +36,6 @@
 	border-radius: 0 0 var( --rad ) var( --rad );
 	pointer-events: auto;
 	background-color: rgb( from var( --gsuiComProfile-bg ) r g b / var( --y32 ) );
-
-	#userPage:has( gsui-com-player[ data-head-sticky-shadow="bottom" ] ) & {
-		box-shadow: 0 12px 0 var( --app-bg );
-	}
 }
 
 /* .......................................................................... */
