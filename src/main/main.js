@@ -72,7 +72,7 @@ class gscoMain {
 
 	// .........................................................................
 	#onplay( e ) {
-		DOM.userPage.$query( "gsui-com-player[playing]" ).$each( elCmp => {
+		DOM.main.$query( "gsui-com-player[playing]" ).$each( elCmp => {
 			if ( !e.$target.$is( elCmp ) ) {
 				elCmp.$pause();
 			}
@@ -80,7 +80,7 @@ class gscoMain {
 		GSUsetTimeout( () => this.#onscroll(), .1 );
 	}
 	#onstop( e ) {
-		e.$target.$rmAttr( "data-head-sticky-shadow" );
+		e.$target.$parent().$rmAttr( "data-head-sticky-shadow" );
 		GSUsetTimeout( () => this.#onscroll(), .1 );
 	}
 	#onscroll() {
@@ -120,7 +120,7 @@ class gscoMain {
 			} else if ( bottom >= $html.$get( 0 ).offsetHeight - 5 ) {
 				shad = "top";
 			}
-			elCmp.$setAttr( "data-head-sticky-shadow", shad );
+			elCmp.$parent().$setAttr( "data-head-sticky-shadow", shad );
 		}
 	}
 	static #onscrollBg() {
