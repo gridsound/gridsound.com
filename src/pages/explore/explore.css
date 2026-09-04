@@ -66,3 +66,6 @@
 	border-top: 10px dotted;
 	opacity: .025;
 }
+.explore-item-head + .player {
+	padding-bottom: 4px;
+}
