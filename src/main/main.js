@@ -18,7 +18,7 @@ class gscoMain {
 		resetPassword:  [ DOM.resetpassPage,  DOM.headAuth,    PAGES.$resetpass ],
 		forgotPassword: [ DOM.forgotpassPage, DOM.headAuth,    PAGES.$forgotpass ],
 	} );
-	static $routes = Object.freeze( [
+	static #routes = Object.freeze( [
 		/^#\/$/u,
 		/^#\/u\/.+(\/bin|\/likes)?$/u,
 		/^#\/explore(\/all)?$/u,
@@ -178,7 +178,7 @@ class gscoMain {
 			location.hash = "#/";
 		} else if ( h !== "#/" && h.endsWith( "/" ) ) {
 			location.hash = h.substring( 0, h.length - 1 );
-		} else if ( !gscoMain.$routes.some( r => r.test( h ) ) ) {
+		} else if ( !gscoMain.#routes.some( r => r.test( h ) ) ) {
 			this.$error( 404 );
 		} else {
 			const arr = h.split( "/" );
