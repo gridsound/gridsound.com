@@ -8,7 +8,7 @@ class gscoSamples {
 			$root: DOM.samplesPageGroups,
 			$parentSelector: "#samplesPageGroups",
 			$itemSelector: "gsco-samplegroup",
-			$itemGripSelector: "[data-prop='grip']",
+			$itemGripSelector: "gsco-samplegroup-head > [data-prop='grip']",
 			$getTargetList: () => $noop,
 			$onchange( o ) {
 				gsapiClient.$reorderSampleGroup( o.$rdrItemId, o.$rdrItemOrderNow, o.$rdrItemOrderOld );
