@@ -1,5 +1,7 @@
 "use strict";
 
+const GSCO_SAMPLEGROUP_LISTCHANGE = 1;
+
 class gscoSamples {
 	constructor() {
 		Object.seal( this );
@@ -16,6 +18,9 @@ class gscoSamples {
 			$ondrop( dropInfo ) {
 				console.log( "$ondrop", dropInfo );
 			},
+		} );
+		DOM.samplesPageGroups.$listen( {
+			[ GSCO_SAMPLEGROUP_LISTCHANGE ]: () => this.#updateStorage(),
 		} );
 	}
 
@@ -216,7 +221,7 @@ class gscoSamplegroup extends gsui0ne {
 			if ( b ) {
 				this.$elements.$deleteBtn.$addAttr( "loading" );
 				gsapiClient.$deleteSamplegroup( this.$this.$dataId() )
-					.then( () => this.$this.$remove() )
+					.then( () => this.$this.$empty().$dispatch( GSCO_SAMPLEGROUP_LISTCHANGE ).$remove() )
 					.finally( () => this.$elements.$deleteBtn.$rmAttr( "loading" ) );
 			}
 		} );
@@ -242,6 +247,7 @@ class gscoSamplegroup extends gsui0ne {
 						updated: smp.$updated,
 					} ) );
 					this.#updateInfo();
+					this.$this.$dispatch( GSCO_SAMPLEGROUP_LISTCHANGE );
 				} )
 				.finally( () => this.$elements.$addSampleBtn.$rmAttr( "loading" ) );
 		} );
@@ -269,7 +275,7 @@ class gscoSample extends gsui0ne {
 				),
 			],
 			$elements: {
-				$xxx: ".xxx",
+				// $xxx: ".xxx",
 			},
 		} );
 	}
