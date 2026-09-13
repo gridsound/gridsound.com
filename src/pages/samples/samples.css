@@ -160,6 +160,16 @@ gsco-sample-head {
 		width: 16px;
 	}
 }
+gsco-sample-name {
+	font-weight: bold;
+	font-size: 13px;
+}
+gsco-sample-info {
+	margin-right: auto;
+	font-size: 12px;
+	white-space: nowrap;
+	opacity: .5;
+}
 gsco-sample-body {
 	flex: 1;
 	display: flex;

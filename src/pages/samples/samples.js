@@ -177,7 +177,7 @@ class gscoSamplegroup extends gsui0ne {
 			...smps.map( smp => $.$elem( "gsco-sample", {
 				"data-id": smp.$id,
 				order: smp.$order,
-				type: smp.$type,
+				format: smp.$format,
 				size: smp.$size,
 				name: smp.$name,
 				desc: smp.$desc,
@@ -239,7 +239,7 @@ class gscoSamplegroup extends gsui0ne {
 					this.$elements.$body.$prepend( $.$elem( "gsco-sample", {
 						"data-id": smp.$id,
 						order: smp.$order,
-						type: smp.$type,
+						format: smp.$format,
 						size: smp.$size,
 						name: smp.$name,
 						desc: smp.$desc,
@@ -268,6 +268,9 @@ class gscoSample extends gsui0ne {
 							$.$icon( { icon: "grip-v" } ),
 						),
 						$.$elem( "gsui-com-button", { "data-prop": "play", icon: "play" } ),
+						$.$elem( "gsco-sample-name" ),
+						$.$elem( "gsui-com-button", { "data-prop": "rename", icon: "pen" } ),
+						$.$elem( "gsco-sample-info" ),
 						$.$elem( "gsui-com-button", { "data-prop": "delete", icon: "trash", type: "danger" } ),
 					),
 					$.$elem( "gsco-sample-body", null,
@@ -275,25 +278,31 @@ class gscoSample extends gsui0ne {
 				),
 			],
 			$elements: {
-				// $xxx: ".xxx",
+				$name: "gsco-sample-name",
+				$info: "gsco-sample-info",
 			},
 		} );
 	}
 
 	// .........................................................................
 	static get observedAttributes() {
-		return [ "order" ];
-		// type: smp.$type,
-		// size: smp.$size,
-		// name: smp.$name,
-		// desc: smp.$desc,
-		// created: smp.$created,
-		// updated: smp.$updated,
+		return [ "order", "name", "format", "size" ];
 	}
 	$attributeChanged( prop, val ) {
 		switch ( prop ) {
 			case "order": this.$this.$css( "order", val ); break;
+			case "name": this.$elements.$name.$text( val ); break;
+			case "format":
+			case "size": this.#updateInfo(); break;
 		}
+	}
+
+	// .........................................................................
+	#updateInfo() {
+		this.$elements.$info.$textHTML( GSTXreplace( GSTX.$samplesFormatSize,
+			this.$this.$getAttr( "format" ),
+			GSUmathFloatReadable( +this.$this.$getAttr( "size" ) ).join( "" ),
+		) );
 	}
 }
 
