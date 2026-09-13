@@ -158,15 +158,15 @@ class gscoHome {
 				oscillators: {
 					0: GSUgetModel( "oscillator", {
 						wave: "custom.s0.o0",
-						// unisonvoices: 2,
+						unisonvoices: 2,
 						wavetable: wt,
 						gain: .3,
 					} ),
 					1: GSUgetModel( "oscillator", {
-						wave: "sine",
+						wave: "triangle",
 						// unisonvoices: 3,
-						detune: -6,
-						gain: .35,
+						detune: 0,
+						gain: .3,
 					} ),
 					2: GSUgetModel( "oscillator", {
 						wave: "sine",

@@ -15,6 +15,7 @@ class gscoMain {
 		auth:           [ DOM.authPage,       DOM.headAuth,    PAGES.$auth ],
 		logs:           [ DOM.logsPage,       null,            PAGES.$logs ],
 		explore:        [ DOM.explorePage,    DOM.headExplore, PAGES.$explore ],
+		samples:        [ DOM.samplesPage,    DOM.headSamples, PAGES.$samples ],
 		resetPassword:  [ DOM.resetpassPage,  DOM.headAuth,    PAGES.$resetpass ],
 		forgotPassword: [ DOM.forgotpassPage, DOM.headAuth,    PAGES.$forgotpass ],
 	} );
@@ -22,6 +23,7 @@ class gscoMain {
 		/^#\/$/u,
 		/^#\/u\/.+(\/bin|\/likes)?$/u,
 		/^#\/explore(\/all)?$/u,
+		/^#\/samples$/u,
 		/^#\/q(\/u|\/cmp)?$/u,
 		/^#\/q(\/u|\/cmp)(\/.+)?$/u,
 		/^#\/cmp\/.+$/u,
@@ -96,10 +98,12 @@ class gscoMain {
 
 		DOM.head.$css( st );
 		DOM.userPageTop.$css( st );
+		DOM.samplesPageHead.$css( st );
 		DOM.explorePage.$css( st );
 		DOM.searchPageForm.$css( st );
 		DOM.exploreSwitch.$setAttr( "data-head-sticky-shadow", sticky );
 		DOM.searchPageForm.$setAttr( "data-head-sticky-shadow", sticky );
+		DOM.samplesPageHead.$setAttr( "data-head-sticky-shadow", y >= 30 && "bottom" );
 		DOM.userPageProfileMenu.$setAttr( "data-head-sticky-shadow", sticky );
 		gscoMain.#onscrollCmpPlaying( this.#pageName );
 		gscoMain.#onscrollBg();

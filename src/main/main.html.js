@@ -22,6 +22,7 @@ $.$setTemplate( "gs-main", () =>
 					$.$link( { id: "headSearch", class: "headLink", href: "#/q", "data-tooltip": GSTX.$searchUsersCmps }, $.$icon( { icon: "search" } ) ),
 					$.$div( { id: "headSep" } ),
 					$.$linkExt( { id: "headNewCmp", class: "headLink", href: GSURL.$gsDAW, "data-tooltip": GSTX.$createNewCmp }, $.$icon( { icon: "cu-music-plus" } ) ),
+					$.$link( { id: "headSamples", class: "headLink", href: "#/samples", "data-tooltip": GSTX.$samplesLink }, $.$icon( { icon: "folder-music" } ) ),
 					$.$link( { id: "headUser", class: "headLink gsui-ellipsis" },
 						$.$div( { id: "headUsername", class: "gsui-ellipsis", inert: true } ),
 						$.$elem( "gsui-com-avatar", { id: "headAvatar", inert: true } ),

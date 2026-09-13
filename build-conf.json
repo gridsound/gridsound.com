@@ -26,7 +26,8 @@
 		"src/pages/auth/auth.css",
 		"src/pages/user/user.css",
 		"src/pages/logs/logs.css",
-		"src/pages/explore/explore.css"
+		"src/pages/explore/explore.css",
+		"src/pages/samples/samples.css"
 	],
 	"jsSrcB": [
 		"src/main/main.html.js",
@@ -37,6 +38,7 @@
 		"src/pages/logs/logs.html.js",
 		"src/pages/search/search.html.js",
 		"src/pages/explore/explore.html.js",
+		"src/pages/samples/samples.html.js",
 		"src/pages/forgotpass/forgotpass.html.js",
 		"src/pages/resetpass/resetpass.html.js",
 
@@ -53,6 +55,7 @@
 		"src/pages/search/search.js",
 		"src/pages/resetpass/resetpass.js",
 		"src/pages/explore/explore.js",
+		"src/pages/samples/samples.js",
 		"src/pages/forgotpass/forgotpass.js",
 
 		"src/run.js"
@@ -64,6 +67,7 @@
 		"gs-ui-components/gsuiIcon/gsuiIcon.css",
 		"gs-ui-components/gsuiCursor/gsuiCursor.css",
 		"gs-ui-components/gsuiRipple/gsuiRipple.css",
+		"gs-ui-components/gsuiReorder/gsuiReorder.css",
 		"gs-ui-components/gsuiTooltip/gsuiTooltip.css",
 		"gs-ui-components/gsuiComAvatar/gsuiComAvatar.css",
 		"gs-ui-components/gsuiComButton/gsuiComButton.css",
@@ -123,6 +127,7 @@
 
 		"gs-ui-components/gsui0ne/gsui0ne.js",
 		"gs-ui-components/gsuiRipple/gsuiRipple.js",
+		"gs-ui-components/gsuiReorder/gsuiReorder.js",
 		"gs-ui-components/gsuiTooltip/gsuiTooltip.js",
 		"gs-ui-components/gsuiComAvatar/gsuiComAvatar.js",
 		"gs-ui-components/gsuiComButton/gsuiComButton.js",

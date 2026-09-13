@@ -11,6 +11,7 @@ $( "#pages" ).$append(
 	$.$getTemplate( "gscoLogs" ),
 	$.$getTemplate( "gscoCmp" ),
 	$.$getTemplate( "gscoExplore" ),
+	$.$getTemplate( "gscoSamples" ),
 	$.$getTemplate( "gscoResetPass" ),
 	$.$getTemplate( "gscoForgotPass" ),
 );
@@ -27,6 +28,7 @@ const PAGES = {
 	$logs: new gscoLogs(),
 	$search: new gscoSearch(),
 	$explore: new gscoExplore(),
+	$samples: new gscoSamples(),
 	$resetpass: new gscoResetPass(),
 	$forgotpass: new gscoForgotPass(),
 };
