@@ -46,9 +46,12 @@ class gscoSamples {
 	#updateStorage() {
 		const max = gsapiClient.$user.samplesMaxBytes;
 		const sum = DOM.samplesPageGroups.$query( "gsco-sample" ).$reduce( ( sum, el ) => sum + +$.$getAttr( el, "size" ), 0 );
-		const p = GSUmathRound( sum / max * 100, .1 );
 
-		DOM.samplesPageStorage.$textHTML( GSTXreplace( GSTX.$samplesStorage, p, sum, max ) );
+		DOM.samplesPageStorage.$textHTML( GSTXreplace( GSTX.$samplesStorage,
+			GSUmathRound( sum / max * 100, .1 ),
+			GSUmathFloatReadable( sum ).join( "" ),
+			GSUmathFloatReadable( max ).join( "" ),
+		) );
 	}
 	#onclickMenu( e ) {
 		switch ( $.$dataProp( e.target ) ) {
@@ -161,9 +164,10 @@ class gscoSamplegroup extends gsui0ne {
 	#updateInfo() {
 		const nbSmp = this.$elements.$body.$childrenCount();
 		const size = this.$elements.$body.$children().$reduce( ( sum, el ) => sum + +$.$getAttr( el, "size" ), 0 );
+		const size2 = GSUmathFloatReadable( size ).join( "" );
 
 		this.#nbSmp = nbSmp;
-		this.$elements.$info.$textHTML( GSTXreplace( GSTX.$samplesGroupSize, nbSmp, size ) );
+		this.$elements.$info.$textHTML( GSTXreplace( GSTX.$samplesGroupSize, nbSmp, size2 ) );
 	}
 	#addSamples( smps ) {
 		this.$elements.$body.$append(
