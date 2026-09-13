@@ -11,7 +11,7 @@ class gscoSamples {
 			$itemGripSelector: "gsco-samplegroup-head > [data-prop='grip']",
 			$getTargetList: () => $noop,
 			$onchange( o ) {
-				gsapiClient.$reorderSampleGroup( o.$rdrItemId, o.$rdrItemOrderNow, o.$rdrItemOrderOld );
+				gsapiClient.$reorderSamplegroup( o.$rdrItemId, o.$rdrItemOrderNow, o.$rdrItemOrderOld );
 			},
 			$ondrop( dropInfo ) {
 				console.log( "$ondrop", dropInfo );
@@ -22,8 +22,8 @@ class gscoSamples {
 	// .........................................................................
 	$show() {
 		gsapiClient.$getSamples()
-			.then( o => {
-				DOM.samplesPageGroups.$append( ...o.$groups.map( g => {
+			.then( grps => {
+				DOM.samplesPageGroups.$append( ...grps.map( g => {
 					return $( "<gsco-samplegroup>" ).$setAttr( {
 						"data-id": g.$id,
 						open: false,
@@ -34,8 +34,6 @@ class gscoSamples {
 				this.#updateStorage();
 				DOM.samplesPageHead.$query( "[data-prop='open-groups']" ).$click();
 			} );
-	}
-	$update() {
 	}
 	$quit() {
 		DOM.samplesPageStorage.$empty();
@@ -61,7 +59,7 @@ class gscoSamples {
 		}
 	}
 	#newGroup() {
-		gsapiClient.$newSampleGroup()
+		gsapiClient.$newSamplegroup()
 			.then( grp => {
 				DOM.samplesPageGroups
 					.$query( "gsco-samplegroup" )
@@ -203,7 +201,7 @@ class gscoSamplegroup extends gsui0ne {
 				}
 				return name;
 			} )
-			.then( name => gsapiClient.$renameSampleGroup( this.$this.$dataId(), name ) )
+			.then( name => gsapiClient.$renameSamplegroup( this.$this.$dataId(), name ) )
 			.then( name => this.$this.$setAttr( "name", name ) )
 			.finally( () => this.$elements.$renameBtn.$rmAttr( "loading" ) );
 	}
@@ -217,7 +215,7 @@ class gscoSamplegroup extends gsui0ne {
 		).then( b => {
 			if ( b ) {
 				this.$elements.$deleteBtn.$addAttr( "loading" );
-				gsapiClient.$deleteSampleGroup( this.$this.$dataId() )
+				gsapiClient.$deleteSamplegroup( this.$this.$dataId() )
 					.then( () => this.$this.$remove() )
 					.finally( () => this.$elements.$deleteBtn.$rmAttr( "loading" ) );
 			}
