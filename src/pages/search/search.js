@@ -62,7 +62,7 @@ class gscoSearch {
 			len === 0 ? isU ? GSTX.$search_user_0   : GSTX.$search_cmps_0 :
 			len === 1 ? isU ? GSTX.$search_user_1   : GSTX.$search_cmps_1 :
 			len < 20  ? isU ? GSTX.$search_user_n   : GSTX.$search_cmps_n :
-			            isU ? GSTX.$search_user_max : GSTX.$search_cmps_max;
+			isU             ? GSTX.$search_user_max : GSTX.$search_cmps_max;
 
 		DOM.searchPageResultIntro.$textHTML( GSTXreplace( txt, q, len ) );
 		DOM.searchPageResult.$append( ...arr.map( isU

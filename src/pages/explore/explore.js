@@ -13,7 +13,7 @@ class gscoExplore {
 		DOM.exploreBody.$empty();
 	}
 	$update( all ) {
-		const all2 = all === "all"
+		const all2 = all === "all";
 		const nbFollow = gsapiClient.$user.following;
 		const intro =
 			all2 ? GSTX.$explore_all :

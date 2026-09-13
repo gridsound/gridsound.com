@@ -10,10 +10,10 @@ class gscoSamples {
 			$itemSelector: "gsco-samplegroup",
 			$itemGripSelector: "[data-prop='grip']",
 			$getTargetList: () => $noop,
-			$onchange: o => {
+			$onchange( o ) {
 				gsapiClient.$reorderSampleGroup( o.$rdrItemId, o.$rdrItemOrderNow, o.$rdrItemOrderOld );
 			},
-			$ondrop: dropInfo => {
+			$ondrop( dropInfo ) {
 				console.log( "$ondrop", dropInfo );
 			},
 		} );

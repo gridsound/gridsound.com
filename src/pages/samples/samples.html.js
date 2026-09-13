@@ -2,7 +2,7 @@
 
 $.$setTemplate( "gscoSamples", () =>
 	$.$div( { class: "page", id: "samplesPage" },
-		$.$flex( { id: "samplesPageHead", x: true, ycenter: true, g8: true, },
+		$.$flex( { id: "samplesPageHead", x: true, ycenter: true, g8: true },
 			$.$span( { id: "samplesPageStorage" } ),
 			$.$elem( "gsui-com-button", { "data-prop": "open-groups", type: "button", icon: "chevrons-down", "data-tooltip": GSTX.$samplesOpenGroups } ),
 			$.$elem( "gsui-com-button", { "data-prop": "close-groups", type: "button", icon: "chevrons-up", "data-tooltip": GSTX.$samplesCloseGroups } ),
