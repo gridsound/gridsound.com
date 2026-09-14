@@ -134,6 +134,7 @@ class gscoSamplegroup extends gsui0ne {
 		} );
 		this.$elements.$head.$onclick( this.#onclick.bind( this ) );
 		this.$elements.$gripH.$on( {
+			dblclick: () => this.#setHeightAuto(),
 			pointerdown: e => {
 				this.$elements.$gripH.$setPtrCapture( e.pointerId );
 				this.#resizing = true;
@@ -177,10 +178,7 @@ class gscoSamplegroup extends gsui0ne {
 			case "order": this.$this.$css( "order", val ); break;
 			case "open":
 				if ( val === "" && !this.#resizing ) {
-					const nb = this.$elements.$body.$childrenCount();
-					const smpsH = nb * 100 + ( nb - 1 ) * 6;
-
-					this.$this.$height( GSUmathClamp( 50 + smpsH + 18, 120, 600 ), "px" );
+					this.#setHeightAuto();
 				}
 				break;
 		}
@@ -192,6 +190,12 @@ class gscoSamplegroup extends gsui0ne {
 	}
 
 	// .........................................................................
+	#setHeightAuto() {
+		const nb = this.$elements.$body.$childrenCount();
+		const smpsH = nb * 100 + ( nb - 1 ) * 6;
+
+		this.$this.$height( GSUmathClamp( 50 + smpsH + 18, 120, 600 ), "px" );
+	}
 	#updateInfo() {
 		let nbSmp = 0;
 		const size = this.$elements.$body.$children().$reduce( ( sum, el ) => {
