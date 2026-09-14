@@ -317,6 +317,7 @@ class gscoSample extends gsui0ne {
 			$elements: {
 				$name: "gsco-sample-name",
 				$info: "gsco-sample-info",
+				$renameBtn: "[data-prop='rename']",
 				$deleteBtn: "[data-prop='delete']",
 			},
 		} );
@@ -347,9 +348,23 @@ class gscoSample extends gsui0ne {
 	// .........................................................................
 	#onclick( e ) {
 		switch ( $.$dataProp( e.target ) ) {
+			case "rename": this.#clickRename(); break;
 			case "delete": this.#clickDelete(); break;
 			case "download": this.#clickDownload(); break;
 		}
+	}
+	#clickRename() {
+		this.$elements.$renameBtn.$addAttr( "loading" );
+		return $popup.$prompt( GSTX.$samplesMvSample, "", this.$this.$getAttr( "name" ) )
+			.then( name => {
+				if ( !name || name === this.$this.$getAttr( "name" ) ) {
+					throw "";
+				}
+				return name;
+			} )
+			.then( name => gsapiClient.$renameSample( this.$this.$dataId(), name ) )
+			.then( name => this.$this.$setAttr( "name", name ) )
+			.finally( () => this.$elements.$renameBtn.$rmAttr( "loading" ) );
 	}
 	#clickDownload() {
 		gsapiClient.$downloadSample( ...this.$this.$getAttr( "data-id", "name", "format" ) );
