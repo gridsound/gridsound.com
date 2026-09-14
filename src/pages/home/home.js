@@ -1,7 +1,6 @@
 "use strict";
 
 class gscoHome {
-	#ctx = null;
 	#waSynth = null;
 	#waReverb = null;
 	#startedKey = null;
@@ -18,7 +17,7 @@ class gscoHome {
 			[ GSEV_JOYSTICK_END ]: () => this.#onendJoystick(),
 			[ GSEV_JOYSTICK_MOVE ]: ( _, x, y ) => this.#onmoveJoystick( x, y ),
 			[ GSEV_JOYSTICK_START ]: ( _, x, y ) => {
-				if ( this.#ctx ) {
+				if ( GSUaudioCurrentContext ) {
 					this.#onstartJoystick( x, y );
 				} else {
 					this.#audioInit().then( () => this.#onstartJoystick( x, y ) );
@@ -46,20 +45,21 @@ class gscoHome {
 	#onstartJoystick( x, y ) {
 		this.#startedKey = this.#waSynth.$synStartKey( [
 			[ null, GSUgetModel( "key", { key: 3 * 12 } ) ],
-		], this.#ctx.currentTime, 0, Infinity );
+		], GSUaudioCurrentContext.currentTime, 0, Infinity );
 		this.#onmoveJoystick( x, y );
 	}
 	#onmoveJoystick( x, y ) {
+		const ctx = GSUaudioCurrentContext;
 		const lfoSpeed = 1 + GSUmathEaseInCirc( x ) * 60;
 		const lfoAmp = .2 + y * .8;
 		// const waKey = this.#waSynth.$synGetKeyNode( this.#startedKey );
 
 		// GSUforEach( waKey.$oscNodes.get( "0" ).uniNodes, osc => {
 		// 	osc[ 0 ].$cancelWtpos();
-		// 	osc[ 0 ].$setWtposAtTime( 1 - x, this.#ctx.currentTime );
+		// 	osc[ 0 ].$setWtposAtTime( 1 - x, ctx.currentTime );
 		// } );
 		this.#setAnimSpeedThr( lfoSpeed, lfoAmp );
-		this.#waSynth?.$synChange( this.#ctx, {
+		this.#waSynth?.$synChange( ctx, {
 			envs: {
 				lowpass: {
 					q: 4 - x * 4,
@@ -100,20 +100,22 @@ class gscoHome {
 
 	// .........................................................................
 	#audioInit() {
-		this.#ctx = GSUaudioContext();
-		return gswaOsc.$oscLoadModule( this.#ctx ).then( () => {
+		const ctx = GSUaudioCurrentContext || GSUaudioContext();
+
+		GSUaudioCurrentContext = ctx;
+		return gswaOsc.$oscLoadModule( ctx ).then( () => {
 			const wt = gscoHome.#createPulseWT();
 			const wt2 = Object.values( wt.waves ).sort( ( a, b ) => a.index - b.index ).map( w => w.curve );
 
 			gswaBuffers.$sabSetWavetable( "custom.s0.o0", wt2 );
 			this.#waSynth = new gswaSynth();
 			this.#waReverb = new gswaFxReverb();
-			this.#waReverb.$setContext( this.#ctx );
-			this.#waReverb.$getOutput().connect( this.#ctx.destination );
-			this.#waSynth.$synSetContext( this.#ctx );
+			this.#waReverb.$setContext( ctx );
+			this.#waReverb.$getOutput().connect( ctx.destination );
+			this.#waSynth.$synSetContext( ctx );
 			this.#waSynth.$synSetBPM( 60 );
 			this.#waSynth.$output.connect( this.#waReverb.$getInput() );
-			this.#waSynth.$synChange( this.#ctx, {
+			this.#waSynth.$synChange( ctx, {
 				envs: {
 					gain: {
 						toggle: true,
