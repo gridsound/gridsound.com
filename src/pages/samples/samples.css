@@ -171,7 +171,34 @@ gsco-sample-info {
 	opacity: .5;
 }
 gsco-sample-body {
+	position: relative;
 	flex: 1;
 	display: flex;
 	background-color: #fff1;
+}
+gsco-sample-player {
+	position: absolute;
+	inset: 0 1px;
+
+	svg {
+		position: absolute;
+		width: 100%;
+		height: 100%;
+		fill: white;
+	}
+	gsco-sample-slider {
+		position: absolute;
+		inset: 0;
+		cursor: var( --gsuiCursor-pointer );
+
+		gsco-sample-cursor {
+			position: absolute;
+			inset: 0 auto;
+			width: 2px;
+			margin-left: -1px;
+			background-color: #ff9;
+			pointer-events: none;
+			transition: opacity .5s;
+		}
+	}
 }

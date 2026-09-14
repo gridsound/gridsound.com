@@ -5,6 +5,7 @@ const GSCO_SAMPLEGROUP_LISTCHANGE = 1;
 class gscoSamples {
 	constructor() {
 		Object.seal( this );
+		GSUaudioCurrentContext ||= GSUaudioContext();
 		DOM.samplesPageHead.$onclick( this.#onclickMenu.bind( this ) );
 		new gsuiReorder( {
 			$root: DOM.samplesPageGroups,
@@ -219,6 +220,7 @@ class gscoSamplegroup extends gsui0ne {
 				size: smp.$size,
 				name: smp.$name,
 				desc: smp.$desc,
+				waveform: smp.$waveform,
 				created: smp.$created,
 				updated: smp.$updated,
 			} ) )
@@ -265,33 +267,50 @@ class gscoSamplegroup extends gsui0ne {
 		} );
 	}
 	#clickAddSample() {
-		GSUopenFileManager().then( files => {
-			this.$elements.$addSampleBtn.$addAttr( "loading" );
-			GSUgetFileContent( files[ 0 ], "array" )
-				.then( arr => {
-					const hash = GSUhashBufferV1( new Uint8Array( arr ) );
+		let file;
+		let hash;
 
-					return gsapiClient.$addSample( this.$this.$dataId(), hash, files[ 0 ] );
-				} )
-				.then( smp => {
-					this.$elements.$body
-						.$query( "gsco-sample" )
-						.$setAttr( "order", el => 1 + +$.$getAttr( el, "order" ) );
-					this.$elements.$body.$prepend( $.$elem( "gsco-sample", {
-						"data-id": smp.$id,
-						order: smp.$order,
-						format: smp.$format,
-						size: smp.$size,
-						name: smp.$name,
-						desc: smp.$desc,
-						created: smp.$created,
-						updated: smp.$updated,
-					} ) );
-					this.#updateInfo();
-					this.$this.$dispatch( GSCO_SAMPLEGROUP_LISTCHANGE );
-				} )
-				.finally( () => this.$elements.$addSampleBtn.$rmAttr( "loading" ) );
-		} );
+		GSUopenFileManager()
+			.then( files => {
+				this.$elements.$addSampleBtn.$addAttr( "loading" );
+				file = files[ 0 ];
+				return GSUgetFileContent( file, "array" );
+			} )
+			.then( arr => {
+				hash = GSUhashBufferV1( new Uint8Array( arr ) );
+				return GSUaudioCurrentContext.decodeAudioData( arr );
+			} )
+			.then( buf => {
+				const [ l, r ] = gsuiWaveform.$wfGetArrayFromBuffer( 512, buf );
+
+				for ( let i in l ) {
+					l[ i ] = GSUmathClamp( l[ i ] - 1, 0,  1 ) * 127 | 0;
+					r[ i ] = GSUmathClamp( r[ i ],     0, -1 ) * 127 | 0;
+				}
+
+				const wf = gsuiWaveform.$wfArraysToPolygonPoints( l, r );
+
+				return gsapiClient.$addSample( this.$this.$dataId(), hash, file, wf );
+			} )
+			.then( smp => {
+				this.$elements.$body
+					.$query( "gsco-sample" )
+					.$setAttr( "order", el => 1 + +$.$getAttr( el, "order" ) );
+				this.$elements.$body.$prepend( $.$elem( "gsco-sample", {
+					"data-id": smp.$id,
+					order: smp.$order,
+					format: smp.$format,
+					size: smp.$size,
+					name: smp.$name,
+					desc: smp.$desc,
+					waveform: smp.$waveform,
+					created: smp.$created,
+					updated: smp.$updated,
+				} ) );
+				this.#updateInfo();
+				this.$this.$dispatch( GSCO_SAMPLEGROUP_LISTCHANGE );
+			} )
+			.finally( () => this.$elements.$addSampleBtn.$rmAttr( "loading" ) );
 	}
 }
 
@@ -299,6 +318,8 @@ $.$define( "gsco-samplegroup", gscoSamplegroup );
 
 // .............................................................................
 class gscoSample extends gsui0ne {
+	#currentTiming = false;
+
 	constructor() {
 		super( {
 			$tagName: "gsco-sample",
@@ -309,6 +330,7 @@ class gscoSample extends gsui0ne {
 							$.$icon( { icon: "grip-v" } ),
 						),
 						$.$elem( "gsui-com-button", { "data-prop": "play", icon: "play", type: "submit" } ),
+						$.$elem( "gsui-com-button", { "data-prop": "stop", icon: "stop", type: "submit", disabled: true } ),
 						$.$elem( "gsco-sample-name" ),
 						$.$elem( "gsui-com-button", { "data-prop": "rename", icon: "pen", "data-tooltip": GSTX.$samplesMvSample } ),
 						$.$elem( "gsui-com-button", { "data-prop": "download", icon: "download", "data-tooltip": GSTX.$samplesDLSample } ),
@@ -316,22 +338,38 @@ class gscoSample extends gsui0ne {
 						$.$elem( "gsui-com-button", { "data-prop": "delete", icon: "trash", type: "danger", "data-tooltip": GSTX.$samplesRmSample } ),
 					),
 					$.$elem( "gsco-sample-body", null,
+						$.$elem( "gsco-sample-player", null,
+							$.$elem( "svg", { viewBox: "0 -127 512 256", preserveAspectRatio: "none" },
+								$.$elem( "polygon" ),
+							),
+							$.$elem( "gsco-sample-slider", null,
+								$.$elem( "gsco-sample-cursor" ),
+							),
+						),
 					),
 				),
 			],
 			$elements: {
 				$name: "gsco-sample-name",
 				$info: "gsco-sample-info",
+				$slider: "gsco-sample-slider",
+				$waveform: "gsco-sample-body polygon",
 				$renameBtn: "[data-prop='rename']",
 				$deleteBtn: "[data-prop='delete']",
 			},
 		} );
 		this.$this.$onclick( this.#onclick.bind( this ) );
+		this.$elements.$slider.$on( {
+			pointerdown: this.#sliderPtrDown.bind( this ),
+			pointermove: this.#sliderPtrMove.bind( this ),
+			pointerup: this.#sliderPtrUp.bind( this ),
+		} );
+		this.#setSlider( 0 );
 	}
 
 	// .........................................................................
 	static get observedAttributes() {
-		return [ "order", "name", "format", "size" ];
+		return [ "order", "name", "format", "size", "waveform" ];
 	}
 	$attributeChanged( prop, val ) {
 		switch ( prop ) {
@@ -339,6 +377,7 @@ class gscoSample extends gsui0ne {
 			case "name": this.$elements.$name.$text( val ); break;
 			case "format":
 			case "size": this.#updateInfo(); break;
+			case "waveform": this.#updateWaveform( val ); break;
 		}
 	}
 
@@ -348,6 +387,35 @@ class gscoSample extends gsui0ne {
 			this.$this.$getAttr( "format" ),
 			GSUmathFloatReadable( +this.$this.$getAttr( "size" ) ).join( "" ),
 		) );
+	}
+	#updateWaveform( o ) {
+		this.$elements.$waveform.$setAttr( "points", o );
+	}
+
+	// .........................................................................
+	#sliderPtrDown( e ) {
+		this.$elements.$slider.$setPtrCapture( e.pointerId );
+		this.#currentTiming = true;
+		this.#sliderPtrMove( e );
+		e.preventDefault();
+	}
+	#sliderPtrMove( e ) {
+		if ( this.#currentTiming ) {
+			const bcr = this.$elements.$slider.$bcr();
+
+			this.#setSlider( ( e.pageX - bcr.x ) / bcr.w );
+		}
+	}
+	#sliderPtrUp( e ) {
+		this.$elements.$slider.$relPtrCapture( e.pointerId );
+		this.#currentTiming = false;
+	}
+	#setSlider( n ) {
+		const p = GSUmathClamp( n, 0, 1 ) * 100;
+
+		this.$elements.$slider.$child( 0 )
+			.$left( p, "%" )
+			.$css( "opacity", p === 0 || p === 100 ? 0 : 1 );
 	}
 
 	// .........................................................................
