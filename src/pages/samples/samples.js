@@ -138,6 +138,7 @@ class gscoSamplegroup extends gsui0ne {
 			pointerdown: e => {
 				this.$elements.$gripH.$setPtrCapture( e.pointerId );
 				this.#resizing = true;
+				e.preventDefault();
 			},
 			pointerup: e => {
 				this.$elements.$gripH.$relPtrCapture( e.pointerId );
