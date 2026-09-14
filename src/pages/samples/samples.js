@@ -20,7 +20,20 @@ class gscoSamples {
 			},
 		} );
 		DOM.samplesPageGroups.$listen( {
-			[ GSCO_SAMPLEGROUP_LISTCHANGE ]: () => this.#updateStorage(),
+			[ GSCO_SAMPLEGROUP_LISTCHANGE ]: d => {
+				this.#updateStorage();
+				if ( d.$target.$tag() === "gsco-samplegroup" ) {
+					const order = +d.$target.$getAttr( "order" );
+
+					DOM.samplesPageGroups.$query( "gsco-samplegroup" ).$each( el => {
+						const or = +$.$getAttr( el, "order" );
+
+						if ( or > order ) {
+							$.$setAttr( el, "order", or - 1 );
+						}
+					} );
+				}
+			},
 		} );
 	}
 
@@ -137,6 +150,21 @@ class gscoSamplegroup extends gsui0ne {
 				}
 			},
 		} );
+		this.$this.$listen( {
+			[ GSCO_SAMPLEGROUP_LISTCHANGE ]: d => {
+				const order = +d.$target.$getAttr( "order" );
+
+				this.$elements.$body.$query( "gsco-sample" ).$each( el => {
+					const or = +$.$getAttr( el, "order" );
+
+					if ( or > order ) {
+						$.$setAttr( el, "order", or - 1 );
+					}
+				} );
+				this.#updateInfo();
+				return true;
+			},
+		} );
 	}
 
 	// .........................................................................
@@ -165,8 +193,13 @@ class gscoSamplegroup extends gsui0ne {
 
 	// .........................................................................
 	#updateInfo() {
-		const nbSmp = this.$elements.$body.$childrenCount();
-		const size = this.$elements.$body.$children().$reduce( ( sum, el ) => sum + +$.$getAttr( el, "size" ), 0 );
+		let nbSmp = 0;
+		const size = this.$elements.$body.$children().$reduce( ( sum, el ) => {
+			const sz = +$.$getAttr( el, "size" );
+
+			nbSmp += sz > 0;
+			return sum + sz;
+		}, 0 );
 		const size2 = GSUmathFloatReadable( size ).join( "" );
 
 		this.#nbSmp = nbSmp;
@@ -236,6 +269,9 @@ class gscoSamplegroup extends gsui0ne {
 					return gsapiClient.$addSample( this.$this.$dataId(), hash, files[ 0 ] );
 				} )
 				.then( smp => {
+					this.$elements.$body
+						.$query( "gsco-sample" )
+						.$setAttr( "order", el => 1 + +$.$getAttr( el, "order" ) );
 					this.$elements.$body.$prepend( $.$elem( "gsco-sample", {
 						"data-id": smp.$id,
 						order: smp.$order,
@@ -267,11 +303,12 @@ class gscoSample extends gsui0ne {
 						$.$button( { "data-prop": "grip" },
 							$.$icon( { icon: "grip-v" } ),
 						),
-						$.$elem( "gsui-com-button", { "data-prop": "play", icon: "play" } ),
+						$.$elem( "gsui-com-button", { "data-prop": "play", icon: "play", type: "submit" } ),
 						$.$elem( "gsco-sample-name" ),
-						$.$elem( "gsui-com-button", { "data-prop": "rename", icon: "pen" } ),
+						$.$elem( "gsui-com-button", { "data-prop": "rename", icon: "pen", "data-tooltip": GSTX.$samplesMvSample } ),
+						$.$elem( "gsui-com-button", { "data-prop": "download", icon: "download", "data-tooltip": GSTX.$samplesDLSample } ),
 						$.$elem( "gsco-sample-info" ),
-						$.$elem( "gsui-com-button", { "data-prop": "delete", icon: "trash", type: "danger" } ),
+						$.$elem( "gsui-com-button", { "data-prop": "delete", icon: "trash", type: "danger", "data-tooltip": GSTX.$samplesRmSample } ),
 					),
 					$.$elem( "gsco-sample-body", null,
 					),
@@ -280,8 +317,10 @@ class gscoSample extends gsui0ne {
 			$elements: {
 				$name: "gsco-sample-name",
 				$info: "gsco-sample-info",
+				$deleteBtn: "[data-prop='delete']",
 			},
 		} );
+		this.$this.$onclick( this.#onclick.bind( this ) );
 	}
 
 	// .........................................................................
@@ -303,6 +342,21 @@ class gscoSample extends gsui0ne {
 			this.$this.$getAttr( "format" ),
 			GSUmathFloatReadable( +this.$this.$getAttr( "size" ) ).join( "" ),
 		) );
+	}
+
+	// .........................................................................
+	#onclick( e ) {
+		switch ( $.$dataProp( e.target ) ) {
+			case "delete": this.#clickDelete(); break;
+		}
+	}
+	#clickDelete() {
+		this.$elements.$deleteBtn.$addAttr( "loading" );
+		gsapiClient.$deleteSample( this.$this.$dataId() )
+			.then( () => {
+				this.$this.$setAttr( "size", 0 ).$dispatch( GSCO_SAMPLEGROUP_LISTCHANGE ).$remove();
+			} )
+			.finally( () => this.$elements.$deleteBtn.$rmAttr( "loading" ) );
 	}
 }
 
