@@ -348,7 +348,11 @@ class gscoSample extends gsui0ne {
 	#onclick( e ) {
 		switch ( $.$dataProp( e.target ) ) {
 			case "delete": this.#clickDelete(); break;
+			case "download": this.#clickDownload(); break;
 		}
+	}
+	#clickDownload() {
+		gsapiClient.$downloadSample( ...this.$this.$getAttr( "data-id", "name", "format" ) );
 	}
 	#clickDelete() {
 		this.$elements.$deleteBtn.$addAttr( "loading" );
