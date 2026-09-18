@@ -40,7 +40,25 @@ class gscoSamples {
 
 	// .........................................................................
 	$show() {
-		gsapiClient.$getSamples()
+		$body.$on( "keydown", this.#onkeydown.bind( this ) );
+		this.#updateData().then( () => {
+			DOM.samplesPageHead.$query( "[data-prop='open-groups']" ).$click();
+		} );
+	}
+	$quit() {
+		this.#empty();
+		$body.$off( "keypress" );
+	}
+
+	// .........................................................................
+	#empty() {
+		DOM.samplesPageStorage.$empty();
+		DOM.samplesPageGroups.$empty();
+	}
+	#updateData() {
+		this.#empty();
+		DOM.samplesPage.$addAttr( "data-loading" );
+		return gsapiClient.$getSamples()
 			.then( grps => {
 				DOM.samplesPageGroups.$append( ...grps.map( g => {
 					return $( "<gsco-samplegroup>" ).$setAttr( {
@@ -51,27 +69,37 @@ class gscoSamples {
 					} ).$message( "addsamples", g.$samples );
 				} ) );
 				this.#updateStorage();
-				DOM.samplesPageHead.$query( "[data-prop='open-groups']" ).$click();
+				DOM.samplesPage.$rmAttr( "data-loading" );
 			} );
 	}
-	$quit() {
-		DOM.samplesPageStorage.$empty();
-		DOM.samplesPageGroups.$empty();
-	}
-
-	// .........................................................................
 	#updateStorage() {
 		const max = gsapiClient.$user.samplesMaxBytes;
 		const sum = DOM.samplesPageGroups.$query( "gsco-sample" ).$reduce( ( sum, el ) => sum + +$.$getAttr( el, "size" ), 0 );
 
 		DOM.samplesPageStorage.$textHTML( GSTXreplace( GSTX.$samplesStorage,
 			GSUmathRound( sum / max * 100, .1 ),
-			GSUmathFloatReadable( sum ).join( "" ),
-			GSUmathFloatReadable( max ).join( "" ),
+			GSUmathFloatReadable( sum ).join( " " ),
+			GSUmathFloatReadable( max ).join( " " ),
 		) );
+	}
+	#onkeydown( e ) {
+		if ( e.key === "Tab" ) {
+			e.preventDefault();
+		} else if ( e.key === " " ) {
+			const el = $( document.activeElement );
+			const tag = el.$tag();
+
+			if ( tag === "gsco-sample" ) {
+				el.$message( "playToggle" );
+			} else {
+				$( "gsco-sample[playing]" ).$message( "pause" );
+			}
+			e.preventDefault();
+		}
 	}
 	#onclickMenu( e ) {
 		switch ( $.$dataProp( e.target ) ) {
+			case "refresh": this.#updateData(); break;
 			case "new-group": this.#newGroup(); break;
 			case "open-groups": DOM.samplesPageGroups.$children().$rmAttr( "open" ).$addAttr( "open" ); break;
 			case "close-groups": DOM.samplesPageGroups.$children().$rmAttr( "open" ); break;
@@ -196,7 +224,7 @@ class gscoSamplegroup extends gsui0ne {
 		const nb = this.$elements.$body.$childrenCount();
 		const smpsH = nb * 100 + ( nb - 1 ) * 6;
 
-		this.$this.$height( GSUmathClamp( 50 + smpsH + 18, 120, 600 ), "px" );
+		this.$this.$height( GSUmathClamp( 50 + smpsH + 18, 120, 560 ), "px" );
 	}
 	#updateInfo() {
 		let nbSmp = 0;
@@ -206,7 +234,7 @@ class gscoSamplegroup extends gsui0ne {
 			nbSmp += sz > 0;
 			return sum + sz;
 		}, 0 );
-		const size2 = GSUmathFloatReadable( size ).join( "" );
+		const size2 = GSUmathFloatReadable( size ).join( " " );
 
 		this.#nbSmp = nbSmp;
 		this.$elements.$info.$textHTML( GSTXreplace( GSTX.$samplesGroupSize, nbSmp, size2 ) );
@@ -217,6 +245,7 @@ class gscoSamplegroup extends gsui0ne {
 				"data-id": smp.$id,
 				order: smp.$order,
 				format: smp.$format,
+				duration: smp.$duration,
 				size: smp.$size,
 				name: smp.$name,
 				desc: smp.$desc,
@@ -290,7 +319,13 @@ class gscoSamplegroup extends gsui0ne {
 
 				const wf = gsuiWaveform.$wfArraysToPolygonPoints( l, r );
 
-				return gsapiClient.$addSample( this.$this.$dataId(), hash, file, wf );
+				return gsapiClient.$addSample( {
+					$idgroup: this.$this.$dataId(),
+					$hash: hash,
+					$file: file,
+					$duration: buf.duration,
+					$waveform: wf,
+				} );
 			} )
 			.then( smp => {
 				this.$elements.$body
@@ -300,6 +335,7 @@ class gscoSamplegroup extends gsui0ne {
 					"data-id": smp.$id,
 					order: smp.$order,
 					format: smp.$format,
+					duration: smp.$duration,
 					size: smp.$size,
 					name: smp.$name,
 					desc: smp.$desc,
@@ -319,6 +355,8 @@ $.$define( "gsco-samplegroup", gscoSamplegroup );
 // .............................................................................
 class gscoSample extends gsui0ne {
 	#currentTiming = false;
+	#audioElem = null;
+	#frameId = null;
 
 	constructor() {
 		super( {
@@ -334,7 +372,15 @@ class gscoSample extends gsui0ne {
 						$.$elem( "gsco-sample-name" ),
 						$.$elem( "gsui-com-button", { "data-prop": "rename", icon: "pen", "data-tooltip": GSTX.$samplesMvSample } ),
 						$.$elem( "gsui-com-button", { "data-prop": "download", icon: "download", "data-tooltip": GSTX.$samplesDLSample } ),
-						$.$elem( "gsco-sample-info" ),
+						$.$elem( "gsco-sample-info", null,
+							$.$div( null,
+								$.$elem( "gsco-sample-duration" ),
+								$.$elem( "gsco-sample-format" ),
+							),
+							$.$div( null,
+								$.$elem( "gsco-sample-size" ),
+							),
+						),
 						$.$elem( "gsui-com-button", { "data-prop": "delete", icon: "trash", type: "danger", "data-tooltip": GSTX.$samplesRmSample } ),
 					),
 					$.$elem( "gsco-sample-body", null,
@@ -349,11 +395,19 @@ class gscoSample extends gsui0ne {
 					),
 				),
 			],
+			$attributes: {
+				tabindex: -1,
+			},
 			$elements: {
 				$name: "gsco-sample-name",
-				$info: "gsco-sample-info",
+				$infoDur: "gsco-sample-duration",
+				$infoFormat: "gsco-sample-format",
+				$infoSize: "gsco-sample-size",
 				$slider: "gsco-sample-slider",
+				$cursor: "gsco-sample-cursor",
 				$waveform: "gsco-sample-body polygon",
+				$playBtn: "[data-prop='play']",
+				$stopBtn: "[data-prop='stop']",
 				$renameBtn: "[data-prop='rename']",
 				$deleteBtn: "[data-prop='delete']",
 			},
@@ -369,25 +423,26 @@ class gscoSample extends gsui0ne {
 
 	// .........................................................................
 	static get observedAttributes() {
-		return [ "order", "name", "format", "size", "waveform" ];
+		return [ "order", "name", "format", "size", "duration", "waveform" ];
 	}
 	$attributeChanged( prop, val ) {
 		switch ( prop ) {
 			case "order": this.$this.$css( "order", val ); break;
 			case "name": this.$elements.$name.$text( val ); break;
-			case "format":
-			case "size": this.#updateInfo(); break;
+			case "duration": this.$elements.$infoDur.$text( `${ val } ${ GSTX.$unitSecondSec }` ); break;
+			case "format": this.$elements.$infoFormat.$text( val ); break;
+			case "size": this.$elements.$infoSize.$text( `${ GSUmathFloatReadable( +val ).join( " " ) }${ GSTX.$unitByteB }` ); break;
 			case "waveform": this.#updateWaveform( val ); break;
+		}
+	}
+	$onmessage( type ) {
+		switch ( type ) {
+			case "pause": this.#audioPlay( false ); break;
+			case "playToggle": this.$elements.$playBtn.$click(); break;
 		}
 	}
 
 	// .........................................................................
-	#updateInfo() {
-		this.$elements.$info.$textHTML( GSTXreplace( GSTX.$samplesFormatSize,
-			this.$this.$getAttr( "format" ),
-			GSUmathFloatReadable( +this.$this.$getAttr( "size" ) ).join( "" ),
-		) );
-	}
 	#updateWaveform( o ) {
 		this.$elements.$waveform.$setAttr( "points", o );
 	}
@@ -398,33 +453,109 @@ class gscoSample extends gsui0ne {
 		this.#currentTiming = true;
 		this.#sliderPtrMove( e );
 		e.preventDefault();
+		this.$this.$focus();
 	}
 	#sliderPtrMove( e ) {
 		if ( this.#currentTiming ) {
-			const bcr = this.$elements.$slider.$bcr();
-
-			this.#setSlider( ( e.pageX - bcr.x ) / bcr.w );
+			this.#setSlider( this.#getSliderVal( e.pageX ) );
 		}
 	}
 	#sliderPtrUp( e ) {
 		this.$elements.$slider.$relPtrCapture( e.pointerId );
 		this.#currentTiming = false;
+		if ( this.#audioElem ) {
+			this.#audioElem.currentTime = this.#getSliderVal( e.pageX ) * this.#audioElem.duration;
+		}
+	}
+	#getSliderVal( px ) {
+		const bcr = this.$elements.$slider.$bcr();
+
+		return ( px - bcr.x ) / bcr.w;
 	}
 	#setSlider( n ) {
 		const p = GSUmathClamp( n, 0, 1 ) * 100;
 
-		this.$elements.$slider.$child( 0 )
+		this.$elements.$cursor
 			.$left( p, "%" )
 			.$css( "opacity", p === 0 || p === 100 ? 0 : 1 );
 	}
 
 	// .........................................................................
+	#initAudio() {
+		if ( !this.#audioElem ) {
+			const [ id, format ] = this.$this.$getAttr( "data-id", "format" );
+			const btn = this.$elements.$playBtn;
+
+			btn.$addAttr( "loading" );
+			this.#audioElem = $( "<audio>" )
+				.$on( {
+					play: () => {
+						btn.$setAttr( "icon", "pause" );
+						this.$this.$addAttr( "playing" );
+						this.$elements.$stopBtn.$disabled( false );
+						this.#frameId = GSUsetInterval( this.#audioTimeUpdate.bind( this ), 1 / 60 );
+					},
+					pause: () => {
+						this.$this.$rmAttr( "playing" );
+						btn.$setAttr( "icon", "play" );
+						if ( this.#audioElem.currentTime === 0 ) {
+							this.$elements.$stopBtn.$disabled( true );
+						}
+						GSUclearInterval( this.#frameId );
+					},
+					ended: () => {
+						this.#setSlider( 1 );
+						this.$elements.$stopBtn.$disabled( true );
+					},
+					timeupdate: () => {
+						this.#audioTimeUpdate();
+					},
+					loadeddata: () => {
+						btn.$rmAttr( "loading" );
+						this.#audioPlay( true );
+					},
+				} )
+				.$setAttr( {
+					src: `${ GSURL.$gsSmps }/${ id }.${ format }`,
+					loop: true,
+				} )
+				.$get( 0 );
+		}
+	}
+	#audioTimeUpdate() {
+		if ( !this.#currentTiming ) {
+			this.#setSlider( this.#audioElem.currentTime / this.#audioElem.duration );
+		}
+	}
+	#audioPlay( b ) {
+		if ( b ) {
+			$( "gsco-sample[playing]" ).$message( "pause" );
+			this.#audioElem.play();
+		} else {
+			this.#audioElem.pause();
+		}
+	}
+	#audioStop() {
+		this.#audioElem.currentTime = 0;
+		this.#audioPlay( false );
+		this.$elements.$stopBtn.$disabled( true );
+	}
+
+	// .........................................................................
 	#onclick( e ) {
 		switch ( $.$dataProp( e.target ) ) {
+			case "play": this.#clickPlay(); break;
+			case "stop": this.#audioStop(); break;
 			case "rename": this.#clickRename(); break;
 			case "delete": this.#clickDelete(); break;
 			case "download": this.#clickDownload(); break;
 		}
+		this.$this.$focus();
+	}
+	#clickPlay() {
+		!this.#audioElem
+			? this.#initAudio()
+			: this.#audioPlay( this.#audioElem.paused );
 	}
 	#clickRename() {
 		this.$elements.$renameBtn.$addAttr( "loading" );
@@ -440,7 +571,9 @@ class gscoSample extends gsui0ne {
 			.finally( () => this.$elements.$renameBtn.$rmAttr( "loading" ) );
 	}
 	#clickDownload() {
-		gsapiClient.$downloadSample( ...this.$this.$getAttr( "data-id", "name", "format" ) );
+		const [ id, name, format ] = this.$this.$getAttr( "data-id", "name", "format" );
+
+		GSUdownloadURL( `${ name }.${ format }`, `${ GSURL.$gsSmps }/${ id }.${ format }` );
 	}
 	#clickDelete() {
 		this.$elements.$deleteBtn.$addAttr( "loading" );

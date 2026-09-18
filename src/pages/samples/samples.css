@@ -29,6 +29,9 @@
 		}
 	}
 }
+#samplesPage[ data-loading ] #samplesPagePH {
+	display: none;
+}
 
 gsco-samplegroup {
 	position: relative;
@@ -107,7 +110,7 @@ gsco-samplegroup {
 		height: 100px;
 		margin: 0 var( --gsco-sg-pad ) var( --gsco-sg-pad-bot );
 		border-radius: 8px;
-		background-color: #0002;
+		scrollbar-width: none;
 
 		&:empty {
 			display: none;
@@ -140,9 +143,17 @@ gsco-samplegroup-placeholder {
 /* ........................................... */
 gsco-sample {
 	overflow: hidden;
+	box-sizing: border-box;
 	width: 100%;
 	min-height: 100px;
+	border: 2px solid transparent;
 	border-radius: inherit;
+	transition: .2s border-color;
+	outline: 0;
+
+	&:focus-within {
+		border-color: #fff4;
+	}
 }
 gsco-sample-in {
 	display: flex;
@@ -165,10 +176,21 @@ gsco-sample-name {
 	font-size: 13px;
 }
 gsco-sample-info {
+	display: flex;
+	flex-direction: column;
 	margin-right: auto;
 	font-size: 12px;
+	font-weight: bold;
 	white-space: nowrap;
 	opacity: .5;
+
+	> div {
+		display: flex;
+		gap: .7ch;
+	}
+}
+gsco-sample-format {
+	text-transform: uppercase;
 }
 gsco-sample-body {
 	position: relative;
@@ -198,7 +220,7 @@ gsco-sample-player {
 			margin-left: -1px;
 			background-color: #ff9;
 			pointer-events: none;
-			transition: opacity .5s;
+			transition: opacity .2s;
 		}
 	}
 }
