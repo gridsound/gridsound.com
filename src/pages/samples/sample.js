@@ -59,7 +59,10 @@ class gscoSample extends gsui0ne {
 				$deleteBtn: "[data-prop='delete']",
 			},
 		} );
-		this.$this.$onclick( this.#onclick.bind( this ) );
+		this.$this.$on( {
+			click: this.#onclick.bind( this ),
+			dblclick: this.#dblclick.bind( this ),
+		} );
 		this.$elements.$slider.$on( {
 			pointerdown: this.#sliderPtrDown.bind( this ),
 			pointermove: this.#sliderPtrMove.bind( this ),
@@ -198,6 +201,11 @@ class gscoSample extends gsui0ne {
 			case "download": this.#clickDownload(); break;
 		}
 		this.$this.$focus();
+	}
+	#dblclick( e ) {
+		if ( $.$tag( e.target ) === "gsco-sample-name" ) {
+			this.#clickRename();
+		}
 	}
 	#clickPlay() {
 		!this.#audioElem
