@@ -139,6 +139,19 @@ body {
 }
 
 /* .......................................................................... */
+gsco-loader {
+	display: none;
+	align-items: center;
+	justify-content: center;
+	margin: 20px 0;
+	font-size: 48px;
+
+	[ data-loading ] & {
+		display: flex;
+	}
+}
+
+/* .......................................................................... */
 #bg {
 	position: fixed;
 	inset: auto 0 0;

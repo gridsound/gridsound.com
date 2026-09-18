@@ -76,19 +76,6 @@
 		display: none;
 	}
 }
-#userPagePlaylistLoading {
-	display: none;
-	align-items: center;
-	justify-content: center;
-	margin: 20px 0;
-	font-size: 48px;
-	transition: .2s;
-	transition-property: opacity, visibility;
-
-	[ data-loading ] & {
-		display: flex;
-	}
-}
 #userPage:not( [ data-loading ] ) #userPagePlaylist:empty {
 	[ data-page="main" ] & ~ #userPagePHmain,
 	[ data-page="bin" ] & ~ #userPagePHbin,

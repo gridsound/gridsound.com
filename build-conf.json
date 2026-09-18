@@ -43,6 +43,7 @@
 		"src/pages/resetpass/resetpass.html.js",
 
 		"src/main/main.js",
+		"src/main/loader.js",
 
 		"src/partials/cmp.js",
 		"src/partials/editText.js",
