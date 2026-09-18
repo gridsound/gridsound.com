@@ -68,7 +68,8 @@ class gscoSamples {
 				} ) );
 				this.#updateStorage();
 				DOM.samplesPage.$rmAttr( "data-loading" );
-			} );
+			} )
+			.catch( err => PAGES.$main.$error( err.code ) );
 	}
 	#updateStorage() {
 		const max = gsapiClient.$user.samplesMaxBytes;
