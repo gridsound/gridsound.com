@@ -41,7 +41,10 @@ class gscoSamplegroup extends gsui0ne {
 				$addSampleBtn: "[data-prop='addSample']",
 			},
 		} );
-		this.$elements.$head.$onclick( this.#onclick.bind( this ) );
+		this.$elements.$head.$on( {
+			click: this.#onclick.bind( this ),
+			dblclick: this.#dblclick.bind( this ),
+		} );
 		this.$elements.$gripH.$on( {
 			dblclick: () => this.#setHeightAuto(),
 			pointerdown: e => {
@@ -144,6 +147,11 @@ class gscoSamplegroup extends gsui0ne {
 			case "expand": this.#clickExpand(); break;
 			case "delete": this.#clickDelete(); break;
 			case "addSample": this.#clickAddSample(); break;
+		}
+	}
+	#dblclick( e ) {
+		if ( $.$tag( e.target ) === "gsco-samplegroup-name" ) {
+			this.#clickRename();
 		}
 	}
 	#clickRename() {
