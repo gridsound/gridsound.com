@@ -45,7 +45,7 @@ class gscoSamples {
 	}
 	$quit() {
 		this.#empty();
-		$body.$off( "keypress" );
+		$body.$off( "keydown" );
 	}
 
 	// .........................................................................
