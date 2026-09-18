@@ -56,6 +56,8 @@
 		"src/pages/search/search.js",
 		"src/pages/resetpass/resetpass.js",
 		"src/pages/explore/explore.js",
+		"src/pages/samples/samplegroup.js",
+		"src/pages/samples/sample.js",
 		"src/pages/samples/samples.js",
 		"src/pages/forgotpass/forgotpass.js",
 
