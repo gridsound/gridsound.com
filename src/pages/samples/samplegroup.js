@@ -24,8 +24,9 @@ class gscoSamplegroup extends gsui0ne {
 					$.$elem( "gsui-com-button", { "data-prop": "addSample", icon: "file-plus", type: "submit", "data-tooltip": GSTX.$samplesUpload } ),
 					$.$elem( "gsui-com-button", { "data-prop": "delete", icon: "trash", type: "danger", "data-tooltip": GSTX.$samplesRmGroup } ),
 				),
-				$.$elem( "gsco-samplegroup-body" ),
-				$.$elem( "gsco-samplegroup-placeholder", null, GSTX.$yourSamplegroupPH ),
+				$.$elem( "gsco-samplegroup-body", null,
+					$.$elem( "gsco-samplegroup-placeholder", null, GSTX.$yourSamplegroupPH ),
+				),
 				$.$elem( "gsco-samplegroup-expand-grip", null,
 					$.$icon( { icon: "grip-h" } ),
 				),
@@ -104,7 +105,7 @@ class gscoSamplegroup extends gsui0ne {
 
 	// .........................................................................
 	#setHeightAuto() {
-		const nb = this.$elements.$body.$childrenCount();
+		const nb = this.$elements.$body.$childrenCount() - 1;
 		const smpsH = nb * 100 + ( nb - 1 ) * 6;
 
 		this.$this.$height( GSUmathClamp( 50 + smpsH + 18, 120, 560 ), "px" );

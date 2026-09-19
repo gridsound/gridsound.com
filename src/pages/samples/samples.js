@@ -18,6 +18,19 @@ class gscoSamples {
 				console.log( "$ondrop", dropInfo );
 			},
 		} );
+		new gsuiReorder( {
+			$root: DOM.samplesPageGroups,
+			$parentSelector: "gsco-samplegroup-body",
+			$itemSelector: "gsco-sample",
+			$itemGripSelector: "gsco-sample-head > [data-prop='grip']",
+			$getTargetList: () => $noop,
+			$onchange( o ) {
+				gsapiClient.$reorderSample( o.$rdrItemId, o.$rdrItemOrderNow, o.$rdrItemOrderOld, o.$rdrItemParentNow, o.$rdrItemParentOld );
+			},
+			$ondrop( dropInfo ) {
+				console.log( "$ondrop", dropInfo );
+			},
+		} );
 		DOM.samplesPageGroups.$listen( {
 			[ GSCO_SAMPLEGROUP_LISTCHANGE ]: d => {
 				this.#updateStorage();
