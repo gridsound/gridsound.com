@@ -4,7 +4,6 @@ const GSCO_SAMPLEGROUP_LISTCHANGE = 1;
 
 class gscoSamplegroup extends gsui0ne {
 	#nbSmp = 0;
-	#resizing = false;
 
 	constructor() {
 		super( {
@@ -27,16 +26,12 @@ class gscoSamplegroup extends gsui0ne {
 				$.$elem( "gsco-samplegroup-body", null,
 					$.$elem( "gsco-samplegroup-placeholder", null, GSTX.$yourSamplegroupPH ),
 				),
-				$.$elem( "gsco-samplegroup-expand-grip", null,
-					$.$icon( { icon: "grip-h" } ),
-				),
 			],
 			$elements: {
 				$head: "gsco-samplegroup-head",
 				$name: "gsco-samplegroup-name",
 				$body: "gsco-samplegroup-body",
 				$info: "gsco-samplegroup-info",
-				$gripH: "gsco-samplegroup-expand-grip",
 				$renameBtn: "[data-prop='rename']",
 				$deleteBtn: "[data-prop='delete']",
 				$addSampleBtn: "[data-prop='addSample']",
@@ -45,25 +40,6 @@ class gscoSamplegroup extends gsui0ne {
 		this.$elements.$head.$on( {
 			click: this.#onclick.bind( this ),
 			dblclick: this.#dblclick.bind( this ),
-		} );
-		this.$elements.$gripH.$on( {
-			dblclick: () => this.#setHeightAuto(),
-			pointerdown: e => {
-				this.$elements.$gripH.$setPtrCapture( e.pointerId );
-				this.#resizing = true;
-				e.preventDefault();
-			},
-			pointerup: e => {
-				this.$elements.$gripH.$relPtrCapture( e.pointerId );
-				this.#resizing = false;
-			},
-			pointermove: e => {
-				if ( this.#resizing ) {
-					const h = e.pageY - $html.$scrollY() - this.$this.$bcr().y + 8;
-
-					this.$this.$height( h, "px" ).$setAttr( "open", h > 96 );
-				}
-			},
 		} );
 		this.$this.$listen( {
 			[ GSCO_SAMPLEGROUP_LISTCHANGE ]: d => {
@@ -84,17 +60,12 @@ class gscoSamplegroup extends gsui0ne {
 
 	// .........................................................................
 	static get observedAttributes() {
-		return [ "name", "open", "order" ];
+		return [ "name", "order" ];
 	}
 	$attributeChanged( prop, val ) {
 		switch ( prop ) {
 			case "name": this.$elements.$name.$text( val ); break;
 			case "order": this.$this.$css( "order", val ); break;
-			case "open":
-				if ( val === "" && !this.#resizing ) {
-					this.#setHeightAuto();
-				}
-				break;
 		}
 	}
 	$onmessage( msg, val ) {
@@ -104,12 +75,6 @@ class gscoSamplegroup extends gsui0ne {
 	}
 
 	// .........................................................................
-	#setHeightAuto() {
-		const nb = this.$elements.$body.$childrenCount() - 1;
-		const smpsH = nb * 100 + ( nb - 1 ) * 6;
-
-		this.$this.$height( GSUmathClamp( 50 + smpsH + 18, 120, 560 ), "px" );
-	}
 	#updateInfo() {
 		let nbSmp = 0;
 		const size = this.$elements.$body.$children().$reduce( ( sum, el ) => {

@@ -40,16 +40,12 @@ gsco-samplegroup {
 	border-radius: 8px;
 	background-color: #0005;
 	--gsco-sg-pad: 8px;
-	--gsco-sg-pad-bot: 18px;
 
 	&:not( [ open ] ) {
 		height: auto !important;
 
 		gsco-samplegroup-body {
 			display: none;
-		}
-		gsco-samplegroup-expand-grip {
-			visibility: hidden;
 		}
 		gsco-samplegroup-name {
 			overflow: hidden;
@@ -106,29 +102,20 @@ gsco-samplegroup {
 		overflow: auto;
 		display: flex;
 		flex-direction: column;
-		gap: 6px;
+		gap: var( --gsco-sg-pad );
 		flex: 1;
-		height: 100px;
-		margin: 0 var( --gsco-sg-pad ) var( --gsco-sg-pad-bot );
+		padding: var( --gsco-sg-pad );
+		padding-top: 0;
 		border-radius: 8px;
 		scrollbar-width: none;
 	}
-}
-gsco-samplegroup-expand-grip {
-	position: absolute;
-	inset: calc( 100% - var( --gsco-sg-pad-bot ) ) 0 0;
-	display: flex;
-	justify-content: center;
-	font-size: 10px;
-	cursor: var( --gsuiCursor-ns-resize );
-	opacity: .7;
 }
 gsco-samplegroup-placeholder {
 	display: none;
 	font-style: italic;
 	align-items: center;
 	justify-content: center;
-	height: 100%;
+	height: 60px;
 	opacity: .5;
 
 	&:only-child {
@@ -141,6 +128,7 @@ gsco-sample {
 	overflow: hidden;
 	box-sizing: border-box;
 	width: 100%;
+	height: 100px;
 	min-height: 100px;
 	border: 2px solid transparent;
 	border-radius: inherit;
