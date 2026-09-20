@@ -1,6 +1,8 @@
 "use strict";
 
-const GSCO_SAMPLEGROUP_LISTCHANGE = 1;
+const GSCO_SAMPLEGROUP_DELETED = 1;
+const GSCO_SAMPLE_ADDED = 2;
+const GSCO_SAMPLE_DELETED = 3;
 
 class gscoSamplegroup extends gsui0ne {
 	#nbSmp = 0;
@@ -42,7 +44,7 @@ class gscoSamplegroup extends gsui0ne {
 			dblclick: this.#dblclick.bind( this ),
 		} );
 		this.$this.$listen( {
-			[ GSCO_SAMPLEGROUP_LISTCHANGE ]: d => {
+			[ GSCO_SAMPLE_DELETED ]: d => {
 				const order = +d.$target.$getAttr( "order" );
 
 				this.$elements.$body.$query( "gsco-sample" ).$each( el => {
@@ -77,7 +79,7 @@ class gscoSamplegroup extends gsui0ne {
 	// .........................................................................
 	#updateInfo() {
 		let nbSmp = 0;
-		const size = this.$elements.$body.$children().$reduce( ( sum, el ) => {
+		const size = this.$elements.$body.$query( "gsco-sample" ).$reduce( ( sum, el ) => {
 			const sz = +$.$getAttr( el, "size" );
 
 			nbSmp += sz > 0;
@@ -144,7 +146,7 @@ class gscoSamplegroup extends gsui0ne {
 			if ( b ) {
 				this.$elements.$deleteBtn.$addAttr( "loading" );
 				gsapiClient.$deleteSamplegroup( this.$this.$dataId() )
-					.then( () => this.$this.$empty().$dispatch( GSCO_SAMPLEGROUP_LISTCHANGE ).$remove() )
+					.then( () => this.$this.$empty().$dispatch( GSCO_SAMPLEGROUP_DELETED ).$remove() )
 					.finally( () => this.$elements.$deleteBtn.$rmAttr( "loading" ) );
 			}
 		} );
@@ -198,7 +200,7 @@ class gscoSamplegroup extends gsui0ne {
 					updated: smp.$updated,
 				} ) );
 				this.#updateInfo();
-				this.$this.$dispatch( GSCO_SAMPLEGROUP_LISTCHANGE );
+				this.$this.$dispatch( GSCO_SAMPLE_ADDED );
 			} )
 			.finally( () => this.$elements.$addSampleBtn.$rmAttr( "loading" ) )
 			.catch( err => {

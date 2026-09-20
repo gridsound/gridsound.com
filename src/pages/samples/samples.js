@@ -32,19 +32,19 @@ class gscoSamples {
 			},
 		} );
 		DOM.samplesPageGroups.$listen( {
-			[ GSCO_SAMPLEGROUP_LISTCHANGE ]: d => {
+			[ GSCO_SAMPLE_ADDED ]: () => this.#updateStorage(),
+			[ GSCO_SAMPLE_DELETED ]: () => this.#updateStorage(),
+			[ GSCO_SAMPLEGROUP_DELETED ]: d => {
+				const order = +d.$target.$getAttr( "order" );
+
 				this.#updateStorage();
-				if ( d.$target.$tag() === "gsco-samplegroup" ) {
-					const order = +d.$target.$getAttr( "order" );
+				DOM.samplesPageGroups.$query( "gsco-samplegroup" ).$each( el => {
+					const or = +$.$getAttr( el, "order" );
 
-					DOM.samplesPageGroups.$query( "gsco-samplegroup" ).$each( el => {
-						const or = +$.$getAttr( el, "order" );
-
-						if ( or > order ) {
-							$.$setAttr( el, "order", or - 1 );
-						}
-					} );
-				}
+					if ( or > order ) {
+						$.$setAttr( el, "order", or - 1 );
+					}
+				} );
 			},
 		} );
 	}

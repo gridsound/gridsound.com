@@ -233,9 +233,7 @@ class gscoSample extends gsui0ne {
 	#clickDelete() {
 		this.$elements.$deleteBtn.$addAttr( "loading" );
 		gsapiClient.$deleteSample( this.$this.$dataId() )
-			.then( () => {
-				this.$this.$setAttr( "size", 0 ).$dispatch( GSCO_SAMPLEGROUP_LISTCHANGE ).$remove();
-			} )
+			.then( () => this.$this.$setAttr( "size", 0 ).$dispatch( GSCO_SAMPLE_DELETED ).$remove() )
 			.finally( () => this.$elements.$deleteBtn.$rmAttr( "loading" ) );
 	}
 }
