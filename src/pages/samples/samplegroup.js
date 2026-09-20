@@ -200,7 +200,15 @@ class gscoSamplegroup extends gsui0ne {
 				this.#updateInfo();
 				this.$this.$dispatch( GSCO_SAMPLEGROUP_LISTCHANGE );
 			} )
-			.finally( () => this.$elements.$addSampleBtn.$rmAttr( "loading" ) );
+			.finally( () => this.$elements.$addSampleBtn.$rmAttr( "loading" ) )
+			.catch( err => {
+				const msg = err.msg || err;
+				const msg2 = msg === "sample:no-space"
+					? gsapiClient.$user.premium ? GSTX.$samplesNoSpacePrem : GSTX.$samplesNoSpace
+					: msg;
+
+				return $popup.$alert( GSTX.$uploadErr, msg2 );
+			} );
 	}
 }
 
