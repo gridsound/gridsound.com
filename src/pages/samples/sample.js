@@ -32,8 +32,11 @@ class gscoSample extends gsui0ne {
 					),
 					$.$elem( "gsco-sample-body", null,
 						$.$elem( "gsco-sample-player", null,
-							$.$elem( "svg", { viewBox: "0 -127 512 256", preserveAspectRatio: "none" },
-								$.$elem( "polygon" ),
+							$.$elem( "svg", { viewBox: "0 -128 512 256", preserveAspectRatio: "none" },
+								$.$elem( "g", null,
+									$.$elem( "path" ),
+									$.$elem( "path" ),
+								),
 							),
 							$.$elem( "gsco-sample-slider", null,
 								$.$elem( "gsco-sample-cursor" ),
@@ -52,7 +55,8 @@ class gscoSample extends gsui0ne {
 				$infoSize: "gsco-sample-size",
 				$slider: "gsco-sample-slider",
 				$cursor: "gsco-sample-cursor",
-				$waveform: "gsco-sample-body polygon",
+				$waveL: "gsco-sample-body path:first-child",
+				$waveR: "gsco-sample-body path:last-child",
 				$playBtn: "[data-prop='play']",
 				$stopBtn: "[data-prop='stop']",
 				$renameBtn: "[data-prop='rename']",
@@ -73,7 +77,7 @@ class gscoSample extends gsui0ne {
 
 	// .........................................................................
 	static get observedAttributes() {
-		return [ "order", "name", "format", "size", "duration", "waveform" ];
+		return [ "order", "name", "format", "size", "duration" ];
 	}
 	$attributeChanged( prop, val ) {
 		switch ( prop ) {
@@ -82,22 +86,21 @@ class gscoSample extends gsui0ne {
 			case "duration": this.$elements.$infoDur.$text( `${ val } ${ GSTX.$unitSecondSec }` ); break;
 			case "format": this.$elements.$infoFormat.$text( val ); break;
 			case "size": this.$elements.$infoSize.$text( `${ GSUmathFloatReadable( +val ).join( " " ) }${ GSTX.$unitByteB }` ); break;
-			case "waveform": this.#updateWaveform( val ); break;
 		}
 	}
-	$onmessage( type ) {
+	$onmessage( type, val ) {
 		switch ( type ) {
+			case "waveL": this.#drawWaveform( this.$elements.$waveL, val ); break;
+			case "waveR": this.#drawWaveform( this.$elements.$waveR, val ); break;
 			case "pause": this.#audioPlay( false ); break;
 			case "playToggle": this.$elements.$playBtn.$click(); break;
 		}
 	}
 
 	// .........................................................................
-	#updateWaveform( o ) {
-		this.$elements.$waveform.$setAttr( "points", o );
+	#drawWaveform( el, val ) {
+		el.$setAttr( "d", `M${ val.replaceAll( ",", "L" ) }` );
 	}
-
-	// .........................................................................
 	#sliderPtrDown( e ) {
 		this.$elements.$slider.$setPtrCapture( e.pointerId );
 		this.#currentTiming = true;
@@ -167,7 +170,7 @@ class gscoSample extends gsui0ne {
 				} )
 				.$setAttr( {
 					src: `${ GSURL.$gsSmps }/${ id }.${ format }`,
-					loop: true,
+					loop: false,
 				} )
 				.$get( 0 );
 		}

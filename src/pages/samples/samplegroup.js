@@ -92,18 +92,22 @@ class gscoSamplegroup extends gsui0ne {
 	}
 	#addSamples( smps ) {
 		this.$elements.$body.$append(
-			...smps.map( smp => $.$elem( "gsco-sample", {
-				"data-id": smp.$id,
-				order: smp.$order,
-				format: smp.$format,
-				duration: smp.$duration,
-				size: smp.$size,
-				name: smp.$name,
-				desc: smp.$desc,
-				waveform: smp.$waveform,
-				created: smp.$created,
-				updated: smp.$updated,
-			} ) )
+			...smps.map( smp =>
+				$( "<gsco-sample>" )
+					.$setAttr( {
+						"data-id": smp.$id,
+						order: smp.$order,
+						format: smp.$format,
+						duration: smp.$duration,
+						size: smp.$size,
+						name: smp.$name,
+						desc: smp.$desc,
+						created: smp.$created,
+						updated: smp.$updated,
+					} )
+					.$message( "waveL", smp.$waveformleft )
+					.$message( "waveR", smp.$waveformright )
+			)
 		);
 		this.#updateInfo();
 	}
@@ -152,6 +156,7 @@ class gscoSamplegroup extends gsui0ne {
 		} );
 	}
 	#clickAddSample() {
+		let arrBuf;
 		let file;
 		let hash;
 
@@ -162,43 +167,49 @@ class gscoSamplegroup extends gsui0ne {
 				return GSUgetFileContent( file, "array" );
 			} )
 			.then( arr => {
-				hash = GSUhashBufferV1( new Uint8Array( arr ) );
-				return GSUaudioCurrentContext.decodeAudioData( arr );
+				arrBuf = arr;
+				return GSUhashBuffer( arr );
+			} )
+			.then( sha1 => {
+				hash = sha1;
+				return GSUaudioCurrentContext.decodeAudioData( arrBuf );
 			} )
 			.then( buf => {
-				const [ l, r ] = gsuiWaveform.$wfGetArrayFromBuffer( 512, buf );
-
-				for ( let i in l ) {
-					l[ i ] = GSUmathClamp( l[ i ] - 1, 0,  1 ) * 127 | 0;
-					r[ i ] = GSUmathClamp( r[ i ],     0, -1 ) * 127 | 0;
-				}
-
-				const wf = gsuiWaveform.$wfArraysToPolygonPoints( l, r );
+				const dur = buf.duration;
+				const chanL = buf.getChannelData( 0 );
+				const chanR = buf.getChannelData( 1 );
+				const pathL = gscoSamplegroup.$drawPath( 512, 256, chanL, dur, 0, dur );
+				const pathR = gscoSamplegroup.$drawPath( 512, 256, chanR, dur, 0, dur );
 
 				return gsapiClient.$addSample( {
 					$idgroup: this.$this.$dataId(),
 					$hash: hash,
 					$file: file,
-					$duration: buf.duration,
-					$waveform: wf,
+					$duration: dur,
+					$waveformleft: pathL.join( "," ),
+					$waveformright: pathR.join( "," ),
 				} );
 			} )
 			.then( smp => {
 				this.$elements.$body
 					.$query( "gsco-sample" )
 					.$setAttr( "order", el => 1 + +$.$getAttr( el, "order" ) );
-				this.$elements.$body.$prepend( $.$elem( "gsco-sample", {
-					"data-id": smp.$id,
-					order: smp.$order,
-					format: smp.$format,
-					duration: smp.$duration,
-					size: smp.$size,
-					name: smp.$name,
-					desc: smp.$desc,
-					waveform: smp.$waveform,
-					created: smp.$created,
-					updated: smp.$updated,
-				} ) );
+				this.$elements.$body.$prepend(
+					$( "<gsco-sample>" )
+						.$setAttr( {
+							"data-id": smp.$id,
+							order: smp.$order,
+							format: smp.$format,
+							duration: smp.$duration,
+							size: smp.$size,
+							name: smp.$name,
+							desc: smp.$desc,
+							created: smp.$created,
+							updated: smp.$updated,
+						} )
+						.$message( "waveL", smp.$waveformleft )
+						.$message( "waveR", smp.$waveformright )
+				);
 				this.#updateInfo();
 				this.$this.$dispatch( GSCO_SAMPLE_ADDED );
 			} )
@@ -211,6 +222,39 @@ class gscoSamplegroup extends gsui0ne {
 
 				return $popup.$alert( GSTX.$uploadErr, msg2 );
 			} );
+	}
+	static $drawPath( w, h, data, bufDur, start, dur ) {
+		const h2 = h / 2;
+		const sampleRate = data.length / bufDur;
+		const startSample = start * sampleRate;
+		const spp = dur * sampleRate / w;
+		const arrA = [];
+		const arrB = [];
+
+		for ( let px = 0; px < w; ++px ) {
+			const a = Math.floor( startSample + px * spp );
+			const b = Math.max( a + 1, Math.floor( startSample + ( px + 1 ) * spp ) );
+			let min = 0;
+			let max = 0;
+
+			if ( b > 0 && a < data.length ) {
+				const len = Math.min( b, data.length );
+
+				min = Infinity;
+				max = -Infinity;
+				for ( let i = Math.max( 0, a ); i < len; ++i ) {
+					const v = data[ i ];
+
+					if ( v < min ) { min = v; }
+					if ( v > max ) { max = v; }
+				}
+				min = GSUmathClamp( min, -1, 1 );
+				max = GSUmathClamp( max, -1, 1 );
+			}
+			arrA.push( `${ px } ${ Math.round( -max * h2 ) }` );
+			arrB.push( `${ px } ${ Math.round( -min * h2 ) }` );
+		}
+		return arrA.concat( arrB.reverse() );
 	}
 }
 

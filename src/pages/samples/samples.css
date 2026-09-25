@@ -184,13 +184,27 @@ gsco-sample-body {
 }
 gsco-sample-player {
 	position: absolute;
-	inset: 0 1px;
+	inset: 0;
 
 	svg {
 		position: absolute;
 		width: 100%;
 		height: 100%;
-		fill: white;
+
+		g {
+			mix-blend-mode: exclusion;
+		}
+		path {
+			color: #ff207e;
+			fill: currentColor;
+			stroke: currentColor;
+			stroke-width: 1;
+			opacity: .5;
+
+			& + path {
+				color: #0757fb;
+			}
+		}
 	}
 	gsco-sample-slider {
 		position: absolute;
