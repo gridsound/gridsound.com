@@ -136,7 +136,7 @@ class gscoSample extends gsui0ne {
 	// .........................................................................
 	#initAudio() {
 		if ( !this.#audioElem ) {
-			const [ id, format ] = this.$this.$getAttr( "data-id", "format" );
+			const [ hash, format ] = this.$this.$getAttr( "hash", "format" );
 			const btn = this.$elements.$playBtn;
 
 			btn.$addAttr( "loading" );
@@ -169,7 +169,7 @@ class gscoSample extends gsui0ne {
 					},
 				} )
 				.$setAttr( {
-					src: `${ GSURL.$gsSmps }/${ id }.${ format }`,
+					src: `${ GSURL.$gsSmps }/${ hash }.${ format }`,
 					loop: false,
 				} )
 				.$get( 0 );
@@ -229,9 +229,9 @@ class gscoSample extends gsui0ne {
 			.finally( () => this.$elements.$renameBtn.$rmAttr( "loading" ) );
 	}
 	#clickDownload() {
-		const [ id, name, format ] = this.$this.$getAttr( "data-id", "name", "format" );
+		const [ hash, name, format ] = this.$this.$getAttr( "hash", "name", "format" );
 
-		GSUdownloadURL( `${ name }.${ format }`, `${ GSURL.$gsSmps }/${ id }.${ format }` );
+		GSUdownloadURL( `${ name }.${ format }`, `${ GSURL.$gsSmps }/${ hash }.${ format }` );
 	}
 	#clickDelete() {
 		this.$elements.$deleteBtn.$addAttr( "loading" );

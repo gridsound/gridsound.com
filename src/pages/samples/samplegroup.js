@@ -96,6 +96,7 @@ class gscoSamplegroup extends gsui0ne {
 				$( "<gsco-sample>" )
 					.$setAttr( {
 						"data-id": smp.$id,
+						hash: smp.$hash,
 						order: smp.$order,
 						format: smp.$format,
 						duration: smp.$duration,
@@ -105,8 +106,8 @@ class gscoSamplegroup extends gsui0ne {
 						created: smp.$created,
 						updated: smp.$updated,
 					} )
-					.$message( "waveL", smp.$waveformleft )
-					.$message( "waveR", smp.$waveformright )
+					.$message( "waveL", smp.$wave0 )
+					.$message( "waveR", smp.$wave1 )
 			)
 		);
 		this.#updateInfo();
@@ -186,8 +187,8 @@ class gscoSamplegroup extends gsui0ne {
 					$hash: hash,
 					$file: file,
 					$duration: dur,
-					$waveformleft: pathL.join( "," ),
-					$waveformright: pathR.join( "," ),
+					$wave0: pathL.join( "," ),
+					$wave1: pathR.join( "," ),
 				} );
 			} )
 			.then( smp => {
@@ -198,6 +199,7 @@ class gscoSamplegroup extends gsui0ne {
 					$( "<gsco-sample>" )
 						.$setAttr( {
 							"data-id": smp.$id,
+							hash: smp.$hash,
 							order: smp.$order,
 							format: smp.$format,
 							duration: smp.$duration,
@@ -207,8 +209,8 @@ class gscoSamplegroup extends gsui0ne {
 							created: smp.$created,
 							updated: smp.$updated,
 						} )
-						.$message( "waveL", smp.$waveformleft )
-						.$message( "waveR", smp.$waveformright )
+						.$message( "waveL", smp.$wave0 )
+						.$message( "waveR", smp.$wave1 )
 				);
 				this.#updateInfo();
 				this.$this.$dispatch( GSCO_SAMPLE_ADDED );
