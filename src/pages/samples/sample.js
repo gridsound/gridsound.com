@@ -6,6 +6,8 @@ class gscoSample extends gsui0ne {
 	#frameId = null;
 
 	constructor() {
+		const popId = GSUuuid();
+
 		super( {
 			$tagName: "gsco-sample",
 			$template: [
@@ -17,18 +19,26 @@ class gscoSample extends gsui0ne {
 						$.$elem( "gsui-com-button", { "data-prop": "play", icon: "play", type: "submit" } ),
 						$.$elem( "gsui-com-button", { "data-prop": "stop", icon: "stop", type: "submit", disabled: true } ),
 						$.$elem( "gsco-sample-name", { class: "gsui-ellipsis" } ),
-						$.$elem( "gsui-com-button", { "data-prop": "rename", icon: "pen", "data-tooltip": GSTX.$samplesMvSample } ),
-						$.$elem( "gsui-com-button", { "data-prop": "download", icon: "download", "data-tooltip": GSTX.$samplesDLSample } ),
+						$.$elem( "gsco-sample-format" ),
 						$.$elem( "gsco-sample-info", null,
-							$.$div( null,
-								$.$elem( "gsco-sample-duration" ),
-								$.$elem( "gsco-sample-format" ),
-							),
-							$.$div( null,
-								$.$elem( "gsco-sample-size" ),
-							),
+							$.$elem( "gsco-sample-duration" ),
+							$.$elem( "gsco-sample-size" ),
 						),
-						$.$elem( "gsui-com-button", { "data-prop": "delete", icon: "trash", type: "danger", "data-tooltip": GSTX.$samplesRmSample } ),
+						$.$elem( "gsui-com-button", { "data-prop": "options", popovertarget: popId, icon: "ellipsis-v" } ),
+					),
+					$.$elem( "gsco-sample-options", { id: popId, popover: true },
+						$.$button( { "data-prop": "rename" },
+							$.$icon( { icon: "pen" } ),
+							$.$span( null, "Rename" ),
+						),
+						$.$button( { "data-prop": "download" },
+							$.$icon( { icon: "download" } ),
+							$.$span( null, "Download" ),
+						),
+						$.$button( { "data-prop": "delete" },
+							$.$icon( { icon: "trash" } ),
+							$.$span( null, "Delete" ),
+						),
 					),
 					$.$elem( "gsco-sample-body", null,
 						$.$elem( "gsco-sample-player", null,

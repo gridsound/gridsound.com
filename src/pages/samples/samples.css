@@ -125,6 +125,7 @@ gsco-samplegroup-placeholder {
 
 /* ........................................... */
 gsco-sample {
+	anchor-scope: --gsco-sample-options;
 	overflow: hidden;
 	box-sizing: border-box;
 	width: 100%;
@@ -137,6 +138,10 @@ gsco-sample {
 
 	&:focus-within {
 		border-color: #fff4;
+	}
+	[ data-prop="options" ] {
+		margin-left: auto;
+		anchor-name: --gsco-sample-options;
 	}
 }
 gsco-sample-in {
@@ -163,7 +168,6 @@ gsco-sample-name {
 gsco-sample-info {
 	display: flex;
 	flex-direction: column;
-	margin-right: auto;
 	font-size: 12px;
 	font-weight: bold;
 	white-space: nowrap;
@@ -178,14 +182,51 @@ gsco-sample-format {
 	padding: 0 4px;
 	border-radius: 4px;
 	color: #334;
+	font-weight: bold;
 	text-transform: uppercase;
 	background-color: #fff;
+	opacity: .5;
 }
 gsco-sample-body {
 	position: relative;
 	flex: 1;
 	display: flex;
 	background-color: #223;
+}
+gsco-sample-options {
+	position: absolute;
+	position-anchor: --gsco-sample-options;
+	position-area: bottom;
+	position-try-fallbacks: top;
+	width: 180px;
+	flex-direction: column;
+	font-size: 14px;
+
+	&:popover-open {
+		display: flex;
+	}
+	button {
+		display: flex;
+		align-items: center;
+		gap: .7ch;
+		height: 38px;
+		padding: 0 10px;
+		font-size: 16px;
+
+		&:hover {
+			background-color: #fff2;
+		}
+		* {
+			pointer-events: none;
+		}
+		&[ data-prop="delete" ] {
+			background-color: var( --btn-danger-colorB );
+
+			&:hover {
+				background-color: var( --btn-danger-colorA );
+			}
+		}
+	}
 }
 gsco-sample-player {
 	position: absolute;
