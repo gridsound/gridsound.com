@@ -104,15 +104,18 @@
 	user-select: none;
 	-webkit-user-select: none;
 
-	.noauth & {
-		display: none;
-	}
 	gsui-com-avatar {
 		width: 40px;
 		height: 40px;
 		min-width: 40px;
 		border-radius: 4px;
 		color: inherit;
+	}
+}
+.noauth {
+	#headUser,
+	#headSamples {
+		display: none;
 	}
 }
 
