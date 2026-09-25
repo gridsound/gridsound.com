@@ -149,13 +149,14 @@ gsco-sample-head {
 	align-items: center;
 	padding: 4px;
 	gap: 6px;
-	background-color: #fff2;
+	background-color: #334;
 
 	[ data-prop="grip" ] {
-		width: 16px;
+		min-width: 16px;
 	}
 }
 gsco-sample-name {
+	min-width: 32px;
 	font-weight: bold;
 	font-size: 13px;
 }
@@ -174,13 +175,17 @@ gsco-sample-info {
 	}
 }
 gsco-sample-format {
+	padding: 0 4px;
+	border-radius: 4px;
+	color: #334;
 	text-transform: uppercase;
+	background-color: #fff;
 }
 gsco-sample-body {
 	position: relative;
 	flex: 1;
 	display: flex;
-	background-color: #fff1;
+	background-color: #223;
 }
 gsco-sample-player {
 	position: absolute;

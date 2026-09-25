@@ -16,7 +16,7 @@ class gscoSample extends gsui0ne {
 						),
 						$.$elem( "gsui-com-button", { "data-prop": "play", icon: "play", type: "submit" } ),
 						$.$elem( "gsui-com-button", { "data-prop": "stop", icon: "stop", type: "submit", disabled: true } ),
-						$.$elem( "gsco-sample-name" ),
+						$.$elem( "gsco-sample-name", { class: "gsui-ellipsis" } ),
 						$.$elem( "gsui-com-button", { "data-prop": "rename", icon: "pen", "data-tooltip": GSTX.$samplesMvSample } ),
 						$.$elem( "gsui-com-button", { "data-prop": "download", icon: "download", "data-tooltip": GSTX.$samplesDLSample } ),
 						$.$elem( "gsco-sample-info", null,
