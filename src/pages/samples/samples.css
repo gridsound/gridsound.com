@@ -241,10 +241,8 @@ gsco-sample-player {
 			mix-blend-mode: exclusion;
 		}
 		path {
-			color: #ff207e;
+			color: #fff;
 			fill: currentColor;
-			stroke: currentColor;
-			stroke-width: 1;
 			opacity: .5;
 
 			& + path {
