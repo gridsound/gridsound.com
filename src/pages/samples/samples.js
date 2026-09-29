@@ -32,6 +32,7 @@ class gscoSamples {
 			},
 		} );
 		DOM.samplesPageGroups.$listen( {
+			[ GSCO_SAMPLES_UPDATE_STORAGE ]: () => this.#updateStorage(),
 			[ GSCO_SAMPLE_ADDED ]: () => this.#updateStorage(),
 			[ GSCO_SAMPLE_DELETED ]: () => this.#updateStorage(),
 			[ GSCO_SAMPLEGROUP_DELETED ]: d => {

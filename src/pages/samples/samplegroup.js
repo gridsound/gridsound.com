@@ -3,6 +3,8 @@
 const GSCO_SAMPLEGROUP_DELETED = 1;
 const GSCO_SAMPLE_ADDED = 2;
 const GSCO_SAMPLE_DELETED = 3;
+const GSCO_SAMPLE_CLONEMP3 = 4;
+const GSCO_SAMPLES_UPDATE_STORAGE = 5;
 
 class gscoSamplegroup extends gsui0ne {
 	#nbSmp = 0;
@@ -44,19 +46,8 @@ class gscoSamplegroup extends gsui0ne {
 			dblclick: this.#dblclick.bind( this ),
 		} );
 		this.$this.$listen( {
-			[ GSCO_SAMPLE_DELETED ]: d => {
-				const order = +d.$target.$getAttr( "order" );
-
-				this.$elements.$body.$query( "gsco-sample" ).$each( el => {
-					const or = +$.$getAttr( el, "order" );
-
-					if ( or > order ) {
-						$.$setAttr( el, "order", or - 1 );
-					}
-				} );
-				this.#updateInfo();
-				return true;
-			},
+			[ GSCO_SAMPLE_CLONEMP3 ]: d => this.#cloneToMp3( ...d.$args ),
+			[ GSCO_SAMPLE_DELETED ]: d => ( this.#deleteSample( d.$target ), true ),
 		} );
 	}
 
@@ -112,6 +103,46 @@ class gscoSamplegroup extends gsui0ne {
 		);
 		this.#updateInfo();
 	}
+	#cloneToMp3( smpId, url ) {
+		let blob;
+
+		fetch( url )
+			.then( res => res.arrayBuffer() )
+			.then( arr => GSUaudioCurrentContext.decodeAudioData( arr ) )
+			.then( buf => gswaLameMP3.$convert( buf ) )
+			.then( blobby => ( blob = blobby ).arrayBuffer() )
+			.then( arr => GSUaudioCurrentContext.decodeAudioData( arr ) )
+			.then( buf => {
+				const [ pathL, pathR ] = gscoSamplegroup.$getBufData( buf );
+
+				return gsapiClient.$cloneSampleToMP3( {
+					$idsample: smpId,
+					$file: blob,
+					$duration: buf.duration,
+					$wave0: pathL,
+					$wave1: pathR,
+				} );
+			} )
+			.then( smp => {
+				this.#incrOrder( smp.$order, +1 );
+				this.#addSamples( [ smp ] );
+				this.$this.$dispatch( GSCO_SAMPLES_UPDATE_STORAGE );
+			} )
+			.catch( err => $popup.$alert( GSTX.$uploadErr, err.msg ) );
+	}
+	#deleteSample( elSmp ) {
+		this.#incrOrder( +elSmp.$getAttr( "order" ), -1 );
+		this.#updateInfo();
+	}
+	#incrOrder( limit, incr ) {
+		this.$elements.$body
+			.$query( "gsco-sample" )
+			.$setAttr( "order", el => {
+				const ordr = +$.$getAttr( el, "order" );
+
+				return ordr + ( ordr >= limit ? incr : 0 );
+			} );
+	}
 
 	// .........................................................................
 	#onclick( e ) {
@@ -157,9 +188,7 @@ class gscoSamplegroup extends gsui0ne {
 		} );
 	}
 	#clickAddSample() {
-		let arrBuf;
 		let file;
-		let hash;
 
 		GSUopenFileManager()
 			.then( files => {
@@ -167,34 +196,20 @@ class gscoSamplegroup extends gsui0ne {
 				file = files[ 0 ];
 				return GSUgetFileContent( file, "array" );
 			} )
-			.then( arr => {
-				arrBuf = arr;
-				return GSUhashBuffer( arr );
-			} )
-			.then( sha1 => {
-				hash = sha1;
-				return GSUaudioCurrentContext.decodeAudioData( arrBuf );
-			} )
+			.then( arr => GSUaudioCurrentContext.decodeAudioData( arr ) )
 			.then( buf => {
-				const dur = buf.duration;
-				const chanL = buf.getChannelData( 0 );
-				const chanR = buf.getChannelData( 1 );
-				const pathL = gscoSamplegroup.$drawPath( 512, 256, chanL, dur, 0, dur );
-				const pathR = gscoSamplegroup.$drawPath( 512, 256, chanR, dur, 0, dur );
+				const [ pathL, pathR ] = gscoSamplegroup.$getBufData( buf );
 
 				return gsapiClient.$addSample( {
 					$idgroup: this.$this.$dataId(),
-					$hash: hash,
 					$file: file,
-					$duration: dur,
-					$wave0: pathL.join( "," ),
-					$wave1: pathR.join( "," ),
+					$duration: buf.duration,
+					$wave0: pathL,
+					$wave1: pathR,
 				} );
 			} )
 			.then( smp => {
-				this.$elements.$body
-					.$query( "gsco-sample" )
-					.$setAttr( "order", el => 1 + +$.$getAttr( el, "order" ) );
+				this.#incrOrder( -1, +1 );
 				this.$elements.$body.$prepend(
 					$( "<gsco-sample>" )
 						.$setAttr( {
@@ -224,6 +239,16 @@ class gscoSamplegroup extends gsui0ne {
 
 				return $popup.$alert( GSTX.$uploadErr, msg2 );
 			} );
+	}
+	static $getBufData( buf ) {
+		const dur = buf.duration;
+		const chanL = buf.getChannelData( 0 );
+		const chanR = buf.getChannelData( 1 );
+
+		return [
+			gscoSamplegroup.$drawPath( 512, 256, chanL, dur, 0, dur ).join( "," ),
+			gscoSamplegroup.$drawPath( 512, 256, chanR, dur, 0, dur ).join( "," ),
+		];
 	}
 	static $drawPath( w, h, data, bufDur, start, dur ) {
 		const h2 = h / 2;

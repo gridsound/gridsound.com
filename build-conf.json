@@ -99,6 +99,7 @@
 
 		"gs-api-client/gsapiClient.js",
 
+		"gs-wa-components/gswaLameMP3/gswaLameMP3.js",
 		"gs-wa-components/gswaBuffers/gswaBuffers.js",
 		"gs-wa-components/gswaOsc/gswaOsc.js",
 		"gs-wa-components/gswaNoise/gswaNoise.js",

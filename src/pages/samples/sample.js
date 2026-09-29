@@ -29,6 +29,7 @@ class gscoSample extends gsui0ne {
 					$.$elem( "gsco-sample-options", { id: popId, popover: true },
 						$.$button( { "data-prop": "rename"   }, $.$icon( { icon: "pen"      } ), $.$span( null, "Rename" ) ),
 						$.$button( { "data-prop": "download" }, $.$icon( { icon: "download" } ), $.$span( null, "Download" ) ),
+						$.$button( { "data-prop": "clonemp3" }, $.$icon( { icon: "file-mp3" } ), $.$span( null, "Clone to MP3" ) ),
 						$.$button( { "data-prop": "delete"   }, $.$icon( { icon: "trash"    } ), $.$span( null, "Delete" ) ),
 					),
 					$.$elem( "gsco-sample-body", null,
@@ -62,6 +63,7 @@ class gscoSample extends gsui0ne {
 				$stopBtn: "[data-prop='stop']",
 				$renameBtn: "[data-prop='rename']",
 				$deleteBtn: "[data-prop='delete']",
+				$clonemp3Btn: "[data-prop='clonemp3']",
 			},
 		} );
 		this.$this.$on( {
@@ -79,14 +81,18 @@ class gscoSample extends gsui0ne {
 	// .........................................................................
 	static get observedAttributes() {
 		return [ "order", "name", "format", "size", "duration" ];
+		// "hash", "playing"
 	}
 	$attributeChanged( prop, val ) {
 		switch ( prop ) {
 			case "order": this.$this.$css( "order", val ); break;
 			case "name": this.$elements.$name.$text( val ); break;
-			case "duration": this.$elements.$infoDur.$text( `${ val } ${ GSTX.$unitSecondSec }` ); break;
-			case "format": this.$elements.$infoFormat.$text( val ); break;
 			case "size": this.$elements.$infoSize.$text( `${ GSUmathFloatReadable( +val ).join( " " ) }${ GSTX.$unitByteB }` ); break;
+			case "duration": this.$elements.$infoDur.$text( `${ val } ${ GSTX.$unitSecondSec }` ); break;
+			case "format":
+				this.$elements.$infoFormat.$text( val );
+				this.$elements.$clonemp3Btn.$css( "display", val === "wav" ? "flex" : "none" );
+				break;
 		}
 	}
 	$onmessage( type, val ) {
@@ -135,9 +141,13 @@ class gscoSample extends gsui0ne {
 	}
 
 	// .........................................................................
+	#calcURL() {
+		const [ hash, format ] = this.$this.$getAttr( "hash", "format" );
+
+		return `${ GSURL.$gsSmps }/${ hash }.${ format }`;
+	}
 	#initAudio() {
 		if ( !this.#audioElem ) {
-			const [ hash, format ] = this.$this.$getAttr( "hash", "format" );
 			const btn = this.$elements.$playBtn;
 
 			btn.$addAttr( "loading" );
@@ -170,7 +180,7 @@ class gscoSample extends gsui0ne {
 					},
 				} )
 				.$setAttr( {
-					src: `${ GSURL.$gsSmps }/${ hash }.${ format }`,
+					src: this.#calcURL(),
 					loop: false,
 				} )
 				.$get( 0 );
@@ -203,6 +213,7 @@ class gscoSample extends gsui0ne {
 			case "rename": this.#clickRename(); break;
 			case "delete": this.#clickDelete(); break;
 			case "download": this.#clickDownload(); break;
+			case "clonemp3": this.#clickCloneMP3(); break;
 		}
 		this.$this.$focus();
 	}
@@ -230,15 +241,18 @@ class gscoSample extends gsui0ne {
 			.finally( () => this.$elements.$renameBtn.$rmAttr( "loading" ) );
 	}
 	#clickDownload() {
-		const [ hash, name, format ] = this.$this.$getAttr( "hash", "name", "format" );
+		const [ name, format ] = this.$this.$getAttr( "name", "format" );
 
-		GSUdownloadURL( `${ name }.${ format }`, `${ GSURL.$gsSmps }/${ hash }.${ format }` );
+		GSUdownloadURL( `${ name }.${ format }`, this.#calcURL() );
 	}
 	#clickDelete() {
 		this.$elements.$deleteBtn.$addAttr( "loading" );
 		gsapiClient.$deleteSample( this.$this.$dataId() )
 			.then( () => this.$this.$setAttr( "size", 0 ).$dispatch( GSCO_SAMPLE_DELETED ).$remove() )
 			.finally( () => this.$elements.$deleteBtn.$rmAttr( "loading" ) );
+	}
+	#clickCloneMP3() {
+		this.$this.$dispatch( GSCO_SAMPLE_CLONEMP3, this.$this.$dataId(), this.#calcURL() );
 	}
 }
 
