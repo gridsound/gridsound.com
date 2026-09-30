@@ -4,7 +4,8 @@ const GSCO_SAMPLEGROUP_DELETED = 1;
 const GSCO_SAMPLE_ADDED = 2;
 const GSCO_SAMPLE_DELETED = 3;
 const GSCO_SAMPLE_CLONEMP3 = 4;
-const GSCO_SAMPLES_UPDATE_STORAGE = 5;
+const GSCO_SAMPLE_CONVERTMP3 = 5;
+const GSCO_SAMPLES_UPDATE_STORAGE = 6;
 
 class gscoSamplegroup extends gsui0ne {
 	#nbSmp = 0;
@@ -22,8 +23,9 @@ class gscoSamplegroup extends gsui0ne {
 					),
 					$.$icon( { icon: "folder-music" } ),
 					$.$elem( "gsco-samplegroup-name" ),
+					$.$elem( "gsco-samplegroup-nbsamples" ),
+					$.$elem( "gsco-samplegroup-size" ),
 					$.$elem( "gsui-com-button", { "data-prop": "rename", icon: "pen", "data-tooltip": GSTX.$samplesMvGroup } ),
-					$.$elem( "gsco-samplegroup-info" ),
 					$.$elem( "gsui-com-button", { "data-prop": "addSample", icon: "file-plus", type: "submit", "data-tooltip": GSTX.$samplesUpload } ),
 					$.$elem( "gsui-com-button", { "data-prop": "delete", icon: "trash", type: "danger", "data-tooltip": GSTX.$samplesRmGroup } ),
 				),
@@ -35,7 +37,8 @@ class gscoSamplegroup extends gsui0ne {
 				$head: "gsco-samplegroup-head",
 				$name: "gsco-samplegroup-name",
 				$body: "gsco-samplegroup-body",
-				$info: "gsco-samplegroup-info",
+				$size: "gsco-samplegroup-size",
+				$nbSamples: "gsco-samplegroup-nbsamples",
 				$renameBtn: "[data-prop='rename']",
 				$deleteBtn: "[data-prop='delete']",
 				$addSampleBtn: "[data-prop='addSample']",
@@ -47,6 +50,7 @@ class gscoSamplegroup extends gsui0ne {
 		} );
 		this.$this.$listen( {
 			[ GSCO_SAMPLE_CLONEMP3 ]: d => this.#cloneToMp3( ...d.$args ),
+			[ GSCO_SAMPLE_CONVERTMP3 ]: d => this.#convertToMp3( ...d.$args ),
 			[ GSCO_SAMPLE_DELETED ]: d => ( this.#deleteSample( d.$target ), true ),
 		} );
 	}
@@ -79,7 +83,8 @@ class gscoSamplegroup extends gsui0ne {
 		const size2 = GSUmathFloatReadable( size ).join( " " );
 
 		this.#nbSmp = nbSmp;
-		this.$elements.$info.$textHTML( GSTXreplace( GSTX.$samplesGroupSize, nbSmp, size2 ) );
+		this.$elements.$size.$text( `${ size2 }${ GSTX.$unitByteB }` );
+		this.$elements.$nbSamples.$text( nbSmp );
 	}
 	#addSamples( smps ) {
 		this.$elements.$body.$append(
@@ -93,20 +98,18 @@ class gscoSamplegroup extends gsui0ne {
 						duration: smp.$duration,
 						size: smp.$size,
 						name: smp.$name,
-						desc: smp.$desc,
 						created: smp.$created,
 						updated: smp.$updated,
 					} )
-					.$message( "waveL", smp.$wave0 )
-					.$message( "waveR", smp.$wave1 )
+					.$message( "waves", smp.$wave0, smp.$wave1 )
 			)
 		);
 		this.#updateInfo();
 	}
-	#cloneToMp3( smpId, url ) {
+	#getMp3( smpId, url ) {
 		let blob;
 
-		fetch( url )
+		return fetch( url )
 			.then( res => res.arrayBuffer() )
 			.then( arr => GSUaudioCurrentContext.decodeAudioData( arr ) )
 			.then( buf => gswaLameMP3.$convert( buf ) )
@@ -115,14 +118,36 @@ class gscoSamplegroup extends gsui0ne {
 			.then( buf => {
 				const [ pathL, pathR ] = gscoSamplegroup.$getBufData( buf );
 
-				return gsapiClient.$cloneSampleToMP3( {
+				return {
 					$idsample: smpId,
 					$file: blob,
 					$duration: buf.duration,
 					$wave0: pathL,
 					$wave1: pathR,
-				} );
+				};
+			} );
+	}
+	#convertToMp3( smpId, url ) {
+		this.#getMp3( smpId, url )
+			.then( obj => gsapiClient.$convertSampleToMP3( obj ) )
+			.then( smp => {
+				this.$elements.$body.$query( `[data-id="${ smpId }"]` )
+					.$setAttr( {
+						size: smp.$size,
+						hash: smp.$hash,
+						format: smp.$format,
+						duration: smp.$duration,
+						updated: smp.$updated,
+					} )
+					.$message( "waves", smp.$wave0, smp.$wave1 );
+				this.#updateInfo();
+				this.$this.$dispatch( GSCO_SAMPLES_UPDATE_STORAGE );
 			} )
+			.catch( err => $popup.$alert( GSTX.$uploadErr, err.msg ) );
+	}
+	#cloneToMp3( smpId, url ) {
+		this.#getMp3( smpId, url )
+			.then( obj => gsapiClient.$cloneSampleToMP3( obj ) )
 			.then( smp => {
 				this.#incrOrder( smp.$order, +1 );
 				this.#addSamples( [ smp ] );
@@ -224,8 +249,7 @@ class gscoSamplegroup extends gsui0ne {
 							created: smp.$created,
 							updated: smp.$updated,
 						} )
-						.$message( "waveL", smp.$wave0 )
-						.$message( "waveR", smp.$wave1 )
+						.$message( "waves", smp.$wave0, smp.$wave1 )
 				);
 				this.#updateInfo();
 				this.$this.$dispatch( GSCO_SAMPLE_ADDED );
@@ -243,11 +267,11 @@ class gscoSamplegroup extends gsui0ne {
 	static $getBufData( buf ) {
 		const dur = buf.duration;
 		const chanL = buf.getChannelData( 0 );
-		const chanR = buf.getChannelData( 1 );
+		const chanR = buf.numberOfChannels > 1 ? buf.getChannelData( 1 ) : "";
 
 		return [
 			gscoSamplegroup.$drawPath( 512, 256, chanL, dur, 0, dur ).join( "," ),
-			gscoSamplegroup.$drawPath( 512, 256, chanR, dur, 0, dur ).join( "," ),
+			chanR && gscoSamplegroup.$drawPath( 512, 256, chanR, dur, 0, dur ).join( "," ),
 		];
 	}
 	static $drawPath( w, h, data, bufDur, start, dur ) {

@@ -34,12 +34,13 @@
 }
 
 gsco-samplegroup {
+	--gsco-bg: #161627;
+	--gsco-sg-pad: 8px;
 	position: relative;
 	display: flex;
 	flex-direction: column;
 	border-radius: 8px;
-	background-color: #0005;
-	--gsco-sg-pad: 8px;
+	background-color: var( --gsco-bg );
 
 	&:not( [ open ] ) {
 		height: auto !important;
@@ -54,8 +55,6 @@ gsco-samplegroup {
 		}
 	}
 	&[ open ] {
-		background-color: #0003;
-
 		[ data-prop="expand" ] gsui-icon {
 			rotate: 90deg;
 		}
@@ -89,13 +88,23 @@ gsco-samplegroup {
 		&:empty::before {
 			content: "Untitled";
 			font-style: italic;
+			padding-right: 2px;
 			opacity: .5;
 		}
 	}
-	gsco-samplegroup-info {
-		margin-right: auto;
-		font-size: 12px;
+	gsco-samplegroup-size {
 		white-space: nowrap;
+		font-size: 12px;
+		font-weight: bold;
+		opacity: .5;
+	}
+	gsco-samplegroup-nbsamples {
+		border-radius: 4px;
+		padding: 0 4px;
+		font-size: 16px;
+		font-weight: bold;
+		color: var( --gsco-bg );
+		background-color: #fff;
 		opacity: .5;
 	}
 	gsco-samplegroup-body {
@@ -125,6 +134,10 @@ gsco-samplegroup-placeholder {
 
 /* ........................................... */
 gsco-sample {
+	--gsco-sample-head-bg: #334;
+	--gsco-sample-body-bg: #223;
+	--gsco-sample-cursor-bg: #ff9;
+	--gsco-sample-chan-r-bg: #0757fb;
 	anchor-scope: --gsco-sample-options;
 	overflow: hidden;
 	box-sizing: border-box;
@@ -154,7 +167,7 @@ gsco-sample-head {
 	align-items: center;
 	padding: 4px;
 	gap: 6px;
-	background-color: #334;
+	background-color: var( --gsco-sample-head-bg );
 
 	[ data-prop="grip" ] {
 		min-width: 16px;
@@ -181,7 +194,7 @@ gsco-sample-info {
 gsco-sample-format {
 	padding: 0 4px;
 	border-radius: 4px;
-	color: #334;
+	color: var( --gsco-sample-head-bg );
 	font-weight: bold;
 	text-transform: uppercase;
 	background-color: #fff;
@@ -191,14 +204,14 @@ gsco-sample-body {
 	position: relative;
 	flex: 1;
 	display: flex;
-	background-color: #223;
+	background-color: var( --gsco-sample-body-bg );
 }
 gsco-sample-options {
 	position: absolute;
 	position-anchor: --gsco-sample-options;
 	position-area: bottom;
 	position-try-fallbacks: top;
-	width: 180px;
+	min-width: 180px;
 	flex-direction: column;
 	font-size: 14px;
 
@@ -208,6 +221,7 @@ gsco-sample-options {
 	button {
 		display: flex;
 		align-items: center;
+		text-align: start;
 		gap: .7ch;
 		height: 38px;
 		padding: 0 10px;
@@ -216,10 +230,17 @@ gsco-sample-options {
 		&:hover {
 			background-color: #fff2;
 		}
-		* {
-			pointer-events: none;
+		gsui-icon {
+			min-width: 20px;
 		}
-		&[ data-prop="delete" ] {
+		span {
+			pointer-events: none;
+
+			&:first-letter {
+				text-transform: uppercase;
+			}
+		}
+		&[ data-danger ] {
 			background-color: var( --btn-danger-colorB );
 
 			&:hover {
@@ -246,7 +267,7 @@ gsco-sample-player {
 			opacity: .5;
 
 			& + path {
-				color: #0757fb;
+				color: var( --gsco-sample-chan-r-bg );
 			}
 		}
 	}
@@ -260,7 +281,7 @@ gsco-sample-player {
 			inset: 0 auto;
 			width: 2px;
 			margin-left: -1px;
-			background-color: #ff9;
+			background-color: var( --gsco-sample-cursor-bg );
 			pointer-events: none;
 			transition: opacity .2s;
 		}

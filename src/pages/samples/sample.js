@@ -27,10 +27,11 @@ class gscoSample extends gsui0ne {
 						$.$elem( "gsui-com-button", { "data-prop": "options", popovertarget: popId, icon: "ellipsis-v" } ),
 					),
 					$.$elem( "gsco-sample-options", { id: popId, popover: true },
-						$.$button( { "data-prop": "rename"   }, $.$icon( { icon: "pen"      } ), $.$span( null, "Rename" ) ),
-						$.$button( { "data-prop": "download" }, $.$icon( { icon: "download" } ), $.$span( null, "Download" ) ),
-						$.$button( { "data-prop": "clonemp3" }, $.$icon( { icon: "file-mp3" } ), $.$span( null, "Clone to MP3" ) ),
-						$.$button( { "data-prop": "delete"   }, $.$icon( { icon: "trash"    } ), $.$span( null, "Delete" ) ),
+						$.$button( { "data-prop": "rename"                      }, $.$icon( { icon: "pen"      } ), $.$span( null, GSTX.$rename ) ),
+						$.$button( { "data-prop": "download"                    }, $.$icon( { icon: "download" } ), $.$span( null, GSTX.$download ) ),
+						$.$button( { "data-prop": "convertmp3"                  }, $.$icon( { icon: "file-mp3" } ), $.$span( null, GSTX.$convertToMP3 ) ),
+						$.$button( { "data-prop": "clonemp3"                    }, $.$icon( { icon: "file-mp3" } ), $.$span( null, GSTX.$cloneToMP3 ) ),
+						$.$button( { "data-prop": "delete", "data-danger": true }, $.$icon( { icon: "trash"    } ), $.$span( null, GSTX.$delete ) ),
 					),
 					$.$elem( "gsco-sample-body", null,
 						$.$elem( "gsco-sample-player", null,
@@ -63,7 +64,7 @@ class gscoSample extends gsui0ne {
 				$stopBtn: "[data-prop='stop']",
 				$renameBtn: "[data-prop='rename']",
 				$deleteBtn: "[data-prop='delete']",
-				$clonemp3Btn: "[data-prop='clonemp3']",
+				$mp3Btns: "[data-prop$='mp3']",
 			},
 		} );
 		this.$this.$on( {
@@ -91,14 +92,16 @@ class gscoSample extends gsui0ne {
 			case "duration": this.$elements.$infoDur.$text( `${ val } ${ GSTX.$unitSecondSec }` ); break;
 			case "format":
 				this.$elements.$infoFormat.$text( val );
-				this.$elements.$clonemp3Btn.$css( "display", val === "wav" ? "flex" : "none" );
+				this.$elements.$mp3Btns.$css( "display", val === "wav" ? "flex" : "none" );
 				break;
 		}
 	}
-	$onmessage( type, val ) {
+	$onmessage( type, a, b ) {
 		switch ( type ) {
-			case "waveL": this.#drawWaveform( this.$elements.$waveL, val ); break;
-			case "waveR": this.#drawWaveform( this.$elements.$waveR, val ); break;
+			case "waves":
+				this.#drawWaveform( this.$elements.$waveL, a );
+				this.#drawWaveform( this.$elements.$waveR, b || a );
+				break;
 			case "pause": this.#audioPlay( false ); break;
 			case "playToggle": this.$elements.$playBtn.$click(); break;
 		}
@@ -214,6 +217,7 @@ class gscoSample extends gsui0ne {
 			case "delete": this.#clickDelete(); break;
 			case "download": this.#clickDownload(); break;
 			case "clonemp3": this.#clickCloneMP3(); break;
+			case "convertmp3": this.#clickConvertMP3(); break;
 		}
 		this.$this.$focus();
 	}
@@ -253,6 +257,9 @@ class gscoSample extends gsui0ne {
 	}
 	#clickCloneMP3() {
 		this.$this.$dispatch( GSCO_SAMPLE_CLONEMP3, this.$this.$dataId(), this.#calcURL() );
+	}
+	#clickConvertMP3() {
+		this.$this.$dispatch( GSCO_SAMPLE_CONVERTMP3, this.$this.$dataId(), this.#calcURL() );
 	}
 }
 
