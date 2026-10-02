@@ -11,6 +11,8 @@ class gscoSamplegroup extends gsui0ne {
 	#nbSmp = 0;
 
 	constructor() {
+		const popId = GSUuuid();
+
 		super( {
 			$tagName: "gsco-samplegroup",
 			$template: [
@@ -25,9 +27,12 @@ class gscoSamplegroup extends gsui0ne {
 					$.$elem( "gsco-samplegroup-name" ),
 					$.$elem( "gsco-samplegroup-nbsamples" ),
 					$.$elem( "gsco-samplegroup-size" ),
-					$.$elem( "gsui-com-button", { "data-prop": "rename", icon: "pen", "data-tooltip": GSTX.$samplesMvGroup } ),
 					$.$elem( "gsui-com-button", { "data-prop": "addSample", icon: "file-plus", type: "submit", "data-tooltip": GSTX.$samplesUpload } ),
-					$.$elem( "gsui-com-button", { "data-prop": "delete", icon: "trash", type: "danger", "data-tooltip": GSTX.$samplesRmGroup } ),
+					$.$elem( "gsui-com-button", { "data-prop": "options", popovertarget: popId, icon: "ellipsis-v" } ),
+				),
+				$.$elem( "gsui-dropdown", { id: popId },
+					$.$elem( "gsui-dropdown-option", { value: "rename", icon: "pen",   text: GSTX.$rename } ),
+					$.$elem( "gsui-dropdown-option", { value: "delete", icon: "trash", text: GSTX.$delete, danger: true } ),
 				),
 				$.$elem( "gsco-samplegroup-body", null,
 					$.$elem( "gsco-samplegroup-placeholder", null, GSTX.$yourSamplegroupPH ),
@@ -39,8 +44,7 @@ class gscoSamplegroup extends gsui0ne {
 				$body: "gsco-samplegroup-body",
 				$size: "gsco-samplegroup-size",
 				$nbSamples: "gsco-samplegroup-nbsamples",
-				$renameBtn: "[data-prop='rename']",
-				$deleteBtn: "[data-prop='delete']",
+				$menuBtn: "[data-prop='options']",
 				$addSampleBtn: "[data-prop='addSample']",
 			},
 		} );
@@ -52,6 +56,12 @@ class gscoSamplegroup extends gsui0ne {
 			[ GSCO_SAMPLE_CLONEMP3 ]: d => this.#cloneToMp3( ...d.$args ),
 			[ GSCO_SAMPLE_CONVERTMP3 ]: d => this.#convertToMp3( ...d.$args ),
 			[ GSCO_SAMPLE_DELETED ]: d => ( this.#deleteSample( d.$target ), true ),
+			[ GSEV_DROPDOWN_CLICK ]: d => {
+				switch ( d.$args[ 0 ] ) {
+					case "rename": this.#clickRename(); break;
+					case "delete": this.#clickDelete(); break;
+				}
+			},
 		} );
 	}
 
@@ -172,9 +182,7 @@ class gscoSamplegroup extends gsui0ne {
 	// .........................................................................
 	#onclick( e ) {
 		switch ( $.$dataProp( e.target ) ) {
-			case "rename": this.#clickRename(); break;
 			case "expand": this.#clickExpand(); break;
-			case "delete": this.#clickDelete(); break;
 			case "addSample": this.#clickAddSample(); break;
 		}
 	}
@@ -184,7 +192,7 @@ class gscoSamplegroup extends gsui0ne {
 		}
 	}
 	#clickRename() {
-		this.$elements.$renameBtn.$addAttr( "loading" );
+		this.$elements.$menuBtn.$addAttr( "loading" );
 		return $popup.$prompt( GSTX.$samplesMvGroup, "", this.$this.$getAttr( "name" ) )
 			.then( name => {
 				if ( !name || name === this.$this.$getAttr( "name" ) ) {
@@ -194,7 +202,7 @@ class gscoSamplegroup extends gsui0ne {
 			} )
 			.then( name => gsapiClient.$renameSamplegroup( this.$this.$dataId(), name ) )
 			.then( name => this.$this.$setAttr( "name", name ) )
-			.finally( () => this.$elements.$renameBtn.$rmAttr( "loading" ) );
+			.finally( () => this.$elements.$menuBtn.$rmAttr( "loading" ) );
 	}
 	#clickExpand() {
 		this.$this.$togAttr( "open" );
@@ -205,10 +213,10 @@ class gscoSamplegroup extends gsui0ne {
 			: Promise.resolve( true )
 		).then( b => {
 			if ( b ) {
-				this.$elements.$deleteBtn.$addAttr( "loading" );
+				this.$elements.$menuBtn.$addAttr( "loading" );
 				gsapiClient.$deleteSamplegroup( this.$this.$dataId() )
 					.then( () => this.$this.$empty().$dispatch( GSCO_SAMPLEGROUP_DELETED ).$remove() )
-					.finally( () => this.$elements.$deleteBtn.$rmAttr( "loading" ) );
+					.finally( () => this.$elements.$menuBtn.$rmAttr( "loading" ) );
 			}
 		} );
 	}

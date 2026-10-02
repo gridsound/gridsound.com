@@ -26,12 +26,12 @@ class gscoSample extends gsui0ne {
 						),
 						$.$elem( "gsui-com-button", { "data-prop": "options", popovertarget: popId, icon: "ellipsis-v" } ),
 					),
-					$.$elem( "gsco-sample-options", { id: popId, popover: true },
-						$.$button( { "data-prop": "rename"                      }, $.$icon( { icon: "pen"      } ), $.$span( null, GSTX.$rename ) ),
-						$.$button( { "data-prop": "download"                    }, $.$icon( { icon: "download" } ), $.$span( null, GSTX.$download ) ),
-						$.$button( { "data-prop": "convertmp3"                  }, $.$icon( { icon: "file-mp3" } ), $.$span( null, GSTX.$convertToMP3 ) ),
-						$.$button( { "data-prop": "clonemp3"                    }, $.$icon( { icon: "file-mp3" } ), $.$span( null, GSTX.$cloneToMP3 ) ),
-						$.$button( { "data-prop": "delete", "data-danger": true }, $.$icon( { icon: "trash"    } ), $.$span( null, GSTX.$delete ) ),
+					$.$elem( "gsui-dropdown", { id: popId },
+						$.$elem( "gsui-dropdown-option", { value: "rename",     icon: "pen",      text: GSTX.$rename               } ),
+						$.$elem( "gsui-dropdown-option", { value: "download",   icon: "download", text: GSTX.$download             } ),
+						$.$elem( "gsui-dropdown-option", { value: "convertmp3", icon: "file-mp3", text: GSTX.$convertToMP3         } ),
+						$.$elem( "gsui-dropdown-option", { value: "clonemp3",   icon: "file-mp3", text: GSTX.$cloneToMP3           } ),
+						$.$elem( "gsui-dropdown-option", { value: "delete",     icon: "trash",    text: GSTX.$delete, danger: true } ),
 					),
 					$.$elem( "gsco-sample-body", null,
 						$.$elem( "gsco-sample-player", null,
@@ -62,9 +62,8 @@ class gscoSample extends gsui0ne {
 				$waveR: "gsco-sample-body path:last-child",
 				$playBtn: "[data-prop='play']",
 				$stopBtn: "[data-prop='stop']",
-				$renameBtn: "[data-prop='rename']",
-				$deleteBtn: "[data-prop='delete']",
-				$mp3Btns: "[data-prop$='mp3']",
+				$menuBtn: "[data-prop='options']",
+				$mp3Btns: "gsui-dropdown-option[value$='mp3']",
 			},
 		} );
 		this.$this.$on( {
@@ -75,6 +74,18 @@ class gscoSample extends gsui0ne {
 			pointerdown: this.#sliderPtrDown.bind( this ),
 			pointermove: this.#sliderPtrMove.bind( this ),
 			pointerup: this.#sliderPtrUp.bind( this ),
+		} );
+		this.$this.$listen( {
+			[ GSEV_DROPDOWN_CLICK ]: d => {
+				switch ( d.$args[ 0 ] ) {
+					case "rename": this.#clickRename(); break;
+					case "delete": this.#clickDelete(); break;
+					case "download": this.#clickDownload(); break;
+					case "clonemp3": this.#clickCloneMP3(); break;
+					case "convertmp3": this.#clickConvertMP3(); break;
+				}
+				this.$this.$focus();
+			},
 		} );
 		this.#setSlider( 0 );
 	}
@@ -213,11 +224,6 @@ class gscoSample extends gsui0ne {
 		switch ( $.$dataProp( e.target ) ) {
 			case "play": this.#clickPlay(); break;
 			case "stop": this.#audioStop(); break;
-			case "rename": this.#clickRename(); break;
-			case "delete": this.#clickDelete(); break;
-			case "download": this.#clickDownload(); break;
-			case "clonemp3": this.#clickCloneMP3(); break;
-			case "convertmp3": this.#clickConvertMP3(); break;
 		}
 		this.$this.$focus();
 	}
@@ -232,7 +238,7 @@ class gscoSample extends gsui0ne {
 			: this.#audioPlay( this.#audioElem.paused );
 	}
 	#clickRename() {
-		this.$elements.$renameBtn.$addAttr( "loading" );
+		this.$elements.$menuBtn.$addAttr( "loading" );
 		return $popup.$prompt( GSTX.$samplesMvSample, "", this.$this.$getAttr( "name" ) )
 			.then( name => {
 				if ( !name || name === this.$this.$getAttr( "name" ) ) {
@@ -242,7 +248,7 @@ class gscoSample extends gsui0ne {
 			} )
 			.then( name => gsapiClient.$renameSample( this.$this.$dataId(), name ) )
 			.then( name => this.$this.$setAttr( "name", name ) )
-			.finally( () => this.$elements.$renameBtn.$rmAttr( "loading" ) );
+			.finally( () => this.$elements.$menuBtn.$rmAttr( "loading" ) );
 	}
 	#clickDownload() {
 		const [ name, format ] = this.$this.$getAttr( "name", "format" );
@@ -250,10 +256,10 @@ class gscoSample extends gsui0ne {
 		GSUdownloadURL( `${ name }.${ format }`, this.#calcURL() );
 	}
 	#clickDelete() {
-		this.$elements.$deleteBtn.$addAttr( "loading" );
+		this.$elements.$menuBtn.$addAttr( "loading" );
 		gsapiClient.$deleteSample( this.$this.$dataId() )
 			.then( () => this.$this.$setAttr( "size", 0 ).$dispatch( GSCO_SAMPLE_DELETED ).$remove() )
-			.finally( () => this.$elements.$deleteBtn.$rmAttr( "loading" ) );
+			.finally( () => this.$elements.$menuBtn.$rmAttr( "loading" ) );
 	}
 	#clickCloneMP3() {
 		this.$this.$dispatch( GSCO_SAMPLE_CLONEMP3, this.$this.$dataId(), this.#calcURL() );
