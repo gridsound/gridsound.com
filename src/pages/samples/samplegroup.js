@@ -55,13 +55,8 @@ class gscoSamplegroup extends gsui0ne {
 		this.$this.$listen( {
 			[ GSCO_SAMPLE_CLONEMP3 ]: d => this.#cloneToMp3( ...d.$args ),
 			[ GSCO_SAMPLE_CONVERTMP3 ]: d => this.#convertToMp3( ...d.$args ),
-			[ GSCO_SAMPLE_DELETED ]: d => ( this.#deleteSample( d.$target ), true ),
-			[ GSEV_DROPDOWN_CLICK ]: d => {
-				switch ( d.$args[ 0 ] ) {
-					case "rename": this.#clickRename(); break;
-					case "delete": this.#clickDelete(); break;
-				}
-			},
+			[ GSCO_SAMPLE_DELETED ]: d => ( this.#sampleDeleted( d.$target ), true ),
+			[ GSEV_DROPDOWN_CLICK ]: d => this.#clickDropdown( d.$args[ 0 ] ),
 		} );
 	}
 
@@ -126,7 +121,7 @@ class gscoSamplegroup extends gsui0ne {
 			.then( blobby => ( blob = blobby ).arrayBuffer() )
 			.then( arr => GSUaudioCurrentContext.decodeAudioData( arr ) )
 			.then( buf => {
-				const [ pathL, pathR ] = gscoSamplegroup.$getBufData( buf );
+				const [ pathL, pathR ] = gscoSamplegroup.#getBufData( buf );
 
 				return {
 					$idsample: smpId,
@@ -165,7 +160,7 @@ class gscoSamplegroup extends gsui0ne {
 			} )
 			.catch( err => $popup.$alert( GSTX.$uploadErr, err.msg ) );
 	}
-	#deleteSample( elSmp ) {
+	#sampleDeleted( elSmp ) {
 		this.#incrOrder( +elSmp.$getAttr( "order" ), -1 );
 		this.#updateInfo();
 	}
@@ -189,6 +184,12 @@ class gscoSamplegroup extends gsui0ne {
 	#dblclick( e ) {
 		if ( $.$tag( e.target ) === "gsco-samplegroup-name" ) {
 			this.#clickRename();
+		}
+	}
+	#clickDropdown( act ) {
+		switch ( act ) {
+			case "rename": this.#clickRename(); break;
+			case "delete": this.#clickDelete(); break;
 		}
 	}
 	#clickRename() {
@@ -231,7 +232,7 @@ class gscoSamplegroup extends gsui0ne {
 			} )
 			.then( arr => GSUaudioCurrentContext.decodeAudioData( arr ) )
 			.then( buf => {
-				const [ pathL, pathR ] = gscoSamplegroup.$getBufData( buf );
+				const [ pathL, pathR ] = gscoSamplegroup.#getBufData( buf );
 
 				return gsapiClient.$addSample( {
 					$idgroup: this.$this.$dataId(),
@@ -272,17 +273,17 @@ class gscoSamplegroup extends gsui0ne {
 				return $popup.$alert( GSTX.$uploadErr, msg2 );
 			} );
 	}
-	static $getBufData( buf ) {
+	static #getBufData( buf ) {
 		const dur = buf.duration;
 		const chanL = buf.getChannelData( 0 );
 		const chanR = buf.numberOfChannels > 1 ? buf.getChannelData( 1 ) : "";
 
 		return [
-			gscoSamplegroup.$drawPath( 512, 256, chanL, dur, 0, dur ).join( "," ),
-			chanR && gscoSamplegroup.$drawPath( 512, 256, chanR, dur, 0, dur ).join( "," ),
+			gscoSamplegroup.#drawPath( 512, 256, chanL, dur, 0, dur ).join( "," ),
+			chanR && gscoSamplegroup.#drawPath( 512, 256, chanR, dur, 0, dur ).join( "," ),
 		];
 	}
-	static $drawPath( w, h, data, bufDur, start, dur ) {
+	static #drawPath( w, h, data, bufDur, start, dur ) {
 		const h2 = h / 2;
 		const sampleRate = data.length / bufDur;
 		const startSample = start * sampleRate;
