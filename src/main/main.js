@@ -63,7 +63,11 @@ class gscoMain {
 		} );
 		DOM.headUser.$setAttr( "href", `#/u/${ u.username }` );
 		DOM.headUsername.$text( u.username );
-		DOM.root.$rmClass( "noauth" );
+		DOM.root.$setAttr( {
+			"user-noauth": false,
+			"user-premium": u.premium,
+			"user-nopremium": !u.premium,
+		} );
 		DOM.headAvatar.$setAttr( "src", u.avatar );
 	}
 	$error( code ) {

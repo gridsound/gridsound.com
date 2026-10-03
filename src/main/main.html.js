@@ -1,7 +1,7 @@
 "use strict";
 
 $.$setTemplate( "gs-main", () =>
-	$.$div( { id: "root", class: "noauth" },
+	$.$div( { id: "root", "user-noauth": true, "user-nopremium": true },
 		$.$flex( { id: "bg", x: true, inert: false },
 			$.$div( { "data-side": "start" },
 				$.$div( { class: "bg-island", "data-name": "drums" } ),

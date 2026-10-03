@@ -112,11 +112,9 @@
 		color: inherit;
 	}
 }
-.noauth {
-	#headUser,
-	#headSamples {
-		display: none;
-	}
+#root[ user-noauth ] #headUser,
+#root[ user-nopremium ] #headSamples {
+	display: none;
 }
 
 /* .......................................................................... */
