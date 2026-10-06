@@ -77,6 +77,10 @@ class gscoSamplegroup extends gsui0ne {
 	}
 
 	// .........................................................................
+	static #getBufData( arr ) {
+		return GSUaudioCurrentContext.decodeAudioData( arr )
+			.then( buf => [ buf, gsuiWaveform.$getPathChans( buf, 512, 256 ) ] );
+	}
 	#updateInfo() {
 		let nbSmp = 0;
 		const size = this.$elements.$body.$query( "gsco-sample" ).$reduce( ( sum, el ) => {
@@ -119,18 +123,14 @@ class gscoSamplegroup extends gsui0ne {
 			.then( arr => GSUaudioCurrentContext.decodeAudioData( arr ) )
 			.then( buf => gswaLameMP3.$convert( buf ) )
 			.then( blobby => ( blob = blobby ).arrayBuffer() )
-			.then( arr => GSUaudioCurrentContext.decodeAudioData( arr ) )
-			.then( buf => {
-				const [ pathL, pathR ] = gscoSamplegroup.#getBufData( buf );
-
-				return {
-					$idsample: smpId,
-					$file: blob,
-					$duration: buf.duration,
-					$wave0: pathL,
-					$wave1: pathR,
-				};
-			} );
+			.then( arr => gscoSamplegroup.#getBufData( arr ) )
+			.then( ( [ buf, paths ] ) => ( {
+				$idsample: smpId,
+				$file: blob,
+				$duration: buf.duration,
+				$wave0: paths[ 0 ],
+				$wave1: paths[ 1 ],
+			} ) );
 	}
 	#convertToMp3( smpId, url ) {
 		this.#getMp3( smpId, url )
@@ -230,18 +230,14 @@ class gscoSamplegroup extends gsui0ne {
 				file = files[ 0 ];
 				return GSUgetFileContent( file, "array" );
 			} )
-			.then( arr => GSUaudioCurrentContext.decodeAudioData( arr ) )
-			.then( buf => {
-				const [ pathL, pathR ] = gscoSamplegroup.#getBufData( buf );
-
-				return gsapiClient.$addSample( {
-					$idgroup: this.$this.$dataId(),
-					$file: file,
-					$duration: buf.duration,
-					$wave0: pathL,
-					$wave1: pathR,
-				} );
-			} )
+			.then( arr => gscoSamplegroup.#getBufData( arr ) )
+			.then( ( [ buf, paths ] ) => gsapiClient.$addSample( {
+				$idgroup: this.$this.$dataId(),
+				$file: file,
+				$duration: buf.duration,
+				$wave0: paths[ 0 ],
+				$wave1: paths[ 1 ],
+			} ) )
 			.then( smp => {
 				this.#incrOrder( -1, +1 );
 				this.$elements.$body.$prepend(
@@ -272,49 +268,6 @@ class gscoSamplegroup extends gsui0ne {
 
 				return $popup.$alert( GSTX.$uploadErr, msg2 );
 			} );
-	}
-	static #getBufData( buf ) {
-		const dur = buf.duration;
-		const chanL = buf.getChannelData( 0 );
-		const chanR = buf.numberOfChannels > 1 ? buf.getChannelData( 1 ) : "";
-
-		return [
-			gscoSamplegroup.#drawPath( 512, 256, chanL, dur, 0, dur ).join( "," ),
-			chanR && gscoSamplegroup.#drawPath( 512, 256, chanR, dur, 0, dur ).join( "," ),
-		];
-	}
-	static #drawPath( w, h, data, bufDur, start, dur ) {
-		const h2 = h / 2;
-		const sampleRate = data.length / bufDur;
-		const startSample = start * sampleRate;
-		const spp = dur * sampleRate / w;
-		const arrA = [];
-		const arrB = [];
-
-		for ( let px = 0; px < w; ++px ) {
-			const a = Math.floor( startSample + px * spp );
-			const b = Math.max( a + 1, Math.floor( startSample + ( px + 1 ) * spp ) );
-			let min = 0;
-			let max = 0;
-
-			if ( b > 0 && a < data.length ) {
-				const len = Math.min( b, data.length );
-
-				min = Infinity;
-				max = -Infinity;
-				for ( let i = Math.max( 0, a ); i < len; ++i ) {
-					const v = data[ i ];
-
-					if ( v < min ) { min = v; }
-					if ( v > max ) { max = v; }
-				}
-				min = GSUmathClamp( min, -1, 1 );
-				max = GSUmathClamp( max, -1, 1 );
-			}
-			arrA.push( `${ px } ${ Math.round( -max * h2 ) }` );
-			arrB.push( `${ px } ${ Math.round( -min * h2 ) }` );
-		}
-		return arrA.concat( arrB.reverse() );
 	}
 }
 
