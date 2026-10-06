@@ -40,7 +40,6 @@ class gscoPartialCmp {
 			rendered: !!$cmp.rendered,
 			duration: $cmp.durationSec,
 			opensource: $cmp.opensource,
-			dawlink: !$cmp.deleted && ( itsmine || $cmp.opensource ) ? `${ GSURL.$gsDAW }/#${ $cmp.id }` : false,
 		} );
 
 		gscoPartialCmp.$updateCmpActions( elCmp );
