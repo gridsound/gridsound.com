@@ -27,6 +27,7 @@ class gscoSamplegroup extends gsui0ne {
 					$.$elem( "gsco-samplegroup-name" ),
 					$.$elem( "gsco-samplegroup-nbsamples" ),
 					$.$elem( "gsco-samplegroup-size" ),
+					$.$elem( "gsui-com-button", { "data-prop": "record", icon: "microphone", type: "submit", "data-tooltip": GSTX.$samplesRecord } ),
 					$.$elem( "gsui-com-button", { "data-prop": "addSample", icon: "file-plus", type: "submit", "data-tooltip": GSTX.$samplesUpload } ),
 					$.$elem( "gsui-com-button", { "data-prop": "options", popovertarget: popId, icon: "ellipsis-v" } ),
 				),
@@ -45,6 +46,7 @@ class gscoSamplegroup extends gsui0ne {
 				$size: "gsco-samplegroup-size",
 				$nbSamples: "gsco-samplegroup-nbsamples",
 				$menuBtn: "[data-prop='options']",
+				$recordBtn: "[data-prop='record']",
 				$addSampleBtn: "[data-prop='addSample']",
 			},
 		} );
@@ -178,6 +180,7 @@ class gscoSamplegroup extends gsui0ne {
 	#onclick( e ) {
 		switch ( $.$dataProp( e.target ) ) {
 			case "expand": this.#clickExpand(); break;
+			case "record": this.#clickRecord(); break;
 			case "addSample": this.#clickAddSample(); break;
 		}
 	}
@@ -207,6 +210,9 @@ class gscoSamplegroup extends gsui0ne {
 	}
 	#clickExpand() {
 		this.$this.$togAttr( "open" );
+	}
+	#clickRecord() {
+		this.$elements.$recordBtn.$addAttr( "loading" );
 	}
 	#clickDelete() {
 		( this.#nbSmp > 0

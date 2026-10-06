@@ -76,6 +76,9 @@ gsco-samplegroup {
 		[ data-prop="grip" ] {
 			margin-right: -8px;
 		}
+		[ data-prop="record" ] {
+			display: none;
+		}
 		[ data-prop="addSample" ] {
 			margin-left: auto;
 		}
