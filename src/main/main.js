@@ -44,6 +44,11 @@ class gscoMain {
 		DOM.main.$listen( {
 			[ GSEV_COMPLAYER_PLAY ]: this.#onplay.bind( this ),
 			[ GSEV_COMPLAYER_STOP ]: this.#onstop.bind( this ),
+			[ GSEV_DROPDOWN_CLICK ]: d => {
+				switch ( d.$args[ 0 ] ) {
+					case "logout": this.#headAuthBtnClick(); break;
+				}
+			},
 		} );
 		gsuiTooltip.$start();
 	}
@@ -64,6 +69,7 @@ class gscoMain {
 		DOM.headUser.$setAttr( "href", `#/u/${ u.username }` );
 		DOM.headUsername.$text( u.username );
 		DOM.root.$setAttr( {
+			"user-auth": true,
 			"user-noauth": false,
 			"user-premium": u.premium,
 			"user-nopremium": !u.premium,

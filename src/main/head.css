@@ -44,6 +44,7 @@
 /* .......................................................................... */
 #headSep {
 	flex: 1;
+	min-width: 10px;
 	border: var( --head-brd );
 	border-width: 0 1px;
 	background-color: #0001;
@@ -74,7 +75,7 @@
 /* .......................................................................... */
 #headIcon {
 	position: relative;
-	width: 64px;
+	min-width: 64px;
 	padding: 0;
 	border-bottom-left-radius: inherit;
 
@@ -86,15 +87,15 @@
 		background: center no-repeat url( "../../assets/logo/gs-gs-logo.svg" );
 	}
 }
-
-/* .......................................................................... */
-#headNewCmp {
-	position: relative;
+#headExplore,
+#headSearch,
+#headSamples,
+#headNewCmp,
+#headAuth,
+#headMenuBtn {
 	width: 42px;
-	font-size: 24px;
+	min-width: 42px;
 }
-
-/* .......................................................................... */
 #headUser {
 	display: flex;
 	align-items: center;
@@ -113,16 +114,36 @@
 	}
 }
 #root[ user-noauth ] #headUser,
+#root[ user-noauth ] #headMenuBtn,
 #root[ user-nopremium ] #headSamples {
 	display: none;
 }
-
-/* .......................................................................... */
+#headMenuBtn {
+	display: none;
+	anchor-name: --gsui-dropdown;
+}
 #headAuth {
 	border-bottom-right-radius: inherit;
 
 	&:hover,
 	&.selected {
 		background-color: var( --head-logout-hover-bg );
+	}
+}
+
+/* .......................................................................... */
+@media ( max-width: 500px ) {
+	#root[ user-auth ] #headAuth,
+	#root[ user-auth ] #headNewCmp,
+	#headSamples {
+		display: none;
+	}
+	#headMenuBtn {
+		display: flex;
+	}
+}
+@media ( max-width: 380px ) {
+	#headUsername {
+		display: none;
 	}
 }
