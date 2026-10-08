@@ -6,7 +6,7 @@
 	display: flex;
 	align-self: center;
 	--h: calc( 32px * ( 1 - var( --y128 ) * .4 ) );
-	width: calc( 50% + 50% * var( --y128 ) );
+	width: calc( 60% + 40% * var( --y128 ) );
 	height: var( --h );
 	line-height: var( --h );
 	border-radius: calc( 8px - 4px * var( --y128 ) );
@@ -14,6 +14,7 @@
 
 	a {
 		flex: 1;
+		padding: 0 14px;
 		text-align: center;
 		background-color: #fff1;
 	}
