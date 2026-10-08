@@ -91,6 +91,7 @@ gsco-samplegroup {
 	}
 	[ data-prop="grip" ] {
 		cursor: var( --gsuiCursor-move );
+		touch-action: none;
 	}
 	gsco-samplegroup-name {
 		font-weight: bold;
