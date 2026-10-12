@@ -8,7 +8,7 @@ class gscoPartialEditText {
 			$.$flex( { x: true, xcenter: true, g16: true },
 				$.$elem( "gsui-button", { action: "edit", text: o.$edit } ),
 				$.$elem( "gsui-button", { action: "cancel", text: o.$cancel } ),
-				$.$elem( "gsui-button", { action: "save", text: o.$save, type: "submit" } ),
+				$.$elem( "gsui-button", { action: "save", text: o.$save, type: "submit", model: "submit" } ),
 			),
 		) );
 

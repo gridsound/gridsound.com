@@ -15,7 +15,7 @@ $.$setTemplate( "gscoForgotPass", () =>
 			$.$div( { class: "form-error", id: "forgotpassFormError" } ),
 			$.$div( { class: "form-btns" },
 				$.$elem( "gsui-button", { href: "#/auth", text: "Back" } ),
-				$.$elem( "gsui-button", { type: "submit", text: "Send email", id: "forgotpassFormSubmit" } ),
+				$.$elem( "gsui-button", { type: "submit", model: "submit", text: "Send email", id: "forgotpassFormSubmit" } ),
 			),
 		),
 	),

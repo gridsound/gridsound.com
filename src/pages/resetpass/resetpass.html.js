@@ -19,7 +19,7 @@ $.$setTemplate( "gscoResetPass", () =>
 			$.$div( { class: "form-error", id: "resetpassFormError" } ),
 			$.$div( { class: "form-btns" },
 				$.$elem( "gsui-button", { href: "#/auth", text: "Back to the login page" } ),
-				$.$elem( "gsui-button", { type: "submit", text: "Save", id: "resetpassFormSubmit" } ),
+				$.$elem( "gsui-button", { type: "submit", model: "submit", text: "Save", id: "resetpassFormSubmit" } ),
 			),
 		),
 	),
