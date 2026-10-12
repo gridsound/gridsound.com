@@ -81,7 +81,8 @@
 		"gs-ui-components/gsuiJoystick/gsuiJoystick.css",
 		"gs-ui-components/gsuiPopup/gsuiPopup.css",
 		"gs-ui-components/gsuiScratch/gsuiScratch.css",
-		"gs-ui-components/gsuiSlider/gsuiSlider.css"
+		"gs-ui-components/gsuiSlider/gsuiSlider.css",
+		"gs-ui-components/gsuiWaveform/gsuiWaveform.css"
 	],
 	"jsDep": [
 		"gs-utils/gs-utils.js",
