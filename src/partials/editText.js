@@ -6,9 +6,9 @@ class gscoPartialEditText {
 			$.$div( { class: "editText-text", "data-placeholder": o.$placeholder } ),
 			$.$elem( "textarea", { class: "editText-textarea" } ),
 			$.$flex( { x: true, xcenter: true, g16: true },
-				$.$elem( "gsui-com-button", { action: "edit", text: o.$edit } ),
-				$.$elem( "gsui-com-button", { action: "cancel", text: o.$cancel } ),
-				$.$elem( "gsui-com-button", { action: "save", text: o.$save, type: "submit" } ),
+				$.$elem( "gsui-button", { action: "edit", text: o.$edit } ),
+				$.$elem( "gsui-button", { action: "cancel", text: o.$cancel } ),
+				$.$elem( "gsui-button", { action: "save", text: o.$save, type: "submit" } ),
 			),
 		) );
 
