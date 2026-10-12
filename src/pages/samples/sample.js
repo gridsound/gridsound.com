@@ -35,10 +35,7 @@ class gscoSample extends gsui0ne {
 					),
 					$.$elem( "gsco-sample-body", null,
 						$.$elem( "gsco-sample-player", null,
-							$.$elem( "svg", { class: "gsui-waveform", viewBox: "0 0 512 256", preserveAspectRatio: "none" },
-								$.$elem( "path" ),
-								$.$elem( "path" ),
-							),
+							$.$elem( "gsui-waveform", { res: "512 256" } ),
 							$.$elem( "gsco-sample-slider", null,
 								$.$elem( "gsco-sample-cursor" ),
 							),
@@ -56,8 +53,7 @@ class gscoSample extends gsui0ne {
 				$infoSize: "gsco-sample-size",
 				$slider: "gsco-sample-slider",
 				$cursor: "gsco-sample-cursor",
-				$waveL: "gsco-sample-body path:first-child",
-				$waveR: "gsco-sample-body path:last-child",
+				$waveform: "gsui-waveform",
 				$playBtn: "[data-prop='play']",
 				$stopBtn: "[data-prop='stop']",
 				$menuBtn: "[data-prop='options']",
@@ -105,21 +101,15 @@ class gscoSample extends gsui0ne {
 				break;
 		}
 	}
-	$onmessage( type, a, b ) {
+	$onmessage( type, val ) {
 		switch ( type ) {
-			case "waves":
-				this.#drawWaveform( this.$elements.$waveL, a );
-				this.#drawWaveform( this.$elements.$waveR, b || a );
-				break;
+			case "waves": this.$elements.$waveform.$message( GSEV_WAVEFORM_DRAW, val ); break;
 			case "pause": this.#audioPlay( false ); break;
 			case "playToggle": this.$elements.$playBtn.$click(); break;
 		}
 	}
 
 	// .........................................................................
-	#drawWaveform( el, val ) {
-		el.$setAttr( "d", `M${ val.replaceAll( ",", "L" ) }` );
-	}
 	#sliderPtrDown( e ) {
 		this.$elements.$slider.$setPtrCapture( e.pointerId );
 		this.#currentTiming = true;

@@ -112,7 +112,7 @@ class gscoSamplegroup extends gsui0ne {
 						created: smp.$created,
 						updated: smp.$updated,
 					} )
-					.$message( "waves", smp.$wave0, smp.$wave1 )
+					.$message( "waves", smp.$waves )
 			)
 		);
 		this.#updateInfo();
@@ -146,7 +146,7 @@ class gscoSamplegroup extends gsui0ne {
 						duration: smp.$duration,
 						updated: smp.$updated,
 					} )
-					.$message( "waves", smp.$wave0, smp.$wave1 );
+					.$message( "waves", smp.$waves );
 				this.#updateInfo();
 				this.$this.$dispatch( GSCO_SAMPLES_UPDATE_STORAGE );
 			} )
@@ -260,7 +260,7 @@ class gscoSamplegroup extends gsui0ne {
 							created: smp.$created,
 							updated: smp.$updated,
 						} )
-						.$message( "waves", smp.$wave0, smp.$wave1 )
+						.$message( "waves", smp.$waves )
 				);
 				this.#updateInfo();
 				this.$this.$dispatch( GSCO_SAMPLE_ADDED );
