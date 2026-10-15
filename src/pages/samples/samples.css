@@ -157,7 +157,9 @@ gsco-sample {
 	min-height: 100px;
 	border: 2px solid transparent;
 	border-radius: inherit;
-	transition: .2s border-color;
+	transition:
+		.2s border-color,
+		.4s height;
 	outline: 0;
 
 	&:focus-within {
@@ -166,6 +168,13 @@ gsco-sample {
 	[ data-prop="options" ] {
 		margin-left: auto;
 		anchor-name: --gsui-dropdown;
+	}
+	&[ editing ] {
+		height: 300px;
+
+		gsco-sample-player {
+			display: none;
+		}
 	}
 }
 gsco-sample-in {
@@ -214,12 +223,13 @@ gsco-sample-format {
 gsco-sample-body {
 	position: relative;
 	flex: 1;
-	display: flex;
+	display: block;
 	background-color: var( --gsco-sample-body-bg );
 }
 gsco-sample-player {
 	position: absolute;
 	inset: 0;
+	transition: .4s opacity;
 
 	gsco-sample-slider {
 		position: absolute;

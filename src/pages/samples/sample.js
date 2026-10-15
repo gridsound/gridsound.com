@@ -4,6 +4,8 @@ class gscoSample extends gsui0ne {
 	#currentTiming = false;
 	#audioElem = null;
 	#frameId = null;
+	#buf = null;
+	#bufEdit = $noop;
 
 	constructor() {
 		const popId = GSUuuid();
@@ -28,12 +30,13 @@ class gscoSample extends gsui0ne {
 						),
 						$.$elem( "gsui-button", { "data-prop": "options", popovertarget: popId, icon: "ellipsis-v" } ),
 					),
-					$.$elem( "gsui-dropdown", { id: popId },
-						$.$elem( "gsui-dropdown-option", { value: "rename",     icon: "pen",      name: GSTX.$rename               } ),
-						$.$elem( "gsui-dropdown-option", { value: "download",   icon: "download", name: GSTX.$download             } ),
-						$.$elem( "gsui-dropdown-option", { value: "convertmp3", icon: "file-mp3", name: GSTX.$convertToMP3         } ),
-						$.$elem( "gsui-dropdown-option", { value: "clonemp3",   icon: "file-mp3", name: GSTX.$cloneToMP3           } ),
-						$.$elem( "gsui-dropdown-option", { value: "delete",     icon: "trash",    name: GSTX.$delete, danger: true } ),
+					$.$elem( "gsui-dropdown", { id: popId, clicknclose: true },
+						$.$elem( "gsui-dropdown-option", { value: "rename",     icon: "pen",         name: GSTX.$rename               } ),
+						$.$elem( "gsui-dropdown-option", { value: "edit",       icon: "square-dash", name: GSTX.$editTrim             } ),
+						$.$elem( "gsui-dropdown-option", { value: "download",   icon: "download",    name: GSTX.$download             } ),
+						$.$elem( "gsui-dropdown-option", { value: "convertmp3", icon: "file-mp3",    name: GSTX.$convertToMP3         } ),
+						$.$elem( "gsui-dropdown-option", { value: "clonemp3",   icon: "file-mp3",    name: GSTX.$cloneToMP3           } ),
+						$.$elem( "gsui-dropdown-option", { value: "delete",     icon: "trash",       name: GSTX.$delete, danger: true } ),
 					),
 					$.$elem( "gsco-sample-body", null,
 						$.$elem( "gsco-sample-player", null,
@@ -55,11 +58,13 @@ class gscoSample extends gsui0ne {
 				$infoSize: "gsco-sample-size",
 				$slider: "gsco-sample-slider",
 				$cursor: "gsco-sample-cursor",
-				$waveform: "gsui-waveform",
 				$playBtn: "[data-prop='play']",
 				$stopBtn: "[data-prop='stop']",
 				$menuBtn: "[data-prop='options']",
 				$mp3Btns: "gsui-dropdown-option[value$='mp3']",
+				$body: "gsco-sample-body",
+				$waveform: "gsui-waveform",
+				$editOpt: "gsui-dropdown-option[value='edit']",
 			},
 		} );
 		this.$this.$on( {
@@ -72,8 +77,12 @@ class gscoSample extends gsui0ne {
 			pointerup: this.#sliderPtrUp.bind( this ),
 		} );
 		this.$this.$listen( {
+			[ GSEV_BUFFEREDITOR_EXIT ]: () => {
+				this.$this.$rmAttr( "editing" );
+			},
 			[ GSEV_DROPDOWN_CLICK ]: d => {
 				switch ( d.$args[ 0 ] ) {
+					case "edit": this.#clickEdit(); break;
 					case "rename": this.#clickRename(); break;
 					case "delete": this.#clickDelete(); break;
 					case "download": this.#clickDownload(); break;
@@ -88,11 +97,12 @@ class gscoSample extends gsui0ne {
 
 	// .........................................................................
 	static get observedAttributes() {
-		return [ "order", "name", "format", "size", "duration" ];
+		return [ "order", "name", "format", "size", "duration", "editing" ];
 		// "hash", "playing"
 	}
 	$attributeChanged( prop, val ) {
 		switch ( prop ) {
+			case "editing": this.#setEditing( val === "" ); break;
 			case "order": this.$this.$css( "order", val ); break;
 			case "name": this.$elements.$name.$text( val ); break;
 			case "size": this.$elements.$infoSize.$text( `${ GSUmathFloatReadable( +val ).join( " " ) }${ GSTX.$unitByteB }` ); break;
@@ -112,6 +122,25 @@ class gscoSample extends gsui0ne {
 	}
 
 	// .........................................................................
+	#setEditing( b ) {
+		this.$elements.$editOpt.$disabled( b );
+		if ( !b ) {
+			this.#bufEdit.$remove();
+			this.#bufEdit = $noop;
+			this.#buf = null;
+		} else {
+			this.#bufEdit = $( "<gsui-buffer-editor>" ).$appendTo( this.$elements.$body );
+			this.#getAudioBuffer()
+				.then( buf => GSUwait( .2 ).then( () => buf ) )
+				.then( buf => {
+					this.#buf = buf;
+					this.#bufEdit.$message( GSEV_BUFFEREDITOR_BUFFER, buf );
+				} )
+				.finally( () => {
+					this.$elements.$menuBtn.$rmAttr( "loading" );
+				} );
+		}
+	}
 	#sliderPtrDown( e ) {
 		this.$elements.$slider.$setPtrCapture( e.pointerId );
 		this.#currentTiming = true;
@@ -149,6 +178,13 @@ class gscoSample extends gsui0ne {
 		const [ hash, format ] = this.$this.$getAttr( "hash", "format" );
 
 		return `${ GSURL.$gsSmps }/${ hash }.${ format }`;
+	}
+	#getAudioBuffer() {
+		const url = this.#calcURL();
+
+		return fetch( url )
+			.then( res => res.arrayBuffer() )
+			.then( arr => GSUaudioCurrentContext.decodeAudioData( arr ) );
 	}
 	#initAudio() {
 		if ( !this.#audioElem ) {
@@ -256,6 +292,10 @@ class gscoSample extends gsui0ne {
 	}
 	#clickConvertMP3() {
 		this.$this.$dispatch( GSCO_SAMPLE_CONVERTMP3, this.$this.$dataId(), this.#calcURL() );
+	}
+	#clickEdit() {
+		this.$elements.$menuBtn.$addAttr( "loading" );
+		this.$this.$addAttr( "editing" );
 	}
 }
 

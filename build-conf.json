@@ -68,6 +68,8 @@
 		"gs-ui-components/gsui-gray.css",
 		"gs-ui-components/gsui-flex.css",
 		"gs-ui-components/gsuiIcon/gsuiIcon.css",
+		"gs-ui-components/gsuiBufferEditor/gsuiBufferEditor.css",
+		"gs-ui-components/gsuiBufferView/gsuiBufferView.css",
 		"gs-ui-components/gsuiCursor/gsuiCursor.css",
 		"gs-ui-components/gsuiDropdown/gsuiDropdown.css",
 		"gs-ui-components/gsuiRipple/gsuiRipple.css",
@@ -132,6 +134,8 @@
 		"gs-ui-components/gsuiSlider/gsuiSlider.html.js",
 
 		"gs-ui-components/gsui0ne/gsui0ne.js",
+		"gs-ui-components/gsuiBufferEditor/gsuiBufferEditor.js",
+		"gs-ui-components/gsuiBufferView/gsuiBufferView.js",
 		"gs-ui-components/gsuiDropdown/gsuiDropdown.js",
 		"gs-ui-components/gsuiRipple/gsuiRipple.js",
 		"gs-ui-components/gsuiReorder/gsuiReorder.js",
