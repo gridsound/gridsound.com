@@ -123,7 +123,7 @@ class gscoSamplegroup extends gsui0ne {
 		return fetch( url )
 			.then( res => res.arrayBuffer() )
 			.then( arr => GSUaudioCurrentContext.decodeAudioData( arr ) )
-			.then( buf => gswaLameMP3.$convert( buf ) )
+			.then( buf => gswaBufferToFile.$convert( buf, "mp3" ) )
 			.then( blobby => ( blob = blobby ).arrayBuffer() )
 			.then( arr => gscoSamplegroup.#getBufData( arr ) )
 			.then( ( [ buf, paths ] ) => ( {
