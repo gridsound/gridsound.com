@@ -6,6 +6,7 @@ class gscoSample extends gsui0ne {
 	#frameId = null;
 	#buf = null;
 	#bufEdit = $noop;
+	#loadedOnce = false;
 
 	constructor() {
 		const popId = GSUuuid();
@@ -97,8 +98,8 @@ class gscoSample extends gsui0ne {
 
 	// .........................................................................
 	static get observedAttributes() {
-		return [ "order", "name", "format", "size", "duration", "editing" ];
-		// "hash", "playing"
+		return [ "hash", "order", "name", "format", "size", "duration", "editing" ];
+		// "playing"
 	}
 	$attributeChanged( prop, val ) {
 		switch ( prop ) {
@@ -110,7 +111,7 @@ class gscoSample extends gsui0ne {
 			case "format":
 				this.$elements.$infoFormat.$text( val );
 				this.$elements.$mp3Btns.$css( "display", val === "wav" ? "flex" : "none" );
-				break;
+			case "hash": this.#initAudioSrc(); break;
 		}
 	}
 	$onmessage( type, val ) {
@@ -186,6 +187,11 @@ class gscoSample extends gsui0ne {
 			.then( res => res.arrayBuffer() )
 			.then( arr => GSUaudioCurrentContext.decodeAudioData( arr ) );
 	}
+	#initAudioSrc() {
+		if ( this.#audioElem ) {
+			$.$setAttr( this.#audioElem, "src", this.#calcURL() );
+		}
+	}
 	#initAudio() {
 		if ( !this.#audioElem ) {
 			const btn = this.$elements.$playBtn;
@@ -216,14 +222,14 @@ class gscoSample extends gsui0ne {
 					},
 					loadeddata: () => {
 						btn.$rmAttr( "loading" );
-						this.#audioPlay( true );
+						if ( !this.#loadedOnce ) {
+							this.#loadedOnce = true;
+							this.#audioPlay( true );
+						}
 					},
 				} )
-				.$setAttr( {
-					src: this.#calcURL(),
-					loop: false,
-				} )
 				.$get( 0 );
+			this.#initAudioSrc();
 		}
 	}
 	#audioTimeUpdate() {

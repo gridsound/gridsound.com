@@ -59,6 +59,8 @@ class gscoSamplegroup extends gsui0ne {
 			[ GSCO_SAMPLE_CONVERTMP3 ]: d => this.#convertToMp3( ...d.$args ),
 			[ GSCO_SAMPLE_DELETED ]: d => ( this.#sampleDeleted( d.$target ), true ),
 			[ GSEV_DROPDOWN_CLICK ]: d => this.#clickDropdown( d.$args[ 0 ] ),
+			[ GSEV_BUFFEREDITOR_SAVE ]: d => this.#updateBuffer( d.$args[ 0 ], d ),
+			[ GSEV_BUFFEREDITOR_EXTRACT ]: d => this.#extractSelection( d.$args[ 0 ], d ),
 		} );
 	}
 
@@ -244,27 +246,7 @@ class gscoSamplegroup extends gsui0ne {
 				$wave0: paths[ 0 ],
 				$wave1: paths[ 1 ],
 			} ) )
-			.then( smp => {
-				this.#incrOrder( -1, +1 );
-				this.$elements.$body.$prepend(
-					$( "<gsco-sample>" )
-						.$setAttr( {
-							"data-id": smp.$id,
-							hash: smp.$hash,
-							order: smp.$order,
-							format: smp.$format,
-							duration: smp.$duration,
-							size: smp.$size,
-							name: smp.$name,
-							desc: smp.$desc,
-							created: smp.$created,
-							updated: smp.$updated,
-						} )
-						.$message( "waves", smp.$waves )
-				);
-				this.#updateInfo();
-				this.$this.$dispatch( GSCO_SAMPLE_ADDED );
-			} )
+			.then( smp => this.#addSampleThen( smp ) )
 			.finally( () => this.$elements.$addSampleBtn.$rmAttr( "loading" ) )
 			.catch( err => {
 				const msg = err.msg || err;
@@ -274,6 +256,80 @@ class gscoSamplegroup extends gsui0ne {
 
 				return $popup.$alert( GSTX.$uploadErr, msg2 );
 			} );
+	}
+	#updateBuffer( buf, d ) {
+		const bufEdit = d.$target;
+		const smp = bufEdit.$closest( "gsco-sample" );
+		const format = smp.$getAttr( "format" );
+		const newFormat = GSUisOneOf( format, "wav", "mp3" ) ? format : "wav";
+		let blob;
+
+		gswaBufferToFile.$convert( buf, newFormat )
+			.then( blobby => ( blob = blobby ).arrayBuffer() )
+			.then( arr => gscoSamplegroup.#getBufData( arr ) )
+			.then( ( [ buf2, paths ] ) => {
+				blob.name = smp.$getAttr( "name" );
+				return gsapiClient.$updateSample( {
+					$idsample: smp.$dataId(),
+					$file: blob,
+					$duration: buf2.duration,
+					$wave0: paths[ 0 ],
+					$wave1: paths[ 1 ],
+				} );
+			} )
+			.then( smp => {
+				this.$elements.$body.$query( `[data-id="${ smp.$id }"]` )
+					.$setAttr( {
+						size: smp.$size,
+						hash: smp.$hash,
+						format: smp.$format,
+						duration: smp.$duration,
+						updated: smp.$updated,
+					} )
+					.$message( "waves", smp.$waves );
+				this.#updateInfo();
+				this.$this.$dispatch( GSCO_SAMPLES_UPDATE_STORAGE );
+			} )
+			.finally( () => bufEdit.$rmAttr( "saving" ) );
+	}
+	#extractSelection( buf, d ) {
+		gswaBufferToFile.$convert( buf, "wav" )
+			.then( blob => {
+				const name = d.$target.$closest( "gsco-sample" ).$getAttr( "name" );
+				const paths = gsuiWaveform.$getPathChans( buf, 512, 256 );
+
+				blob.name = name;
+				return gsapiClient.$addSample( {
+					$idgroup: this.$this.$dataId(),
+					$file: blob,
+					$duration: buf.duration,
+					$wave0: paths[ 0 ],
+					$wave1: paths[ 1 ],
+				} );
+			} )
+			.then( smp => this.#addSampleThen( smp ) )
+			.finally( () => d.$target.$rmAttr( "extracting" ) );
+	}
+	#addSampleThen( smp ) {
+		this.#incrOrder( -1, +1 );
+		this.$elements.$body.$prepend(
+			$( "<gsco-sample>" )
+				.$setAttr( {
+					"data-id": smp.$id,
+					hash: smp.$hash,
+					order: smp.$order,
+					format: smp.$format,
+					duration: smp.$duration,
+					size: smp.$size,
+					name: smp.$name,
+					desc: smp.$desc,
+					created: smp.$created,
+					updated: smp.$updated,
+				} )
+				.$message( "waves", smp.$waves )
+		);
+		this.#updateInfo();
+		this.$this.$dispatch( GSCO_SAMPLE_ADDED );
 	}
 }
 

@@ -121,7 +121,6 @@
 		"gs-wa-components/gswaFxWaveShaper/gswaFxWaveShaper.js",
 		"gs-wa-components/gswaDrumrows/gswaDrumrows.js",
 		"gs-wa-components/gswaScheduler/gswaScheduler.js",
-		"gs-wa-components/gswaEncodeWAV/gswaEncodeWAV.js",
 		"gs-wa-components/gswaMIDIParser/gswaMIDIParser.js",
 		"gs-wa-components/gswaMIDIParser/gswaMIDIToKeys.js",
 		"gs-wa-components/gswaMIDIDevices/gswaMIDIDevices.js",
