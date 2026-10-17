@@ -104,6 +104,7 @@
 		"gs-api-client/gsapiClient.js",
 
 		"gs-wa-components/gswaBufferToFile/gswaBufferToFile.js",
+		"gs-wa-components/gswaBufferPlayer/gswaBufferPlayer.js",
 		"gs-wa-components/gswaBuffers/gswaBuffers.js",
 		"gs-wa-components/gswaOsc/gswaOsc.js",
 		"gs-wa-components/gswaNoise/gswaNoise.js",
@@ -121,11 +122,6 @@
 		"gs-wa-components/gswaFxWaveShaper/gswaFxWaveShaper.js",
 		"gs-wa-components/gswaDrumrows/gswaDrumrows.js",
 		"gs-wa-components/gswaScheduler/gswaScheduler.js",
-		"gs-wa-components/gswaMIDIParser/gswaMIDIParser.js",
-		"gs-wa-components/gswaMIDIParser/gswaMIDIToKeys.js",
-		"gs-wa-components/gswaMIDIDevices/gswaMIDIDevices.js",
-		"gs-wa-components/gswaMIDIDevices/gswaMIDIInput.js",
-		"gs-wa-components/gswaMIDIDevices/gswaMIDIOutput.js",
 
 		"gs-ui-components/gsuiComProfile/gsuiComProfile.html.js",
 		"gs-ui-components/gsuiComPlayer/gsuiComPlayer.html.js",

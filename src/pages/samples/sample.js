@@ -2,11 +2,11 @@
 
 class gscoSample extends gsui0ne {
 	#currentTiming = false;
-	#audioElem = null;
 	#frameId = null;
-	#buf = null;
 	#bufEdit = $noop;
+	#bufPlayer = null;
 	#loadedOnce = false;
+	#intervalId = null;
 
 	constructor() {
 		const popId = GSUuuid();
@@ -112,14 +112,14 @@ class gscoSample extends gsui0ne {
 			case "format":
 				this.$elements.$infoFormat.$text( val );
 				this.$elements.$mp3Btns.$css( "display", val === "wav" ? "flex" : "none" );
-			case "hash": this.#initAudioSrc(); break;
+			case "hash": this.#bufPlayer && this.#initAudio(); break;
 		}
 	}
 	$onmessage( type, val ) {
 		switch ( type ) {
 			case "waves": this.$elements.$waveform.$message( GSEV_WAVEFORM_DRAW, val ); break;
-			case "pause": this.#audioPlay( false ); break;
-			case "playToggle": this.$elements.$playBtn.$click(); break;
+			case "pause": this.#audioStop(); break;
+			case "playToggle": this.#clickPlay(); break;
 		}
 	}
 
@@ -129,18 +129,12 @@ class gscoSample extends gsui0ne {
 		if ( !b ) {
 			this.#bufEdit.$remove();
 			this.#bufEdit = $noop;
-			this.#buf = null;
 		} else {
 			this.#bufEdit = $( "<gsui-buffer-editor>" ).$appendTo( this.$elements.$body );
 			this.#getAudioBuffer()
 				.then( buf => GSUwait( .2 ).then( () => buf ) )
-				.then( buf => {
-					this.#buf = buf;
-					this.#bufEdit.$message( GSEV_BUFFEREDITOR_BUFFER, buf );
-				} )
-				.finally( () => {
-					this.$elements.$menuBtn.$rmAttr( "loading" );
-				} );
+				.then( buf => this.#bufEdit.$message( GSEV_BUFFEREDITOR_BUFFER, buf ) )
+				.finally( () => this.$elements.$menuBtn.$rmAttr( "loading" ) );
 		}
 	}
 	#sliderPtrDown( e ) {
@@ -156,8 +150,8 @@ class gscoSample extends gsui0ne {
 	#sliderPtrUp( e ) {
 		this.$elements.$slider.$relPtrCapture( e.pointerId );
 		this.#currentTiming = false;
-		if ( this.#audioElem ) {
-			this.#audioElem.currentTime = this.#getSliderVal( e.pageX ) * this.#audioElem.duration;
+		if ( this.#bufPlayer ) {
+			this.#bufPlayer.$bfplTime( this.#getSliderVal( e.pageX ) );
 		}
 	}
 	#getSliderVal( px ) {
@@ -180,73 +174,51 @@ class gscoSample extends gsui0ne {
 		return `${ GSURL.$gsSmps }/${ hash }.${ format }`;
 	}
 	#getAudioBuffer() {
-		const url = this.#calcURL();
-
-		return fetch( url )
+		return fetch( this.#calcURL() )
 			.then( res => res.arrayBuffer() )
 			.then( arr => GSUaudioCurrentContext.decodeAudioData( arr ) );
 	}
-	#initAudioSrc() {
-		if ( this.#audioElem ) {
-			$.$setAttr( this.#audioElem, "src", this.#calcURL() );
-		}
-	}
 	#initAudio() {
-		if ( !this.#audioElem ) {
-			const btn = this.$elements.$playBtn;
+		const btn = this.$elements.$playBtn;
 
-			btn.$addAttr( "loading" );
-			this.#audioElem = $( "<audio>" )
-				.$on( {
-					play: () => {
-						btn.$setAttr( "icon", "pause" );
-						this.$this.$addAttr( "playing" );
-						this.$elements.$stopBtn.$disabled( false );
-						this.#frameId = GSUsetInterval( this.#audioTimeUpdate.bind( this ), 1 / 60 );
-					},
-					pause: () => {
-						this.$this.$rmAttr( "playing" );
-						btn.$setAttr( "icon", "play" );
-						if ( this.#audioElem.currentTime === 0 ) {
-							this.$elements.$stopBtn.$disabled( true );
-						}
-						GSUclearInterval( this.#frameId );
-					},
-					ended: () => {
-						this.#setSlider( 1 );
-						this.$elements.$stopBtn.$disabled( true );
-					},
-					timeupdate: () => {
-						this.#audioTimeUpdate();
-					},
-					loadeddata: () => {
-						btn.$rmAttr( "loading" );
-						if ( !this.#loadedOnce ) {
-							this.#loadedOnce = true;
-							this.#audioPlay( true );
-						}
-					},
-				} )
-				.$get( 0 );
-			this.#initAudioSrc();
-		}
-	}
-	#audioTimeUpdate() {
-		if ( !this.#currentTiming ) {
-			this.#setSlider( this.#audioElem.currentTime / this.#audioElem.duration );
-		}
+		btn.$addAttr( "loading" );
+		return GSUaudioCurrentContext.resume()
+			.then( () => gswaBufferPlayer.$bfplLoadModule( GSUaudioCurrentContext ) )
+			.then( () => this.#getAudioBuffer() )
+			.then( buf => {
+				gswaBuffers.$sabSetBuffer( this.$this.$dataId(), buf );
+				if ( !this.#bufPlayer ) {
+					this.#bufPlayer = new gswaBufferPlayer( GSUaudioCurrentContext );
+					this.#bufPlayer.$bfplLoop( true );
+					this.#bufPlayer.$bfplConnect( GSUaudioCurrentContext.destination );
+				}
+				this.#bufPlayer.$bfplSource( ...gswaBuffers.$sabGetBuffer( this.$this.$dataId() ) );
+			} )
+			.finally( () => btn.$rmAttr( "loading" ) );
 	}
 	#audioPlay( b ) {
 		if ( b ) {
 			$( "gsco-sample[playing]" ).$message( "pause" );
-			this.#audioElem.play();
+			this.#intervalId = GSUsetInterval( () => {
+				lg("loop")
+				if ( !this.#currentTiming ) {
+					this.#setSlider( this.#bufPlayer.$bfplTime() );
+				}
+			}, 1 / 60 );
+			this.$elements.$stopBtn.$disabled( false );
 		} else {
-			this.#audioElem.pause();
+			GSUclearInterval( this.#intervalId );
+			this.#intervalId = null;
 		}
+		GSUaudioParamSet( this.#bufPlayer.$play, +b );
+		GSUaudioParamSet( this.#bufPlayer.$speed, 1 );
+		this.$this.$setAttr( "playing", b );
+		this.$elements.$playBtn.$setAttr( "icon", b ? "pause" : "play" );
 	}
 	#audioStop() {
-		this.#audioElem.currentTime = 0;
 		this.#audioPlay( false );
+		this.#bufPlayer.$bfplTime( 0 );
+		this.#setSlider( 0 );
 		this.$elements.$stopBtn.$disabled( true );
 	}
 
@@ -264,9 +236,9 @@ class gscoSample extends gsui0ne {
 		}
 	}
 	#clickPlay() {
-		!this.#audioElem
-			? this.#initAudio()
-			: this.#audioPlay( this.#audioElem.paused );
+		!this.#bufPlayer
+			? this.#initAudio().then( () => this.#audioPlay( true ) )
+			: this.#audioPlay( !this.#intervalId );
 	}
 	#clickRename() {
 		this.$elements.$menuBtn.$addAttr( "loading" );
