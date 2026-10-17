@@ -73,6 +73,7 @@ class gscoSample extends gsui0ne {
 			dblclick: this.#dblclick.bind( this ),
 		} );
 		this.$elements.$slider.$on( {
+			dragstart: e => e.preventDefault(),
 			pointerdown: this.#sliderPtrDown.bind( this ),
 			pointermove: this.#sliderPtrMove.bind( this ),
 			pointerup: this.#sliderPtrUp.bind( this ),
@@ -146,8 +147,6 @@ class gscoSample extends gsui0ne {
 		this.$elements.$slider.$setPtrCapture( e.pointerId );
 		this.#currentTiming = true;
 		this.#sliderPtrMove( e );
-		e.preventDefault();
-		this.$this.$focus();
 	}
 	#sliderPtrMove( e ) {
 		if ( this.#currentTiming ) {
