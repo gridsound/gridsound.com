@@ -21,8 +21,8 @@ class gscoSamples {
 		new gsuiReorder( {
 			$root: DOM.samplesPageGroups,
 			$parentSelector: "gsco-samplegroup-body",
-			$itemSelector: "gsco-sample",
-			$itemGripSelector: "gsco-sample-head > [data-prop='grip']",
+			$itemSelector: "gsui-sample",
+			$itemGripSelector: "gsui-sample-head > [data-prop='grip']",
 			$getTargetList: () => $noop,
 			$onchange( o ) {
 				gsapiClient.$reorderSample( o.$rdrItemId, o.$rdrItemOrderNow, o.$rdrItemOrderOld, o.$rdrItemParentNow, o.$rdrItemParentOld );
@@ -33,8 +33,8 @@ class gscoSamples {
 		} );
 		DOM.samplesPageGroups.$listen( {
 			[ GSCO_SAMPLES_UPDATE_STORAGE ]: () => this.#updateStorage(),
-			[ GSCO_SAMPLE_ADDED ]: () => this.#updateStorage(),
-			[ GSCO_SAMPLE_DELETED ]: () => this.#updateStorage(),
+			[ GSEV_SAMPLE_ADDED ]: () => this.#updateStorage(),
+			[ GSEV_SAMPLE_DELETED ]: () => this.#updateStorage(),
 			[ GSCO_SAMPLEGROUP_DELETED ]: d => {
 				const order = +d.$target.$getAttr( "order" );
 
@@ -87,7 +87,7 @@ class gscoSamples {
 	}
 	#updateStorage() {
 		const max = gsapiClient.$user.samplesMaxBytes;
-		const sum = DOM.samplesPageGroups.$query( "gsco-sample" ).$reduce( ( sum, el ) => sum + +$.$getAttr( el, "size" ), 0 );
+		const sum = DOM.samplesPageGroups.$query( "gsui-sample" ).$reduce( ( sum, el ) => sum + +$.$getAttr( el, "size" ), 0 );
 
 		DOM.samplesPageStorage.$textHTML( GSTXreplace( GSTX.$samplesStorage,
 			GSUmathRound( sum / max * 100, .1 ),
@@ -102,10 +102,10 @@ class gscoSamples {
 			const el = $( document.activeElement );
 			const tag = el.$tag();
 
-			if ( tag === "gsco-sample" ) {
+			if ( tag === "gsui-sample" ) {
 				el.$message( "playToggle" );
 			} else {
-				$( "gsco-sample[playing]" ).$message( "pause" );
+				$( "gsui-sample[playing]" ).$message( "pause" );
 			}
 			e.preventDefault();
 		}

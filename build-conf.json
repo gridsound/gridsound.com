@@ -57,7 +57,6 @@
 		"src/pages/resetpass/resetpass.js",
 		"src/pages/explore/explore.js",
 		"src/pages/samples/samplegroup.js",
-		"src/pages/samples/sample.js",
 		"src/pages/samples/samples.js",
 		"src/pages/forgotpass/forgotpass.js",
 
@@ -82,6 +81,7 @@
 		"gs-ui-components/gsuiComPlayer/gsuiComPlayer.css",
 		"gs-ui-components/gsuiJoystick/gsuiJoystick.css",
 		"gs-ui-components/gsuiPopup/gsuiPopup.css",
+		"gs-ui-components/gsuiSample/gsuiSample.css",
 		"gs-ui-components/gsuiScratch/gsuiScratch.css",
 		"gs-ui-components/gsuiSlider/gsuiSlider.css",
 		"gs-ui-components/gsuiWaveform/gsuiWaveform.css"
@@ -142,6 +142,7 @@
 		"gs-ui-components/gsuiComPlayer/gsuiComPlayer.js",
 		"gs-ui-components/gsuiJoystick/gsuiJoystick.js",
 		"gs-ui-components/gsuiPopup/gsuiPopup.js",
+		"gs-ui-components/gsuiSample/gsuiSample.js",
 		"gs-ui-components/gsuiScratch/gsuiScratch.js",
 		"gs-ui-components/gsuiSlider/gsuiSlider.js",
 		"gs-ui-components/gsuiWaveform/gsuiWaveform.js"

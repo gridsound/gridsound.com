@@ -1,10 +1,6 @@
 "use strict";
 
 const GSCO_SAMPLEGROUP_DELETED = 1;
-const GSCO_SAMPLE_ADDED = 2;
-const GSCO_SAMPLE_DELETED = 3;
-const GSCO_SAMPLE_CLONEMP3 = 4;
-const GSCO_SAMPLE_CONVERTMP3 = 5;
 const GSCO_SAMPLES_UPDATE_STORAGE = 6;
 
 class gscoSamplegroup extends gsui0ne {
@@ -55,9 +51,9 @@ class gscoSamplegroup extends gsui0ne {
 			dblclick: this.#dblclick.bind( this ),
 		} );
 		this.$this.$listen( {
-			[ GSCO_SAMPLE_CLONEMP3 ]: d => this.#cloneToMp3( ...d.$args ),
-			[ GSCO_SAMPLE_CONVERTMP3 ]: d => this.#convertToMp3( ...d.$args ),
-			[ GSCO_SAMPLE_DELETED ]: d => ( this.#sampleDeleted( d.$target ), true ),
+			[ GSEV_SAMPLE_CLONEMP3 ]: d => this.#cloneToMp3( ...d.$args ),
+			[ GSEV_SAMPLE_CONVERTMP3 ]: d => this.#convertToMp3( ...d.$args ),
+			[ GSEV_SAMPLE_DELETED ]: d => ( this.#sampleDeleted( d.$target ), true ),
 			[ GSEV_DROPDOWN_CLICK ]: d => this.#clickDropdown( d.$args[ 0 ] ),
 			[ GSEV_BUFFEREDITOR_SAVE ]: d => this.#updateBuffer( d.$args[ 0 ], d ),
 			[ GSEV_BUFFEREDITOR_EXTRACT ]: d => this.#extractSelection( d.$args[ 0 ], d ),
@@ -87,7 +83,7 @@ class gscoSamplegroup extends gsui0ne {
 	}
 	#updateInfo() {
 		let nbSmp = 0;
-		const size = this.$elements.$body.$query( "gsco-sample" ).$reduce( ( sum, el ) => {
+		const size = this.$elements.$body.$query( "gsui-sample" ).$reduce( ( sum, el ) => {
 			const sz = +$.$getAttr( el, "size" );
 
 			nbSmp += sz > 0;
@@ -102,7 +98,7 @@ class gscoSamplegroup extends gsui0ne {
 	#addSamples( smps ) {
 		this.$elements.$body.$append(
 			...smps.map( smp =>
-				$( "<gsco-sample>" )
+				$( "<gsui-sample>" )
 					.$setAttr( {
 						"data-id": smp.$id,
 						hash: smp.$hash,
@@ -115,6 +111,8 @@ class gscoSamplegroup extends gsui0ne {
 						updated: smp.$updated,
 					} )
 					.$message( "waves", smp.$waves )
+					.$message( GSEV_API_PROMISE, "rename", gsapiClient.$renameSample )
+					.$message( GSEV_API_PROMISE, "delete", gsapiClient.$deleteSample )
 			)
 		);
 		this.#updateInfo();
@@ -170,7 +168,7 @@ class gscoSamplegroup extends gsui0ne {
 	}
 	#incrOrder( limit, incr ) {
 		this.$elements.$body
-			.$query( "gsco-sample" )
+			.$query( "gsui-sample" )
 			.$setAttr( "order", el => {
 				const ordr = +$.$getAttr( el, "order" );
 
@@ -259,7 +257,7 @@ class gscoSamplegroup extends gsui0ne {
 	}
 	#updateBuffer( buf, d ) {
 		const bufEdit = d.$target;
-		const smp = bufEdit.$closest( "gsco-sample" );
+		const smp = bufEdit.$closest( "gsui-sample" );
 		const format = smp.$getAttr( "format" );
 		const newFormat = GSUisOneOf( format, "wav", "mp3" ) ? format : "wav";
 		let blob;
@@ -295,7 +293,7 @@ class gscoSamplegroup extends gsui0ne {
 	#extractSelection( buf, d ) {
 		gswaBufferToFile.$convert( buf, "wav" )
 			.then( blob => {
-				const name = d.$target.$closest( "gsco-sample" ).$getAttr( "name" );
+				const name = d.$target.$closest( "gsui-sample" ).$getAttr( "name" );
 				const paths = gsuiWaveform.$getPathChans( buf, 512, 256 );
 
 				blob.name = name;
@@ -313,7 +311,7 @@ class gscoSamplegroup extends gsui0ne {
 	#addSampleThen( smp ) {
 		this.#incrOrder( -1, +1 );
 		this.$elements.$body.$prepend(
-			$( "<gsco-sample>" )
+			$( "<gsui-sample>" )
 				.$setAttr( {
 					"data-id": smp.$id,
 					hash: smp.$hash,
@@ -329,7 +327,7 @@ class gscoSamplegroup extends gsui0ne {
 				.$message( "waves", smp.$waves )
 		);
 		this.#updateInfo();
-		this.$this.$dispatch( GSCO_SAMPLE_ADDED );
+		this.$this.$dispatch( GSEV_SAMPLE_ADDED );
 	}
 }
 
