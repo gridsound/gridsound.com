@@ -129,6 +129,7 @@ class gscoSamplegroup extends gsui0ne {
 			.then( ( [ buf, paths ] ) => ( {
 				$idsample: smpId,
 				$file: blob,
+				$nbchannels: buf.numberOfChannels,
 				$duration: buf.duration,
 				$wave0: paths[ 0 ],
 				$wave1: paths[ 1 ],
@@ -240,6 +241,7 @@ class gscoSamplegroup extends gsui0ne {
 			.then( ( [ buf, paths ] ) => gsapiClient.$addSample( {
 				$idgroup: this.$this.$dataId(),
 				$file: file,
+				$nbchannels: buf.numberOfChannels,
 				$duration: buf.duration,
 				$wave0: paths[ 0 ],
 				$wave1: paths[ 1 ],
@@ -270,6 +272,7 @@ class gscoSamplegroup extends gsui0ne {
 				return gsapiClient.$updateSample( {
 					$idsample: smp.$dataId(),
 					$file: blob,
+					$nbchannels: buf2.numberOfChannels,
 					$duration: buf2.duration,
 					$wave0: paths[ 0 ],
 					$wave1: paths[ 1 ],
@@ -300,6 +303,7 @@ class gscoSamplegroup extends gsui0ne {
 				return gsapiClient.$addSample( {
 					$idgroup: this.$this.$dataId(),
 					$file: blob,
+					$nbchannels: buf.numberOfChannels,
 					$duration: buf.duration,
 					$wave0: paths[ 0 ],
 					$wave1: paths[ 1 ],
