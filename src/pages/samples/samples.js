@@ -119,6 +119,7 @@ class gscoSamples {
 		}
 	}
 	#newGroup() {
+		DOM.samplesPageNewGrp.$addAttr( "loading" );
 		gsapiClient.$newSamplegroup()
 			.then( grp => {
 				DOM.samplesPageGroups
@@ -130,6 +131,7 @@ class gscoSamples {
 					name: grp.$name,
 					order: grp.$order,
 				} ) );
-			} );
+			} )
+			.finally( () => DOM.samplesPageNewGrp.$rmAttr( "loading" ) );
 	}
 }
