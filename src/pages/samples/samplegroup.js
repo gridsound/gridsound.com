@@ -229,24 +229,28 @@ class gscoSamplegroup extends gsui0ne {
 		} );
 	}
 	#clickAddSample() {
-		let file;
+		let filesSave;
 
-		GSUopenFileManager()
+		GSUopenFileManager( { $multiple: true, $accept: "audio/*" } )
 			.then( files => {
 				this.$elements.$addSampleBtn.$addAttr( "loading" );
-				file = files[ 0 ];
-				return GSUgetFileContent( file, "array" );
+				filesSave = files;
+				return Promise.all( files.map( f => {
+					return f.arrayBuffer()
+						.then( arr => gscoSamplegroup.#getBufData( arr ) );
+				} ) );
 			} )
-			.then( arr => gscoSamplegroup.#getBufData( arr ) )
-			.then( ( [ buf, paths ] ) => gsapiClient.$addSample( {
-				$idgroup: this.$this.$dataId(),
-				$file: file,
-				$nbchannels: buf.numberOfChannels,
-				$duration: buf.duration,
-				$wave0: paths[ 0 ],
-				$wave1: paths[ 1 ],
-			} ) )
-			.then( smp => this.#addSampleThen( smp ) )
+			.then( arr => gsapiClient.$addSamples(
+				this.$this.$dataId(),
+				arr.map( ( [ buf, paths ], i ) => ( {
+					$file: filesSave[ i ],
+					$wave0: paths[ 0 ],
+					$wave1: paths[ 1 ],
+					$duration: buf.duration,
+					$nbchannels: buf.numberOfChannels,
+				} ) ),
+			) )
+			.then( smps => this.#addSamplesThen( smps ) )
 			.finally( () => this.$elements.$addSampleBtn.$rmAttr( "loading" ) )
 			.catch( err => {
 				const msg = err.msg || err;
@@ -300,21 +304,20 @@ class gscoSamplegroup extends gsui0ne {
 				const paths = gsuiWaveform.$getPathChans( buf, 512, 256 );
 
 				blob.name = name;
-				return gsapiClient.$addSample( {
-					$idgroup: this.$this.$dataId(),
+				return gsapiClient.$addSamples( this.$this.$dataId(), [ {
 					$file: blob,
-					$nbchannels: buf.numberOfChannels,
-					$duration: buf.duration,
 					$wave0: paths[ 0 ],
 					$wave1: paths[ 1 ],
-				} );
+					$duration: buf.duration,
+					$nbchannels: buf.numberOfChannels,
+				} ] );
 			} )
-			.then( smp => this.#addSampleThen( smp ) )
+			.then( smp => this.#addSamplesThen( [ smp ] ) )
 			.finally( () => d.$target.$rmAttr( "extracting" ) );
 	}
-	#addSampleThen( smp ) {
-		this.#incrOrder( -1, +1 );
-		this.$elements.$body.$prepend(
+	#addSamplesThen( smps ) {
+		this.#incrOrder( -1, smps.length );
+		this.$elements.$body.$prepend( ...smps.map( smp =>
 			$( "<gsui-sample>" )
 				.$setAttr( {
 					"data-id": smp.$id,
@@ -329,7 +332,7 @@ class gscoSamplegroup extends gsui0ne {
 					updated: smp.$updated,
 				} )
 				.$message( "waves", smp.$waves )
-		);
+		) );
 		this.#updateInfo();
 		this.$this.$dispatch( GSEV_SAMPLE_ADDED );
 	}
