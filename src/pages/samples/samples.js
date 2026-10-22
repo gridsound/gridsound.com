@@ -69,6 +69,7 @@ class gscoSamples {
 	}
 	#updateData() {
 		this.#empty();
+		DOM.samplesPageRefresh.$addAttr( "loading" );
 		DOM.samplesPage.$addAttr( "data-loading" );
 		return gsapiClient.$getSamples()
 			.then( grps => {
@@ -81,9 +82,12 @@ class gscoSamples {
 					} ).$message( "addsamples", g.$samples );
 				} ) );
 				this.#updateStorage();
-				DOM.samplesPage.$rmAttr( "data-loading" );
 			} )
-			.catch( err => PAGES.$main.$error( err.code ) );
+			.catch( err => PAGES.$main.$error( err.code ) )
+			.finally( () => {
+				DOM.samplesPageRefresh.$rmAttr( "loading" );
+				DOM.samplesPage.$rmAttr( "data-loading" );
+			} );
 	}
 	#updateStorage() {
 		const max = gsapiClient.$user.samplesMaxBytes;
