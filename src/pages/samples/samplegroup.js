@@ -311,7 +311,7 @@ class gscoSamplegroup extends gsui0ne {
 					$nbchannels: buf.numberOfChannels,
 				} ] );
 			} )
-			.then( smp => this.#addSamplesThen( [ smp ] ) )
+			.then( smps => this.#addSamplesThen( smps ) )
 			.finally( () => d.$target.$rmAttr( "extracting" ) );
 	}
 	#addSamplesThen( smps ) {
