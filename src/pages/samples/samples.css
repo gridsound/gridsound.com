@@ -6,13 +6,53 @@
 	position: sticky;
 	z-index: 1;
 	top: calc( var( --head-height ) + var( --main-padding ) - ( 10px + 32px ) * var( --y128 ) );
-	padding-bottom: 8px;
 	border-radius: 8px;
 	background-color: var( --app-bg );
 }
 
 #samplesPageStorage {
+	display: flex;
+	flex-direction: column;
+	min-width: 120px;
+	padding: 6px 10px;
+	border: 1px solid #fff2;
+	border-radius: 4px;
 	margin-right: auto;
+	text-align: center;
+	background-color: #0002;
+
+	progress {
+		width: 100%;
+		height: 10px;
+		pointer-events: none;
+	}
+	#samplesPageStoragePerc {
+		font-weight: bold;
+
+		&::before {
+			content: ":";
+			font-weight: normal;
+			margin-right: .7ch;
+		}
+		&::after {
+			content: "%";
+			margin-left: .2ch;
+		}
+	}
+	#samplesPageStorageSum,
+	#samplesPageStorageMax {
+		font-weight: bold;
+		font-size: 11px;
+		opacity: .5;
+	}
+	#samplesPageStorageMax {
+		font-weight: bold;
+
+		&::before {
+			content: " / ";
+			font-weight: normal;
+		}
+	}
 }
 
 #samplesPageGroups {

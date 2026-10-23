@@ -64,7 +64,10 @@ class gscoSamples {
 
 	// .........................................................................
 	#empty() {
-		DOM.samplesPageStorage.$empty();
+		DOM.samplesPageStoragePerc.$text( 0 );
+		DOM.samplesPageStorageSum.$text( GSUmathFloatHuman( 0 ) );
+		DOM.samplesPageStorageMax.$text( GSUmathFloatHuman( 0 ) );
+		DOM.samplesPageStorageProgress.$value( 0 );
 		DOM.samplesPageGroups.$empty();
 	}
 	#updateData() {
@@ -90,14 +93,14 @@ class gscoSamples {
 			} );
 	}
 	#updateStorage() {
-		const max = gsapiClient.$user.samplesMaxBytes;
 		const sum = DOM.samplesPageGroups.$query( "gsui-sample" ).$reduce( ( sum, el ) => sum + +$.$getAttr( el, "size" ), 0 );
+		const max = gsapiClient.$user.samplesMaxBytes;
+		const perc = GSUmathRound( sum / max * 100, .1 );
 
-		DOM.samplesPageStorage.$textHTML( GSTXreplace( GSTX.$samplesStorage,
-			GSUmathRound( sum / max * 100, .1 ),
-			GSUmathFloatReadable( sum ).join( " " ),
-			GSUmathFloatReadable( max ).join( " " ),
-		) );
+		DOM.samplesPageStoragePerc.$text( perc );
+		DOM.samplesPageStorageProgress.$value( perc / 100 );
+		DOM.samplesPageStorageSum.$text( GSUmathFloatHuman( sum ) );
+		DOM.samplesPageStorageMax.$text( GSUmathFloatHuman( max ) );
 	}
 	#onkeydown( e ) {
 		if ( e.key === "Tab" ) {

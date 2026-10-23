@@ -89,10 +89,9 @@ class gscoSamplegroup extends gsui0ne {
 			nbSmp += sz > 0;
 			return sum + sz;
 		}, 0 );
-		const size2 = GSUmathFloatReadable( size ).join( " " );
 
 		this.#nbSmp = nbSmp;
-		this.$elements.$size.$text( `${ size2 }${ GSTX.$unitByteB }` );
+		this.$elements.$size.$text( GSUmathFloatHuman( size ) );
 		this.$elements.$nbSamples.$text( nbSmp );
 	}
 	#addSamples( smps ) {
