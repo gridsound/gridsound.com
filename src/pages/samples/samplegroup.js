@@ -331,6 +331,8 @@ class gscoSamplegroup extends gsui0ne {
 					updated: smp.$updated,
 				} )
 				.$message( "waves", smp.$waves )
+				.$message( GSEV_API_PROMISE, "rename", gsapiClient.$renameSample )
+				.$message( GSEV_API_PROMISE, "delete", gsapiClient.$deleteSample )
 		) );
 		this.#updateInfo();
 		this.$this.$dispatch( GSEV_SAMPLE_ADDED );
