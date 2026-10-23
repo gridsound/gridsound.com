@@ -23,15 +23,13 @@ class gscoPartialEditText {
 					dom.$query( "textarea" ).$value( "" );
 					break;
 				case "save":
-					dom.$query( "[action=save]" ).$addAttr( "loading" );
+					dom.$query( "[action=save]" ).$loading( true );
 					o.$onsave( dom.$query( "textarea" ).$value() )
 						.then( str => {
 							dom.$query( ".editText-text" ).$text( str );
 							dom.$rmAttr( "data-editing" );
 						} )
-						.finally( () => {
-							dom.$query( "[action=save]" ).$rmAttr( "loading" );
-						} );
+						.finally( () => dom.$query( "[action=save]" ).$loading( false ) );
 					break;
 			}
 		} );

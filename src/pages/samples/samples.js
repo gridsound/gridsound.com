@@ -72,7 +72,7 @@ class gscoSamples {
 	}
 	#updateData() {
 		this.#empty();
-		DOM.samplesPageRefresh.$addAttr( "loading" );
+		DOM.samplesPageRefresh.$loading( true );
 		DOM.samplesPage.$addAttr( "data-loading" );
 		return gsapiClient.$getSamples()
 			.then( grps => {
@@ -88,7 +88,7 @@ class gscoSamples {
 			} )
 			.catch( err => PAGES.$main.$error( err.code ) )
 			.finally( () => {
-				DOM.samplesPageRefresh.$rmAttr( "loading" );
+				DOM.samplesPageRefresh.$loading( false );
 				DOM.samplesPage.$rmAttr( "data-loading" );
 			} );
 	}
@@ -126,7 +126,7 @@ class gscoSamples {
 		}
 	}
 	#newGroup() {
-		DOM.samplesPageNewGrp.$addAttr( "loading" );
+		DOM.samplesPageNewGrp.$loading( true );
 		gsapiClient.$newSamplegroup()
 			.then( grp => {
 				DOM.samplesPageGroups
@@ -139,6 +139,6 @@ class gscoSamples {
 					order: grp.$order,
 				} ) );
 			} )
-			.finally( () => DOM.samplesPageNewGrp.$rmAttr( "loading" ) );
+			.finally( () => DOM.samplesPageNewGrp.$loading( false ) );
 	}
 }

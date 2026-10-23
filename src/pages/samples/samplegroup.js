@@ -196,7 +196,7 @@ class gscoSamplegroup extends gsui0ne {
 		}
 	}
 	#clickRename() {
-		this.$elements.$menuBtn.$addAttr( "loading" );
+		this.$elements.$menuBtn.$loading( true );
 		return $popup.$prompt( GSTX.$samplesMvGroup, "", this.$this.$getAttr( "name" ) )
 			.then( name => {
 				if ( !name || name === this.$this.$getAttr( "name" ) ) {
@@ -206,13 +206,13 @@ class gscoSamplegroup extends gsui0ne {
 			} )
 			.then( name => gsapiClient.$renameSamplegroup( this.$this.$dataId(), name ) )
 			.then( name => this.$this.$setAttr( "name", name ) )
-			.finally( () => this.$elements.$menuBtn.$rmAttr( "loading" ) );
+			.finally( () => this.$elements.$menuBtn.$loading( false ) );
 	}
 	#clickExpand() {
 		this.$this.$togAttr( "open" );
 	}
 	#clickRecord() {
-		this.$elements.$recordBtn.$addAttr( "loading" );
+		this.$elements.$recordBtn.$loading( true );
 	}
 	#clickDelete() {
 		( this.#nbSmp > 0
@@ -220,10 +220,10 @@ class gscoSamplegroup extends gsui0ne {
 			: Promise.resolve( true )
 		).then( b => {
 			if ( b ) {
-				this.$elements.$menuBtn.$addAttr( "loading" );
+				this.$elements.$menuBtn.$loading( true );
 				gsapiClient.$deleteSamplegroup( this.$this.$dataId() )
 					.then( () => this.$this.$empty().$dispatch( GSCO_SAMPLEGROUP_DELETED ).$remove() )
-					.finally( () => this.$elements.$menuBtn.$rmAttr( "loading" ) );
+					.finally( () => this.$elements.$menuBtn.$loading( false ) );
 			}
 		} );
 	}
@@ -232,7 +232,7 @@ class gscoSamplegroup extends gsui0ne {
 
 		GSUopenFileManager( { $multiple: true, $accept: "audio/*" } )
 			.then( files => {
-				this.$elements.$addSampleBtn.$addAttr( "loading" );
+				this.$elements.$addSampleBtn.$loading( true );
 				filesSave = files;
 				return Promise.all( files.map( f => {
 					return f.arrayBuffer()
@@ -250,7 +250,7 @@ class gscoSamplegroup extends gsui0ne {
 				} ) ),
 			) )
 			.then( smps => this.#addSamplesThen( smps ) )
-			.finally( () => this.$elements.$addSampleBtn.$rmAttr( "loading" ) )
+			.finally( () => this.$elements.$addSampleBtn.$loading( false ) )
 			.catch( err => {
 				const msg = err.msg || err;
 				const msg2 = msg === "sample:no-space"
