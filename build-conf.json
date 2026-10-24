@@ -93,7 +93,6 @@
 		"gs-utils/gs-utils-math-fft.js",
 		"gs-utils/gs-utils-json.js",
 		"gs-utils/gs-utils-audio.js",
-		"gs-utils/gs-utils-audio-nodes.js",
 		"gs-utils/gs-utils-jquery.js",
 		"gs-utils/gs-utils-files.js",
 		"gs-utils/gs-utils-models.js",
@@ -103,6 +102,7 @@
 
 		"gs-api-client/gsapiClient.js",
 
+		"gs-wa-components/gswaContext/gswaContext.js",
 		"gs-wa-components/gswaBufferToFile/gswaBufferToFile.js",
 		"gs-wa-components/gswaBufferPlayer/gswaBufferPlayer.js",
 		"gs-wa-components/gswaBuffers/gswaBuffers.js",

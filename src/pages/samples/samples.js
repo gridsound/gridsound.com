@@ -3,7 +3,6 @@
 class gscoSamples {
 	constructor() {
 		Object.seal( this );
-		GSUaudioCurrentContext ||= GSUaudioContext();
 		DOM.samplesPageHead.$onclick( this.#onclickMenu.bind( this ) );
 		new gsuiReorder( {
 			$root: DOM.samplesPageGroups,

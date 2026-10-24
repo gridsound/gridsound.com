@@ -78,7 +78,7 @@ class gscoSamplegroup extends gsui0ne {
 
 	// .........................................................................
 	static #getBufData( arr ) {
-		return GSUaudioCurrentContext.decodeAudioData( arr )
+		return gswaContext.$decodeAudioData( arr )
 			.then( buf => [ buf, gsuiWaveform.$getPathChans( buf, 512, 256 ) ] );
 	}
 	#updateInfo() {
@@ -121,7 +121,7 @@ class gscoSamplegroup extends gsui0ne {
 
 		return fetch( url )
 			.then( res => res.arrayBuffer() )
-			.then( arr => GSUaudioCurrentContext.decodeAudioData( arr ) )
+			.then( arr => gswaContext.$decodeAudioData( arr ) )
 			.then( buf => gswaBufferToFile.$convert( buf, "mp3" ) )
 			.then( blobby => ( blob = blobby ).arrayBuffer() )
 			.then( arr => gscoSamplegroup.#getBufData( arr ) )
