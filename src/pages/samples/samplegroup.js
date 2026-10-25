@@ -109,7 +109,7 @@ class gscoSamplegroup extends gsui0ne {
 						created: smp.$created,
 						updated: smp.$updated,
 					} )
-					.$message( "waves", smp.$waves )
+					.$message( GSEV_SAMPLE_DRAW, smp.$waves )
 					.$message( GSEV_API_PROMISE, "rename", gsapiClient.$renameSample )
 					.$message( GSEV_API_PROMISE, "delete", gsapiClient.$deleteSample )
 			)
@@ -146,7 +146,7 @@ class gscoSamplegroup extends gsui0ne {
 						duration: smp.$duration,
 						updated: smp.$updated,
 					} )
-					.$message( "waves", smp.$waves );
+					.$message( GSEV_SAMPLE_DRAW, smp.$waves );
 				this.#updateInfo();
 				this.$this.$dispatch( GSCO_SAMPLES_UPDATE_STORAGE );
 			} )
@@ -290,7 +290,7 @@ class gscoSamplegroup extends gsui0ne {
 						duration: smp.$duration,
 						updated: smp.$updated,
 					} )
-					.$message( "waves", smp.$waves );
+					.$message( GSEV_SAMPLE_DRAW, smp.$waves );
 				this.#updateInfo();
 				this.$this.$dispatch( GSCO_SAMPLES_UPDATE_STORAGE );
 			} )
@@ -330,7 +330,7 @@ class gscoSamplegroup extends gsui0ne {
 					created: smp.$created,
 					updated: smp.$updated,
 				} )
-				.$message( "waves", smp.$waves )
+				.$message( GSEV_SAMPLE_DRAW, smp.$waves )
 				.$message( GSEV_API_PROMISE, "rename", gsapiClient.$renameSample )
 				.$message( GSEV_API_PROMISE, "delete", gsapiClient.$deleteSample )
 		) );

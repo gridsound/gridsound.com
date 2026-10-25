@@ -109,9 +109,9 @@ class gscoSamples {
 			const tag = el.$tag();
 
 			if ( tag === "gsui-sample" ) {
-				el.$message( "playToggle" );
+				el.$message( GSEV_SAMPLE_PLAYTOGGLE );
 			} else {
-				$( "gsui-sample[playing]" ).$message( "pause" );
+				$( "gsui-sample[playing]" ).$message( GSEV_SAMPLE_STOP );
 			}
 			e.preventDefault();
 		}
