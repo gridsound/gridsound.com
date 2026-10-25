@@ -99,7 +99,7 @@ class gscoHome {
 
 	// .........................................................................
 	#audioInit() {
-		return gswaContext.$resume().then( () => gswaContext.$loadModules() ).then( () => {
+		return gswaContext.$resume().then( () => {
 			const wt = gscoHome.#createPulseWT();
 			const wt2 = Object.values( wt.waves ).sort( ( a, b ) => a.index - b.index ).map( w => w.curve );
 
