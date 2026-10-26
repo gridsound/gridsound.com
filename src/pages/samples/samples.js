@@ -105,15 +105,14 @@ class gscoSamples {
 		if ( e.key === "Tab" ) {
 			e.preventDefault();
 		} else if ( e.key === " " ) {
-			const el = $( document.activeElement );
-			const tag = el.$tag();
+			const smp = $( document.activeElement ).$closest( "gsui-sample" );
 
-			if ( tag === "gsui-sample" ) {
-				el.$message( GSEV_SAMPLE_PLAYTOGGLE );
-			} else {
-				$( "gsui-sample[playing]" ).$message( GSEV_SAMPLE_STOP );
-			}
 			e.preventDefault();
+			if ( smp.$size() ) {
+				smp.$message( GSEV_SAMPLE_PLAYTOGGLE );
+			} else {
+				$( "gsui-sample:where([playing],:has([playing]))" ).$message( GSEV_SAMPLE_STOP );
+			}
 		}
 	}
 	#onclickMenu( e ) {
